@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap');
+
+
+
+body{
+    background-color:#FAFAFA ;
+    color: #1F1F1F ;
+    font-weight: 500;
+}
+a.active{
+    color: #D65F0D;
+}
+a.active hr{
+    display: block;
+    border-radius: 100%;
+    background-color: #D65F0D;
+}
