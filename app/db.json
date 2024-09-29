@@ -48,20 +48,96 @@
     {
       "id": "1",
       "name": "Gray Sofa",
-      "prrice": 25999,
-      "discountPrice": 19999,
+      "price": 25999,
       "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
       "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "original":"true",
       "category": "sofas"
     },
     {
       "id": "2",
-      "name": "Blue Sofa",
-      "prrice": 2599,
-      "discountPrice": 19999,
+      "name": "Chair",
+      "price": 2599,
       "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
       "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "original":"true",
+      "category": "chairs"
+    },
+    {
+      "id": "3",
+      "name": "Table",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "category": "tables"
+    },
+    {
+      "id": "4",
+      "name": "Lamp",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "category": "lamps"
+    },
+    {
+      "id": "5",
+      "name": "Bed",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "category": "bed"
+    },
+    {
+      "id": "6",
+      "name": "Gray Sofa 2",
+      "price": 25999,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "original":"true",
       "category": "sofas"
+    },
+    {
+      "id": "7",
+      "name": "Chair 2",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "category": "chairs"
+    },
+    {
+      "id": "8",
+      "name": "Tabl 2",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "category": "tables"
+    },
+    {
+      "id": "9",
+      "name": "Lamp 2",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "original":"true",
+      "category": "lamps"
+    },
+    {
+      "id": "10",
+      "name": "Bed 2",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "original":"true",
+      "category": "bed"
+    },
+    {
+      "id": "1",
+      "name": "Bed 3",
+      "price": 2599,
+      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
+      "description": "A stylish and comfortable modern sofa perfect for any living room.",
+      "original":"true",
+      "category": "bed"
     }
   ]
 }

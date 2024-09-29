@@ -11,11 +11,12 @@ import PlaceOrder from './Pages/PlaceOrder'
 import Orders from './Pages/Orders'
 import NavBar from './Components/NavBar'
 import WishLists from './Pages/WishLists'
+import Footer from './Components/Footer'
 
 function App() {
 
   return (
-    <>
+    <div className='px-[5%]'>
     <NavBar/>
     <Routes>
       <Route path='/' element={<Home/>}/>
@@ -29,7 +30,8 @@ function App() {
       <Route path='/orders' element={<Orders/>}/>
       <Route path='/wishlist' element={<WishLists/>}/>
     </Routes>
-    </>
+    <Footer/>
+    </div>
   )
 }
 
