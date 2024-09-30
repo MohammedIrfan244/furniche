@@ -7,7 +7,7 @@ function OriginalProducts() {
     const[originaProduct,setOriginalProduct]=useState([])
     useEffect(()=>{
         setOriginalProduct(products.filter((items)=>items.original))
-    },[products])
+    },[])
   return (
     <div className="flex flex-col items-center w-[100%] mt-20">
         <h1 className="flex items-baseline text-xl">IN HOUSE DESIGNS<hr className="w-10 h-[3px] bg-[#D65F0D]" /></h1>

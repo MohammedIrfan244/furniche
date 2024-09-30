@@ -8,7 +8,7 @@ function NewCollection() {
     const [newProducts,setNewProduct]=useState([])
     useEffect(()=>{
         setNewProduct(products.slice(-10))
-    },[products])
+    },[])
   return (
     <div className="flex flex-col items-center w-[100%] mt-20">
         <h1 className="flex items-baseline text-xl">NEW COLLECTIONS <hr className="w-10 h-[3px] bg-[#D65F0D]" /></h1>

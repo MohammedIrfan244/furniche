@@ -12,6 +12,7 @@ import Orders from './Pages/Orders'
 import NavBar from './Components/NavBar'
 import WishLists from './Pages/WishLists'
 import Footer from './Components/Footer'
+import Search from './Pages/Search'
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
       <Route path='/placeoder' element={<PlaceOrder/>}/>
       <Route path='/orders' element={<Orders/>}/>
       <Route path='/wishlist' element={<WishLists/>}/>
+      <Route path='/search' element={<Search/>}/>
     </Routes>
     <Footer/>
     </div>

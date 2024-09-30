@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
+    <>
     <div className="my-20 flex justify-between">
       <div className="w-[40%] text-left">
         <img className="w-[60%] sm:w-[30%]" src={Logo} alt="logo" />
@@ -31,6 +32,8 @@ function Footer() {
         </ul>
       </div>
     </div>
+    <p className="text-center text-xs mb-2">&copy; 2024 Settle.com . All Rights Reserved</p>
+    </>
   );
 }
 

@@ -2,8 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,faHeart,faUser,faCartShopping,
-  faBars,
-  faArrowLeft
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from '/src/assets/Settle.comLogo (1).png'
 import { useState } from "react";
@@ -11,7 +10,7 @@ import { useState } from "react";
 function NavBar() {
   const[visible,setVisible]=useState(false)
   return (
-    <div className="flex items-center justify-between py-3 m-0">
+    <div className="flex items-center justify-between py-3 m-0 shadow-sm px-2 rounded-sm">
       <div>
       <Link to={'/'}><img src={Logo} alt="logo" className="w-[90%]"/></Link>
       </div>
@@ -46,17 +45,19 @@ function NavBar() {
         </NavLink>
       </ul>
       <div className="flex items-center gap-3 sm:gap-5 md:gap-7">
+        <Link to={'/search'}>
         <FontAwesomeIcon
           className="cursor-pointer hover:scale-110 transition duration-300"
           icon={faSearch}
         />
-        <Link to={'/wishlist'} className=" relative">
+        </Link>
+        <Link to={'/wishlist'}>
           <FontAwesomeIcon
             className="hover:scale-110 transition duration-300"
             icon={faHeart}
           />
         </Link>
-        <Link className=" relative" to="/cart">
+        <Link to="/cart">
           <FontAwesomeIcon
             className="hover:scale-110 transition duration-300"
              icon={faCartShopping}
@@ -79,14 +80,12 @@ function NavBar() {
           </div>
         </div>
         <FontAwesomeIcon onClick={()=>setVisible(true)} className="sm:hidden cursor-pointer" icon={faBars}/>
-      <div className={`absolute top-0  right-0 bottom-0 overflow-hidden bg-[#FAFAFA] transition-all ${visible?'w-min':'w-0'}`}>
+      <div className={`absolute top-0  right-0 bottom-0 overflow-hidden bg-[#FAFAFA]  ${visible?'w-min':'w-0'}`}>
         <ul className="flex flex-col py-10 px-5 gap-5">
-        <NavLink to={'/'}>HOME</NavLink>
-        <NavLink to={'/collection'}>COLLECTION</NavLink>
-        <NavLink to={'/about'}>ABOUT</NavLink>
-        <NavLink to={'/contact'}>CONTACT</NavLink>
-        <li onClick={()=>setVisible(false)}><FontAwesomeIcon icon={faArrowLeft}/> BACK
-        </li>
+        <NavLink onClick={()=>setVisible(false)} to={'/'}>HOME</NavLink>
+        <NavLink onClick={()=>setVisible(false)} to={'/collection'}>COLLECTION</NavLink>
+        <NavLink onClick={()=>setVisible(false)} to={'/about'}>ABOUT</NavLink>
+        <NavLink onClick={()=>setVisible(false)} to={'/contact'}>CONTACT</NavLink>
         </ul>
       </div>
       </div>
