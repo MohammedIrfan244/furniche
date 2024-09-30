@@ -27,8 +27,8 @@ function Footer() {
       <div>
         <h1 className="text-[50%] sm:text-[80%] md:text-[100%]">GET IN TOUCH</h1>
         <ul className="flex flex-col mt-[5%] gap-1">
-        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link >+91 88915 55811</Link></li>
-        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link >settlecom@gmil.com</Link></li>
+        <li className="text-[3%] sm:text-[5%] md:text-xs">+91 88915 55811</li>
+        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/contact'}>settlecom@gmil.com</Link></li>
         </ul>
       </div>
     </div>

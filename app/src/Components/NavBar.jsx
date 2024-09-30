@@ -10,7 +10,7 @@ import { useState } from "react";
 function NavBar() {
   const[visible,setVisible]=useState(false)
   return (
-    <div className="flex items-center justify-between py-3 m-0 shadow-sm px-2 rounded-sm">
+    <div className="flex items-center justify-between py-3 m-0">
       <div>
       <Link to={'/'}><img src={Logo} alt="logo" className="w-[90%]"/></Link>
       </div>
@@ -57,30 +57,30 @@ function NavBar() {
             icon={faHeart}
           />
         </Link>
-        <Link to="/cart">
+        <Link to="/cart" className="relative">
           <FontAwesomeIcon
             className="hover:scale-110 transition duration-300"
              icon={faCartShopping}
           />
-          <p className="absolute right-[-5px] bottom-[-2px]  bg-[#D65F0D] text-[10px] px-[2px] rounded-[100%] text-[#FAFAFA]">
+          <p className="absolute right-[-5px] bottom-[-2px]  bg-[#A47C48] text-[10px] px-[2px] rounded-[100%] text-[#FAFAFA]">
             10
           </p>
         </Link>
         <div className=" group relative">
-          <FontAwesomeIcon
+          <FontAwesomeIcon  
             className=" cursor-pointer hover:scale-110 transition duration-300"
             icon={faUser}
           />
           <div className="group-hover:block hidden absolute -right-2 text-xs">
             <div className="flex flex-col gap-2 w-20 mt-2 pl-2 bg-slate-100 rounded">
-              <Link className=" hover:text-[#D65F0D]">My Profile</Link>
-              <Link to={'/orders'} className=" hover:text-[#D65F0D]">Orders</Link>
-              <Link to={'/login'} className=" hover:text-[#D65F0D]">Login</Link>
+              <Link className=" hover:text-[#A47C48]">My Profile</Link>
+              <Link to={'/orders'} className=" hover:text-[#A47C48]">Orders</Link>
+              <Link to={'/login'} className=" hover:text-[#A47C48]">Login</Link>
             </div>
           </div>
         </div>
         <FontAwesomeIcon onClick={()=>setVisible(true)} className="sm:hidden cursor-pointer" icon={faBars}/>
-      <div className={`absolute top-0  right-0 bottom-0 overflow-hidden bg-[#FAFAFA]  ${visible?'w-min':'w-0'}`}>
+      <div className={`absolute top-0  right-0 bottom-0 overflow-hidden bg-[#F5F2E9]  ${visible?'w-min':'w-0'}`}>
         <ul className="flex flex-col py-10 px-5 gap-5">
         <NavLink onClick={()=>setVisible(false)} to={'/'}>HOME</NavLink>
         <NavLink onClick={()=>setVisible(false)} to={'/collection'}>COLLECTION</NavLink>
