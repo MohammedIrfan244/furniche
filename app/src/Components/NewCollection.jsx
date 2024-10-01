@@ -1,14 +1,11 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext } from "react"
 import { ShopContext } from "../Contexts/ShopContext"
 import ProductItems from "./ProductItems"
 
 
 function NewCollection() {
     const{products}=useContext(ShopContext)
-    const [newProducts,setNewProduct]=useState([])
-    useEffect(()=>{
-        setNewProduct(products.slice(-10))
-    },[newProducts])
+    const newProducts=products.slice(-10)
   return (
     <div className="flex flex-col items-center w-[100%] mt-20">
         <h1 className="flex items-baseline text-xl">NEW COLLECTIONS <hr className="w-10 h-[3px] bg-[#A47C48]" /></h1>

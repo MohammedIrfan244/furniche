@@ -6,13 +6,13 @@ import About from './Pages/About'
 import Contact from './Pages/Contact'
 import Product from './Pages/Product'
 import Cart from './Pages/Cart'
-import Login from './Pages/Login'
 import PlaceOrder from './Pages/PlaceOrder'
 import Orders from './Pages/Orders'
 import NavBar from './Components/NavBar'
 import WishLists from './Pages/WishLists'
 import Footer from './Components/Footer'
 import Search from './Pages/Search'
+import LoginSignUp from './Pages/LoginSignUp'
 
 function App() {
 
@@ -24,9 +24,10 @@ function App() {
       <Route path='/collection' element={<Collection/>}/>
       <Route path='/about' element={<About/>}/>
       <Route path='/contact' element={<Contact/>}/>
-      <Route path='/collection/:Id' element={<Product/>}/>
+     <Route path='/product/:Id' element={<Product/>}/>
+      
       <Route path='/cart' element={<Cart/>}/>
-      <Route path='/login' element={<Login/>}/>
+      <Route path='/login' element={<LoginSignUp/>}/>
       <Route path='/placeoder' element={<PlaceOrder/>}/>
       <Route path='/orders' element={<Orders/>}/>
       <Route path='/wishlist' element={<WishLists/>}/>

@@ -22,7 +22,7 @@ function Collection() {
     }else{
       setFilteredProducts(products.filter(items=>categories.includes(items.category)))
     }
-   },[categories])
+   },[categories,products])
 
 
    

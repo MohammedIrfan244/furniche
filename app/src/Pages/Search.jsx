@@ -12,9 +12,7 @@ function Search() {
     setSearchedProduct(
       products.filter((items) => items.name.toLowerCase().includes(search.toLowerCase())||items.description.toLowerCase().includes(search.toLowerCase())||items.category.toLowerCase().includes(search.toLowerCase()))
     );
-  }, []);
-  console.log(search);
-  console.log(searchedProduct);
+  }, [search]);
 
   return (
     <div className="flex flex-col items-center w-[100%] mt-[3%]">
