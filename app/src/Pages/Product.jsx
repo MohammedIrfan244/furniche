@@ -5,14 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons"
 import ProductItems from "../Components/ProductItems"
 
-
 function Product() {
   const {Id}=useParams()
-  const{products,addCart,cartItems}=useContext(ShopContext)
+  const{products,addCart}=useContext(ShopContext)
   const product=products.find((items)=>items.id===Id)
   const interestedProduct=products.filter(items=>items.category==product.category&&items.id!=product.id)
 
-
+ 
   return (
     <div className="flex flex-col items-center">
       <h1 className="flex items-baseline text-xl mt-[2%]">Product Details<hr className="w-10 h-[3px] bg-[#A47C48]" /></h1>
@@ -21,14 +20,14 @@ function Product() {
       <img className="hover:scale-[1.01] transition duration-500 ease-in-out" src={product?.image} alt="image"/>
     </div>
     <div className="w-[100%] sm:w-[50%] flex flex-col justify-around p-[3%] gap-[10px] sm:gap-0">
-      {/* <h1 className="">Name : {product?.name}{product.original?"(house)":null}</h1> */}
+      <h1 className="">Name : {product?.name}{product?.original?"(house)":null}</h1>
       <p>Category : {product?.category}</p>
       <p>Rating : {`${product?.rating}/5 `}<FontAwesomeIcon className="scale-75" icon={faStar}/></p>
       <p>Price : {product?.price}</p>
       <p>{product?.description}</p>
       <div className="w-[90%] mt-4 flex justify-between">
-        <button onClick={()=>addCart(Id)} className="border shadow-md border-gray-300 rounded-md px-3 sm:py-1">Add to Cart</button>
-        <button className="border shadow-md border-gray-300 rounded-md px-3 sm:py-1">Add to Wishlist</button>
+        <button onClick={()=>addCart(Id)} className="border shadow-md border-gray-300 px-3 sm:py-1">Add to cart</button>
+        <button className="border shadow-md border-gray-300 px-3 sm:py-1">Add to Wishlist</button>
       </div>
     </div>
    </div>

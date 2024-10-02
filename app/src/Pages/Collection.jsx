@@ -28,7 +28,7 @@ function Collection() {
    
   return (
     <div className="w-[100%] flex flex-col items-center mt-[3%]">
-      <div className="flex justify-between sm:w-[60%] w-[95%] shadow-lg p-5 rounded-[10px]">
+      <div className="flex justify-between sm:w-[60%] w-[95%] shadow-lg p-5">
         <p><input type="checkbox" onChange={checkCategory} value={"bed"}/> Beds</p>
         <p><input type="checkbox" onChange={checkCategory} value={"lamps"}/> Lamps</p>
         <p><input type="checkbox" onChange={checkCategory} value={"tables"}/> Tables</p>

@@ -5,10 +5,12 @@ import {
   faBars
 } from "@fortawesome/free-solid-svg-icons";
 import Logo from '/src/assets/Settle.comLogo (1).png'
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ShopContext } from "../Contexts/ShopContext";
 
 function NavBar() {
   const[visible,setVisible]=useState(false)
+  const{cartCount}=useContext(ShopContext)
   return (
     <div className="flex items-center justify-between py-3 m-0">
       <div>
@@ -62,8 +64,8 @@ function NavBar() {
             className="hover:scale-110 transition duration-300"
              icon={faCartShopping}
           />
-          <p className="absolute right-[-5px] bottom-[-2px]  bg-[#A47C48] text-[10px] px-[2px] rounded-[100%] text-[#FAFAFA]">
-            10
+          <p className="absolute right-[-5px] bottom-[-2px]  bg-[#A47C48] text-[10px] text-center w-[15px] rounded-[100%] text-[#FAFAFA]">
+            {cartCount}
           </p>
         </Link>
         <div className=" group relative">

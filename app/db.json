@@ -113,16 +113,6 @@
       "rating":4
     },
     {
-      "id": "8",
-      "name": "Tabl 2",
-      "price": 5500,
-      "rating":5,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "category": "tables",
-      "original":"false"
-    },
-    {
       "id": "9",
       "name": "Lamp 2",
       "price": 6000,
