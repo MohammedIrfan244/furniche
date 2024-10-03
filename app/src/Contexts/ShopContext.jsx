@@ -14,6 +14,8 @@ const defaulCart=(Parray)=>{
 const ShopContextProvider=({children})=>{
 
     const[products,setProduct]=useState([])
+    const[cartTotal,setCartTotal]=useState(0)
+    // const[orderItems,setOrderItems]=useState([])
     const[cartItems,setCartItems]=useState(() => {
         const storedCart=localStorage.getItem("cartItems")
         return storedCart?JSON.parse(storedCart):{};
@@ -53,7 +55,7 @@ const ShopContextProvider=({children})=>{
         setCartItems((prev)=>({...prev,[Id]:1}))
     }
     const currency="$"
-    const value={products,currency,cartItems,addCart,cartCount,setCartItems}
+    const value={products,currency,cartItems,addCart,cartCount,setCartItems,cartTotal,setCartTotal}
     return (
         <ShopContext.Provider value={value}>
             {children}

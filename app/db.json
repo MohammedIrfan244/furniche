@@ -2,41 +2,10 @@
   "users": [
     {
       "id": "1",
-      "email": "comfortcraftadmin@gmail.com",
-      "password": "comfortcraft",
-      "name": "Admin",
-      "address": {
-        "name": "Admin",
-        "address": "",
-        "city": "",
-        "state": "",
-        "pincode": "",
-        "phone": ""
-      },
-      "cart": {
-        "2": 2,
-        "6": 2
-      }, 
-      "orders": {},
-      "isAdmin": true
-    },
-    {
-      "id": "1720183156614",
-      "name": "Anas2@gmail.com",
-      "email": "Anas2@gmail.com",
-      "password": "Anas2@gmail.com",
-      "address": {
-        "name": "Anas2@gmail.com",
-        "address": "",
-        "city": "",
-        "state": "",
-        "pincode": "",
-        "phone": ""
-      },
-      "cart": {
-        "6": 1,
-        "10": 1
-      },
+      "name": "Mohammed Irfan",
+      "email": "irfan@gmail.com",
+      "password": "irfan@gmail.com",
+      "cart": {},
       "orders": {},
       "isAdmin": false
     }

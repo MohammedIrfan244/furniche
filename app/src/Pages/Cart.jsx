@@ -4,9 +4,8 @@ import CartCards from "../Components/CartCards"
 import { Link } from "react-router-dom"
 
 function Cart() {
-  const{currency,cartItems,products,setCartItems,cartCount}=useContext(ShopContext)
+  const{currency,cartItems,products,setCartItems,cartCount,cartTotal,setCartTotal}=useContext(ShopContext)
   const cartProducts=products.filter(items=>cartItems[items.id]>0)
-  const[cartTotal,setCartTotal]=useState(0)
   const [cartItemCounts, setCartItemCounts] = useState(() => {
     const counts = {}
     cartProducts?.forEach(item=>{
@@ -43,7 +42,7 @@ const decCart=(item)=>{
       ))
     }
     </div>
-    <div className={`${cartProducts.length===0?'hidden':null}flex flex-col justify-between w-[100%] sm:w-[30%] border-2 border-gray-200 shadow-lg p-[1%] relative`}>
+    <div className={`${cartProducts.length==0?'hidden':null} flex flex-col justify-between w-[100%] sm:w-[30%] border-2 border-gray-200 shadow-lg p-[1%] `}>
       <p className="text-center">CART DETAILS</p>
       <div className="mt-[5%] flex flex-col gap-5">
       <p>Total products : {cartCount}</p>
@@ -52,7 +51,7 @@ const decCart=(item)=>{
         {cartProducts?.map((items,index)=><li key={index}>{items.name} : {cartItemCounts[items.id]}</li>)}
       </ul>
     <p>Total : {currency} {cartTotal}</p>
-    <Link className="shadow-md border border-gray-300 px-3 w-[30%] sm:py-1" to={'/placeorder'}>Buy now</Link>
+    <Link className="shadow-md border border-gray-300 px-3  sm:py-1" to={'/placeorder'}>Proceed to payment</Link>
     </div>
     </div>
     </div>
