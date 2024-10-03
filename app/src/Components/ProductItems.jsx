@@ -10,7 +10,7 @@ function ProductItems({id,name,price,image})
   return (
     <div className="transition duration-300 overflow-hidden border-2 border-gray-200 shadow-lg ">
           <Link to={`/product/${id}`}>
-        <img onClick={window.scrollTo} className="hover:scale-105 transition duration-500  ease-in-out" src={image}alt="image" />
+        <img onClick={window.scrollTo(0,0)} className="hover:scale-105 transition duration-500  ease-in-out" src={image}alt="image" />
     </Link>
         <div className="px-[4%] flex justify-between items-center py-[3%]">
           <div>

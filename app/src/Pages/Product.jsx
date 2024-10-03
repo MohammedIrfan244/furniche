@@ -29,8 +29,8 @@ function Product() {
       <p>Price : {product?.price}</p>
       <p>{product?.description}</p>
       <div className="w-[90%] mt-4 flex justify-between">
-        <Link to={currentUser==null?'/login':'#'} onClick={()=>addCart(Id)} className="border shadow-md border-gray-300 px-3 sm:py-1">{`${cartItems[Id]>0?"Added":"Add to Cart"}`}</Link>
-        {/* <button className="border shadow-md border-gray-300 px-3 sm:py-1">Add to Wishlist</button> */}
+        <Link to={currentUser==null?'/login':'#'}><button onClick={currentUser!=null?()=>addCart(Id):null} className="border active:scale-95 shadow-md border-gray-300 px-3 sm:py-1">{`${cartItems[Id]>0?"Added":"Add to Cart"}`}</button></Link>
+       
       </div>
     </div>
    </div>

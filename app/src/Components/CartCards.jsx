@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { ShopContext } from "../Contexts/ShopContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faRemove } from "@fortawesome/free-solid-svg-icons"
+import {  faTrash } from "@fortawesome/free-solid-svg-icons"
 
 
 function CartCards({image,name,price,removeCart,incCartCount,decCartCount,count}) {
@@ -19,7 +19,7 @@ function CartCards({image,name,price,removeCart,incCartCount,decCartCount,count}
         <button className="w-[25%] border shadow-md border-gray-300 px-3 sm:py-1" onClick={decCartCount}>-</button>
         </div>
         <div className="flex items-center text-xs sm:text-sm md:text-[16px]">
-        <button className="border shadow-md border-gray-300 px-[5%]" onClick={removeCart}><FontAwesomeIcon className="mx-[6px]" icon={faRemove}/></button>
+        <button className="border shadow-md border-gray-300 px-[5%]" onClick={removeCart}><FontAwesomeIcon className="p-[6px]" icon={faTrash}/></button>
         </div>
     </div>
   )

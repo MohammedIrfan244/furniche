@@ -1,21 +1,19 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import axios from 'axios'
+import { UserContext } from "./UserContext";
 
 export const ShopContext=createContext()
 
-const defaulCart=(Parray)=>{
-    let cart={}
-    Parray.forEach(item=>{
-        cart[item.id]=0
-    })
-    return cart
+const cartUpdater=(userId,updatedCart)=>{
+    axios.patch(`http://localhost:3000/users/${userId}`,{cart:updatedCart})
+    .catch((err)=>console.log(err))
 }
 
 const ShopContextProvider=({children})=>{
 
     const[products,setProduct]=useState([])
+    const{currentUser}=useContext(UserContext)
     const[cartTotal,setCartTotal]=useState(0)
-    // const[orderItems,setOrderItems]=useState([])
     const[cartItems,setCartItems]=useState(() => {
         const storedCart=localStorage.getItem("cartItems")
         return storedCart?JSON.parse(storedCart):{};
@@ -26,13 +24,13 @@ const ShopContextProvider=({children})=>{
     })
 
     useEffect(()=>{
+        if(currentUser){
+            cartUpdater(currentUser.id,cartItems)
+        }
+    },[currentUser,cartItems])
+    useEffect(()=>{
         axios.get('http://localhost:3000/products')
-        .then((response)=>{
-            setProduct(response.data)
-            if (Object.keys(cartItems).length===0){
-                setCartItems(defaulCart(response.data))
-            }
-        })
+        .then((response)=>setProduct(response.data))
         .catch((err)=>console.log(err))
     },[])
 

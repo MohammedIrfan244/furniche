@@ -5,28 +5,38 @@
       "name": "Mohammed Irfan",
       "email": "irfan@gmail.com",
       "password": "irfan@gmail.com",
-      "cart": {}
+      "cart": {
+        "1": 0,
+        "2": 0,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 0,
+        "7": 0,
+        "9": 1,
+        "10": 0,
+        "11": 0,
+        "12": 0
+      }
     },
     {
-      "id": "e18f",
-      "name": "navaf",
-      "email": "navaf@gmail.com",
-      "password": "navaf@gmail.com",
-      "cart": {}
-    },
-    {
-      "id": "db41",
-      "name": "anasp",
-      "email": "anasp@gmail.com",
-      "password": "anasp@gmail.com",
-      "cart": {}
-    },
-    {
-      "id": "7acd",
+      "id": "9297",
       "name": "username",
       "email": "username@gmail.com",
       "password": "username@gmail.com",
-      "cart": {}
+      "cart": {
+        "1": 1,
+        "2": 1,
+        "3": 0,
+        "4": 0,
+        "5": 1,
+        "6": 1,
+        "7": 0,
+        "9": 1,
+        "10": 0,
+        "11": 0,
+        "12": 0
+      }
     }
   ],
   "products": [

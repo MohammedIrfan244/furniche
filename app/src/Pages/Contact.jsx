@@ -36,7 +36,7 @@ function Contact() {
       <input name="name" value={formData.name} required onChange={(e)=>setFormData({...formData,["name"]:e.target.value})} className="w-[90%] text-xs border shadow-md border-gray-300 rounded-md px-3 sm:py-1 focus:outline-none" type="text" placeholder="Username" />
       <input name="email" value={formData.email} required  onChange={(e)=>setFormData({...formData,["email"]:e.target.value})} className="w-[90%] text-xs border shadow-md border-gray-300 rounded-md px-3 sm:py-1 focus:outline-none" type="email" placeholder="Email" />
       <textarea name="message" value={formData.message} required onChange={(e)=>setFormData({...formData,["message"]:e.target.value})} className="w-[90%] text-xs border shadow-md border-gray-300 rounded-md px-3 sm:py-1 focus:outline-none"></textarea>
-      <button type="submit" className="border shadow-md border-gray-300 rounded-md px-3 sm:py-1">Submit</button>
+      <button type="submit" className="border shadow-md border-gray-300 active:scale-95 px-3 sm:py-1">Submit</button>
     </div>
     </Hero>
     </div>
