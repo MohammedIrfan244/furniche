@@ -4,10 +4,13 @@ import { useParams } from "react-router-dom"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faStar } from "@fortawesome/free-solid-svg-icons"
 import ProductItems from "../Components/ProductItems"
+import { UserContext } from "../Contexts/UserContext"
+import { Link } from "react-router-dom"
 
 function Product() {
   const {Id}=useParams()
-  const{products,addCart}=useContext(ShopContext)
+  const{currentUser}=useContext(UserContext)
+  const{products,addCart,cartItems}=useContext(ShopContext)
   const product=products.find((items)=>items.id===Id)
   const interestedProduct=products.filter(items=>items.category==product.category&&items.id!=product.id)
 
@@ -26,8 +29,8 @@ function Product() {
       <p>Price : {product?.price}</p>
       <p>{product?.description}</p>
       <div className="w-[90%] mt-4 flex justify-between">
-        <button onClick={()=>addCart(Id)} className="border shadow-md border-gray-300 px-3 sm:py-1">Add to cart</button>
-        <button className="border shadow-md border-gray-300 px-3 sm:py-1">Add to Wishlist</button>
+        <Link to={currentUser==null?'/login':'#'} onClick={()=>addCart(Id)} className="border shadow-md border-gray-300 px-3 sm:py-1">{`${cartItems[Id]>0?"Added":"Add to Cart"}`}</Link>
+        {/* <button className="border shadow-md border-gray-300 px-3 sm:py-1">Add to Wishlist</button> */}
       </div>
     </div>
    </div>

@@ -1,8 +1,7 @@
 import { useContext} from "react"
 import { ShopContext } from "../Contexts/ShopContext"
 import { Link } from "react-router-dom"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faHeart } from "@fortawesome/free-solid-svg-icons"
+
 
 function ProductItems({id,name,price,image}) 
 {
@@ -18,7 +17,7 @@ function ProductItems({id,name,price,image})
         <p className="text-xs">{name}</p>
         <p className="text-xs">{currency} {price}</p>
         </div>
-        <FontAwesomeIcon icon={faHeart}/>
+        {/* <FontAwesomeIcon icon={faHeart}/> */}
         </div>
         </div>
   )
