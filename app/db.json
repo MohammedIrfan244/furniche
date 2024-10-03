@@ -6,8 +6,8 @@
       "email": "irfan@gmail.com",
       "password": "irfan@gmail.com",
       "cart": {},
-      "orders": {},
-      "isAdmin": false
+      "orders": [],
+      "isAdmin": true
     }
   ],
   "products": [
