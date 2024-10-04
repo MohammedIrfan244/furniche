@@ -14,7 +14,7 @@ function NavBar() {
   const{currentUser}=useContext(UserContext)
   const{cartCount}=useContext(ShopContext)
   return (
-      <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3">
+      <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
     <div className="flex items-center justify-between">
       <div>
       <Link to={'/'}><img src={Logo} alt="logo" className="w-[90%]"/></Link>
@@ -56,7 +56,7 @@ function NavBar() {
           icon={faSearch}
         />
         </Link>
-        <Link  to={currentUser==null?'/login':'/cart'} className="relative">
+        <Link  to={'/cart'} className={`${currentUser?"relative":"hidden"}`}>
           <FontAwesomeIcon
             className="hover:scale-110 transition duration-300"
              icon={faCartShopping}

@@ -19,7 +19,7 @@ function Login() {
         axios.get("http://localhost:3000/users")
         .then((response)=>{
            const users= (response.data)
-            const inputUser=users.find(items=>items.email==email)
+            const inputUser=users.find(items=>items.email==email&&items.password==password)
            if(inputUser){
             setCurrentUser(inputUser)
             setCartItems(inputUser.cart)

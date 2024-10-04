@@ -15,9 +15,8 @@ function ProductItems({id,name,price,image})
         <div className="px-[4%] flex justify-between items-center py-[3%]">
           <div>
         <p className="text-xs">{name}</p>
-        <p className="text-xs">{currency} {price}</p>
+        <p className="text-xs font-bold">{currency} {price}</p>
         </div>
-        {/* <FontAwesomeIcon icon={faHeart}/> */}
         </div>
         </div>
   )
