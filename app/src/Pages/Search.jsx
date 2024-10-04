@@ -3,7 +3,7 @@ import { ShopContext } from "../Contexts/ShopContext";
 import ProductItems from "../Components/ProductItems";
 
 function Search() {
-  const { products } = useContext(ShopContext);
+  const { products,loading} = useContext(ShopContext);
   const [search, setSearch] = useState("");
   const [searchedProduct, setSearchedProduct] = useState([]);
 
@@ -15,13 +15,14 @@ function Search() {
   }, [search]);
 
   return (
-    <div className="flex flex-col items-center w-[100%] mt-[3%]">
+    <div className="flex flex-col items-center w-[100%] pt-[10%]">
       <input
         type="text"
         value={search}
         placeholder="Search here..."
         onChange={(e)=>setSearch(e.target.value)}
       className="w-[60%] text-xs border shadow-md border-gray-300 rounded-md px-3 sm:py-1 focus:outline-none"/>
+        <p>{loading?"Loading...":null}</p>
       <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-[3%]">
       {
           searchedProduct.map((item,index)=>(

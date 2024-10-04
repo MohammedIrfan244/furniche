@@ -16,7 +16,7 @@ function Product() {
 
  
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center pt-[10%]">
       <h1 className="flex items-baseline text-xl mt-[2%]">Product Details<hr className="w-10 h-[3px] bg-[#A47C48]" /></h1>
    <div className="flex flex-col sm:flex-row w-[100%] border-2 border-gray-200 shadow-lg rounded-[5px] mt-[3%]">
     <div className="w-[100%] sm:w-[70%] overflow-hidden">

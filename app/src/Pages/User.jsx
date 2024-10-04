@@ -17,7 +17,7 @@ function User() {
     }
  
   return (
-    <div>hello{currentUser.name}
+    <div className="pt-[10%]">hello{currentUser.name}
     <Link to={'/'}><button onClick={handleClick}>logout</button></Link>
     </div>
   )

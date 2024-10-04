@@ -1,5 +1,5 @@
 import './App.css'
-import { Routes ,Route} from 'react-router-dom'
+import { Routes ,Route, Outlet} from 'react-router-dom'
 import Home from './Pages/Home'
 import Collection from './Pages/Collection'
 import About from './Pages/About'
@@ -7,22 +7,22 @@ import Contact from './Pages/Contact'
 import Product from './Pages/Product'
 import Cart from './Pages/Cart'
 import PlaceOrder from './Pages/PlaceOrder'
-// import Orders from './Pages/Orders'
 import NavBar from './Components/NavBar'
-// import WishLists from './Pages/WishLists'
-import Footer from './Components/Footer'
 import Search from './Pages/Search'
 import Login from './Pages/Login'
 import SignIn from './Pages/SignIn'
 import User from './Pages/User'
+import NotFound from './Pages/NotFound'
+import Layout from './Components/Layout'
 
 
 function App() {
 
   return (
     <div className='px-[5%]'>
-    <NavBar/>
+      <Layout>
     <Routes>
+      <Route path='/' element={<><NavBar/> <Outlet/></>}>
       <Route path='/' element={<Home/>}/>
       <Route path='/collection' element={<Collection/>}/>
       <Route path='/about' element={<About/>}/>
@@ -33,11 +33,11 @@ function App() {
       <Route path='/signin' element={<SignIn/>}/>
       <Route path='/placeorder' element={<PlaceOrder/>}/>
       <Route path='/user' element={<User/>}/>
-      {/* <Route path='/orders' element={<Orders/>}/> */}
-      {/* <Route path='/wishlist' element={<WishLists/>}/> */}
       <Route path='/search' element={<Search/>}/>
+      </Route>
+      <Route path='*' element={<NotFound/>}/>
     </Routes>
-    <Footer/>
+      </Layout>
     </div>
   )
 }

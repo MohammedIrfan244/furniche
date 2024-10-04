@@ -3,7 +3,7 @@ import { ShopContext } from "../Contexts/ShopContext"
 import ProductItems from "../Components/ProductItems"
 
 function Collection() {
-   const {products}=useContext(ShopContext)
+   const {products,loading}=useContext(ShopContext)
    const [filteredProducts,setFilteredProducts]=useState([])
    const [categories,setCategories]=useState([])
   
@@ -27,7 +27,7 @@ function Collection() {
 
    
   return (
-    <div className="w-[100%] flex flex-col items-center mt-[3%]">
+    <div className="w-[100%] flex flex-col items-center pt-[10%]">
       <div className="flex justify-between sm:w-[60%] w-[95%] shadow-lg p-5">
         <p><input type="checkbox" onChange={checkCategory} value={"bed"}/> Beds</p>
         <p><input type="checkbox" onChange={checkCategory} value={"lamps"}/> Lamps</p>
@@ -35,6 +35,7 @@ function Collection() {
         <p><input type="checkbox" onChange={checkCategory} value={"chairs"}/> Chairs</p>
         <p><input type="checkbox" onChange={checkCategory} value={"sofas"}/> Sofas</p>
       </div>
+        <p>{loading?"Loading...":null}</p>
       <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-[3%]">
         {
           filteredProducts.map((item,index)=>(

@@ -12,6 +12,7 @@ const cartUpdater=(userId,updatedCart)=>{
 const ShopContextProvider=({children})=>{
 
     const[products,setProduct]=useState([])
+    const[loading,setLoading]=useState(false)
     const{currentUser}=useContext(UserContext)
     const[cartTotal,setCartTotal]=useState(0)
     const[cartItems,setCartItems]=useState(() => {
@@ -29,9 +30,11 @@ const ShopContextProvider=({children})=>{
         }
     },[currentUser,cartItems])
     useEffect(()=>{
+        setLoading(true)
         axios.get('http://localhost:3000/products')
         .then((response)=>setProduct(response.data))
         .catch((err)=>console.log(err))
+        .finally(()=>setLoading(false))
     },[])
 
     useEffect(()=>{
@@ -53,7 +56,7 @@ const ShopContextProvider=({children})=>{
         setCartItems((prev)=>({...prev,[Id]:1}))
     }
     const currency="$"
-    const value={products,currency,cartItems,addCart,cartCount,setCartItems,cartTotal,setCartTotal}
+    const value={products,currency,cartItems,addCart,cartCount,setCartItems,cartTotal,setCartTotal,loading}
     return (
         <ShopContext.Provider value={value}>
             {children}

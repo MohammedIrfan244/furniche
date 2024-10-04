@@ -11,10 +11,11 @@ import { UserContext } from "../Contexts/UserContext";
 
 function NavBar() {
   const[visible,setVisible]=useState(false)
-  const{currentUser,setCurrentUser}=useContext(UserContext)
+  const{currentUser}=useContext(UserContext)
   const{cartCount}=useContext(ShopContext)
   return (
-    <div className="flex items-center justify-between py-3 m-0">
+      <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3">
+    <div className="flex items-center justify-between">
       <div>
       <Link to={'/'}><img src={Logo} alt="logo" className="w-[90%]"/></Link>
       </div>
@@ -55,12 +56,6 @@ function NavBar() {
           icon={faSearch}
         />
         </Link>
-        {/* <Link to={'/wishlist'}>
-          <FontAwesomeIcon
-            className="hover:scale-110 transition duration-300"
-            icon={faHeart}
-          />
-        </Link> */}
         <Link  to={currentUser==null?'/login':'/cart'} className="relative">
           <FontAwesomeIcon
             className="hover:scale-110 transition duration-300"
@@ -84,6 +79,7 @@ function NavBar() {
         <NavLink onClick={()=>setVisible(false)} to={'/about'}>ABOUT</NavLink>
         <NavLink onClick={()=>setVisible(false)} to={'/contact'}>CONTACT</NavLink>
         </ul>
+      </div>
       </div>
       </div>
     </div>

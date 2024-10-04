@@ -3,7 +3,7 @@ import Hero from "../Components/Hero"
 function About() {
 
   return (
-    <div className="mt-[5%]">
+    <div className="pt-[10%]">
     <Hero source={"https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-deb711d/www.decorilla.com/online-decorating/wp-content/uploads/2020/01/Calming-bohemian-interior-design-living-room.jpeg"}>
       <div className="w-[100%] sm:w-[50%] p-5 flex flex-col justify-evenly">
       <h1 className="flex items-baseline text-xl">ABOUT US <hr className="w-10 h-[3px] bg-[#A47C48]" /></h1>

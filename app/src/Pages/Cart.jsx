@@ -33,7 +33,7 @@ const decCart=(item)=>{
   setCartItems(prev=>({...prev,[item.id]:Math.max(prev[item.id] - 1, 1)}))
 }
   return (
-    <div className="w-[100%] flex flex-col sm:flex-row gap-9">
+    <div className="w-[100%] flex flex-col sm:flex-row gap-9 pt-[10%]">
        <div className={`${cartProducts.length!=0?'hidden':null} w-[100%] text-center text-gray-600 text-[250%] my-[5%]`}>Your cart is empty :(</div>
        <div className="w-[100%] sm:w-[65%] flex flex-col gap-5">
     {

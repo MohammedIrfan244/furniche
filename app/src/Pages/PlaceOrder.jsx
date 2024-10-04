@@ -4,10 +4,8 @@ import { ShopContext } from "../Contexts/ShopContext"
 
 function PlaceOrder() {
   const{cartTotal,setCartItems,setCartTotal}=useContext(ShopContext)
-  // const cartProductsOrder=products?.filter(items=>cartItems[items.id]>0)
   
   const handleClick=(e)=>{
-    // setOrderItems((prevOrders)=>[...prevOrders, ...cartProductsOrder])
     e.preventDefault()
     setCartItems((prevCart) => {
       const clearedCart={}
@@ -20,12 +18,12 @@ function PlaceOrder() {
 
     setTimeout(()=>{
       alert("Payment Success")
-     },2000)
+     },1000)
   }
   
 
   return (
-    <div>
+    <div className="pt-[10%]">
       <div>
         <form className="flex flex-col">
           <input type="text" placeholder="First name" />

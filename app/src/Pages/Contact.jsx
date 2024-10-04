@@ -29,8 +29,7 @@ function Contact() {
   }
  
   return (
-    <form onSubmit={sendMail} >
-    <div className="mt-[5%]">
+    <form onSubmit={sendMail} className="pt-[10%]">
     <Hero source={"https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-deb711d/www.decorilla.com/online-decorating/wp-content/uploads/2022/07/bohemian-interior-design-feature-2-1536x861.jpeg"}>
     <div className="w-[100%] sm:w-[50%] flex flex-col justify-evenly gap-[30px] items-center py-[5%] sm:py-2">
       <input name="name" value={formData.name} required onChange={(e)=>setFormData({...formData,["name"]:e.target.value})} className="w-[90%] text-xs border shadow-md border-gray-300 rounded-md px-3 sm:py-1 focus:outline-none" type="text" placeholder="Username" />
@@ -39,7 +38,6 @@ function Contact() {
       <button type="submit" className="border shadow-md border-gray-300 active:scale-95 px-3 sm:py-1">Submit</button>
     </div>
     </Hero>
-    </div>
     </form>
   )
 }
