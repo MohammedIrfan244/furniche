@@ -55,8 +55,9 @@ const ShopContextProvider=({children})=>{
     const addCart=(Id)=>{
         setCartItems((prev)=>({...prev,[Id]:1}))
     }
-    const currency="$"
-    const value={products,currency,cartItems,addCart,cartCount,setCartItems,cartTotal,setCartTotal,loading}
+    const currency="₹"
+    const shippingFee=50
+    const value={products,currency,shippingFee,cartItems,addCart,cartCount,setCartItems,cartTotal,setCartTotal,loading}
     return (
         <ShopContext.Provider value={value}>
             {children}

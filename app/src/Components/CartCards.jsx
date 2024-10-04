@@ -1,25 +1,27 @@
 import { useContext } from "react"
 import { ShopContext } from "../Contexts/ShopContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import {  faTrash } from "@fortawesome/free-solid-svg-icons"
+import {  faChevronDown, faChevronUp, faTrash } from "@fortawesome/free-solid-svg-icons"
 
 
 function CartCards({image,name,price,removeCart,incCartCount,decCartCount,count}) {
     const{currency}=useContext(ShopContext)
   return (
-    <div className="flex justify-between gap-[10px] border-2 border-gray-200 shadow-lg pe-[2%] " >
-        <img className="h-14 sm:h-20 md:h-24 lg:h-26" src={image} alt="image" />
-        <div className="flex flex-col justify-between py-[1%] text-xs sm:text-sm md:text-[16px]" >
-        <p>Product:{name}</p>
-        <p>Price :{currency} {price}</p>
+    <div className="flex justify-between gap-[10px] border-b-2 border-gray-300 pe-[2%] pb-[1%]" >
+      <div className="flex gap-4">
+        <img className="h-12 sm:h-16 md:h-20 lg:h-20" src={image} alt="image" />
+        <div className="flex flex-col justify-between pb-[15%] text-xs sm:text-sm md:text-[16px]" >
+        <p className="font-bold">{name}</p>
+        <p>{currency}{price}</p>
+        </div>
         </div>
         <div className="flex flex-col justify-between items-center text-xs sm:text-sm">
-        <button className="w-[25%]  border shadow-md border-gray-300 px-3 sm:py-1" onClick={incCartCount}>+</button>
-        <input className="w-[25%] border shadow-md text-center" value={count}  type="number" min={1} readOnly defaultValue={1}/>
-        <button className="w-[25%] border shadow-md border-gray-300 px-3 sm:py-1" onClick={decCartCount}>-</button>
+        <button onClick={incCartCount}><FontAwesomeIcon className="text-xs" icon={faChevronUp}/></button>
+        <input className="min-w-1 bg-[#F5F2E9] text-center lg:ps-3" value={count}  type="number" min={1} readOnly defaultValue={1}/>
+        <button onClick={decCartCount}><FontAwesomeIcon className="text-xs" icon={faChevronDown}/></button>
         </div>
         <div className="flex items-center text-xs sm:text-sm md:text-[16px]">
-        <button className="border shadow-md border-gray-300 px-[5%]" onClick={removeCart}><FontAwesomeIcon className="p-[6px]" icon={faTrash}/></button>
+        <button onClick={removeCart}><FontAwesomeIcon className="p-[6px]" icon={faTrash}/></button>
         </div>
     </div>
   )

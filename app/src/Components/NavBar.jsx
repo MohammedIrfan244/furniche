@@ -17,7 +17,7 @@ function NavBar() {
       <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
     <div className="flex items-center justify-between">
       <div>
-      <Link to={'/'}><img src={Logo} alt="logo" className="w-[90%]"/></Link>
+      <Link to={'/'}><img src={Logo} alt="logo" className="w-[90%] Logo"/></Link>
       </div>
       <ul className="hidden sm:flex gap-4">
         <NavLink
@@ -72,12 +72,13 @@ function NavBar() {
           />
         </Link>
         <FontAwesomeIcon onClick={()=>setVisible(true)} className="sm:hidden cursor-pointer" icon={faBars}/>
-      <div className={`absolute top-0  right-0 bottom-0 overflow-hidden bg-[#F5F2E9]  ${visible?'w-min':'w-0'}`}>
-        <ul className="flex flex-col py-10 px-5 gap-5">
+      <div className={`absolute top-0  right-0 bottom-0 ${visible?'w-min':'hidden'}`}>
+        <ul className="flex flex-col py-10 px-5 gap-5 bg-[#F5F2E9] ">
         <NavLink onClick={()=>setVisible(false)} to={'/'}>HOME</NavLink>
         <NavLink onClick={()=>setVisible(false)} to={'/collection'}>COLLECTION</NavLink>
         <NavLink onClick={()=>setVisible(false)} to={'/about'}>ABOUT</NavLink>
         <NavLink onClick={()=>setVisible(false)} to={'/contact'}>CONTACT</NavLink>
+        <Link onClick={()=>setVisible(false)}>CLOSE</Link>
         </ul>
       </div>
       </div>

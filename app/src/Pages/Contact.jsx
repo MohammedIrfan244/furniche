@@ -29,13 +29,14 @@ function Contact() {
   }
  
   return (
-    <form onSubmit={sendMail} className="pt-[10%]">
+    <form onSubmit={sendMail} className="pt-[30%] sm:pt-[10%]">
     <Hero source={"https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-deb711d/www.decorilla.com/online-decorating/wp-content/uploads/2022/07/bohemian-interior-design-feature-2-1536x861.jpeg"}>
     <div className="w-[100%] sm:w-[50%] flex flex-col justify-evenly gap-[30px] items-center py-[5%] sm:py-2">
-      <input name="name" value={formData.name} required onChange={(e)=>setFormData({...formData,["name"]:e.target.value})} className="w-[90%] text-xs border-2 border-[#3B3A36] px-3 sm:py-1 focus:outline-none" type="text" placeholder="Username" />
-      <input name="email" value={formData.email} required  onChange={(e)=>setFormData({...formData,["email"]:e.target.value})} className="w-[90%] text-xs border-2 border-[#3B3A36] px-3 sm:py-1 focus:outline-none" type="email" placeholder="Email" />
-      <textarea placeholder="Your message..." name="message" value={formData.message} required onChange={(e)=>setFormData({...formData,["message"]:e.target.value})} className="w-[90%] text-xs border-2 border-[#3B3A36] px-3 sm:py-1 focus:outline-none"></textarea>
-      <button type="submit" className="border shadow-md border-gray-300 active:scale-95 px-3 sm:py-1">Submit</button>
+    <h1 className="flex items-baseline text-l sm:text-xl">CONTACT US <hr className="w-10 h-[3px] bg-[#A47C48]" /></h1>
+      <input name="name" value={formData.name} required onChange={(e)=>setFormData({...formData,["name"]:e.target.value})} className="w-[90%] text-xs border-2 border-[#1C1C1C] px-3 sm:py-1 focus:outline-none" type="text" placeholder="Username" />
+      <input name="email" value={formData.email} required  onChange={(e)=>setFormData({...formData,["email"]:e.target.value})} className="w-[90%] text-xs border-2 border-[#1C1C1C] px-3 sm:py-1 focus:outline-none" type="email" placeholder="Email" />
+      <textarea placeholder="Your message..." name="message" value={formData.message} required onChange={(e)=>setFormData({...formData,["message"]:e.target.value})} className="w-[90%] text-xs border-2 border-[#1C1C1C] px-3 sm:py-1 focus:outline-none"></textarea>
+      <button type="submit" className="bg-black text-[#F5F2E9] text-xs active:scale-95 px-5 py-1 sm:py-2">Send</button>
     </div>
     </Hero>
     </form>

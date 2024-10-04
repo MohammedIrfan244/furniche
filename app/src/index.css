@@ -7,7 +7,7 @@
 
 body{
     background-color:#F5F2E9 ;
-    color: #3B3A36 ;
+    color: #1C1C1C ;
     font-weight: 500;
 }
 a.active{
@@ -18,3 +18,9 @@ a.active hr{
     border-radius: 100%;
     background-color: #A47C48;
 }
+img:not(.Logo) {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+  }
+  

@@ -15,7 +15,7 @@ function Search() {
   }, [search]);
 
   return (
-    <div className="flex flex-col items-center w-[100%] pt-[10%]">
+    <div className="flex flex-col items-center w-[100%] pt-[30%] sm:pt-[10%]">
       <input
         type="text"
         value={search}

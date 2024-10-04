@@ -8,7 +8,7 @@ function NewCollection() {
     const newProducts=products.slice(-10)
   return (
     <div className="flex flex-col items-center w-[100%] mt-20">
-        <h1 className="flex items-baseline text-xl">NEW COLLECTIONS <hr className="w-10 h-[3px] bg-[#A47C48]" /></h1>
+        <h1 className="flex items-baseline text-l sm:text-xl">NEW COLLECTIONS <hr className="w-10 h-[3px] bg-[#A47C48]" /></h1>
       <p>{loading?"Loading...":""}</p>
         <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-20">
             {newProducts.map((item,index)=>(

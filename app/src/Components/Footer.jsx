@@ -8,7 +8,7 @@ function Footer() {
     <>
     <div className="my-20 flex justify-between">
       <div className="w-[40%] text-left">
-        <img className="w-[60%] sm:w-[30%]" src={Logo} alt="logo" />
+        <img className="w-[60%] sm:w-[30%] Logo" src={Logo} alt="logo" />
         <p className="text-[3%] sm:text-[5%] md:text-xs px-[1%]">
           At Settle.com, we believe in delivering quality furniture that brings
           style and comfort to your home. With a commitment to exceptional
@@ -17,7 +17,7 @@ function Footer() {
         </p>
       </div>
       <div>
-        <h1 className="text-[50%] sm:text-[80%] md:text-[100%]">CHECKOUT</h1>
+        <h1 className="text-[50%] sm:text-[80%] md:text-[90%]">CHECKOUT</h1>
         <ul className="flex flex-col mt-[5%] gap-1">
         <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/'}>HOME</Link></li>
         <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/collection'}>COLLECTION</Link></li>
@@ -26,10 +26,10 @@ function Footer() {
         </ul>
       </div>
       <div>
-        <h1 className="text-[50%] sm:text-[80%] md:text-[100%]">GET IN TOUCH</h1>
+        <h1 className="text-[50%] sm:text-[80%] md:text-[90%]">GET IN TOUCH</h1>
         <ul className="flex flex-col mt-[5%] gap-1">
         <li className="text-[3%] sm:text-[5%] md:text-xs">+91 88915 55811</li>
-        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/contact'}>settlecom@gmil.com</Link></li>
+        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/contact'}>settlecom@gmail.com</Link></li>
         </ul>
       </div>
     </div>

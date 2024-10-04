@@ -8,9 +8,9 @@ function ProductItems({id,name,price,image})
     const{currency}=useContext(ShopContext)
   
   return (
-    <div className="transition duration-300 overflow-hidden ">
+    <div className="transition duration-200 overflow-hidden border-b border-gray-400">
           <Link to={`/product/${id}`}>
-        <img onClick={window.scrollTo(0,0)} className="hover:scale-105 transition duration-500  ease-in-out" src={image}alt="image" />
+        <img onClick={window.scrollTo(0,0)} className="hover:scale-105 transition duration-500  w-[100%] ease-in-out" src={image}alt="image" />
     </Link>
         <div className="px-[4%] flex justify-between items-center py-[3%]">
           <div>
