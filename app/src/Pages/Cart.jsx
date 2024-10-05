@@ -29,7 +29,7 @@ function Cart() {
       total += cartItems[item.id] * item.price;
     });
     setCartTotal(total);
-  }, [cartProducts]);
+  }, [cartItems, cartProducts, setCartTotal]);
 
   const incCart = (item) => {
     // setCartItemCounts(prev=>({...prev,[item.id]:prev[item.id]+1}))
@@ -61,8 +61,11 @@ function Cart() {
             incCartCount={() => incCart(item)}
             decCartCount={() => decCart(item)}
             removeCart={() =>
-              setCartItems((prev) => ({ ...prev, [item.id]: 0 }))
-            }
+              setCartItems((prev)=>{
+                const newItems={...prev}
+                delete newItems[item.id]
+                return newItems
+            })}
             image={item.image}
             price={item.price}
             name={item.name}

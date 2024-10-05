@@ -10,13 +10,15 @@ function PlaceOrder() {
   const handleClick = (e) => {
     e.preventDefault();
 
-    setCartItems((prevCart) => {
-      const clearedCart = {};
-      for (let key in prevCart) {
-        clearedCart[key] = 0;
-      }
-      return clearedCart;
-    });
+    // setCartItems((prevCart) => {
+    //   const clearedCart = {};
+    //   for (let key in prevCart) {
+    //     clearedCart[key] = 0;
+    //   }
+    //   return clearedCart;
+    // });
+
+    setCartItems({})
     setCartTotal(0);
 
     setTimeout(() => {

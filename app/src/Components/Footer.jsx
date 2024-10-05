@@ -17,16 +17,16 @@ function Footer() {
         </p>
       </div>
       <div>
-        <h1 className="text-[50%] sm:text-[80%] md:text-[90%]">CHECKOUT</h1>
+        <h1 className="text-[50%] sm:text-[80%] md:text-[80%]">CHECKOUT</h1>
         <ul className="flex flex-col mt-[5%] gap-1">
-        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/'}>HOME</Link></li>
-        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/collection'}>COLLECTION</Link></li>
-        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/contact'}>CONTACT</Link></li>
-        <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/about'}>ABOUT</Link></li>
+        <li className="text-[3%] sm:text-[5%] md:text-[60%]"><Link to={'/'}>HOME</Link></li>
+        <li className="text-[3%] sm:text-[5%] md:text-[60%]"><Link to={'/collection'}>COLLECTION</Link></li>
+        <li className="text-[3%] sm:text-[5%] md:text-[60%]"><Link to={'/contact'}>CONTACT</Link></li>
+        <li className="text-[3%] sm:text-[5%] md:text-[60%]"><Link to={'/about'}>ABOUT</Link></li>
         </ul>
       </div>
       <div>
-        <h1 className="text-[50%] sm:text-[80%] md:text-[90%]">GET IN TOUCH</h1>
+        <h1 className="text-[50%] sm:text-[80%] md:text-[80%]">GET IN TOUCH</h1>
         <ul className="flex flex-col mt-[5%] gap-1">
         <li className="text-[3%] sm:text-[5%] md:text-xs">+91 88915 55811</li>
         <li className="text-[3%] sm:text-[5%] md:text-xs"><Link to={'/contact'}>settlecom@gmail.com</Link></li>

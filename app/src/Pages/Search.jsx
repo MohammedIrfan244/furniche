@@ -16,7 +16,7 @@ function Search() {
           items.category.toLowerCase().includes(search.toLowerCase())
       )
     );
-  }, [search]);
+  }, [products, search]);
 
   return (
     <div className="flex flex-col items-center w-[100%] pt-[30%] sm:pt-[10%]">
