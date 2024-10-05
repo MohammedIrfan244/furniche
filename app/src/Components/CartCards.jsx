@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {  faChevronDown, faChevronUp, faTrash } from "@fortawesome/free-solid-svg-icons"
 
 
+// eslint-disable-next-line react/prop-types
 function CartCards({image,name,price,removeCart,incCartCount,decCartCount,count}) {
     const{currency}=useContext(ShopContext)
   return (

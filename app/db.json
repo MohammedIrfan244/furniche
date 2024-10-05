@@ -6,17 +6,7 @@
       "email": "irfan@gmail.com",
       "password": "irfan@gmail.com",
       "cart": {
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
+        "2": 6
       }
     },
     {
@@ -25,17 +15,8 @@
       "email": "username@gmail.com",
       "password": "username@gmail.com",
       "cart": {
-        "1": 0,
-        "2": 1,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
+        "1": 6,
+        "2": 1
       }
     },
     {
@@ -43,65 +24,29 @@
       "name": "anaspappadan@gmail.com",
       "email": "anaspappadan@gmail.com",
       "password": "anaspappadan@gmail.com",
-      "cart": {
-        "1": 0,
-        "2": 1,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 1,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
-      }
+      "cart": {}
     },
     {
       "id": "2f57",
       "name": "harsha",
       "email": "harsha@gmail.com",
       "password": "harsha@gmail.com",
-      "cart": {
-        "1": 1,
-        "2": 1,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 1,
-        "7": 1,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
-      }
+      "cart": {}
     },
     {
       "id": "dbd5",
       "name": "mohammed irfan",
       "email": "mohammedirfan@gmail.com",
       "password": "mohammedirfan@gmail.com",
+      "cart": {}
+    },
+    {
+      "id": "cfa6",
+      "name": "someone",
+      "email": "someone@gmail.com",
+      "password": "someone@gmail.com",
       "cart": {
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0,
-        "13": 0,
-        "14": 0,
-        "15": 0,
-        "16": 0,
-        "17": 0,
-        "18": 0,
-        "19": 0,
-        "20": 0
+        "1": 5
       }
     }
   ],

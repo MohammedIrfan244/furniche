@@ -1,26 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap");
 
-
-
-body{
-    background-color:#F5F2E9 ;
-    color: #1C1C1C ;
-    font-weight: 500;
+body {
+  background-color: #f5f2e9;
+  color: #1c1c1c;
+  font-weight: 500;
 }
-a.active{
-    color: #A47C48;
+a.active {
+  color: #a47c48;
 }
-a.active hr{
-    display: block;
-    border-radius: 100%;
-    background-color: #A47C48;
+a.active hr {
+  display: block;
+  border-radius: 100%;
+  background-color: #a47c48;
 }
 img:not(.Logo) {
-    width: 200px;
-    height: 150px;
-    object-fit: cover;
-  }
-  
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}

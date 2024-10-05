@@ -1,6 +1,7 @@
 
  
 
+// eslint-disable-next-line react/prop-types
 function Hero({children,source}) {
   return (
       <div className="flex flex-col sm:flex-row w-[100%] overflow-hidden ">
