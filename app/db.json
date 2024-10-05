@@ -1,39 +1,6 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "Mohammed Irfan",
-      "email": "irfan@gmail.com",
-      "password": "irfan@gmail.com",
-      "cart": {
-        "2": 6
-      }
-    },
-    {
-      "id": "9297",
-      "name": "username",
-      "email": "username@gmail.com",
-      "password": "username@gmail.com",
-      "cart": {
-        "1": 6,
-        "2": 1
-      }
-    },
-    {
-      "id": "8672",
-      "name": "anaspappadan@gmail.com",
-      "email": "anaspappadan@gmail.com",
-      "password": "anaspappadan@gmail.com",
-      "cart": {}
-    },
-    {
-      "id": "2f57",
-      "name": "harsha",
-      "email": "harsha@gmail.com",
-      "password": "harsha@gmail.com",
-      "cart": {}
-    },
-    {
       "id": "dbd5",
       "name": "mohammed irfan",
       "email": "mohammedirfan@gmail.com",
@@ -46,7 +13,7 @@
       "email": "someone@gmail.com",
       "password": "someone@gmail.com",
       "cart": {
-        "1": 5
+        "11": 0
       }
     }
   ],

@@ -21,24 +21,24 @@ function Product() {
       <div className="flex flex-col sm:flex-row w-[100%]  mt-[3%]">
         <div className="w-[100%] sm:w-[50%] overflow-hidden">
           <img
-            className="hover:scale-[1.01] transition duration-500 ease-in-out Logo"
+            className="hover:scale-[1.01] transition duration-500 ease-in-out ProductPage w-[400px] h-[200px] sm:w-[600px] sm:h-[400px] object-cover"
             src={product?.image}
             alt="image"
           />
         </div>
         <div className="mt-[3%] sm:mt-0 w-[100%] sm:w-[50%] flex flex-col justify-between min-h-[50vh] sm:px-[3%] sm:gap-0">
           <div className="flex flex-col justify-beteween gap-[20px]">
+            <div>
             <h1 className="font-bold text-xl">
-              {product?.name}{" "}
+              {product?.name}
+            </h1>
               <p className="text-xs font-normal">
                 {product?.original == "false" ? null : "(In house design)"}
               </p>
-            </h1>
+              </div>
             <p className="text-xs flex text-[#A47C48]">
               {Array.from({ length: product?.rating }).map((_, index) => (
-                <p key={index}>
-                  <FontAwesomeIcon icon={faStar} />
-                </p>
+                  <FontAwesomeIcon key={index} icon={faStar} />
               ))}
             </p>
             <p className="text-xl font-bold">
@@ -58,10 +58,12 @@ function Product() {
           </Link>
         </div>
       </div>
-      <h1 className="flex items-baseline text-xl my-20">
+      <div className="flex items-baseline ">
+      <h1 className="text-xl my-20">
         You may also interested in
-        <hr className="w-10 h-[3px] bg-[#A47C48]" />
       </h1>
+        <hr className="w-10 h-[3px] bg-[#A47C48]" />
+      </div>
       <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10">
         {interestedProduct?.map((items, index) => (
           <ProductItems

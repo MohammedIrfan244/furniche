@@ -16,7 +16,7 @@ a.active hr {
   border-radius: 100%;
   background-color: #a47c48;
 }
-img:not(.Logo) {
+img:not(.Logo,.ProductPage,.cartCard) {
   width: 200px;
   height: 150px;
   object-fit: cover;

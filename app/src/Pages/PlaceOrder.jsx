@@ -106,11 +106,11 @@ function PlaceOrder() {
             <div className="flex justify-start gap-5">
               <div>
                 <input type="radio" required name="payment" />
-                Razorpay
+                 Razorpay
               </div>
               <div>
                 <input type="radio" name="payment" />
-                Cash on delivary
+                 Cash on delivary
               </div>
             </div>
             <div className="text-right mt-[5%]">
