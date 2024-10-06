@@ -1,5 +1,5 @@
 
-import Logo from "/src/assets/Settle.comLogo (1).png";
+import Logo from "/src/assets/FinalLogo.png";
 import { Link } from "react-router-dom";
 
 

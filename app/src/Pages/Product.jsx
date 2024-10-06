@@ -9,14 +9,18 @@ import { Link } from "react-router-dom";
 
 function Product() {
   const { Id } = useParams();
-  const { currentUser } = useContext(UserContext);
-  const { products, addCart, cartItems, currency } = useContext(ShopContext);
+  const { currentUser ,addCart,cartItems} = useContext(UserContext);
+  const { products, currency ,loading} = useContext(ShopContext);
   const product = products.find((items) => items.id === Id);
   const interestedProduct = products.filter(
     (items) => items.category == product.category && items.id != product.id
   );
 
   return (
+    <div className={`${loading?"h-[100vh] flex justify-center items-center":null}`}>
+      {loading?(
+        <span className="loader"></span>
+      ):(
     <div className="flex flex-col items-center pt-[27%] sm:pt-[7%]">
       <div className="flex flex-col sm:flex-row w-[100%]  mt-[3%]">
         <div className="w-[100%] sm:w-[50%] overflow-hidden">
@@ -75,6 +79,8 @@ function Product() {
           />
         ))}
       </div>
+    </div>
+      )}
     </div>
   );
 }

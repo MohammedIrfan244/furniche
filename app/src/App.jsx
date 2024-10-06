@@ -13,10 +13,14 @@ import SignIn from "./Pages/SignIn";
 import User from "./Pages/User";
 import NotFound from "./Pages/NotFound";
 import Layout from "./Components/Layout";
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   return (
     <div className="px-[5%]">
+      <ToastContainer/>
       <Layout>
         <Routes>
           <Route

@@ -1,22 +1,18 @@
 import { useContext } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../Contexts/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHandHoldingDollar} from "@fortawesome/free-solid-svg-icons";
 
 function PlaceOrder() {
-  const { cartTotal, setCartItems, setCartTotal, shippingFee, currency } =
+  const { shippingFee, currency ,loading} =
     useContext(ShopContext);
+    const{cartTotal,setCartItems,setCartTotal}=useContext(UserContext)
   const navigate = useNavigate();
 
   const handleClick = (e) => {
     e.preventDefault();
-
-    // setCartItems((prevCart) => {
-    //   const clearedCart = {};
-    //   for (let key in prevCart) {
-    //     clearedCart[key] = 0;
-    //   }
-    //   return clearedCart;
-    // });
 
     setCartItems({})
     setCartTotal(0);
@@ -28,12 +24,16 @@ function PlaceOrder() {
   };
 
   return (
-    <div className="pt-[30%] sm:pt-[10%] flex flex-col sm:flex-row justify-between gap-5 sm:gap-3 w-[100%]">
+    <div className={`${loading?"h-[100vh] flex justify-center items-center":null}`}>
+      {loading?(
+        <span className="loader"></span>
+      ):(
+        <form  className="pt-[30%] sm:pt-[10%] flex flex-col sm:flex-row justify-between gap-5 sm:gap-3 w-[100%]" onSubmit={handleClick}>
       <div className="w-[100%] sm:w-[40%]">
         <h1 className="flex items-baseline text-l sm:text-xl">
           DELIVARY DETAILS <hr className="w-10 h-[3px] bg-[#A47C48]" />
         </h1>
-        <form className="flex flex-col gap-3 mt-[10%]">
+        <div className="flex flex-col gap-3 mt-[10%]">
           <div className="flex gap-3 w-[100%] justify-between">
             <input
               required
@@ -76,7 +76,7 @@ function PlaceOrder() {
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
             />
           </div>
-        </form>
+        </div>
       </div>
       <div className="w-[100%] sm:w-[50%] mt-[10%] sm:mt-0">
         <h1 className="flex items-baseline text-l sm:text-xl">
@@ -104,15 +104,15 @@ function PlaceOrder() {
               {cartTotal + shippingFee}.00
             </p>
           </div>
-          <form onSubmit={handleClick}>
-            <div className="flex justify-start gap-5">
-              <div>
+          <div>
+            <div className="flex justify-start">
+              <div className="flex w-[40%] sm:w-[30%] gap-4 flex-nowrap">
                 <input type="radio" required name="payment" />
-                 Razorpay
+                 <img className="payments w-[50%] sm:w-[80%] md:w-[50%]" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razor pay" />
               </div>
-              <div>
+              <div className="flex w-[60%] sm:w-[30%] gap-4">
                 <input type="radio" name="payment" />
-                 Cash on delivary
+                 <p className="whitespace-nowrap">Cash on Delivary <FontAwesomeIcon icon={faHandHoldingDollar}/></p>
               </div>
             </div>
             <div className="text-right mt-[5%]">
@@ -123,10 +123,12 @@ function PlaceOrder() {
                 Place order
               </button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
-    </div>
+          </form>
+      )}
+          </div>
   );
 }
 

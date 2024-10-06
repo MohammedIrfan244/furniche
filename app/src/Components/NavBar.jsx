@@ -4,17 +4,18 @@ import {
   faSearch,
   faUser,
   faCartShopping,
-  faBars,
+  faBars
 } from "@fortawesome/free-solid-svg-icons";
-import Logo from "/src/assets/Settle.comLogo (1).png";
+import Logo from "/src/assets/FinalLogo.png";
 import { useContext, useState } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
 import { UserContext } from "../Contexts/UserContext";
+
+
+
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
-  const { currentUser } = useContext(UserContext);
-  const { cartCount } = useContext(ShopContext);
+  const { currentUser,cartCount  } = useContext(UserContext);
   return (
     <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
       <div className="flex items-center justify-between">
@@ -70,10 +71,10 @@ function NavBar() {
             to={currentUser == null ? "/login" : "/user"}
             className=" group relative"
           >
-            <FontAwesomeIcon
+           {currentUser==null?"Login": <FontAwesomeIcon
               className=" cursor-pointer hover:scale-110 transition duration-300"
               icon={faUser}
-            />
+            />}
           </Link>
           <FontAwesomeIcon
             onClick={() => setVisible(true)}

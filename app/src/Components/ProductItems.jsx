@@ -7,7 +7,7 @@ function ProductItems({ id, name, price, image }) {
   const { currency } = useContext(ShopContext);
 
   return (
-    <div className="transition duration-200 overflow-hidden border-b border-gray-400">
+    <div className="transition duration-200 overflow-hidden border rounded-md shadow-lg">
       <Link to={`/product/${id}`}>
         <img
           onClick={window.scrollTo(0, 0)}

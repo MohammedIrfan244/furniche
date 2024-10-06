@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import scrollbarPlugin from 'tailwind-scrollbar';
+
 export default {
   content: [
     "./index.html",
@@ -9,5 +11,7 @@ export default {
       oswald: ['Oswald', 'sans-serif']
     }},
   },
-  plugins: [],
+  plugins: [
+    scrollbarPlugin, // Use the imported plugin here
+  ],
 }

@@ -2,26 +2,16 @@ import { useContext, useEffect } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import CartCards from "../Components/CartCards";
 import { Link } from "react-router-dom";
+import { UserContext } from "../Contexts/UserContext";
 
 function Cart() {
   const {
     currency,
     shippingFee,
-    cartItems,
-    products,
-    setCartItems,
-    cartCount,
-    cartTotal,
-    setCartTotal,
-  } = useContext(ShopContext);
+    products,loading} = useContext(ShopContext);
+  const{cartItems,setCartItems,cartCount,cartTotal,setCartTotal}=useContext(UserContext)
   const cartProducts = products.filter((items) => cartItems[items.id] > 0);
-  // const [cartItemCounts, setCartItemCounts] = useState(() => {
-  //   const counts = {}
-  //   cartProducts?.forEach(item=>{
-  //     counts[item.id]=cartItems[item.id]||1
-  //   })
-  //   return counts
-  // })
+ 
 
   useEffect(() => {
     let total = 0;
@@ -32,12 +22,10 @@ function Cart() {
   }, [cartItems, cartProducts, setCartTotal]);
 
   const incCart = (item) => {
-    // setCartItemCounts(prev=>({...prev,[item.id]:prev[item.id]+1}))
 
     setCartItems((prev) => ({ ...prev, [item.id]: prev[item.id] + 1 }));
   };
   const decCart = (item) => {
-    // setCartItemCounts(prev=>({...prev,[item.id]:Math.max(prev[item.id] - 1, 1)}))
 
     setCartItems((prev) => ({
       ...prev,
@@ -45,15 +33,13 @@ function Cart() {
     }));
   };
   return (
+    <div className={`${loading?"h-[100vh] flex justify-center items-center":null}`}>
+      {loading?(
+        <span className="loader"></span>
+      ):(
     <div className="w-[100%] flex flex-col sm:flex-row gap-9 pt-[30%] sm:pt-[10%]">
-      <div
-        className={`${
-          cartProducts.length != 0 ? "hidden" : null
-        } w-[100%] text-center text-gray-600 text-[250%] my-[5%]`}
-      >
-        Your cart is empty :(
-      </div>
-      <div className="w-[100%] sm:w-[65%] flex flex-col gap-5">
+      {cartProducts.length == 0 &&!loading?<div>Your cart is empty :(</div>:null}
+      <div className="w-[100%] sm:w-[65%] flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin sm:h-[70vh]">
         {cartProducts.map((item, index) => (
           <CartCards
             key={index}
@@ -77,11 +63,11 @@ function Cart() {
           cartProducts.length == 0 ? "hidden" : null
         } flex flex-col justify-between w-[100%] sm:w-[30%] p-[1%] `}
       >
-        <h1 className="flex items-baseline text-[100%] sm:text-lg">
+        <div className="mt-[5%] flex flex-col gap-3 text-xs sm:text-sm">
+        <h1 className="flex items-baseline mb-[5%] text-[100%] sm:text-lg">
           CART TOTALS
           <hr className="w-10 h-[3px] bg-[#A47C48]" />
         </h1>
-        <div className="mt-[5%] flex flex-col gap-3 text-xs sm:text-sm">
           <div className="flex justify-between">
             Total Items :<p className="font-bold">{cartCount}</p>
           </div>
@@ -106,7 +92,8 @@ function Cart() {
               {cartTotal + shippingFee}.00
             </p>
           </div>
-          <div className="text-right mt-[3%]">
+          </div>
+          <div className="text-right bg mt-[3%]">
             <Link
               className="bg-black text-[#F5F2E9] active:scale-95 px-5 py-1 sm:py-2 w-[40%] text-xs text-center"
               to={"/placeorder"}
@@ -114,8 +101,9 @@ function Cart() {
               Proceed to payment
             </Link>
           </div>
-        </div>
       </div>
+    </div>
+    )}
     </div>
   );
 }

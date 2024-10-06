@@ -1,25 +1,24 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
+import { UserContext } from "../Contexts/UserContext";
+// import { ShopContext } from "../Contexts/ShopContext";
 
 function SignIn() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [conformPassword,setConformPassword]=useState("")
+  const [errorMessage,setErrorMessage]=useState("") 
   const [passToggle, setPassToggle] = useState(false);
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-
-  //   const defaulCart=(Parray)=>{
-  //     let cart={}
-  //     Parray.forEach(item=>{
-  //         cart[item.id]=0
-  //     })
-  //     return cart
-  // }
+  const { setCurrentUser,setCartItems } = useContext(UserContext);
+  // const {  } = useContext(ShopContext);
+  const navigate = useNavigate();
 
   const data = {
     name: name,
@@ -36,20 +35,26 @@ function SignIn() {
       .then((response) => {
         const users = response.data;
         users.some((item) => item.email == email)
-          ? alert("User already exists")
-          : name.trim() == "" || password.trim() == ""
-          ? alert("Name or Password can't be empty")
+          ? setErrorMessage("User already registered")
+          :password!==conformPassword?setErrorMessage("Passwords do not match")
           : axios
               .post("http://localhost:3000/users", data)
               .then(() => {
-                alert("You have been registered");
+                axios.get("http://localhost:3000/users")
+                .then((getResp)=>{
+                  const datas=getResp.data
+                  const inputUser=datas.find(items=>items.email==email&&password==items.password)
+                  setCurrentUser(inputUser)
+                  setCartItems(inputUser.cart)
+                  toast("You have been registered")
+                })
               })
-              .catch((err) => console.log(err));
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        navigate("/login");
-        setLoading(false);
+              .catch((err) => console.log(err))
+            })
+            .catch((err) => console.log(err))
+            .finally(() => {
+              setLoading(false);
+              navigate('/')
       });
   };
   return (
@@ -66,7 +71,7 @@ function SignIn() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           type="text"
-          placeholder="username"
+          placeholder="Username"
           className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs"
         />
         <input
@@ -74,7 +79,7 @@ function SignIn() {
           value={email}
           type="email"
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="email"
+          placeholder="Email"
           className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs mt-[3%]"
         />
         <div className="min-w-1 relative">
@@ -83,7 +88,7 @@ function SignIn() {
             value={password}
             type={`${passToggle ? "text" : "password"}`}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="password"
+            placeholder="Password"
             className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs mt-[3%] w-[100%]"
           />
           <FontAwesomeIcon
@@ -92,6 +97,22 @@ function SignIn() {
             icon={passToggle ? faEyeSlash : faEye}
           />
         </div>
+        <div className="min-w-1 relative">
+          <input
+            required
+            value={conformPassword}
+            type={`${passToggle ? "text" : "password"}`}
+            onChange={(e) => setConformPassword(e.target.value)}
+            placeholder="Conform password"
+            className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs mt-[3%] w-[100%]"
+          />
+          <FontAwesomeIcon
+            className="text-xs absolute bottom-2 right-2"
+            onClick={() => setPassToggle(!passToggle)}
+            icon={passToggle ? faEyeSlash : faEye}
+          />
+        </div>
+        <p className={`${errorMessage===""?"hidden":"block"} text-xs text-red-600`}>{errorMessage}</p>
         <Link className="text-xs block" to={"/login"}>
           Already have an account?
         </Link>

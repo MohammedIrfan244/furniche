@@ -2,13 +2,14 @@ import { useContext, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ShopContext } from "../Contexts/ShopContext";
+// import { ShopContext } from "../Contexts/ShopContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 function Login() {
-  const { setCurrentUser } = useContext(UserContext);
-  const { setCartItems } = useContext(ShopContext);
+  const { setCurrentUser ,setCartItems  } = useContext(UserContext);
+  // const { } = useContext(ShopContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passToggle, setPassToggle] = useState(false);
@@ -28,9 +29,9 @@ function Login() {
         if (inputUser) {
           setCurrentUser(inputUser);
           setCartItems(inputUser.cart);
-          alert("You have been logged in");
+          toast("You have been logged in");
         } else {
-          alert("You dont have an account");
+          toast("You dont have an account");
         }
       })
       .catch((err) => console.log(err))

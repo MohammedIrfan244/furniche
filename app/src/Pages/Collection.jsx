@@ -25,6 +25,10 @@ function Collection() {
   }, [categories, products]);
 
   return (
+    <div className={`${loading?"h-[100vh] flex justify-center items-center":null}`}>
+      {loading?(
+        <span className="loader"></span>
+      ):(
     <div className="w-[100%] flex flex-col items-center pt-[30%] sm:pt-[10%]">
       <div className="flex justify-between sm:w-[60%] w-[95%] border-b-2 border-gray-300 p-5">
         <p className="text-nowrap text-xs sm:text-[100%]">
@@ -47,7 +51,6 @@ function Collection() {
           SOFAS
         </p>
       </div>
-      <p>{loading ? "Loading..." : null}</p>
       <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 mt-[3%]">
         {filteredProducts.map((item, index) => (
           <ProductItems
@@ -59,6 +62,8 @@ function Collection() {
           />
         ))}
       </div>
+      </div>
+      )}
     </div>
   );
 }
