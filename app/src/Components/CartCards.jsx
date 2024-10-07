@@ -8,7 +8,7 @@ import {  faChevronDown, faChevronUp, faTrash } from "@fortawesome/free-solid-sv
 function CartCards({image,name,price,removeCart,incCartCount,decCartCount,count}) {
     const{currency}=useContext(ShopContext)
   return (
-    <div className="flex justify-between border-b-2 border-gray-300 pe-[2%] pb-[1%]" >
+    <div className="flex justify-between shadow-md pe-[2%] pb-[1%]" >
       <div className="flex gap-4">
         <img className="h-[60px] w-[100px] object-cover cartCard" src={image} alt="image" />
         <div className="flex flex-col justify-between pb-[5%] text-xs sm:text-sm md:text-[16px]" >

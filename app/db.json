@@ -5,11 +5,8 @@
       "name": "mohammed irfan",
       "email": "mohammedirfan@gmail.com",
       "password": "mohammedirfan@gmail.com",
-      "cart": {
-        "2": 1,
-        "4": 1,
-        "5": 1
-      }
+      "cart": {},
+      "isAdmin": true
     },
     {
       "id": "cfa6",
@@ -24,65 +21,88 @@
         "13": 1,
         "16": 1,
         "18": 1
-      }
+      },
+      "isAdmin": false
     },
     {
-      "id": "1065",
-      "name": "irfan",
-      "email": "irfan22@gmail.com",
-      "password": "irfan22@gmail.com",
+      "id": "cfa6",
+      "name": "someone",
+      "email": "one@gmail.com",
+      "password": "someone@gmail.com",
       "cart": {
-        "1": 3
-      }
+        "3": 1,
+        "6": 1,
+        "8": 1,
+        "11": 1,
+        "13": 1,
+        "16": 1,
+        "18": 1
+      },
+      "isAdmin": false
     },
     {
-      "id": "0738",
-      "name": "Nishaj",
-      "email": "nishaj@gmail",
-      "password": "nishaj",
-      "cart": {}
+      "id": "cfa6",
+      "name": "somee",
+      "email": "e@gmail.com",
+      "password": "someone@gmail.com",
+      "cart": {
+        "3": 1,
+        "6": 1,
+        "8": 1,
+        "11": 1,
+        "13": 1,
+        "16": 1,
+        "18": 1
+      },
+      "isAdmin": false
     },
     {
-      "id": "ea26",
-      "name": "ammu",
-      "email": "ammu@gmail.com",
-      "password": "aminaappu",
-      "cart": {}
+      "id": "cfa6",
+      "name": "sone",
+      "email": "someo@gmail.com",
+      "password": "soe@gmail.com",
+      "cart": {
+        "3": 1,
+        "6": 1,
+        "8": 1,
+        "11": 1,
+        "13": 1,
+        "16": 1,
+        "18": 1
+      },
+      "isAdmin": false
     },
     {
-      "id": "f45a",
-      "name": "jj",
-      "email": "jljl@gmail",
-      "password": "1234",
-      "cart": {}
+      "id": "cfa6",
+      "name": "meone",
+      "email": "som@gmail.com",
+      "password": "sone@gmail.com",
+      "cart": {
+        "3": 1,
+        "6": 1,
+        "8": 1,
+        "11": 1,
+        "13": 1,
+        "16": 1,
+        "18": 1
+      },
+      "isAdmin": false
     },
     {
-      "id": "5733",
-      "name": "jfoajflj",
-      "email": "gskfkgs@gmail",
-      "password": "123456",
-      "cart": {}
-    },
-    {
-      "id": "fe73",
-      "name": "dhoni",
-      "email": "dhoni@gmail.com",
-      "password": "1234",
-      "cart": {}
-    },
-    {
-      "id": "6ec2",
-      "name": "akash",
-      "email": "akash@gmail.com",
-      "password": "12345abcde",
-      "cart": {}
-    },
-    {
-      "id": "fe76",
-      "name": "thenewUser",
-      "email": "thenewuser@gmail.com",
-      "password": "1234567890abcd",
-      "cart": {}
+      "id": "cfa6",
+      "name": "someoe",
+      "email": "soone@gmail.com",
+      "password": "soe@gmail.com",
+      "cart": {
+        "3": 1,
+        "6": 1,
+        "8": 1,
+        "11": 1,
+        "13": 1,
+        "16": 1,
+        "18": 1
+      },
+      "isAdmin": false
     }
   ],
   "products": [
@@ -96,17 +116,6 @@
       "original": true,
       "category": "sofas",
       "review": "This sofa combines comfort and style with soft cushions and a sleek design. It's durable and perfect for everyday use, fitting well in modern spaces."
-    },
-    {
-      "id": "2",
-      "name": "Exquisite Leather Lounge Sofa",
-      "rating": 5,
-      "price": 15000,
-      "image": "https://img.freepik.com/free-photo/brown-sofa-blue-room_1194-6647.jpg?t=st=1728226985~exp=1728230585~hmac=e467cac6a8d3d81fa0b2bbbdd8e876236f87213d90e0717f325f49108f3adafa&w=740",
-      "description": "A luxurious leather sofa offering superior comfort with a timeless design, ideal for any living room.",
-      "original": false,
-      "category": "sofas",
-      "review": "A perfect blend of comfort and style, this leather sofa is built to last with high-quality materials."
     },
     {
       "id": "3",

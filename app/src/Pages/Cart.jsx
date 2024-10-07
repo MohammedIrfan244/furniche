@@ -38,8 +38,13 @@ function Cart() {
         <span className="loader"></span>
       ):(
     <div className="w-[100%] flex flex-col sm:flex-row gap-9 pt-[30%] sm:pt-[10%]">
-      {cartProducts.length == 0 &&!loading?<div>Your cart is empty :(</div>:null}
-      <div className="w-[100%] sm:w-[65%] flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin sm:h-[70vh]">
+      {cartProducts.length == 0 &&!loading?<div className="text-lg sm:text-xl md:text-3xl text-gray-500 h-[60vh] w-[90vw] flex justify-center items-center">Your cart is empty :(</div>:null}
+       
+      <div className={cartProducts.length == 0 ? "hidden":"w-[100%] sm:w-[65%] flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin sm:h-[70vh]"}>
+      <h1 className="flex items-baseline mb-[5%] text-[100%] sm:text-lg">
+          CART ITEMS
+          <hr className="w-10 h-[3px] bg-[#A47C48]" />
+        </h1>
         {cartProducts.map((item, index) => (
           <CartCards
             key={index}
@@ -59,9 +64,9 @@ function Cart() {
         ))}
       </div>
       <div
-        className={`${
-          cartProducts.length == 0 ? "hidden" : null
-        } flex flex-col justify-between w-[100%] sm:w-[30%] p-[1%] `}
+        className={
+          cartProducts.length == 0 ? "hidden" : "flex flex-col justify-between w-[100%] sm:w-[30%] p-[1%]"
+        }
       >
         <div className="mt-[5%] flex flex-col gap-3 text-xs sm:text-sm">
         <h1 className="flex items-baseline mb-[5%] text-[100%] sm:text-lg">

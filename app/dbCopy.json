@@ -188,6 +188,17 @@
       "description": "A stylish and comfortable modern sofa perfect for any living room.",
       "original": "true",
       "category": "bed"
+    },
+    {
+      "id": "1",
+      "name": "Charcoal Luxe Sofa",
+      "rating": 4,
+      "price": 10000,
+      "image": "https://img.freepik.com/free-photo/minimal-living-room-interior-design-with-leaf-shadow-wall_53876-128645.jpg?t=st=1728226900~exp=1728230500~hmac=9a65ef9bf87f18c133bcd6ccb9de70a55ebef7207ea7499ab294f04036326114&w=740",
+      "description": "A modern sofa with clean lines and durable fabric, offering a compact design ideal for contemporary living rooms.",
+      "original": true,
+      "category": "sofas",
+      "review": "This sofa combines comfort and style with soft cushions and a sleek design. It's durable and perfect for everyday use, fitting well in modern spaces."
     }
   ]
 }

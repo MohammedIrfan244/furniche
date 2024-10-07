@@ -15,7 +15,7 @@ import { UserContext } from "../Contexts/UserContext";
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
-  const { currentUser,cartCount  } = useContext(UserContext);
+  const { currentUser,cartCount,isAdmin  } = useContext(UserContext);
   return (
     <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
       <div className="flex items-center justify-between">
@@ -45,6 +45,13 @@ function NavBar() {
             className="flex flex-col items-center gap-1 "
           >
             <p>CONTACT</p>
+            <hr className="w-[4px] h-[4px] border-none  hidden " />
+          </NavLink>
+          <NavLink
+            to={"/adminpanel"}
+            className={`${isAdmin?"flex flex-col items-center gap-1":"hidden"}`}
+          >
+            <p>ADMIN PANEL</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
         </ul>
@@ -98,6 +105,9 @@ function NavBar() {
               </NavLink>
               <NavLink onClick={() => setVisible(false)} to={"/contact"}>
                 CONTACT
+              </NavLink>
+              <NavLink onClick={() => setVisible(false)} to={"/adminpanel"} className="whitespace-nowrap">
+                ADMIN PANEL
               </NavLink>
               <Link onClick={() => setVisible(false)}>CLOSE</Link>
             </ul>

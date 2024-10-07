@@ -1,6 +1,7 @@
 import Hero from "../Components/Hero";
 import { useState } from "react";
 import emailjs from "emailjs-com";
+import { toast } from "react-toastify";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -22,11 +23,11 @@ function Contact() {
       .then(
         (response) => {
           console.log("SUCCESS!", response.status, response.text);
-          alert("Message sent successfully!");
+          toast.success("Message sent successfully")
         },
         (err) => {
           console.log("FAILED...", err);
-          alert("Failed to send message. Please try again.");
+          toast.error("Failed to send message. Please try again.");
         }
       );
     setFormData({

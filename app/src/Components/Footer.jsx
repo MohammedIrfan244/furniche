@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Footer() {
   return (
     <>
-    <div className="my-20 flex justify-between">
+    <div className="my-20 flex justify-between pt-5 border-t-2 border-[#a47c48]">
       <div className="w-[40%] text-left">
         <img className="w-[60%] sm:w-[30%] Logo" src={Logo} alt="logo" />
         <p className="text-[3%] sm:text-[5%] md:text-xs px-[1%]">

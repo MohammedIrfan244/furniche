@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { UserContext } from "../Contexts/UserContext";
-// import { ShopContext } from "../Contexts/ShopContext";
 
 function SignIn() {
   const [name, setName] = useState("");
@@ -46,7 +45,7 @@ function SignIn() {
                   const inputUser=datas.find(items=>items.email==email&&password==items.password)
                   setCurrentUser(inputUser)
                   setCartItems(inputUser.cart)
-                  toast("You have been registered")
+                  toast.success("You have been registered")
                 })
               })
               .catch((err) => console.log(err))

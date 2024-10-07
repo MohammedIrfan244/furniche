@@ -23,14 +23,13 @@ function UserContextProvider({ children }) {
     const storedCartCount = localStorage.getItem("cartCount");
     return storedCartCount ? JSON.parse(storedCartCount) : 0;
   });
+  const isAdmin=currentUser!=null&&currentUser.isAdmin?true:false
 
   useEffect(() => {
     if (cartItems) {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
-  }, [cartItems]);
 
-  useEffect(() => {
     let cartCounts = 0;
     for (let key in cartItems) {
       cartCounts += cartItems[key];
@@ -57,6 +56,7 @@ function UserContextProvider({ children }) {
     setCartCount,
     setCartItems,
     cartTotal,
+    isAdmin,
     setCartTotal};
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

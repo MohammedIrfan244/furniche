@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingDollar} from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 function PlaceOrder() {
   const { shippingFee, currency ,loading} =
@@ -18,7 +19,7 @@ function PlaceOrder() {
     setCartTotal(0);
 
     setTimeout(() => {
-      alert("Payment Success");
+      toast.success("Payment Success");
     }, 1000);
     navigate("/");
   };
