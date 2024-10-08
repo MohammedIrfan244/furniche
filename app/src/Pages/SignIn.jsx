@@ -16,7 +16,6 @@ function SignIn() {
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setCurrentUser,setCartItems } = useContext(UserContext);
-  // const {  } = useContext(ShopContext);
   const navigate = useNavigate();
 
   const data = {
@@ -24,6 +23,8 @@ function SignIn() {
     email: email,
     password: password,
     cart: {},
+    isAdmin:false,
+    isBlocked:false
   };
 
   const handleSubmit = (e) => {

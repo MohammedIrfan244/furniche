@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { toast } from "react-toastify";
+import { toast} from "react-toastify";
 
 function Login() {
   const { setCurrentUser ,setCartItems } = useContext(UserContext);
@@ -25,17 +25,18 @@ function Login() {
           (items) => items.email == email && items.password == password
         );
         if (inputUser) {
-          setCurrentUser(inputUser);
-          setCartItems(inputUser.cart);
-          toast.success("You have been logged in");
+          inputUser.isBlocked?toast.error("User is blocked by admin")
+          :(setCurrentUser(inputUser),
+          setCartItems(inputUser.cart),
+          toast.success("You have been logged in"))
+          navigate("/");
         } else {
-          toast.error("You dont have an account");
+          toast.error("Invalid email or password");
         }
       })
       .catch((err) => console.log(err))
       .finally(() => {
         setLoading(false);
-        navigate("/");
       });
   };
   return (

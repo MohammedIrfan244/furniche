@@ -16,6 +16,7 @@ import Layout from "./Components/Layout";
 import { useContext } from "react";
 import { UserContext } from "./Contexts/UserContext";
 import AdminPanel from "./Pages/AdminPanel";
+import UserManipulate from "./Components/UserManipulate";
 
 
 
@@ -45,6 +46,7 @@ function RoutesPage() {
             <Route path="/user" element={currentUser!=null?<User />:<Login/>} />
             <Route path="/search" element={<Search />} />
             <Route path="/adminpanel" element={isAdmin?<AdminPanel/>:<NotFound/>}/>
+            <Route path="/adminpanel/:userId" element={<UserManipulate/>} />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
