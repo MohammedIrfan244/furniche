@@ -7,12 +7,21 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast} from "react-toastify";
 
 function Login() {
-  const { setCurrentUser ,setCartItems } = useContext(UserContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { setCurrentUser ,setCartItems ,setUserOrders} = useContext(UserContext);
+  const[loginData,setLoginData]=useState({
+    email:"",
+    password:""
+  })
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const handleInutChange=(e)=>{
+    const {name,value}=e.target
+    setLoginData((prev)=>({...prev,[name]:value}))
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,12 +31,13 @@ function Login() {
       .then((response) => {
         const users = response.data;
         const inputUser = users.find(
-          (items) => items.email == email && items.password == password
+          (items) => items.email == loginData.email && items.password == loginData.password
         );
         if (inputUser) {
           inputUser.isBlocked?toast.error("User is blocked by admin")
           :(setCurrentUser(inputUser),
           setCartItems(inputUser.cart),
+          setUserOrders(inputUser.orders),
           toast.success("You have been logged in"))
           navigate("/");
         } else {
@@ -50,8 +60,9 @@ function Login() {
       >
         <input
           required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={loginData.email}
+          name="email"
+          onChange={handleInutChange}
           type="email"
           placeholder="Email"
           className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[1%] text-xs"
@@ -59,9 +70,10 @@ function Login() {
         <div className="min-w-1 relative">
           <input
             required
-            value={password}
+            value={loginData.password}
+            name="password"
             type={`${passToggle ? "text" : "password"}`}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInutChange}
             placeholder="Password"
             className="w-[100%] focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[1%] text-xs mt-[3%]"
           />

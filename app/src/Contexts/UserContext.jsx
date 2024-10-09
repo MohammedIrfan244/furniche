@@ -3,20 +3,16 @@ import axios from "axios";
 
 export const UserContext = createContext();
 
-const cartUpdater = (userId, updatedCart) => {
+const dataUpdater = (userId,key, updatedValue) => {
   axios
-    .patch(`http://localhost:3000/users/${userId}`, { cart: updatedCart })
+    .patch(`http://localhost:3000/users/${userId}`, { [key]: updatedValue })
     .catch((err) => console.log(err));
 };
-const orderUpdater=(userId,updatedOrder)=>{
-  axios.patch(`http://localhost:3000/users/${userId}`,{orders:updatedOrder})
-  .catch((err)=>console.log(err))
-}
 // eslint-disable-next-line react/prop-types
 function UserContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(() => {
     const storedUser = localStorage.getItem("currentUser");
-    return storedUser!=null? JSON.parse(storedUser) : null;
+    return storedUser? JSON.parse(storedUser) : null;
   });
   const [cartTotal, setCartTotal] = useState(0);
   const [cartItems, setCartItems] = useState(() => {
@@ -29,14 +25,17 @@ function UserContextProvider({ children }) {
   });
  
   const isAdmin=currentUser!=null&&currentUser.isAdmin?true:false
+  const updateLocalStorage=(key,value)=>{
+    localStorage.setItem(key,JSON.stringify(value))
+  }
   useEffect(() => {
     if (cartItems) {
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      updateLocalStorage("cartItems",cartItems)
     }
   }, [cartItems]);
   useEffect(() => {
     if (userOrders) {
-      localStorage.setItem("userOrders", JSON.stringify(userOrders));
+      updateLocalStorage("userOrders",userOrders)
     }
   }, [userOrders]);
 
@@ -45,15 +44,14 @@ function UserContextProvider({ children }) {
   };
   useEffect(() => {
     if (currentUser) {
-      cartUpdater(currentUser.id, cartItems)
-      orderUpdater(currentUser.id,userOrders)
+      dataUpdater(currentUser.id,"cart", cartItems)
+      dataUpdater(currentUser.id,"orders",userOrders)
     }
   }, [currentUser, cartItems, userOrders]);
   useEffect(() => {
     localStorage.setItem("currentUser", JSON.stringify(currentUser?currentUser:null));
   }, [currentUser]);
 
-  
   const value = { currentUser, setCurrentUser, cartItems,addCart,
     setCartItems,
     cartTotal,

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Contexts/UserContext";
@@ -7,35 +7,37 @@ import { faHandHoldingDollar} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 
 function PlaceOrder() {
-  const { shippingFee, currency ,loading,products} =
+  const { shippingFee, currency ,loading} =
     useContext(ShopContext);
-    const{ setUserOrders,cartTotal,setCartItems,setCartTotal,cartItems}=useContext(UserContext)
+    const{setUserOrders,cartTotal,setCartItems,setCartTotal,cartItems}=useContext(UserContext)
   const navigate = useNavigate();
-  const[orderProducts,setOrderProducts]=useState([])
-  const[firstName,setFirstName]=useState("")
-  const[lastName,setLastName]=useState("")
-  const[email,setEmail]=useState("")
-  const[mobile,setMobile]=useState("")
-  const[place,setPlace]=useState("")
-  const[pin,setPin]=useState("")
-  const address={
-    name:firstName+" "+lastName,
-    email:email,
-    mobile:mobile,
-    place:place,
-    pin:pin
+  const[payment,setPayment]=useState("pending")
+  const[address,setAdress]=useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobile: "",
+    place: "",
+    pin: ""
+  }) 
+  const[order,setOrder]=useState({
+    products:cartItems,address:address,totalAmount:cartTotal+shippingFee,paymentStatus:payment
+  })
+  useEffect(()=>{
+    setOrder((preOrder)=>({...preOrder,address:address,paymentStatus:payment}))
+  },[address, payment])
+  const handleAddress=(e)=>{
+    const{name,value}=e.target
+    setAdress((prevAddress)=>({...prevAddress,[name]:value}))
   }
-  const orderItems = products.filter((items) => cartItems[items.id])
-  orderProducts=orderItems
 
   const handleClick = (e) => {
     e.preventDefault();
-   setUserOrders(prevItems=>[...prevItems,...orderProducts])
+    setUserOrders((prevUserOrders)=>[...prevUserOrders,order])
     setCartItems({})
     setCartTotal(0);
-
     setTimeout(() => {
-      toast.success("Payment Success");
+      toast.success("Your order placed succesfully");
     }, 1000);
     navigate("/");
   };
@@ -55,16 +57,18 @@ function PlaceOrder() {
             <input
               required
               type="text"
-              value={firstName}
-              onChange={(e)=>setFirstName(e.target.value)}
+              name="firstName"
+              value={address.firstName}
+              onChange={handleAddress}
               placeholder="First name"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
             />
             <input
               required
               type="text"
-              value={lastName}
-              onChange={(e)=>setLastName(e.target.value)}
+              name="lastName"
+              value={address.lastName}
+              onChange={handleAddress}
               placeholder="Last name"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
             />
@@ -72,16 +76,18 @@ function PlaceOrder() {
           <input
             required
             type="email"
-            value={email}
-            onChange={(e)=>setEmail(e.target.value)}
+            name="email"
+            value={address.email}
+            onChange={handleAddress}
             placeholder="Email"
             className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2"
           />
           <input
             required
             type="text"
-            value={place}
-            onChange={(e)=>setPlace(e.target.value)}
+            name="place"
+            value={address.place}
+            onChange={handleAddress}
             placeholder="Place"
             className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2"
           />
@@ -89,8 +95,9 @@ function PlaceOrder() {
             <input
               required
               type="number"
-              value={mobile}
-              onChange={(e)=>setMobile(e.target.value)}
+              name="mobile"
+              value={address.mobile}
+              onChange={handleAddress}
               minLength={10}
               placeholder="Mobile Number"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
@@ -98,9 +105,10 @@ function PlaceOrder() {
             <input
               required
               type="number"
+              name="pin"
               minLength={6}
-              value={pin}
-              onChange={(e)=>setPin(e.target.value)}
+              value={address.pin}
+              onChange={handleAddress}
               placeholder="Pincode"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
             />
@@ -136,11 +144,11 @@ function PlaceOrder() {
           <div>
             <div className="flex justify-start">
               <div className="flex w-[40%] sm:w-[30%] gap-4 flex-nowrap">
-                <input type="radio" required name="payment" />
+                <input type="radio" value="paid" required name="payment" onChange={(e)=>setPayment(e.target.value)} />
                  <img className="payments w-[50%] sm:w-[80%] md:w-[50%]" src="https://upload.wikimedia.org/wikipedia/commons/8/89/Razorpay_logo.svg" alt="Razor pay" />
               </div>
               <div className="flex w-[60%] sm:w-[30%] gap-4">
-                <input type="radio" name="payment" />
+                <input type="radio" value="pending" name="payment" onChange={(e)=>setPayment(e.target.value)} />
                  <p className="whitespace-nowrap">Cash on Delivary <FontAwesomeIcon icon={faHandHoldingDollar}/></p>
               </div>
             </div>

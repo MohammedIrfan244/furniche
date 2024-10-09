@@ -80,6 +80,7 @@ const ShopContextProvider = ({ children }) => {
     loading,
     setLoading,
     cartCount,
+    setCartCount,
     addProduct,editProduct,removeProduct
   };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

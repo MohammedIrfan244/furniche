@@ -1,41 +1,44 @@
 import { useContext, useState } from "react"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { ShopContext } from "../Contexts/ShopContext"
 
 
 function ProductManipulation() {
   const {state}=useLocation()
+  const product=state?.product
+  const navigate=useNavigate()
   const {editProduct}=useContext(ShopContext)
-    const product=state?.product
-    const[name,setName]=useState("")
-    const[rating,setRating]=useState()
-    const[price,setPrice]=useState()
-    const[image,setImage]=useState("")
-    const[description,setDescription]=useState("")
-    const[original,setOriginal]=useState("")
-    const[category,setCategory]=useState("")
-    const[review,setReview]=useState("")
-    const productData={
-      name:name,
-      rating:rating,
-      price:price,
-      image:image,
-      description:description,
-      original:original,
-      category:category,
-      review:review
-  }
+
+  const[productData,setProductData]=useState({
+    name:"",
+      rating:"",
+      price:"",
+      image:"",
+      description:"",
+      original:"",
+      category:"",
+      review:""
+  })
+  const handleInputChange=(e)=>{
+    const{name,value}=e.target
+    const newValue=name=="rating"||name=="price"?Number(value):value
+    setProductData((prevData)=>({...prevData,[name]:newValue}))
+}
+
     const handleSubmit=(e)=>{
       e.preventDefault()
       editProduct(product?.id,productData)
-      setName("");
-        setRating();
-        setPrice();
-        setImage("");
-        setDescription("");
-        setOriginal("");
-        setCategory("");
-        setReview("");
+      setProductData({
+        name: "",
+        rating: "",
+        price: "",
+        image: "",
+        description: "",
+        original: "",
+        category: "",
+        review: ""
+      })
+      navigate('/adminpanel')
     }
   return (
     <div className="pt-[10%]">
@@ -47,14 +50,26 @@ function ProductManipulation() {
         <p>{product?.category}</p>
         <p>{product?.review}</p>
         <form onSubmit={handleSubmit}>
-        <input placeholder="name" required value={name} type="text" onChange={(e)=>setName(e.target.value)}/>
-        <input placeholder="rating" required value={rating} type="number" onChange={(e)=>setRating(Number(e.target.value))}/>
-        <input placeholder="price" required value={price} type="number" onChange={(e)=>setPrice(Number(e.target.value))}/>
-        <input placeholder="image" required value={image} type="text" onChange={(e)=>setImage(e.target.value)}/>
-        <input placeholder="description" required value={description} type="text" onChange={(e)=>setDescription(e.target.value)}/>
-        <input placeholder="original" required value={original} type="text" onChange={(e)=>setOriginal(e.target.value)}/>
-        <input placeholder="category" required value={category} type="text" onChange={(e)=>setCategory(e.target.value)}/>
-        <input placeholder="review" required value={review} type="text" onChange={(e)=>setReview(e.target.value)}/>
+        <input placeholder="Name" required name="name" value={productData.name} type="text" onChange={handleInputChange}/>
+        <input placeholder="rating" required name="rating" min={1} max={5} value={productData.rating} type="number" onChange={handleInputChange}/>
+        <input placeholder="price" required name="price" value={productData.price} type="number" onChange={handleInputChange}/>
+        <input placeholder="image" required name="image" value={productData.image} type="text" onChange={handleInputChange}/>
+        <textarea placeholder="description" required name="description" value={productData.description}  onChange={handleInputChange}/>
+        <select name="original" value={productData.original} onChange={handleInputChange} required>
+  <option value="">Select Original</option>
+  <option value="true">True</option>
+  <option value="false">False</option>
+</select>
+
+<select name="category" value={productData.category} onChange={handleInputChange} required>
+  <option value="">Select category</option>
+  <option value="sofas">Sofas</option>
+  <option value="chairs">chairs</option>
+  <option value="tables">tables</option>
+  <option value="bed">bed</option>
+  <option value="lamps">lamps</option>
+</select>
+        <textarea placeholder="review" required name="review" value={productData.review}  onChange={handleInputChange}/>
         <button type="submit">edit product</button>
         </form>
     </div>

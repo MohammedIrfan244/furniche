@@ -5,34 +5,10 @@
       "name": "mohammed irfan",
       "email": "mohammedirfan@gmail.com",
       "password": "mohammedirfan@gmail.com",
-      "cart": {
-        "3": 1
-      },
+      "cart": {},
       "isAdmin": true,
       "isBlocked": false,
-      "orders": [
-        {
-          "name": "Mohammed Navaf",
-          "email": "navaf@gmail.com",
-          "mobile": "1234567899",
-          "place": "Pandikkad",
-          "pin": "123456"
-        },
-        {
-          "name": "Mohammed Navaf",
-          "email": "navaf@gmail.com",
-          "mobile": "1234567899",
-          "place": "Pandikkad",
-          "pin": "123456"
-        },
-        {
-          "name": "Mohammed Navaf",
-          "email": "navaf@gmail.com",
-          "mobile": "1234567899",
-          "place": "Pandikkad",
-          "pin": "123456"
-        }
-      ]
+      "orders": []
     },
     {
       "id": "8f43",
@@ -59,32 +35,40 @@
       "name": "Navaf U",
       "email": "navaf@gmail.com",
       "password": "navafaa",
-      "cart": {
-        "1": 1
-      },
+      "cart": {},
       "isAdmin": false,
       "isBlocked": false,
       "orders": [
         {
-          "name": "Mohammed Navaf",
-          "email": "navaf@gmail.com",
-          "mobile": "1234567899",
-          "place": "Pandikkad",
-          "pin": "123456"
+          "products": {
+            "1": 1
+          },
+          "address": {
+            "firstName": "mohammed",
+            "lastName": "navaf",
+            "email": "navaf@gmail.com",
+            "mobile": "1234567890",
+            "place": "pandickad",
+            "pin": "123456"
+          },
+          "totalAmount": 10050,
+          "paymentStatus": "pending"
         },
         {
-          "name": "Mohammed Navaf",
-          "email": "navaf@gmail.com",
-          "mobile": "1234567899",
-          "place": "Pandikkad",
-          "pin": "123456"
-        },
-        {
-          "name": "Mohammed Navaf",
-          "email": "navaf@gmail.com",
-          "mobile": "1234567899",
-          "place": "Pandikkad",
-          "pin": "123456"
+          "products": {
+            "6": 1,
+            "11": 1
+          },
+          "address": {
+            "firstName": "mohammed",
+            "lastName": "navafa",
+            "email": "navaf@gmail.com",
+            "mobile": "1234567890",
+            "place": "pandickad",
+            "pin": "123456"
+          },
+          "totalAmount": 3550,
+          "paymentStatus": "paid"
         }
       ]
     }
@@ -298,6 +282,17 @@
       "category": "bed",
       "review": "Great for saving space, this bunk bed is sturdy and comfortable, perfect for families.",
       "id": "20"
+    },
+    {
+      "name": "new product1",
+      "rating": 3,
+      "price": 33,
+      "image": "image",
+      "description": "gsg",
+      "original": "true",
+      "category": "chairs",
+      "review": "sgsg",
+      "id": "ac57"
     }
   ]
 }
