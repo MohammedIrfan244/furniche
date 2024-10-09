@@ -8,11 +8,11 @@ function Cart() {
   const {
     currency,
     shippingFee,
+    cartCount,
     products,loading} = useContext(ShopContext);
-  const{cartItems,setCartItems,cartCount,cartTotal,setCartTotal}=useContext(UserContext)
-  const cartProducts = products.filter((items) => cartItems[items.id] > 0);
- 
-
+  const{cartItems,setCartItems,cartTotal,setCartTotal}=useContext(UserContext)
+  const cartProducts = products.filter((items) => cartItems[items.id]);
+  
   useEffect(() => {
     let total = 0;
     cartProducts.forEach((item) => {

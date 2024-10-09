@@ -8,6 +8,10 @@ const cartUpdater = (userId, updatedCart) => {
     .patch(`http://localhost:3000/users/${userId}`, { cart: updatedCart })
     .catch((err) => console.log(err));
 };
+const orderUpdater=(userId,updatedOrder)=>{
+  axios.patch(`http://localhost:3000/users/${userId}`,{orders:updatedOrder})
+  .catch((err)=>console.log(err))
+}
 // eslint-disable-next-line react/prop-types
 function UserContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(() => {
@@ -19,44 +23,42 @@ function UserContextProvider({ children }) {
     const storedCart = localStorage.getItem("cartItems");
     return storedCart ? JSON.parse(storedCart) : {};
   });
-  const [cartCount, setCartCount] = useState(() => {
-    const storedCartCount = localStorage.getItem("cartCount");
-    return storedCartCount ? JSON.parse(storedCartCount) : 0;
+  const [userOrders, setUserOrders] = useState(() => {
+    const storedOrders = localStorage.getItem("userOrders");
+    return storedOrders ? JSON.parse(storedOrders) : [];
   });
+ 
   const isAdmin=currentUser!=null&&currentUser.isAdmin?true:false
-
   useEffect(() => {
     if (cartItems) {
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
-
-    let cartCounts = 0;
-    for (let key in cartItems) {
-      cartCounts += cartItems[key];
-    }
-    setCartCount(cartCounts);
-    localStorage.setItem("cartCount", JSON.stringify(cartCounts));
   }, [cartItems]);
+  useEffect(() => {
+    if (userOrders) {
+      localStorage.setItem("userOrders", JSON.stringify(userOrders));
+    }
+  }, [userOrders]);
 
   const addCart = (Id) => {
     setCartItems((prev) => ({ ...prev, [Id]: 1 }));
   };
   useEffect(() => {
     if (currentUser) {
-      cartUpdater(currentUser.id, cartItems);
+      cartUpdater(currentUser.id, cartItems)
+      orderUpdater(currentUser.id,userOrders)
     }
-  }, [currentUser, cartItems]);
+  }, [currentUser, cartItems, userOrders]);
   useEffect(() => {
     localStorage.setItem("currentUser", JSON.stringify(currentUser?currentUser:null));
   }, [currentUser]);
 
   
   const value = { currentUser, setCurrentUser, cartItems,addCart,
-    cartCount,
-    setCartCount,
     setCartItems,
     cartTotal,
     isAdmin,
+    userOrders,setUserOrders,
     setCartTotal};
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }

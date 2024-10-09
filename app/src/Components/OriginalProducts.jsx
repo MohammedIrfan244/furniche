@@ -4,7 +4,7 @@ import ProductItems from "./ProductItems";
 
 function OriginalProducts() {
   const { products, loading } = useContext(ShopContext);
-  const originaProduct = products.filter((items) => items.original);
+  const originaProduct = products.filter((items) => items.original==="true");
 
   return (
     <div className={`${loading?"h-[20vh] flex justify-center items-center":null}`}>

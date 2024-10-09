@@ -9,13 +9,15 @@ import {
 import Logo from "/src/assets/FinalLogo.png";
 import { useContext, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
+import { ShopContext } from "../Contexts/ShopContext";
 
 
 
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
-  const { currentUser,cartCount,isAdmin  } = useContext(UserContext);
+  const { currentUser,isAdmin  } = useContext(UserContext);
+  const{cartCount}=useContext(ShopContext)
   return (
     <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
       <div className="flex items-center justify-between">

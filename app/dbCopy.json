@@ -1,194 +1,126 @@
 {
   "users": [
     {
-      "id": "1",
-      "name": "Mohammed Irfan",
-      "email": "irfan@gmail.com",
-      "password": "irfan@gmail.com",
+      "id": "dbd5",
+      "name": "mohammed irfan",
+      "email": "mohammedirfan@gmail.com",
+      "password": "mohammedirfan@gmail.com",
       "cart": {
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
-      }
+        "1": 1
+      },
+      "isAdmin": true,
+      "isBlocked": false
     },
     {
-      "id": "9297",
-      "name": "username",
-      "email": "username@gmail.com",
-      "password": "username@gmail.com",
-      "cart": {
-        "1": 0,
-        "2": 1,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
-      }
-    },
-    {
-      "id": "8672",
-      "name": "anaspappadan@gmail.com",
-      "email": "anaspappadan@gmail.com",
-      "password": "anaspappadan@gmail.com",
-      "cart": {
-        "1": 0,
-        "2": 1,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-        "7": 1,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
-      }
-    },
-    {
-      "id": "2f57",
-      "name": "harsha",
-      "email": "harsha@gmail.com",
-      "password": "harsha@gmail.com",
-      "cart": {
-        "1": 1,
-        "2": 1,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 1,
-        "7": 1,
-        "9": 0,
-        "10": 0,
-        "11": 0,
-        "12": 0
-      }
-    }
-  ],
-  "products": [
-    {
-      "id": "1",
-      "name": "Gray Sofa",
-      "rating": 4,
-      "price": 1000,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A modern sofa with clean lines and durable fabric, offering a compact design ideal for contemporary living rooms.",
-      "original": "true",
-      "category": "sofas",
-      "review": "This sofa combines comfort and style with soft cushions and a sleek design. It's durable and perfect for everyday use, fitting well in modern spaces."
+      "id": "ef12",
+      "name": "user1",
+      "email": "user1@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "2",
-      "name": "Chair",
-      "price": 2000,
-      "rating": 4,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "chairs",
-      "original": "true",
-      "category": "chairs"
+      "name": "user2",
+      "email": "user2@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "3",
-      "name": "Table",
-      "price": 3000,
-      "rating": 4,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "category": "tables",
-      "original": "true"
+      "name": "user3",
+      "email": "user3@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "4",
-      "name": "Lamp",
-      "price": 3500,
-      "rating": 4,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "category": "lamps",
-      "original": "false"
+      "name": "user4",
+      "email": "user4@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "5",
-      "name": "Bed",
-      "price": 4000,
-      "rating": 5,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "category": "bed",
-      "original": "false"
+      "name": "user5",
+      "email": "user5@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "6",
-      "name": "Gray Sofa 2",
-      "price": 4500,
-      "rating": 3,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "original": "true",
-      "category": "sofas"
+      "name": "user6",
+      "email": "user6@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "7",
-      "name": "Chair 2",
-      "price": 5000,
-      "original": "false",
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "category": "chairs",
-      "rating": 4
+      "name": "user7",
+      "email": "user7@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
+    },
+    {
+      "id": "8",
+      "name": "user8",
+      "email": "user8@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "9",
-      "name": "Lamp 2",
-      "price": 6000,
-      "rating": 3,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "",
-      "original": "true",
-      "category": "lamps"
+      "name": "user9",
+      "email": "user9@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "10",
-      "name": "Bed 2",
-      "price": 6500,
-      "rating": 4,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "original": "true",
-      "category": "bed"
+      "name": "user10",
+      "email": "user10@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "11",
-      "name": "Bed 3",
-      "price": 7000,
-      "rating": 5,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "original": "true",
-      "category": "bed"
+      "name": "user11",
+      "email": "user11@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
     },
     {
       "id": "12",
-      "name": "Bed 4",
-      "price": 7000,
-      "rating": 5,
-      "image": "https://cdn.pixabay.com/photo/2018/03/29/09/29/furniture-3271762_1280.jpg",
-      "description": "A stylish and comfortable modern sofa perfect for any living room.",
-      "original": "true",
-      "category": "bed"
-    },
+      "name": "user12",
+      "email": "user12@gmail.com",
+      "password": "12345678",
+      "cart": {},
+      "isAdmin": false,
+      "isBlocked": false
+    }
+  ],
+  "products": [
     {
       "id": "1",
       "name": "Charcoal Luxe Sofa",
@@ -196,9 +128,207 @@
       "price": 10000,
       "image": "https://img.freepik.com/free-photo/minimal-living-room-interior-design-with-leaf-shadow-wall_53876-128645.jpg?t=st=1728226900~exp=1728230500~hmac=9a65ef9bf87f18c133bcd6ccb9de70a55ebef7207ea7499ab294f04036326114&w=740",
       "description": "A modern sofa with clean lines and durable fabric, offering a compact design ideal for contemporary living rooms.",
-      "original": true,
+      "original": "true",
       "category": "sofas",
       "review": "This sofa combines comfort and style with soft cushions and a sleek design. It's durable and perfect for everyday use, fitting well in modern spaces."
+    },
+    {
+      "id": "3",
+      "name": "Stylish Plush Accent Chair",
+      "rating": 4,
+      "price": 3000,
+      "image": "https://img.freepik.com/free-photo/background-zoom-calls-with-chair-plant_23-2149684454.jpg?t=st=1728227061~exp=1728230661~hmac=dbf2b89d2c24c900d66c326a48503183d9a9bcbb362362ca100cdb99a4509b9d&w=740",
+      "description": "A stylish accent chair with a plush cushion and wooden frame, adding character to any room.",
+      "original": "true",
+      "category": "chairs",
+      "review": "This accent chair is both stylish and comfortable, making it a great addition to a modern space."
+    },
+    {
+      "id": "4",
+      "name": "Elegant Family Dining Table",
+      "rating": 3,
+      "price": 8000,
+      "image": "https://img.freepik.com/free-photo/high-angle-dining-table-background-zoom-calls_23-2149684457.jpg?t=st=1728227117~exp=1728230717~hmac=4c05f8b5e07939cce80f649eb617532e13e60f33bfd81271722c054871a923d4&w=740",
+      "description": "A large wooden dining table that can accommodate up to six people, perfect for family gatherings.",
+      "original": "false",
+      "category": "tables",
+      "review": "Sturdy and elegant, this dining table is perfect for hosting dinners and enjoying family time."
+    },
+    {
+      "id": "5",
+      "name": "Majestic King-Size Slumber Bed",
+      "rating": 5,
+      "price": 20000,
+      "image": "https://img.freepik.com/free-vector/bedroom-interior-home-hotel-empty-apartment_1441-3633.jpg?t=st=1728227198~exp=1728230798~hmac=97d88f7bd0a4677cef6d72deeffecea6993c3549bdd5a7453f6130054f0077a5&w=740",
+      "description": "A spacious king-sized bed with a high headboard and cushioned base, offering superior comfort and support.",
+      "original": "true",
+      "category": "bed",
+      "review": "Incredibly comfortable, this bed provides a restful sleep and fits well in large bedrooms."
+    },
+    {
+      "id": "6",
+      "name": "Sleek Adjustable Table Lamp",
+      "rating": 4,
+      "price": 1500,
+      "image": "https://img.freepik.com/free-photo/minimal-white-living-room-aesthetic-design_53876-146630.jpg?t=st=1728227247~exp=1728230847~hmac=8644952093db3ad6cc4a7c5a02c5fa2b93b8b401859ef33714261fd4eb866c31&w=740",
+      "description": "A sleek table lamp with an adjustable neck and soft lighting, perfect for reading or ambient lighting.",
+      "original": "false",
+      "category": "lamps",
+      "review": "A functional and stylish lamp, it adds a warm ambiance to any room with its adjustable light."
+    },
+    {
+      "id": "7",
+      "name": "Chic Urban Living Sofa",
+      "rating": 4,
+      "price": 12000,
+      "image": "https://img.freepik.com/free-photo/chic-mid-century-modern-luxury-aesthetics-living-room-with-gray-velvet-couch-blue-rug_53876-128133.jpg?t=st=1728227286~exp=1728230886~hmac=886b3d2959ef412269c52bec35e091b0dc659a959bf230407fd5ca9baadc4d24&w=740",
+      "description": "A minimalist modern sofa with soft cushions and sleek armrests, perfect for urban living spaces.",
+      "original": "true",
+      "category": "sofas",
+      "review": "Comfortable and stylish, this sofa is a great fit for a minimalist modern home."
+    },
+    {
+      "id": "8",
+      "name": "Ergonomic Executive Office Chair",
+      "rating": 5,
+      "price": 2500,
+      "image": "https://img.freepik.com/premium-photo/black-office-chair-with-lamp-it_782516-24923.jpg?w=740",
+      "description": "An ergonomic office chair with adjustable height and lumbar support, perfect for long working hours.",
+      "original": "false",
+      "category": "chairs",
+      "review": "This chair offers great support and comfort, making it ideal for extended office use."
+    },
+    {
+      "id": "9",
+      "name": "Sophisticated Glass Coffee Table",
+      "rating": 3,
+      "price": 5000,
+      "image": "https://img.freepik.com/free-photo/side-view-cup-coffee-small-round-table-horizontal_176474-2487.jpg?t=st=1728227428~exp=1728231028~hmac=43977f3c8bcb869e87f328809c17b65963adf3d2dd9e65629d3dd8bf055f7a3c&w=740",
+      "description": "A chic coffee table with a glass top and wooden legs, adding a touch of elegance to your living room.",
+      "original": "false",
+      "category": "tables",
+      "review": "A compact and stylish coffee table that complements modern interiors with its sleek design."
+    },
+    {
+      "id": "10",
+      "name": "Regal Queen-Size Sleep Haven",
+      "rating": 4,
+      "price": 15000,
+      "image": "https://img.freepik.com/free-photo/color-year-interior-design-space-with-furniture-decor_23-2151397388.jpg?t=st=1728227500~exp=1728231100~hmac=2a17222123dff21e7567a0906adb35cb573757787c51f428cf2074799ab4cd06&w=826",
+      "description": "A comfortable queen-size bed with a padded headboard, ideal for any master bedroom.",
+      "original": "true",
+      "category": "bed",
+      "review": "Spacious and supportive, this bed ensures a good night's sleep in style."
+    },
+    {
+      "id": "11",
+      "name": "Contemporary Floor Lamp",
+      "rating": 3,
+      "price": 2000,
+      "image": "https://img.freepik.com/premium-photo/modern-floor-lamp-casts-warm-light-across-minimalist-room-with-wooden-flooring_941468-11714.jpg?w=740",
+      "description": "A tall floor lamp with a sleek design and soft lighting, perfect for creating a cozy atmosphere.",
+      "original": "false",
+      "category": "lamps",
+      "review": "A practical floor lamp that provides warm lighting, ideal for living rooms and bedrooms."
+    },
+    {
+      "id": "12",
+      "name": "Spacious L-Shaped Leather Sofa",
+      "rating": 5,
+      "price": 18000,
+      "image": "https://img.freepik.com/premium-photo/l-shaped-leather-sofa-with-chaise-lounge-sl_1177965-154012.jpg?w=740",
+      "description": "A spacious L-shaped sofa offering ample seating space with plush cushions, perfect for large living areas.",
+      "original": "true",
+      "category": "sofas",
+      "review": "Great for large families, this sofa is both spacious and comfortable with a modern design."
+    },
+    {
+      "id": "13",
+      "name": "Relaxis Recliner Chair",
+      "rating": 4,
+      "price": 7000,
+      "image": "https://img.freepik.com/free-photo/armchair_1203-292.jpg?t=st=1728227737~exp=1728231337~hmac=7dac1b675046d294846965088de7cb806e691acc66048cf0bea4384fefbf07b0&w=740",
+      "description": "A cozy recliner chair with adjustable positions, offering excellent support for lounging or napping.",
+      "original": "false",
+      "category": "chairs",
+      "review": "Comfortable and adjustable, this recliner is perfect for relaxation after a long day."
+    },
+    {
+      "id": "14",
+      "name": "Modern Glass-Top Dining Table",
+      "rating": 4,
+      "price": 10000,
+      "image": "https://img.freepik.com/premium-photo/glass-dining-table-with-modern-design_1234738-289563.jpg?w=826",
+      "description": "A modern glass dining table with a stainless steel frame, ideal for contemporary dining rooms.",
+      "original": "false",
+      "category": "tables",
+      "review": "This dining table adds a sleek, modern look to any dining space with its glass top and durable frame."
+    },
+    {
+      "id": "15",
+      "name": "Sleek Single Sleep Bed",
+      "rating": 3,
+      "price": 8000,
+      "image": "https://img.freepik.com/free-photo/pillow-bed_74190-4499.jpg?t=st=1728228856~exp=1728232456~hmac=47d2fe160e0cd0197877a6344f1a53d785198f61a7ca4e8cc44bc035545f8290&w=740",
+      "description": "A simple and elegant single bed with a wooden frame, perfect for small bedrooms or guest rooms.",
+      "original": "false",
+      "category": "bed",
+      "review": "This single bed is compact and functional, offering a great solution for smaller spaces."
+    },
+    {
+      "id": "16",
+      "name": "Elegant Pendant Light Fixture",
+      "rating": 5,
+      "price": 3000,
+      "image": "https://img.freepik.com/premium-photo/stylish-overhead-light-fixture-illuminates-minimalist-space-with-soft-glow-creating-welcoming-ambiance-perfect-any-room_1033130-26048.jpg?w=740",
+      "description": "A modern pendant lamp with a metal shade, ideal for creating a focal point in dining or living rooms.",
+      "original": "false",
+      "category": "lamps",
+      "review": "This pendant lamp offers great lighting and a chic, modern design that elevates any room."
+    },
+    {
+      "id": "17",
+      "name": "Opulent Velvet Lounge Sofa",
+      "rating": 5,
+      "price": 17000,
+      "image": "https://img.freepik.com/premium-photo/elegant-black-sofa-accented-with-colorful-velvet-pillows-stylish-interiors_1006547-3428.jpg?w=740",
+      "description": "A luxurious velvet sofa with deep cushions and elegant curves, perfect for adding a touch of glam to your living room.",
+      "original": "false",
+      "category": "sofas",
+      "review": "This velvet sofa combines luxury and comfort, offering a standout piece for any living space."
+    },
+    {
+      "id": "18",
+      "name": "Classic Wingback Armchair",
+      "rating": 4,
+      "price": 6000,
+      "image": "https://img.freepik.com/premium-photo/3d-rendering-retro-futuristic-egg-chair-isolated-beige-background-with-copy-space_958808-30441.jpg?w=740",
+      "description": "A classic wingback chair with a high back and soft upholstery, offering timeless elegance and comfort.",
+      "original": "true",
+      "category": "chairs",
+      "review": "A comfortable and stylish chair, perfect for reading or adding a touch of sophistication to your space."
+    },
+    {
+      "id": "19",
+      "name": "Minimalist Round Coffee Table",
+      "rating": 4,
+      "price": 4000,
+      "image": "https://img.freepik.com/free-photo/realistic-modern-interior-design_23-2151439825.jpg?t=st=1728229071~exp=1728232671~hmac=71ab8f09eeab9bb7fdfe3703840017ab96e21c12e5ed80d69590c42ca5d43448&w=740",
+      "description": "A round coffee table with a wooden top and metal legs, offering a minimalist and functional design.",
+      "original": "false",
+      "category": "tables",
+      "review": "This coffee table is a great fit for small living spaces with its compact, modern design."
+    },
+    {
+      "id": "20",
+      "name": "Space-Saving Bunk Bed Retreat",
+      "rating": 5,
+      "price": 13000,
+      "image": "https://img.freepik.com/premium-photo/bunk-bed-with-ladder-that-says-doll-top_1272195-73754.jpg?w=826",
+      "description": "A space-saving bunk bed with a sturdy wooden frame, ideal for kids' rooms or guest accommodations.",
+      "original": "true",
+      "category": "bed",
+      "review": "Great for saving space, this bunk bed is sturdy and comfortable, perfect for families."
     }
   ]
 }

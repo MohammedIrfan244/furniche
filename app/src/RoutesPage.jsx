@@ -16,7 +16,8 @@ import Layout from "./Components/Layout";
 import { useContext } from "react";
 import { UserContext } from "./Contexts/UserContext";
 import AdminPanel from "./Pages/AdminPanel";
-import UserManipulate from "./Components/UserManipulate";
+import UserManipulate from "./Pages/UserManipulate";
+import ProductManipulation from "./Pages/ProductManipulation";
 
 
 
@@ -45,10 +46,11 @@ function RoutesPage() {
             <Route path="/placeorder" element={currentUser!=null?<PlaceOrder />:<NotFound/>} />
             <Route path="/user" element={currentUser!=null?<User />:<Login/>} />
             <Route path="/search" element={<Search />} />
-            <Route path="/adminpanel" element={isAdmin?<AdminPanel/>:<NotFound/>}/>
-            <Route path="/adminpanel/:userId" element={<UserManipulate/>} />
           </Route>
           <Route path="*" element={<NotFound />} />
+            <Route path="/adminpanel" element={isAdmin?<AdminPanel/>:<NotFound/>}/>
+            <Route path="/adminpanel/useraction/:userId" element={isAdmin?<UserManipulate/>:<NotFound/>} />
+            <Route path="/adminpanel/productaction/:productId" element={isAdmin?<ProductManipulation/>:<NotFound/>}/>
         </Routes>
       </Layout>
       </div>

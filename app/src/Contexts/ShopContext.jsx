@@ -1,32 +1,66 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext,useContext,useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-
+import { UserContext } from "./UserContext";
 export const ShopContext = createContext();
 
 
 
 // eslint-disable-next-line react/prop-types
 const ShopContextProvider = ({ children }) => {
+  const {cartItems}=useContext(UserContext)
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [cartCount, setCartCount] = useState(() => {
+    const storedCartCount = localStorage.getItem("cartCount");
+    return storedCartCount ? JSON.parse(storedCartCount) : 0;
+  });
 
   const addProduct=(data)=>{
+    setLoading(true)
     axios.post("http://localhost:3000/products",data)
-    .then(()=>toast.success("Product added successfully"))
+    .then((response) => {
+      setProduct((prevProducts) => [...prevProducts, response.data])
+      toast.success("Product added successfully")
+    })
     .catch((err)=>console.log(err))
+    .finally(()=>setLoading(false))
   }
   const removeProduct=(id)=>{
+    setLoading(true)
     axios.delete(`http://localhost:3000/products/${id}`)
-    .then(()=>toast.success("Product deleted successfully"))
+    .then(()=>{
+      setProduct((prevProducts)=>prevProducts.filter((items)=>items.id!==id))
+      axios.get("http://localhost:3000/users")
+      toast.success("Product removed")
+    })
     .catch((err)=>console.log(err))
+    .finally(()=>setLoading(false))
   }
   const editProduct=(id,editedProduct)=>{
+    setLoading(true)
     axios.put(`http://localhost:3000/products/${id}`,editedProduct)
-    .then(()=>toast.success("Product updated successfully"))
+    .then((response)=>{
+      setProduct((prevProducts)=>prevProducts.map((items)=>items.id==id?response.data:items))
+      toast.success("Product updated")
+    })
     .catch((err)=>console.log(err))
+    .finally(false)
   }
  
+  useEffect(()=>{
+    
+    let cartCounts = 0;
+    for (let key in cartItems) {
+      products.forEach(items=>{
+        items.id==key?cartCounts += cartItems[key]:null
+      })
+      
+    }
+    setCartCount(cartCounts);
+    localStorage.setItem("cartCount", JSON.stringify(cartCounts));
+  },[cartItems, products])
+
   useEffect(() => {
     setLoading(true);
     axios
@@ -45,6 +79,7 @@ const ShopContextProvider = ({ children }) => {
     shippingFee,
     loading,
     setLoading,
+    cartCount,
     addProduct,editProduct,removeProduct
   };
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

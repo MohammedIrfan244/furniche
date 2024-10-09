@@ -15,7 +15,7 @@ function SignIn() {
   const [errorMessage,setErrorMessage]=useState("") 
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setCurrentUser,setCartItems } = useContext(UserContext);
+  const {setUserOrders,setCurrentUser,setCartItems } = useContext(UserContext);
   const navigate = useNavigate();
 
   const data = {
@@ -24,7 +24,8 @@ function SignIn() {
     password: password,
     cart: {},
     isAdmin:false,
-    isBlocked:false
+    isBlocked:false,
+    orders:[]
   };
 
   const handleSubmit = (e) => {
@@ -45,8 +46,10 @@ function SignIn() {
                   const datas=getResp.data
                   const inputUser=datas.find(items=>items.email==email&&password==items.password)
                   setCurrentUser(inputUser)
-                  setCartItems(inputUser.cart)
+                  setCartItems(inputUser?.cart)
+                  setUserOrders(inputUser?.orders)
                   toast.success("You have been registered")
+                  navigate('/')
                 })
               })
               .catch((err) => console.log(err))
@@ -54,7 +57,6 @@ function SignIn() {
             .catch((err) => console.log(err))
             .finally(() => {
               setLoading(false);
-              navigate('/')
       });
   };
   return (

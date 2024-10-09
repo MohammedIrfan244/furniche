@@ -37,7 +37,7 @@ function Product() {
               {product?.name}
             </h1>
               <p className="text-xs font-normal">
-                {product?.original == false ? null : "(In house design)"}
+                {product?.original === "false" ? null : "(In house design)"}
               </p>
               </div>
             <p className="text-xs flex text-[#A47C48]">

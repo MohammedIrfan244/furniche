@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../Contexts/UserContext";
@@ -7,14 +7,30 @@ import { faHandHoldingDollar} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 
 function PlaceOrder() {
-  const { shippingFee, currency ,loading} =
+  const { shippingFee, currency ,loading,products} =
     useContext(ShopContext);
-    const{cartTotal,setCartItems,setCartTotal}=useContext(UserContext)
+    const{ setUserOrders,cartTotal,setCartItems,setCartTotal,cartItems}=useContext(UserContext)
   const navigate = useNavigate();
+  const[orderProducts,setOrderProducts]=useState([])
+  const[firstName,setFirstName]=useState("")
+  const[lastName,setLastName]=useState("")
+  const[email,setEmail]=useState("")
+  const[mobile,setMobile]=useState("")
+  const[place,setPlace]=useState("")
+  const[pin,setPin]=useState("")
+  const address={
+    name:firstName+" "+lastName,
+    email:email,
+    mobile:mobile,
+    place:place,
+    pin:pin
+  }
+  const orderItems = products.filter((items) => cartItems[items.id])
+  orderProducts=orderItems
 
   const handleClick = (e) => {
     e.preventDefault();
-
+   setUserOrders(prevItems=>[...prevItems,...orderProducts])
     setCartItems({})
     setCartTotal(0);
 
@@ -39,12 +55,16 @@ function PlaceOrder() {
             <input
               required
               type="text"
+              value={firstName}
+              onChange={(e)=>setFirstName(e.target.value)}
               placeholder="First name"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
             />
             <input
               required
               type="text"
+              value={lastName}
+              onChange={(e)=>setLastName(e.target.value)}
               placeholder="Last name"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
             />
@@ -52,12 +72,16 @@ function PlaceOrder() {
           <input
             required
             type="email"
+            value={email}
+            onChange={(e)=>setEmail(e.target.value)}
             placeholder="Email"
             className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2"
           />
           <input
             required
             type="text"
+            value={place}
+            onChange={(e)=>setPlace(e.target.value)}
             placeholder="Place"
             className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2"
           />
@@ -65,6 +89,8 @@ function PlaceOrder() {
             <input
               required
               type="number"
+              value={mobile}
+              onChange={(e)=>setMobile(e.target.value)}
               minLength={10}
               placeholder="Mobile Number"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
@@ -73,6 +99,8 @@ function PlaceOrder() {
               required
               type="number"
               minLength={6}
+              value={pin}
+              onChange={(e)=>setPin(e.target.value)}
               placeholder="Pincode"
               className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
             />
