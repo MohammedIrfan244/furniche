@@ -3,7 +3,8 @@ import { ShopContext } from "../Contexts/ShopContext"
 import { useNavigate } from "react-router-dom"
 
 
-function AdminProduct() {
+// eslint-disable-next-line react/prop-types
+function AdminProduct({products=[]}) {
     const[productData,setProductData]=useState({
         name:"",
         rating:"",
@@ -14,7 +15,7 @@ function AdminProduct() {
         category:"",
         review:""
     })
-    const {products,addProduct,removeProduct}=useContext(ShopContext)
+    const {addProduct,removeProduct}=useContext(ShopContext)
     const navigate=useNavigate()
     const handleInputChange=(e)=>{
         const{name,value}=e.target
@@ -36,7 +37,8 @@ function AdminProduct() {
           })
     }
   return (
-    <div>
+    <div className="flex">
+        <div className="overflow-y-auto max-h-96 scrollbar-thin w-[70%]">
         <table>
             <thead>
                 <tr>
@@ -64,6 +66,8 @@ function AdminProduct() {
                 }
             </tbody>
         </table>
+        </div>
+        <div className="w-[30%]">
         <form onSubmit={formSubmit}>
         <input placeholder="Name" required name="name" value={productData.name} type="text" onChange={handleInputChange}/>
         <input placeholder="rating" required name="rating" min={1} max={5} value={productData.rating} type="number" onChange={handleInputChange}/>
@@ -87,6 +91,7 @@ function AdminProduct() {
         <textarea placeholder="review" required name="review" value={productData.review}  onChange={handleInputChange}/>
         <button type="submit">add product</button>
         </form>
+        </div>
     </div>
   )
 }

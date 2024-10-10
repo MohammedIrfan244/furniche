@@ -4,16 +4,83 @@
       "id": "dbd5",
       "name": "mohammed irfan",
       "email": "mohammedirfan@gmail.com",
+      "mobile":"1234567890",
+      "profile":"",
       "password": "mohammedirfan@gmail.com",
-      "cart": {},
+      "cart": {
+        "1": 1,
+        "5": 1,
+        "10": 1,
+        "12": 1,
+        "17": 1,
+        "20": 1
+      },
       "isAdmin": true,
       "isBlocked": false,
-      "orders": []
+      "orders": [
+        {
+          "products": {
+            "1": 1,
+            "7": 1,
+            "17": 1
+          },
+          "address": {
+            "firstName": "mohammed",
+            "lastName": "irfan",
+            "email": "irfan@gmail.com",
+            "mobile": "1234567890",
+            "place": "pandickad",
+            "pin": "123456"
+          },
+          "totalAmount": 39050,
+          "paymentStatus": "paid"
+        },
+        {
+          "products": {
+            "3": 1,
+            "5": 4,
+            "8": 1,
+            "10": 1,
+            "13": 1,
+            "15": 1,
+            "18": 1,
+            "20": 1
+          },
+          "address": {
+            "firstName": "abu",
+            "lastName": "abu",
+            "email": "abu@gmai.com",
+            "mobile": "213454656",
+            "place": "chem",
+            "pin": "12345"
+          },
+          "totalAmount": 134550,
+          "paymentStatus": "pending"
+        },
+        {
+          "products": {
+            "4": 3,
+            "9": 1
+          },
+          "address": {
+            "firstName": "thrd",
+            "lastName": "third",
+            "email": "irfan@gmail.com",
+            "mobile": "0987654",
+            "place": "pandikkad",
+            "pin": "1233456"
+          },
+          "totalAmount": 29050,
+          "paymentStatus": "paid"
+        }
+      ]
     },
     {
       "id": "8f43",
       "name": "Anas P",
       "email": "anas@gmail.com",
+      "mobile":"1234567890",
+      "profile":"",
       "password": "anasaa",
       "cart": {},
       "isAdmin": false,
@@ -24,6 +91,8 @@
       "id": "025b",
       "name": "Nishaj ",
       "email": "nishaj@gmail.com",
+      "mobile":"1234567890",
+      "profile":"",
       "password": "nishajjj",
       "cart": {},
       "isAdmin": false,
@@ -34,8 +103,14 @@
       "id": "d809",
       "name": "Navaf U",
       "email": "navaf@gmail.com",
+      "mobile":"1234567890",
+      "profile":"",
       "password": "navafaa",
-      "cart": {},
+      "cart": {
+        "1": 1,
+        "12": 1,
+        "17": 1
+      },
       "isAdmin": false,
       "isBlocked": false,
       "orders": [

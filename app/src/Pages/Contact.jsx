@@ -38,7 +38,7 @@ function Contact() {
   };
 
   return (
-    <form onSubmit={sendMail} className="pt-[30%] sm:pt-[10%]">
+    <form onSubmit={sendMail} className="pt-[30%] min-h-[90vh] flex flex-col justify-center sm:pt-[10%]">
       <Hero
         source={
           "https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-deb711d/www.decorilla.com/online-decorating/wp-content/uploads/2022/07/bohemian-interior-design-feature-2-1536x861.jpeg"
@@ -55,7 +55,7 @@ function Contact() {
             onChange={(e) =>
               setFormData({ ...formData, ["name"]: e.target.value })
             }
-            className="w-[90%] text-xs border-2 border-[#1C1C1C] px-3 sm:py-1 focus:outline-none"
+            className="w-[90%] text-xs border-2 border-[#333333] px-3 sm:py-1 focus:outline-none"
             type="text"
             placeholder="Username"
           />
@@ -66,7 +66,7 @@ function Contact() {
             onChange={(e) =>
               setFormData({ ...formData, ["email"]: e.target.value })
             }
-            className="w-[90%] text-xs border-2 border-[#1C1C1C] px-3 sm:py-1 focus:outline-none"
+            className="w-[90%] text-xs border-2 border-[#333333] px-3 sm:py-1 focus:outline-none"
             type="email"
             placeholder="Email"
           />
@@ -78,7 +78,7 @@ function Contact() {
             onChange={(e) =>
               setFormData({ ...formData, ["message"]: e.target.value })
             }
-            className="w-[90%] text-xs border-2 border-[#1C1C1C] px-3 sm:py-1 focus:outline-none"
+            className="w-[90%] text-xs border-2 border-[#333333] px-3 sm:py-1 focus:outline-none"
           ></textarea>
           <button
             type="submit"

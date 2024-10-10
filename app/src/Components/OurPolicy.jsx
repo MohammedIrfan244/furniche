@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function OurPolicy() {
   return (
-    <div className="flex flex-col items-center mt-[5%]">
+    <div className="flex flex-col items-center mt-[50%] sm:mt-[10%]">
       <div className="flex flex-col items-center text-center sm:flex-row justify-between sm:px-10">
         <div className="w-[70%] sm:w-[20%]">
           <FontAwesomeIcon className="sm:mt-10 text-4xl" icon={faHandshake} />

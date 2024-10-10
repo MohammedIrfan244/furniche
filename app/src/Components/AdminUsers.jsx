@@ -1,16 +1,12 @@
 import axios from "axios"
-import { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { ShopContext } from "../Contexts/ShopContext"
-import { UserContext } from "../Contexts/UserContext"
 import { toast } from "react-toastify"
 
 
 
-function AdminUsers() {
-  const [users,setUsers]=useState([])
-  const{setLoading}=useContext(ShopContext)
-  const {currentUser}=useContext(UserContext)
+// eslint-disable-next-line react/prop-types
+function AdminUsers({users=[]}) {
+  
   const navigate=useNavigate()
 
   const removeUser=(userId)=>{
@@ -20,16 +16,7 @@ function AdminUsers() {
     })
     .catch((err)=>console.log(err))
   }
-  useEffect(()=>{
-    axios.get("http://localhost:3000/users")
-    .then((response)=>{
-      setLoading(true)
-      const exceptCurrentUser=response.data.filter(items=>items.id!==currentUser.id)
-      setUsers(exceptCurrentUser)
-    })
-    .catch((err)=>console.log(err))
-    .finally(()=>setLoading(false))
-  },[users, setLoading, currentUser.id])
+  
 
   return (
     <div>
@@ -44,7 +31,7 @@ function AdminUsers() {
         </thead>
         <tbody>
         {
-          users.map((user,index)=><tr key={index}>
+          users?.map((user,index)=><tr key={index}>
             <td>{user.id}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>

@@ -29,7 +29,7 @@ function Search() {
         value={search}
         placeholder="Search here..."
         onChange={(e) => setSearch(e.target.value)}
-        className="w-[60%] text-xs border-b-2 border-gray-300 bg-[#f5f2e9] px-3 sm:py-1 focus:outline-none "
+        className="w-[60%] text-xs border-b-2 border-[#D3D3D3] px-3 sm:py-1 focus:outline-none "
       />
       <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-[3%]">
         {searchedProduct.map((item, index) => (

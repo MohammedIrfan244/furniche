@@ -19,7 +19,7 @@ function NavBar() {
   const { currentUser,isAdmin  } = useContext(UserContext);
   const{cartCount}=useContext(ShopContext)
   return (
-    <div className="fixed w-[90%] bg-[#F5F2E9] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
+    <div className="fixed w-[90%] bg-[#FFFFFF] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>

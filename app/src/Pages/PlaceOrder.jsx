@@ -61,7 +61,7 @@ function PlaceOrder() {
               value={address.firstName}
               onChange={handleAddress}
               placeholder="First name"
-              className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
             />
             <input
               required
@@ -70,7 +70,7 @@ function PlaceOrder() {
               value={address.lastName}
               onChange={handleAddress}
               placeholder="Last name"
-              className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
             />
           </div>
           <input
@@ -80,7 +80,7 @@ function PlaceOrder() {
             value={address.email}
             onChange={handleAddress}
             placeholder="Email"
-            className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2"
+            className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2"
           />
           <input
             required
@@ -89,7 +89,7 @@ function PlaceOrder() {
             value={address.place}
             onChange={handleAddress}
             placeholder="Place"
-            className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2"
+            className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2"
           />
           <div className="flex w-[100%] gap-3 justify-between">
             <input
@@ -100,7 +100,7 @@ function PlaceOrder() {
               onChange={handleAddress}
               minLength={10}
               placeholder="Mobile Number"
-              className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
             />
             <input
               required
@@ -110,7 +110,7 @@ function PlaceOrder() {
               value={address.pin}
               onChange={handleAddress}
               placeholder="Pincode"
-              className="focus:outline-none border border-gray-500 rounded-md text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
             />
           </div>
         </div>

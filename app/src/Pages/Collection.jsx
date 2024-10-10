@@ -30,7 +30,7 @@ function Collection() {
         <span className="loader"></span>
       ):(
     <div className="w-[100%] flex flex-col items-center pt-[30%] sm:pt-[10%]">
-      <div className="flex justify-between sm:w-[60%] w-[95%] border-b-2 border-gray-300 p-5">
+      <div className="flex justify-between sm:w-[60%] w-[95%] border-b-2 border-[#D3D3D3] p-5">
         <p className="text-nowrap text-xs sm:text-[100%]">
           <input type="checkbox" onChange={checkCategory} value={"bed"} /> BEDS
         </p>

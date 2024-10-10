@@ -2,7 +2,7 @@ import Hero from "../Components/Hero";
 
 function About() {
   return (
-    <div className="pt-[30%] sm:pt-[10%]">
+    <div className="pt-[30%] sm:pt-[10%] min-h-[90vh] flex flex-col justify-center">
       <Hero
         source={
           "https://cdn-bnokp.nitrocdn.com/QNoeDwCprhACHQcnEmHgXDhDpbEOlRHH/assets/images/optimized/rev-deb711d/www.decorilla.com/online-decorating/wp-content/uploads/2020/01/Calming-bohemian-interior-design-living-room.jpeg"

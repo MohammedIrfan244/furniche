@@ -29,12 +29,15 @@ function UserManipulate() {
         .catch((err) => console.log(err));
       }
   return (
-    <div className='pt-[10%]'>
+    <div className='pt-[10%] flex'>
         <div>
             <p>{user?.name}</p>
             <p>{user?.email}</p>
             <button onClick={()=>blockUser(userId,!user?.isBlocked)}>{user?.isBlocked?"unblock":"block"}</button>
             <button onClick={()=>makeAdmin(userId,!user?.isAdmin)}>{user?.isAdmin?"remove admin":"make admin"}</button>
+        </div>
+        <div>
+          hello
         </div>
     </div>
   )

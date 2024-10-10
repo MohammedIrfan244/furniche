@@ -65,7 +65,7 @@ function Login() {
           onChange={handleInutChange}
           type="email"
           placeholder="Email"
-          className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[1%] text-xs"
+          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[1%] text-xs"
         />
         <div className="min-w-1 relative">
           <input
@@ -75,7 +75,7 @@ function Login() {
             type={`${passToggle ? "text" : "password"}`}
             onChange={handleInutChange}
             placeholder="Password"
-            className="w-[100%] focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[1%] text-xs mt-[3%]"
+            className="w-[100%] focus:outline-none border-2 border-[#333333] px-[3%] py-[1%] text-xs mt-[3%]"
           />
           <FontAwesomeIcon
             className="text-xs absolute bottom-2 right-2"

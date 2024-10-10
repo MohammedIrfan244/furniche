@@ -7,6 +7,8 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { UserContext } from "../Contexts/UserContext";
 
+// "mobile":"1234567890",
+//       "profile":"",
 function SignIn() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -74,7 +76,7 @@ function SignIn() {
           onChange={(e) => setName(e.target.value)}
           type="text"
           placeholder="Username"
-          className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs"
+          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs"
         />
         <input
           required
@@ -82,7 +84,7 @@ function SignIn() {
           type="email"
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Email"
-          className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs mt-[3%]"
+          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
         />
         <div className="min-w-1 relative">
           <input
@@ -91,7 +93,7 @@ function SignIn() {
             type={`${passToggle ? "text" : "password"}`}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs mt-[3%] w-[100%]"
+            className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%] w-[100%]"
           />
           <FontAwesomeIcon
             className="text-xs absolute bottom-2 right-2"
