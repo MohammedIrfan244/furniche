@@ -31,14 +31,15 @@ function AdminPanel() {
           <div className="w-[20%] bg-slate-400">
             <p>{currentUser?.name}</p>
             <p>{currentUser?.email}</p>
+            <p>{currentUser?.mobile}</p>
           <p className="cursor-pointer" onClick={()=>setComponent("dashboard")}>dashboard</p>
           <p className="cursor-pointer" onClick={()=>setComponent("users")}>users</p>
           <p className="cursor-pointer" onClick={()=>setComponent("products")}>products</p>
             <Link to={'/'}>go back</Link>
           </div>
-          <div className="w-[70%] bg-slate-300">
+          <div className="w-[70%] ">
             {
-              component==="users"?<AdminUsers users={users}/>:component==="products"?<AdminProduct products={products}/>:<AdminDashboard/>
+              component==="users"?<AdminUsers users={users}/>:component==="products"?<AdminProduct products={products}/>:<AdminDashboard users={users} products={products} />
             }
           </div>
         </div>

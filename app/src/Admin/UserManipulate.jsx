@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useEffect, useState} from 'react'
 import { useLocation,  useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import OrderCards from '../shared/OrderCards'
 
 function UserManipulate() {
     const {userId}=useParams()
@@ -19,25 +20,17 @@ function UserManipulate() {
         })
         .catch((err) => console.log(err));
       }
-      const makeAdmin=(userID,adminToggle)=>{
-        axios
-        .patch(`http://localhost:3000/users/${userID}`, { isAdmin:adminToggle })
-        .then(()=>{
-          setUser((prevUser)=>({...prevUser,isAdmin:adminToggle}))
-          toast.success(adminToggle?"User status changed to admin":"User status changed into not admin")
-        })
-        .catch((err) => console.log(err));
-      }
   return (
     <div className='pt-[10%] flex'>
         <div>
             <p>{user?.name}</p>
             <p>{user?.email}</p>
+            <p>{user?.mobile}</p>
             <button onClick={()=>blockUser(userId,!user?.isBlocked)}>{user?.isBlocked?"unblock":"block"}</button>
-            <button onClick={()=>makeAdmin(userId,!user?.isAdmin)}>{user?.isAdmin?"remove admin":"make admin"}</button>
         </div>
-        <div>
-          hello
+        <div className='h-[80vh] overflow-y-auto scrollbar-none'>
+          {user?.orders.length===0?"order is empty":user?.orders.map((items,index)=><OrderCards user={user} key={index} orderItems={items}/>)}
+          
         </div>
     </div>
   )

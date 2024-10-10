@@ -40,7 +40,7 @@ function Cart() {
     <div className="w-[100%] flex flex-col sm:flex-row gap-9 pt-[30%] sm:pt-[10%]">
       {cartProducts.length == 0 &&!loading?<div className="text-lg sm:text-xl md:text-3xl text-gray-500 h-[60vh] w-[90vw] flex justify-center items-center">Your cart is empty :(</div>:null}
        
-      <div className={cartProducts.length == 0 ? "hidden":"w-[100%] sm:w-[65%] flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin sm:h-[70vh]"}>
+      <div className={cartProducts.length == 0 ? "hidden":"w-[100%] sm:w-[65%] flex flex-col gap-5 sm:overflow-y-auto scrollbar-none sm:h-[70vh]"}>
       <h1 className="flex items-baseline mb-[5%] text-[100%] sm:text-lg">
           CART ITEMS
           <hr className="w-10 h-[3px] bg-[#A47C48]" />

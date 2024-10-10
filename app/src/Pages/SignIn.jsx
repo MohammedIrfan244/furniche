@@ -16,6 +16,7 @@ function SignIn() {
     password: "",
     cart: {},
     mobile:"",
+    avatar:"",
     isAdmin:false,
     isBlocked:false,
     orders:[]
@@ -98,6 +99,14 @@ function SignIn() {
           type="text"
           onChange={handleInutChange}
           placeholder="Mobile"
+          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
+        />
+        <input
+          value={inputData.avatar}
+          name="avatar"
+          type="text"
+          onChange={handleInutChange}
+          placeholder="Profile URL (Not requered)"
           className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
         />
         <div className="min-w-1 relative">

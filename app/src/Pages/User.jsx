@@ -7,6 +7,8 @@ import OrderCards from "../shared/OrderCards";
 function User() {
   const { currentUser, setCurrentUser ,setCartItems,isAdmin,setUserOrders,userOrders} = useContext(UserContext);
   const{ setCartCount}=useContext(ShopContext)  
+  console.log(userOrders);
+  
   const handleLogOut = () => {
     setCurrentUser(null);
     setCartItems({});
@@ -28,11 +30,11 @@ function User() {
         <div className="mt-[10%] flex flex-col gap-3">
       <p>Hello <span className="font-bold text-lg">{currentUser.name}</span></p>
       <p className="text-sm">{currentUser.email}</p>
-      <p className="">Mob:{currentUser.mobile}</p>
-      <p >role:{isAdmin?"admin":"user"}</p>
+      <p className="">Mob : {currentUser.mobile}</p>
+      <p >Role : {isAdmin?"Admin":"User"}</p>
       <Link to={"/"}>
         <button
-          className="bg-black text-[#F5F2E9] text-xs active:scale-95 py-1 px-5 sm:py-2 mt-[ ]"
+          className="bg-black text-[#F5F2E9] text-xs active:scale-95 py-1 px-5 sm:py-2 mt-[2%]"
           onClick={handleLogOut}
         >
           Logout
@@ -40,8 +42,8 @@ function User() {
       </Link>
       </div>
       </div>
-      <div>
-        {
+      <div className="flex flex-col gap-5 overflow-y-auto scrollbar-thin h-[60vh]">
+        {userOrders.length===0?"order is empty":
           userOrders?.map((items,index)=><OrderCards key={index} orderItems={items}/>)
         }
       </div>

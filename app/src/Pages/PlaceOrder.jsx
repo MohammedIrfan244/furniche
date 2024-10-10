@@ -5,6 +5,7 @@ import { UserContext } from "../Contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingDollar} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import { v4 as uuidv4 } from 'uuid';
 
 function PlaceOrder() {
   const { shippingFee, currency ,loading} =
@@ -21,7 +22,7 @@ function PlaceOrder() {
     pin: ""
   }) 
   const[order,setOrder]=useState({
-    products:cartItems,address:address,totalAmount:cartTotal+shippingFee,paymentStatus:payment
+    id:uuidv4(),products:cartItems,address:address,totalAmount:cartTotal+shippingFee,paymentStatus:payment,delivaryStatus:"pending"
   })
   useEffect(()=>{
     setOrder((preOrder)=>({...preOrder,address:address,paymentStatus:payment}))
