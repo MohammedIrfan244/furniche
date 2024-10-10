@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState} from "react";
-import AdminProduct from "../Components/AdminProduct";
-import AdminUsers from "../Components/AdminUsers";
-import AdminDashboard from "../Components/AdminDashboard";
+import AdminProduct from "./AdminProduct";
+import AdminUsers from "./AdminUsers";
+import AdminDashboard from "./AdminDashboard";
 import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../Contexts/ShopContext";

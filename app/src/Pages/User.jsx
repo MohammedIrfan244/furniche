@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../Contexts/ShopContext";
-import OrderCards from "../Components/OrderCards";
+import OrderCards from "../shared/OrderCards";
 
 function User() {
   const { currentUser, setCurrentUser ,setCartItems,isAdmin,setUserOrders,userOrders} = useContext(UserContext);
@@ -26,12 +26,13 @@ function User() {
           USER DETAILS <hr className="w-10 h-[3px] bg-[#A47C48]" />
         </h1>
         <div className="mt-[10%] flex flex-col gap-3">
-      <p>{currentUser.name}</p>
-      <p>{currentUser.email}</p>
-      <p className={isAdmin?"text-sm":"hidden"}>admin</p>
+      <p>Hello <span className="font-bold text-lg">{currentUser.name}</span></p>
+      <p className="text-sm">{currentUser.email}</p>
+      <p className="">Mob:{currentUser.mobile}</p>
+      <p >role:{isAdmin?"admin":"user"}</p>
       <Link to={"/"}>
         <button
-          className="bg-black text-[#F5F2E9] text-xs active:scale-95 py-1 px-5 sm:py-2 mt-[5%] sm:mt-[10%]"
+          className="bg-black text-[#F5F2E9] text-xs active:scale-95 py-1 px-5 sm:py-2 mt-[ ]"
           onClick={handleLogOut}
         >
           Logout

@@ -3,7 +3,7 @@ import { ShopContext } from "../Contexts/ShopContext";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import ProductItems from "../Components/ProductItems";
+import ProductItems from "../shared/ProductItems";
 import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
 

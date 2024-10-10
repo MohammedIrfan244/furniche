@@ -1,4 +1,4 @@
-import Hero from "../Components/Hero";
+import Hero from "../shared/Hero";
 
 function About() {
   return (

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
-import ProductItems from "../Components/ProductItems";
+import ProductItems from "../shared/ProductItems";
 
 function Search() {
   const { products, loading } = useContext(ShopContext);

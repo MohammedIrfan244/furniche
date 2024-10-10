@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Hero from "../Components/Hero";
+import Hero from "../shared/Hero";
 import NewCollection from "../Components/NewCollection";
 import OriginalProducts from "../Components/OriginalProducts";
 import OurPolicy from "../Components/OurPolicy";

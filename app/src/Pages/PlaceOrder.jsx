@@ -94,7 +94,7 @@ function PlaceOrder() {
           <div className="flex w-[100%] gap-3 justify-between">
             <input
               required
-              type="number"
+              type="text"
               name="mobile"
               value={address.mobile}
               onChange={handleAddress}
@@ -104,7 +104,7 @@ function PlaceOrder() {
             />
             <input
               required
-              type="number"
+              type="text"
               name="pin"
               minLength={6}
               value={address.pin}

@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import Footer from './Footer'
+import Footer from '../Components/Footer';
 
 // eslint-disable-next-line react/prop-types
 function Layout({children}) {
@@ -9,7 +9,7 @@ function Layout({children}) {
   return (
     <>
     {children}
-    {!isAdminPage && <Footer />}
+    {!isAdminPage && <Footer/>}
   </>
   )
 }

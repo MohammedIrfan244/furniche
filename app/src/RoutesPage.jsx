@@ -12,12 +12,12 @@ import Login from "./Pages/Login";
 import SignIn from "./Pages/SignIn";
 import User from "./Pages/User";
 import NotFound from "./Pages/NotFound";
-import Layout from "./Components/Layout";
 import { useContext } from "react";
 import { UserContext } from "./Contexts/UserContext";
-import AdminPanel from "./Pages/AdminPanel";
-import UserManipulate from "./Pages/UserManipulate";
-import ProductManipulation from "./Pages/ProductManipulation";
+import AdminPanel from "./Admin/AdminPanel";
+import UserManipulate from "./Admin/UserManipulate";
+import ProductManipulation from "./Admin/ProductManipulation";
+import Layout from "./Layout/Layout";
 
 
 

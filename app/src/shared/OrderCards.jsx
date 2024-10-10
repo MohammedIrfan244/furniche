@@ -9,8 +9,6 @@ function OrderCards({orderItems={}}) {
   const orderProducts=products.filter((items) => orderItems?.products[items.id]) 
   // an object
   const orderAdress=orderItems?.address
-  // "totalAmount": 39050,
-  //         "paymentStatus": "paid"
   return (
     <div>
       <div>

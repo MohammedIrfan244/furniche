@@ -10,9 +10,16 @@ import { UserContext } from "../Contexts/UserContext";
 // "mobile":"1234567890",
 //       "profile":"",
 function SignIn() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const[inputData,setInputData]=useState({
+    name: "",
+    email: "",
+    password: "",
+    cart: {},
+    mobile:"",
+    isAdmin:false,
+    isBlocked:false,
+    orders:[]
+  })
   const [conformPassword,setConformPassword]=useState("")
   const [errorMessage,setErrorMessage]=useState("") 
   const [passToggle, setPassToggle] = useState(false);
@@ -20,15 +27,11 @@ function SignIn() {
   const {setUserOrders,setCurrentUser,setCartItems } = useContext(UserContext);
   const navigate = useNavigate();
 
-  const data = {
-    name: name,
-    email: email,
-    password: password,
-    cart: {},
-    isAdmin:false,
-    isBlocked:false,
-    orders:[]
-  };
+
+  const handleInutChange=(e)=>{
+    const {name,value}=e.target
+    setInputData((prev)=>({...prev,[name]:value}))
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,16 +40,16 @@ function SignIn() {
       .get("http://localhost:3000/users")
       .then((response) => {
         const users = response.data;
-        users.some((item) => item.email == email)
+        users.some((item) => item.email == inputData.email)
           ? setErrorMessage("User already registered")
-          :password!==conformPassword?setErrorMessage("Passwords do not match")
+          :inputData.password!==conformPassword?setErrorMessage("Passwords do not match")
           : axios
-              .post("http://localhost:3000/users", data)
+              .post("http://localhost:3000/users", inputData)
               .then(() => {
                 axios.get("http://localhost:3000/users")
                 .then((getResp)=>{
                   const datas=getResp.data
-                  const inputUser=datas.find(items=>items.email==email&&password==items.password)
+                  const inputUser=datas.find(items=>items.email==inputData.email&&inputData.password==items.password)
                   setCurrentUser(inputUser)
                   setCartItems(inputUser?.cart)
                   setUserOrders(inputUser?.orders)
@@ -72,26 +75,38 @@ function SignIn() {
       >
         <input
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={inputData.name}
+          name="name"
+          onChange={handleInutChange}
           type="text"
           placeholder="Username"
           className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs"
         />
         <input
           required
-          value={email}
+          value={inputData.email}
+          name="email"
           type="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleInutChange}
           placeholder="Email"
+          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
+        />
+        <input
+          required
+          value={inputData.mobile}
+          name="mobile"
+          type="text"
+          onChange={handleInutChange}
+          placeholder="Mobile"
           className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
         />
         <div className="min-w-1 relative">
           <input
             required
-            value={password}
+            value={inputData.password}
+            name="password"
             type={`${passToggle ? "text" : "password"}`}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleInutChange}
             placeholder="Password"
             className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%] w-[100%]"
           />

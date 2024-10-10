@@ -4,8 +4,7 @@
       "id": "dbd5",
       "name": "mohammed irfan",
       "email": "mohammedirfan@gmail.com",
-      "mobile":"1234567890",
-      "profile":"",
+      "mobile": "1234567890",
       "password": "mohammedirfan@gmail.com",
       "cart": {
         "1": 1,
@@ -79,8 +78,7 @@
       "id": "8f43",
       "name": "Anas P",
       "email": "anas@gmail.com",
-      "mobile":"1234567890",
-      "profile":"",
+      "mobile": "1234567890",
       "password": "anasaa",
       "cart": {},
       "isAdmin": false,
@@ -91,8 +89,7 @@
       "id": "025b",
       "name": "Nishaj ",
       "email": "nishaj@gmail.com",
-      "mobile":"1234567890",
-      "profile":"",
+      "mobile": "1234567890",
       "password": "nishajjj",
       "cart": {},
       "isAdmin": false,
@@ -103,8 +100,7 @@
       "id": "d809",
       "name": "Navaf U",
       "email": "navaf@gmail.com",
-      "mobile":"1234567890",
-      "profile":"",
+      "mobile": "1234567890",
       "password": "navafaa",
       "cart": {
         "1": 1,
@@ -146,6 +142,21 @@
           "paymentStatus": "paid"
         }
       ]
+    },
+    {
+      "id": "ec09",
+      "name": "The new guy",
+      "email": "newguy@gmail.com",
+      "password": "newguypassword",
+      "cart": {
+        "1": 1,
+        "7": 1,
+        "17": 1
+      },
+      "mobile": "1234567890",
+      "isAdmin": false,
+      "isBlocked": false,
+      "orders": []
     }
   ],
   "products": [

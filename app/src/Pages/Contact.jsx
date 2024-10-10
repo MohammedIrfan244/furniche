@@ -1,4 +1,4 @@
-import Hero from "../Components/Hero";
+import Hero from "../shared/Hero";
 import { useState } from "react";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";
