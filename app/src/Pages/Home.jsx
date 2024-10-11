@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Hero from "../shared/Hero";
 import NewCollection from "../Components/NewCollection";
 import OriginalProducts from "../Components/OriginalProducts";
 import OurPolicy from "../Components/OurPolicy";
@@ -13,29 +12,18 @@ function Home() {
   const { currentUser } = useContext(UserContext);
   return (
     <div>
-      {/* <Hero
-        source={HomeImage}
-      >
-        <div className="w-[100%] sm:w-[50%] flex items-center justify-center">
-          <div className="flex flex-col gap-9 p-10">
-            <div className="flex items-baseline">
-              <hr className="bg-[#A47C48] h-[3px] w-[20%]" />
-              <p className=" text-xl">. Settle.com .</p>
-            </div>
-            <p className="text-2xl sm:text-3xl font-serif">
-              Where Design Meets Comfort
-            </p>
-            <Link
-              to={`${currentUser ? "/collection" : "/login"}`}
-              className=" flex items-baseline"
-            >
-              <FontAwesomeIcon className="text-[#A47C48]" icon={faShop} />. Shop
-              now .<hr className="bg-[#A47C48] h-[3px] w-[15%]" />
-            </Link>
+      <div className="w-[100%] h-[110vh] pt-32 sm:pt-36 lg:pt-20 bg-center bg-cover" style={{backgroundImage:`url(${HomeImage})`}}>
+        <div className="text-center flex flex-col items-center">
+          <h1 className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-wide" style={{ textShadow: '0 0 15px rgba(255, 255, 255)' }}>Settle.com</h1>
+          <div className="text-xs sm:text-[10px] font-bold mt-3 md:mt-2 lg:mt-1">
+          <p>A place where craft meets comforts, blending timeless</p>
+          <p> with modern elegance for your perfect home.</p>
+          </div>
+          <div className="text-xs text-center gap-10 flex mt-6">
+            <Link to={currentUser?"/collection":"/login"} className="bg-[#F9FCFA] shadow-lg text-[#000000] w-24 md:w-32 border-none rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1 font-bold">Dive in <FontAwesomeIcon className="text-[10px]" icon={faShop}/></Link>
+            <Link to={'/signin'} className="bg-[#000000] text-[#F9FCFA] shadow-lg border-none w-24 md:w-32 rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1">Sign up now</Link>
           </div>
         </div>
-      </Hero> */}
-      <div className="w-[100%] h-[120vh] bg-cover bg-slate-200" style={{backgroundImage:`url(${HomeImage})`}}>
       </div>
       <NewCollection />
       <OriginalProducts />

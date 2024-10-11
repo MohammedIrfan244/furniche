@@ -1,15 +1,14 @@
 
-import Logo from "/src/assets/FinalLogo.png";
 import { Link } from "react-router-dom";
 
 
 function Footer() {
   return (
     <>
-    <div className="my-20 flex justify-between pt-5 border-t-2 border-[#a47c48]">
+    <div className="my-20 flex justify-between pt-5 border-t-2 border-[#544A3E] px-3">
       <div className="w-[40%] text-left">
-        <img className="w-[60%] sm:w-[30%] Logo" src={Logo} alt="logo" />
-        <p className="text-[3%] sm:text-[5%] md:text-xs px-[1%]">
+        <h1 className="font-serif text-sm sm:text-md md:text-lg" style={{textShadow:'0 0 1px black'}}>Settle.com</h1>
+        <p className="text-[3%] sm:text-[5%] md:text-xs">
           At Settle.com, we believe in delivering quality furniture that brings
           style and comfort to your home. With a commitment to exceptional
           craftsmanship and customer satisfaction, we make it easy to find

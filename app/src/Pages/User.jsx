@@ -7,7 +7,6 @@ import OrderCards from "../shared/OrderCards";
 function User() {
   const { currentUser, setCurrentUser ,setCartItems,isAdmin,setUserOrders,userOrders} = useContext(UserContext);
   const{ setCartCount}=useContext(ShopContext)  
-  console.log(userOrders);
   
   const handleLogOut = () => {
     setCurrentUser(null);
@@ -42,7 +41,7 @@ function User() {
       </Link>
       </div>
       </div>
-      <div className="flex flex-col gap-5 overflow-y-auto scrollbar-thin h-[60vh]">
+      <div className="flex flex-col gap-5 overflow-y-auto scrollbar-none h-[60vh]">
         {userOrders.length===0?"order is empty":
           userOrders?.map((items,index)=><OrderCards key={index} orderItems={items}/>)
         }

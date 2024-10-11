@@ -18,14 +18,14 @@ function NavBar() {
   const { currentUser,isAdmin  } = useContext(UserContext);
   const{cartCount}=useContext(ShopContext)
   return (
-    <div className="fixed w-[100%] px-[1%] pb-3 pt-[1.5%] bg-[#D7D2C9] z-10">
+    <div className="fixed w-[100%] pt-5 px-2 bg-[#D7D2C9] z-10 border-b-2 border-[#544A3E]">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <h2 className="font-serif text-3xl sm:text-4xl font-medium">Settle.com</h2>
+            <h2 className="font-serif text-2xl sm:text-3xl font-medium" style={{textShadow:'0 0 1px black'}}>Settle.com</h2>
           </Link>
         </div>
-        <ul className="hidden sm:flex gap-4 text-sm">
+        <ul className="hidden sm:flex gap-4 text-sm font-bold">
           <NavLink to={"/"} className=" flex flex-col items-center gap-1">
             <p>HOME</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
@@ -56,7 +56,7 @@ function NavBar() {
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
         </ul>
-        <div className="flex items-center gap-3 sm:gap-5 md:gap-7">
+        <div className="flex items-center gap-5 sm:gap-6 md:gap-7">
           <Link to={"/search"}>
             <FontAwesomeIcon
               className="cursor-pointer hover:scale-110 transition duration-300"
@@ -71,7 +71,7 @@ function NavBar() {
               className="hover:scale-110 transition duration-300"
               icon={faCartShopping}
             />
-            <p className="absolute right-[-5px] bottom-[-2px]  bg-[#A47C48] text-[10px] text-center w-[15px] rounded-[100%] text-[#FAFAFA]">
+            <p className="absolute right-[-5px] bottom-[-2px]  bg-[#544A3E] text-[10px] text-center w-[15px] rounded-[100%] text-[#FAFAFA]">
               {cartCount}
             </p>
           </Link>
@@ -79,7 +79,7 @@ function NavBar() {
             to={currentUser == null ? "/login" : "/user"}
             className=" group relative"
           >
-           {currentUser==null?<p className="bg-[#000000] text-[#F9FCFA] text-xs px-5 py-1 rounded-[50px] mx-2">Login</p>: <FontAwesomeIcon
+           {currentUser==null?<p className="bg-[#000000] text-[#F9FCFA] text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2 shadow-md">Login</p>: <FontAwesomeIcon
               className=" cursor-pointer hover:scale-110 transition duration-300"
               icon={faUser}
             />}
