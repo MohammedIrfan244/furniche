@@ -4,21 +4,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap");
 
 body {
-  background-color: #FFFFFF  ;
-  color: #333333   ;
+  background-color: #D7D2C9   ;
+  color: #000000   ;
   font-weight: 500;
 }
 a{
   transition-duration: 150ms;
 }
 a.active {
-  color: #a47c48;
-  scale: 1.07;
+  scale: 1.05;
 }
 a.active hr {
   display: block;
   border-radius: 100%;
-  background-color: #a47c48;
+  background-color: #000000;
 }
 img:not(.Logo,.ProductPage,.cartCard,.payments) {
   width: 200px;

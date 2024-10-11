@@ -6,7 +6,6 @@ import {
   faCartShopping,
   faBars
 } from "@fortawesome/free-solid-svg-icons";
-import Logo from "/src/assets/FinalLogo.png";
 import { useContext, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import { ShopContext } from "../Contexts/ShopContext";
@@ -19,14 +18,14 @@ function NavBar() {
   const { currentUser,isAdmin  } = useContext(UserContext);
   const{cartCount}=useContext(ShopContext)
   return (
-    <div className="fixed w-[90%] bg-[#FFFFFF] z-10 py-3 border-2 border-b-[#A47C48] border-t-0 border-l-0 border-r-0">
+    <div className="fixed w-[100%] px-[1%] pb-3 pt-[1.5%] bg-[#D7D2C9] z-10">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <img src={Logo} alt="logo" className="w-[90%] Logo" />
+            <h2 className="font-serif text-3xl sm:text-4xl font-medium">Settle.com</h2>
           </Link>
         </div>
-        <ul className="hidden sm:flex gap-4">
+        <ul className="hidden sm:flex gap-4 text-sm">
           <NavLink to={"/"} className=" flex flex-col items-center gap-1">
             <p>HOME</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
@@ -80,14 +79,14 @@ function NavBar() {
             to={currentUser == null ? "/login" : "/user"}
             className=" group relative"
           >
-           {currentUser==null?"Login": <FontAwesomeIcon
+           {currentUser==null?<p className="bg-[#000000] text-[#F9FCFA] text-xs px-5 py-1 rounded-[50px] mx-2">Login</p>: <FontAwesomeIcon
               className=" cursor-pointer hover:scale-110 transition duration-300"
               icon={faUser}
             />}
           </Link>
           <FontAwesomeIcon
             onClick={() => setVisible(true)}
-            className="sm:hidden cursor-pointer"
+            className="sm:hidden cursor-pointer me-3"
             icon={faBars}
           />
           <div

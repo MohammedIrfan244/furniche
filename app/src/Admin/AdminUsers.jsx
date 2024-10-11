@@ -1,6 +1,4 @@
-import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
 
 
 
@@ -9,13 +7,7 @@ function AdminUsers({users=[]}) {
   
   const navigate=useNavigate()
 
-  const removeUser=(userId)=>{
-    axios.delete(`http://localhost:3000/users/${userId}`)
-    .then(()=>{
-      toast.success("User has been removed")
-    })
-    .catch((err)=>console.log(err))
-  }
+  
   
 
   return (
@@ -35,7 +27,6 @@ function AdminUsers({users=[]}) {
             <td>{user.id}</td>
             <td>{user.name}</td>
             <td>{user.email}</td>
-            <td><button onClick={()=>removeUser(user.id)}>delete</button></td>
             <td><button onClick={()=>navigate(`/adminpanel/useraction/${user.id}`,{state:{user}})}>view</button></td>
           </tr>)
         }

@@ -15,7 +15,7 @@ function AdminProduct({products=[]}) {
         category:"",
         review:""
     })
-    const {addProduct,removeProduct}=useContext(ShopContext)
+    const {addProduct}=useContext(ShopContext)
     const navigate=useNavigate()
     const handleInputChange=(e)=>{
         const{name,value}=e.target
@@ -60,7 +60,6 @@ function AdminProduct({products=[]}) {
                         <td>{product.category}</td>
                         <td>{product.rating}</td>
                         <td>{product.price}</td>
-                        <td><button onClick={()=>removeProduct(product.id)}>remove</button></td>
                         <td><button onClick={()=>navigate(`/adminpanel/productaction/${product.id}`,{state:{product}})}>view</button></td>
                     </tr>)
                 }

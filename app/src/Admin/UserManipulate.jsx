@@ -1,7 +1,7 @@
 
 import axios from 'axios'
-import { useEffect, useState} from 'react'
-import { useLocation,  useParams } from 'react-router-dom'
+import { useState} from 'react'
+import { useLocation,  useNavigate,  useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import OrderCards from '../shared/OrderCards'
 
@@ -9,8 +9,16 @@ function UserManipulate() {
     const {userId}=useParams()
     const {state}=useLocation()
     const [user,setUser]=useState(state?.user)
-    useEffect
-   
+    const navigate=useNavigate()
+    
+    const removeUser=(userId)=>{
+      axios.delete(`http://localhost:3000/users/${userId}`)
+      .then(()=>{
+        navigate('/adminpanel')
+        toast.success("User has been removed")
+      })
+      .catch((err)=>console.log(err))
+    }
       const blockUser=(userId,blockToggle)=>{
         axios
         .patch(`http://localhost:3000/users/${userId}`, { isBlocked:blockToggle})
@@ -27,6 +35,7 @@ function UserManipulate() {
             <p>{user?.email}</p>
             <p>{user?.mobile}</p>
             <button onClick={()=>blockUser(userId,!user?.isBlocked)}>{user?.isBlocked?"unblock":"block"}</button>
+            <button onClick={()=>removeUser(user.id)}>delete</button>
         </div>
         <div className='h-[80vh] overflow-y-auto scrollbar-none'>
           {user?.orders.length===0?"order is empty":user?.orders.map((items,index)=><OrderCards user={user} key={index} orderItems={items}/>)}

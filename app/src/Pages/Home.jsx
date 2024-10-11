@@ -7,15 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShop } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { UserContext } from "../Contexts/UserContext";
+import HomeImage from '../assets/LandingPageBackground.jpg'
 
 function Home() {
   const { currentUser } = useContext(UserContext);
   return (
-    <div className="pt-[30%] sm:pt-[10%]">
-      <Hero
-        source={
-          "https://media.istockphoto.com/id/1212526330/photo/bohemian-living-room-interior-3d-render.jpg?s=612x612&w=0&k=20&c=iIQ5wqa4NYpLn0YJvT_NAzMilwTFkTlprwbXAasOn9s="
-        }
+    <div>
+      {/* <Hero
+        source={HomeImage}
       >
         <div className="w-[100%] sm:w-[50%] flex items-center justify-center">
           <div className="flex flex-col gap-9 p-10">
@@ -35,7 +34,9 @@ function Home() {
             </Link>
           </div>
         </div>
-      </Hero>
+      </Hero> */}
+      <div className="w-[100%] h-[120vh] bg-cover bg-slate-200" style={{backgroundImage:`url(${HomeImage})`}}>
+      </div>
       <NewCollection />
       <OriginalProducts />
       <OurPolicy />

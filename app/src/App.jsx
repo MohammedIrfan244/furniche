@@ -6,7 +6,7 @@ import RoutesPage from './RoutesPage';
 
 function App() {
   return (
-    <div className="px-[5%]">
+    <div>
       <ToastContainer/>
      <RoutesPage/>
     </div>

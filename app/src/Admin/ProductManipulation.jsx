@@ -7,7 +7,7 @@ function ProductManipulation() {
   const {state}=useLocation()
   const product=state?.product
   const navigate=useNavigate()
-  const {editProduct}=useContext(ShopContext)
+  const {editProduct,removeProduct}=useContext(ShopContext)
 
   const[productData,setProductData]=useState({
     name:"",
@@ -49,6 +49,7 @@ function ProductManipulation() {
         <p>{product?.description}</p>
         <p>{product?.category}</p>
         <p>{product?.review}</p>
+        <button onClick={()=>removeProduct(product.id)}>remove</button>
         <form onSubmit={handleSubmit}>
         <input placeholder="Name" required name="name" value={productData.name} type="text" onChange={handleInputChange}/>
         <input placeholder="rating" required name="rating" min={1} max={5} value={productData.rating} type="number" onChange={handleInputChange}/>
