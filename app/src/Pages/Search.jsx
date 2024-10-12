@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import ProductItems from "../shared/ProductItems";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBoxOpen} from "@fortawesome/free-solid-svg-icons";
 
 function Search() {
   const { products, loading } = useContext(ShopContext);
@@ -29,25 +31,27 @@ function Search() {
         value={search}
         placeholder="Search here..."
         onChange={(e) => setSearch(e.target.value)}
-        className="w-[60%] text-xs border-b-2 border-[#D3D3D3] px-3 sm:py-1 focus:outline-none "
+        className="w-[90%] sm:w-[60%] text-xs rounded-md bg-[#F9FCFA] shadow-md shadow-[#544A3E] px-3 sm:py-1 focus:outline-none "
       />
-      <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-[3%]">
-        {searchedProduct.map((item, index) => (
-          <ProductItems
-            key={index}
-            id={item.id}
-            name={item.name}
-            price={item.price}
-            image={item.image}
-          />
-        ))}
-      </div>
+      <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-20">
+          {searchedProduct.map((item, index) => (
+            <ProductItems
+              key={index}
+              id={item.id}
+              image={item.image}
+              name={item.name}
+              price={item.price}
+              rating={item.rating}
+              original={item.original}
+            />
+          ))}
+        </div>
       <div
         className={`${
           searchedProduct.length != 0 ? "hidden" : null
         } text-gray-600 text-[250%] my-[5%]`}
       >
-        Not found :(
+       <FontAwesomeIcon icon={faBoxOpen}/>
       </div>
     </div>
     )}

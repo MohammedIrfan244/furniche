@@ -18,11 +18,11 @@ function NavBar() {
   const { currentUser,isAdmin  } = useContext(UserContext);
   const{cartCount}=useContext(ShopContext)
   return (
-    <div className="fixed w-[100%] pt-5 px-2 bg-[#D7D2C9] z-10 border-b-2 border-[#544A3E]">
+    <div className="fixed w-[100%] pt-5 px-2 bg-[#D7D2C9] z-20 border-b-2 border-[#544A3E]">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <h2 className="font-serif text-2xl sm:text-3xl font-medium" style={{textShadow:'0 0 3px #000000'}}>Settle.com</h2>
+            <h2 className="font-serif text-2xl sm:text-3xl font-medium" style={{textShadow:'0 0 1px #000000'}}>Settle.com</h2>
           </Link>
         </div>
         <ul className="hidden sm:flex gap-4 text-sm font-bold">
@@ -37,15 +37,15 @@ function NavBar() {
             <p>COLLECTION</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
-          <NavLink to={"/about"} className="flex flex-col items-center gap-1 ">
-            <p>ABOUT</p>
-            <hr className="w-[4px] h-[4px] border-none  hidden " />
-          </NavLink>
           <NavLink
             to={"/contact"}
             className="flex flex-col items-center gap-1 "
           >
             <p>CONTACT</p>
+            <hr className="w-[4px] h-[4px] border-none  hidden " />
+          </NavLink>
+          <NavLink to={"/about"} className="flex flex-col items-center gap-1 ">
+            <p>ABOUT</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           <NavLink

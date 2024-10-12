@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 function ScrollTop() {
     const[isVisible,setIsVisible]=useState(false)
     const toggleVisible=()=>{
-        if(window.scrollY>innerHeight){
+        if(window.scrollY>innerHeight*0.5){
             setIsVisible(true)
         }else{
             setIsVisible(false)

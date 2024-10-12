@@ -31,9 +31,9 @@ function Collection() {
         <span className="loader"></span>
       ):(
         <div className="pt-[26%] sm:pt-[8%] flex flex-col items-center">
-          <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 10px #000000'}}>SHOP COLLECTIONS</h1>
+          <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10 sm:mb-16" style={{textShadow:'0 0 1px #000000'}}>SHOP COLLECTIONS</h1>
     <div className="flex flex-col sm:flex-row justify-between w-full px-1 sm:px-2">
-      <div className="bg-[#F9FCFA] sm:w-[25%] md:w-[20%] lg:w-[10%] sm:h-36 sm:ps-3 hover:scale-[1.02] transition duration-200 flex sm:flex-col justify-evenly py-3 mb-3 rounded-md shadow-md shadow-[#544A3E]">
+      <div className="bg-[#F9FCFA] sm:w-[25%] md:w-[20%] lg:w-[10%] sm:h-36 sm:ps-3 hover:scale-[1.02] transition duration-200 flex sm:flex-col justify-around py-3 mb-10 rounded-md shadow-md shadow-[#544A3E]">
         <p className="text-nowrap text-xs sm:text-[100%]">
           <input type="checkbox" onChange={checkCategory} value={"bed"} /> BEDS
         </p>
@@ -59,6 +59,7 @@ function Collection() {
               name={item.name}
               price={item.price}
               rating={item.rating}
+              original={item.original}
             />
           ))}
         </div>
