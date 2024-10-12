@@ -40,7 +40,7 @@ function Product() {
                 {product?.original === "false" ? null : "(In house design)"}
               </p>
               </div>
-            <p className="text-xs flex text-[#A47C48]">
+            <p className="text-xs flex text-[#544A3E]">
               {Array.from({ length: product?.rating }).map((_, index) => (
                   <FontAwesomeIcon key={index} icon={faStar} />
               ))}

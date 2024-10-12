@@ -22,7 +22,7 @@ function NavBar() {
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <h2 className="font-serif text-2xl sm:text-3xl font-medium" style={{textShadow:'0 0 1px black'}}>Settle.com</h2>
+            <h2 className="font-serif text-2xl sm:text-3xl font-medium" style={{textShadow:'0 0 3px #000000'}}>Settle.com</h2>
           </Link>
         </div>
         <ul className="hidden sm:flex gap-4 text-sm font-bold">

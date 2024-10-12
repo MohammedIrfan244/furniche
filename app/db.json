@@ -8,8 +8,8 @@
       "avatar": "",
       "password": "mohammedirfan@gmail.com",
       "cart": {
-        "4": 5,
-        "19": 1
+        "4": 1,
+        "19": 6
       },
       "isAdmin": true,
       "isBlocked": false,
@@ -333,17 +333,6 @@
       "category": "bed",
       "review": "Great for saving space, this bunk bed is sturdy and comfortable, perfect for families.",
       "id": "20"
-    },
-    {
-      "name": "new product1",
-      "rating": 3,
-      "price": 33,
-      "image": "image",
-      "description": "gsg",
-      "original": "true",
-      "category": "chairs",
-      "review": "sgsg",
-      "id": "ac57"
     }
   ]
 }

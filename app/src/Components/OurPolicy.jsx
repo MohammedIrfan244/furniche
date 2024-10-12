@@ -34,7 +34,7 @@ function OurPolicy() {
           <p className="text-xs mt-2">
             Our customer support team is available 24/7 to assist you with any
             inquiries or issues. You can reach us through{" "}
-            <Link to={"/contact"} className="text-[#A47C48] text-sm">
+            <Link to={"/contact"} className="text-[#544A3E] text-sm">
               email
             </Link>
             , and we strive to respond within 3 days.

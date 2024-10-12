@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 // eslint-disable-next-line react/prop-types
-function ProductItems({ id, name, price, image }) {
+function ProductItems({ id, name, price, image,rating }) {
   const { currency } = useContext(ShopContext);
 
   return (
-    <div className="transition duration-200 overflow-hidden border bg-[#FFFFFF] hover:scale-[1.03] shadow-lg">
+    <div className="transition duration-200 overflow-hidden border-none rounded-lg shadow-[#544A3E] shadow-md bg-[#F9FCFA] hover:scale-[1.03] hover:shadow-lg ease-in-out hover:shadow-[#544A3E]">
       <Link to={`/product/${id}`}>
         <img
           onClick={window.scrollTo(0, 0)}
@@ -15,15 +17,22 @@ function ProductItems({ id, name, price, image }) {
           src={image}
           alt="image"
         />
-      </Link>
-      <div className="px-[4%] flex justify-between items-center py-[3%]">
-        <div>
-          <p className="text-xs">{name}</p>
+      <div className="px-[4%] flex justify-between items-center w-full py-[3%]">
+        <div className="w-full">
+          <p className="text-xs font-bold">{name}</p>
+          <div className="w-full flex justify-between items-end pe-3">
           <p className="text-xs font-bold">
             {currency} {price}
           </p>
+          <p className="text-[10px] flex text-[#544A3E]">
+              {Array.from({ length: rating }).map((_, index) => (
+                  <FontAwesomeIcon key={index} icon={faStar} />
+              ))}
+            </p>
+            </div>
         </div>
       </div>
+      </Link>
     </div>
   );
 }

@@ -9,9 +9,7 @@ function About() {
         }
       >
         <div className="w-[100%] sm:w-[50%] p-5 flex flex-col justify-evenly">
-          <h1 className="flex items-baseline text-l sm:text-xl">
-            ABOUT US <hr className="w-10 h-[3px] bg-[#A47C48]" />
-          </h1>
+        <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 10px #000000'}}>Settle.com</h1>
           <br />
           <p className="text-xs sm:text-[90%] leading-relaxed">
             Welcome to Settle.com, your go-to destination for stylish and
