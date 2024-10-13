@@ -6,12 +6,25 @@ import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import { ShopContext } from "../Contexts/ShopContext";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 function AdminPanel() {
-  const {currentUser}=useContext(UserContext)
+  const {currentUser,setCurrentUser ,setCartItems,setUserOrders}=useContext(UserContext)
   const [users,setUsers]=useState([])
-  const{loading,setLoading,products}=useContext(ShopContext)
+  const{loading,setLoading,products,setCartCount}=useContext(ShopContext)
   const[component,setComponent]=useState()
+
+  const handleLogOut = () => {
+    setCurrentUser(null);
+    setCartItems({});
+    setCartCount(0);
+    setUserOrders([])
+    localStorage.removeItem("cartItems");
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("cartCount");
+    localStorage.removeItem("userOrders");
+  };
   useEffect(()=>{
     setLoading(true)
     axios.get("http://localhost:3000/users")
@@ -27,20 +40,37 @@ function AdminPanel() {
     {loading?(
       <span className="loader"></span>
     ):(
-        <div className="pt-[30%] sm:pt-[10%] flex w-[100%]">
-          <div className="w-[20%] bg-slate-400">
+        <div className="w-[100%] relative">
+          <div className="bg-[#FFFFFF] h-16 border-b-2 border-[#544A3E] px-5 flex items-center justify-between">
+          <h2 className="font-serif text-2xl sm:text-3xl font-medium" style={{textShadow:'0 0 1px #000000'}}>Settle.com</h2>
+            <div>
+              <button className="py-1 px-3 me-5 rounded-md shadow-sm shadow-black bg-[#544A3E] text-[#F9FCFA] text-xs" onClick={handleLogOut}>Log out</button>
+          <Link className="py-1 px-3 me-5 rounded-md shadow-sm shadow-black bg-[#544A3E] text-[#F9FCFA] text-xs" to={'/'}>Go back</Link>
+          </div>
+          </div>
+          <div className="flex">
+          <div className="w-64 border-r-2 border-[#544A3E] h-screen bg-[#FFFFFF] flex flex-col gap-5 px-5 pt-10">
+            <div className="flex w-[100%] gap-5 text-sm">
+              <img className="avatar" src={currentUser.avatar} alt="User avatar" onError={(e)=>{
+            e.target.onerror=null
+            e.target.src="https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg"
+          }} />
+              <div>
             <p>{currentUser?.name}</p>
-            <p>{currentUser?.email}</p>
-            <p>{currentUser?.mobile}</p>
-          <p className="cursor-pointer" onClick={()=>setComponent("dashboard")}>dashboard</p>
-          <p className="cursor-pointer" onClick={()=>setComponent("users")}>users</p>
-          <p className="cursor-pointer" onClick={()=>setComponent("products")}>products</p>
-            <Link to={'/'}>go back</Link>
+            <p>Admin</p>
+            </div>
+            </div>
+            <p className="text-xs ps-2 text-red-700">Any changes made here will directly affect the live content. Please proceed with caution and double-check your updates before saving.</p>
+          <p className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]" onClick={()=>setComponent("dashboard")}>Dashboard <FontAwesomeIcon className={`${component==="dashboard"?'text-xs':"hidden"}`} icon={faChevronRight}/></p>
+          <p className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]" onClick={()=>setComponent("users")}>Users <FontAwesomeIcon className={`${component==="users"?'text-xs':"hidden"}`} icon={faChevronRight}/></p>
+          <p className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]" onClick={()=>setComponent("products")}>Products <FontAwesomeIcon className={`${component==="products"?'text-xs':"hidden"}`} icon={faChevronRight}/></p>
+            
           </div>
           <div className="w-[70%] ">
             {
               component==="users"?<AdminUsers users={users}/>:component==="products"?<AdminProduct products={products}/>:<AdminDashboard users={users} products={products} />
             }
+          </div>
           </div>
         </div>
     )}

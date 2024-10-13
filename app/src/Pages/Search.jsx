@@ -3,6 +3,7 @@ import { ShopContext } from "../Contexts/ShopContext";
 import ProductItems from "../shared/ProductItems";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBoxOpen} from "@fortawesome/free-solid-svg-icons";
+import ScrollTop from "../shared/ScrollTop";
 
 function Search() {
   const { products, loading } = useContext(ShopContext);
@@ -55,6 +56,7 @@ function Search() {
       </div>
     </div>
     )}
+    <ScrollTop/>
     </div>
   );
 }

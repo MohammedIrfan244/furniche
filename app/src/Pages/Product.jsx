@@ -6,6 +6,7 @@ import { faCertificate, faStar } from "@fortawesome/free-solid-svg-icons";
 import ProductItems from "../shared/ProductItems";
 import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
+import ScrollTop from "../shared/ScrollTop";
 
 function Product() {
   const { Id } = useParams();
@@ -83,6 +84,7 @@ function Product() {
       </div>
     </div>
       )}
+      <ScrollTop/>
     </div>
   );
 }

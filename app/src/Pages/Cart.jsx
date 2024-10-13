@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../Contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
+import ScrollTop from "../shared/ScrollTop";
 
 function Cart() {
   const { currency, shippingFee, cartCount, products, loading } =
@@ -54,7 +55,7 @@ function Cart() {
             }
           >
            <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>CART ITEMS</h1>
-           <div className="flex flex-col gap-5 sm:overflow-y-auto scrollbar-none sm:h-[70vh]">
+           <div className="flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin sm:h-[70vh]">
             {cartProducts.map((item, index) => (
               <CartCards
                 key={index}
@@ -121,6 +122,7 @@ function Cart() {
           </div>
         </div>
       )}
+      <ScrollTop/>
     </div>
   );
 }

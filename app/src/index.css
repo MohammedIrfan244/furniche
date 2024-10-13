@@ -28,6 +28,11 @@ img:not(.Logo,.ProductPage,.cartCard,.payments) {
   height: 150px;
   object-fit: cover;
 }
+img.avatar{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
 .loader, .loader:before, .loader:after {
   border-radius: 50%;
   width: 2.5em;
