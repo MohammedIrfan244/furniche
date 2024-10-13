@@ -6,7 +6,7 @@ import { ShopContext } from "../Contexts/ShopContext"
 function OrderItemCards({image,name,price,count}) {
     const {currency}=useContext(ShopContext)
   return (
-    <div className="flex justify-between border-b-2 border-[#D3D3D3] pe-[2%] pb-[1%]" >
+    <div className="flex justify-between bg-[#F9FCFA] p-1 rounded-lg shadow-sm shadow-[#544A3E]" >
     <div className="flex gap-4">
       <img className="h-[60px] w-[100px] object-cover cartCard" src={image} alt="image" />
       <div className="flex flex-col justify-between pb-[5%] text-xs sm:text-sm md:text-[16px]" >

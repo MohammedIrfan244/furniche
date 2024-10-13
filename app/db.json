@@ -42,7 +42,9 @@
       "avatar": "",
       "mobile": "1234567890",
       "password": "anasaa",
-      "cart": {},
+      "cart": {
+        "1": 1
+      },
       "isAdmin": false,
       "isBlocked": false,
       "orders": [
@@ -101,6 +103,29 @@
           "totalAmount": 33050,
           "paymentStatus": "paid",
           "delivaryStatus": "done"
+        },
+        {
+          "id": "cb224bb2-f00e-4dac-91a5-348697a69166",
+          "products": {
+            "3": 1,
+            "8": 1,
+            "18": 1,
+            "23": 1,
+            "29": 1,
+            "34": 1,
+            "38": 1
+          },
+          "address": {
+            "firstName": "mohammed",
+            "lastName": "abu",
+            "email": "mohammedirfan@gmail.com",
+            "mobile": "1234567890",
+            "place": "pandickad",
+            "pin": "679326"
+          },
+          "totalAmount": 50550,
+          "paymentStatus": "paid",
+          "delivaryStatus": "pending"
         }
       ]
     },
