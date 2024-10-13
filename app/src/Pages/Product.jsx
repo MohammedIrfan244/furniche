@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faCertificate, faStar } from "@fortawesome/free-solid-svg-icons";
 import ProductItems from "../shared/ProductItems";
 import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
@@ -21,11 +21,11 @@ function Product() {
       {loading?(
         <span className="loader"></span>
       ):(
-    <div className="flex flex-col items-center pt-[27%] sm:pt-[7%]">
-      <div className="flex flex-col sm:flex-row w-[100%]  mt-[3%]">
-        <div className="w-[100%] sm:w-[50%] overflow-hidden">
+    <div className="pt-[26%] sm:pt-[10%] flex flex-col items-center">
+      <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-[#F9FCFA] rounded-3xl shadow-lg shadow-[#544A3E]">
+        <div className="w-[100%] sm:w-[50%] flex justify-center rounded-2xl overflow-hidden items-center">
           <img
-            className="hover:scale-[1.01] transition duration-500 ease-in-out ProductPage w-[400px] h-[200px] sm:w-[600px] sm:h-[400px] object-cover"
+            className="hover:scale-[1.01] transition duration-500 ease-in-out ProductPage w-[400px] h-[200px] sm:w-[610px] sm:h-[410px] object-cover"
             src={product?.image}
             alt="image"
           />
@@ -35,12 +35,13 @@ function Product() {
             <div>
             <h1 className="font-bold text-xl">
               {product?.name}
+              <span> {product?.original === "false" ? null : <FontAwesomeIcon className="text-base text-[#FFD700]" icon={faCertificate}/>}</span>
             </h1>
-              <p className="text-xs font-normal">
+              <p className="text-xs">
                 {product?.original === "false" ? null : "(In house design)"}
               </p>
               </div>
-            <p className="text-xs flex text-[#544A3E]">
+            <p className="text-xs flex text-[#FFD700]">
               {Array.from({ length: product?.rating }).map((_, index) => (
                   <FontAwesomeIcon key={index} icon={faStar} />
               ))}
@@ -54,30 +55,31 @@ function Product() {
             <p className="text-sm">Review :</p>
             <p className="text-xs">{product?.review}</p>
           </div>
+          <div className="flex justify-end">
           <Link to={currentUser == null ? "/login" : "#"}>
             <button
               onClick={currentUser != null ? () => addCart(Id) : null}
-              className="border active:scale-95 bg-black text-xs text-[#F5F2E9] px-5 py-1 sm:py-2"
+              className="active:scale-95 bg-[#544A3E] hover:scale-[1.01] shadow-md shadow-[#544A3E] text-xs text-[#F5F2E9] px-5 py-2 rounded-xl sm:py-3"
             >{`${cartItems[Id] > 0 ? "Added" : "Add to Cart"}`}</button>
           </Link>
+          </div>
         </div>
       </div>
-      <div className="flex items-baseline ">
-      <h1 className="text-xl my-20">
-        You may also interested in
-      </h1>
-        <hr className="w-10 h-[3px] bg-[#A47C48]" />
-      </div>
-      <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10">
-        {interestedProduct?.map((items, index) => (
-          <ProductItems
-            key={index}
-            id={items.id}
-            name={items.name}
-            image={items.image}
-            price={items.price}
-          />
-        ))}
+      <div className="flex flex-col items-center w-[100%] mt-20 px-3 lg:p-2">
+        <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline" style={{textShadow:'0 0 1px #000000'}}>YOU MAY ALSO INTERESTED IN</h1>
+        <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-20">
+          {interestedProduct.map((item, index) => (
+            <ProductItems
+              key={index}
+              id={item.id}
+              image={item.image}
+              name={item.name}
+              price={item.price}
+              rating={item.rating}
+              original={item.original}
+            />
+          ))}
+        </div>
       </div>
     </div>
       )}

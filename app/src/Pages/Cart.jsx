@@ -3,6 +3,8 @@ import { ShopContext } from "../Contexts/ShopContext";
 import CartCards from "../Components/CartCards";
 import { Link } from "react-router-dom";
 import { UserContext } from "../Contexts/UserContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 
 function Cart() {
   const { currency, shippingFee, cartCount, products, loading } =
@@ -37,10 +39,10 @@ function Cart() {
       {loading ? (
         <span className="loader"></span>
       ) : (
-        <div className="w-[100%] flex flex-col sm:flex-row gap-9 pt-[30%] sm:pt-[10%]">
+        <div className="w-[100%] flex flex-col sm:flex-row gap-9 px-5 pt-[26%] sm:pt-[8%] ">
           {cartProducts.length == 0 && !loading ? (
-            <div className="text-lg sm:text-xl md:text-3xl text-gray-500 h-[60vh] w-[90vw] flex justify-center items-center">
-              Your cart is empty :(
+            <div className="text-gray-500 h-[60vh] w-[100vw] flex justify-center items-center">
+              <FontAwesomeIcon className="text-xl sm:text-3xl md:text-6xl" icon={faCartArrowDown}/>
             </div>
           ) : null}
 
@@ -48,13 +50,11 @@ function Cart() {
             className={
               cartProducts.length == 0
                 ? "hidden"
-                : "w-[100%] sm:w-[65%] flex flex-col gap-5 sm:overflow-y-auto scrollbar-none sm:h-[70vh]"
+                : "w-[100%] sm:w-[65%]"
             }
           >
-            <h1 className="flex items-baseline mb-[5%] text-[100%] sm:text-lg">
-              CART ITEMS
-              <hr className="w-10 h-[3px] bg-[#A47C48]" />
-            </h1>
+           <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>CART ITEMS</h1>
+           <div className="flex flex-col gap-5 sm:overflow-y-auto scrollbar-none sm:h-[70vh]">
             {cartProducts.map((item, index) => (
               <CartCards
                 key={index}
@@ -71,21 +71,20 @@ function Cart() {
                 image={item.image}
                 price={item.price}
                 name={item.name}
+                id={item.id}
               />
             ))}
+            </div>
           </div>
           <div
             className={
               cartProducts.length == 0
                 ? "hidden"
-                : "flex flex-col justify-between w-[100%] sm:w-[30%] p-[1%]"
+                : "w-[100%] sm:w-[30%]"
             }
           >
-            <div className="mt-[5%] flex flex-col gap-3 text-xs sm:text-sm">
-              <h1 className="flex items-baseline mb-[5%] text-[100%] sm:text-lg">
-                CART TOTALS
-                <hr className="w-10 h-[3px] bg-[#A47C48]" />
-              </h1>
+            <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>CART DETAILS</h1>
+            <div className="flex flex-col p-3 rounded-md shadow-md shadow-[#544A3E] gap-6 bg-[#F9FCFA] text-xs sm:text-sm">
               <div className="flex justify-between">
                 Total Items :<p className="font-bold">{cartCount}</p>
               </div>
@@ -110,14 +109,14 @@ function Cart() {
                   {cartTotal + shippingFee}.00
                 </p>
               </div>
-            </div>
             <div className="text-right bg mt-[3%]">
               <Link
-                className="bg-black text-[#F5F2E9] active:scale-95 px-5 py-1 sm:py-2 w-[40%] text-xs text-center"
+                className="bg-[#544A3E] rounded-lg shadow-sm shadow-[#544A3E] text-[#F5F2E9] active:scale-75 transition duration-200 px-5 py-1 sm:py-2 w-[40%] text-xs text-center"
                 to={"/placeorder"}
               >
                 Proceed to payment
               </Link>
+            </div>
             </div>
           </div>
         </div>

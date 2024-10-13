@@ -10,7 +10,30 @@
       "cart": {},
       "isAdmin": true,
       "isBlocked": false,
-      "orders": []
+      "orders": [
+        {
+          "id": "32957577-4558-4379-ac90-04a395935954",
+          "products": {
+            "1": 1,
+            "5": 1,
+            "10": 1,
+            "12": 1,
+            "17": 1,
+            "20": 1
+          },
+          "address": {
+            "firstName": "mohammed",
+            "lastName": "Anas",
+            "email": "random585753@gmail.com",
+            "mobile": "1234567890",
+            "place": "pandickad",
+            "pin": "679326"
+          },
+          "totalAmount": 93050,
+          "paymentStatus": "paid",
+          "delivaryStatus": "pending"
+        }
+      ]
     },
     {
       "id": "8f43",
@@ -381,7 +404,7 @@
       "image": "https://img.freepik.com/free-photo/realistic-interior-design-with-furniture_23-2151439724.jpg?t=st=1728757418~exp=1728761018~hmac=3f61752a5b3538bbbcbcb2226c0718284f6553a40765a71e9666a236815e99fa&w=740",
       "description": "A stylish nightstand with a smooth finish and ample storage, perfect for modern bedrooms. It features a spacious drawer for nighttime essentials and a lower shelf for books or decor. Its clean lines and minimalist design make it a great addition to any space.",
       "original": "true",
-      "category": "bed",
+      "category": "lamps",
       "review": "Sleek design and great quality, fits perfectly next to my bed.",
       "id": "21"
     },
@@ -447,7 +470,7 @@
       "image": "https://img.freepik.com/free-photo/wooden-piece-furniture-interior_23-2148848665.jpg?t=st=1728757703~exp=1728761303~hmac=114403ca11b792470c85d1bba69cd29386327090a85af7bf49abca249545d4a5&w=826",
       "description": "A classic chest of drawers with six spacious drawers, providing ample storage for clothes and accessories. Its timeless design complements any bedroom decor while keeping your items organized. Built with sturdy materials, it ensures lasting functionality.",
       "original": "true",
-      "category": "bed",
+      "category": "tables",
       "review": "Very spacious and blends well with my decor.",
       "id": "27"
     },

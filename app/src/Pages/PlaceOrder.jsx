@@ -48,12 +48,11 @@ function PlaceOrder() {
       {loading?(
         <span className="loader"></span>
       ):(
-        <form  className="pt-[30%] sm:pt-[10%] flex flex-col sm:flex-row justify-between gap-5 sm:gap-3 w-[100%]" onSubmit={handleClick}>
+        <form  className="pt-[26%] sm:pt-[8%] h-[100vh] flex flex-col sm:flex-row justify-between gap-5 sm:gap-3 w-[100%] px-5" onSubmit={handleClick}>
       <div className="w-[100%] sm:w-[40%]">
-        <h1 className="flex items-baseline text-l sm:text-xl">
-          DELIVARY DETAILS <hr className="w-10 h-[3px] bg-[#A47C48]" />
-        </h1>
-        <div className="flex flex-col gap-3 mt-[10%]">
+      <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>DELIVARY ADDRESS</h1>
+      <div>
+        <div className="flex flex-col gap-3 mt-[10%] bg-[#F9FCFA] p-3 rounded-lg shadow-md shadow-[#544A3E]">
           <div className="flex gap-3 w-[100%] justify-between">
             <input
               required
@@ -62,7 +61,7 @@ function PlaceOrder() {
               value={address.firstName}
               onChange={handleAddress}
               placeholder="First name"
-              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#544A3E] rounded-md text-xs py-1 px-2 w-[50%]"
             />
             <input
               required
@@ -71,7 +70,7 @@ function PlaceOrder() {
               value={address.lastName}
               onChange={handleAddress}
               placeholder="Last name"
-              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#544A3E] rounded-md text-xs py-1 px-2 w-[50%]"
             />
           </div>
           <input
@@ -81,7 +80,7 @@ function PlaceOrder() {
             value={address.email}
             onChange={handleAddress}
             placeholder="Email"
-            className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2"
+            className="focus:outline-none border-2 border-[#544A3E] rounded-md text-xs py-1 px-2"
           />
           <input
             required
@@ -90,7 +89,7 @@ function PlaceOrder() {
             value={address.place}
             onChange={handleAddress}
             placeholder="Place"
-            className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2"
+            className="focus:outline-none border-2 border-[#544A3E] rounded-md text-xs py-1 px-2"
           />
           <div className="flex w-[100%] gap-3 justify-between">
             <input
@@ -101,7 +100,7 @@ function PlaceOrder() {
               onChange={handleAddress}
               minLength={10}
               placeholder="Mobile Number"
-              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#544A3E] rounded-md text-xs py-1 px-2 w-[50%]"
             />
             <input
               required
@@ -111,16 +110,19 @@ function PlaceOrder() {
               value={address.pin}
               onChange={handleAddress}
               placeholder="Pincode"
-              className="focus:outline-none border-2 border-[#333333] text-xs py-1 px-2 w-[50%]"
+              className="focus:outline-none border-2 border-[#544A3E] rounded-md text-xs py-1 px-2 w-[50%]"
             />
           </div>
         </div>
+        <div className="bg-[#F9FCFA] mt-5 rounded-md text-xs text-red-800 shadow-md shadow-[#544A3E] p-3">
+          <input type="checkbox" required/>
+          <label> Please review your order carefully. By clicking &apos;Place order,&apos; you confirm your purchase of the selected products and authorize us to process the payment as per your chosen method.</label>
+        </div>
+        </div>
       </div>
       <div className="w-[100%] sm:w-[50%] mt-[10%] sm:mt-0">
-        <h1 className="flex items-baseline text-l sm:text-xl">
-          PAYMENT DETAILS <hr className="w-10 h-[3px] bg-[#A47C48]" />
-        </h1>
-        <div className="mt-[10%] flex flex-col gap-3">
+      <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>PAYMENT DETAILS</h1>
+        <div className="flex flex-col gap-3 mt-12 bg-[#F9FCFA] p-3 rounded-lg shadow-md shadow-[#544A3E]">
           <div className="flex justify-between">
             Total :
             <p className="font-bold">
@@ -156,7 +158,7 @@ function PlaceOrder() {
             <div className="text-right mt-[5%]">
               <button
                 type="submit"
-                className="bg-black text-[#F5F2E9] text-xs active:scale-95 px-5 py-1 sm:py-2 "
+                className="bg-[#544A3E] text-[#F9FCFA] rounded-md text-xs active:scale-95 px-5 py-1 sm:py-2 "
               >
                 Place order
               </button>

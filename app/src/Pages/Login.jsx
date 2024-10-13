@@ -48,13 +48,11 @@ function Login() {
       });
   };
   return (
-    <div className="w-[100%] flex flex-col items-center pt-[30%] sm:pt-[10%]">
-      <h1 className="flex items-baseline text-l sm:text-xl">
-        LOGIN <hr className="w-10 h-[3px] bg-[#A47C48]" />
-      </h1>
+    <div className="w-[100%] flex flex-col items-center pt-[26%] sm:pt-[8%] h-[100vh]">
+      <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>LOGIN</h1>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-2 w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] mt-[10%] sm:mt-[3%]"
+        className="flex flex-col gap-2 w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] mt-10 bg-[#544A3E] shadow-lg shadow-[#000000] p-5 rounded-2xl" 
       >
         <input
           required
@@ -63,7 +61,7 @@ function Login() {
           onChange={handleInutChange}
           type="email"
           placeholder="Email"
-          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[1%] text-xs"
+          className="focus:outline-none rounded-lg px-[3%] py-[1%] text-xs"
         />
         <div className="min-w-1 relative">
           <input
@@ -73,7 +71,7 @@ function Login() {
             type={`${passToggle ? "text" : "password"}`}
             onChange={handleInutChange}
             placeholder="Password"
-            className="w-[100%] focus:outline-none border-2 border-[#333333] px-[3%] py-[1%] text-xs mt-[3%]"
+            className="w-[100%] focus:outline-none rounded-lg px-[3%] py-[1%] text-xs mt-[3%]"
           />
           <FontAwesomeIcon
             className="text-xs absolute bottom-2 right-2"
@@ -81,13 +79,13 @@ function Login() {
             icon={passToggle ? faEyeSlash : faEye}
           />
         </div>
-        <Link className="text-xs block" to={"/signin"}>
-          Create an account ?
+        <Link className="text-xs block text-[#F9FCFA]" to={"/signin"}>
+          Dont have an account ? Register now
         </Link>
         <div className="text-center mt-[2%]">
           <button
             type="submit"
-            className="bg-black text-[#F5F2E9] text-xs active:scale-95 py-1 px-5 sm:py-2"
+            className="bg-[#D7D2C9] text-[#000000] font-bold rounded-lg shadow-sm shadow-black hover:scale-[1.01] hover:shadow-md hover:shadow-black transition-all duration-200 text-xs active:scale-95 py-1 px-5 sm:py-2"
           >
             {loading ? "Loading..." : "Login"}
           </button>

@@ -66,14 +66,13 @@ function SignIn() {
       });
   };
   return (
-    <div className="w-[100%] flex flex-col items-center pt-[30%] sm:pt-[10%]">
-      <h1 className="flex items-baseline text-l sm:text-xl">
-        SIGN UP <hr className="w-10 h-[3px] bg-[#A47C48]" />
-      </h1>
+    <div className="w-[100%] flex flex-col items-center pt-[26%] sm:pt-[8%] h-[100vh]">
+      <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>REGISTER</h1>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-2 w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] mt-[10%] sm:mt-[3%]"
+        className="flex flex-col gap-2 w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] mt-10 bg-[#544A3E] shadow-lg shadow-[#000000] p-5 rounded-2xl"
       >
+        <div className="flex w-[100%] gap-2 justify-between">
         <input
           required
           value={inputData.name}
@@ -81,8 +80,18 @@ function SignIn() {
           onChange={handleInutChange}
           type="text"
           placeholder="Username"
-          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs"
+          className="focus:outline-none w-[50%] rounded-lg px-3 py-1 text-xs"
         />
+         <input
+          required
+          value={inputData.mobile}
+          name="mobile"
+          type="text"
+          onChange={handleInutChange}
+          placeholder="Mobile"
+          className="focus:outline-none w-[50%] rounded-lg px-3 py-1 text-xs"
+        />
+        </div>
         <input
           required
           value={inputData.email}
@@ -90,16 +99,7 @@ function SignIn() {
           type="email"
           onChange={handleInutChange}
           placeholder="Email"
-          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
-        />
-        <input
-          required
-          value={inputData.mobile}
-          name="mobile"
-          type="text"
-          onChange={handleInutChange}
-          placeholder="Mobile"
-          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
+          className="focus:outline-none rounded-lg px-3 py-1 text-xs"
         />
         <input
           value={inputData.avatar}
@@ -107,9 +107,10 @@ function SignIn() {
           type="text"
           onChange={handleInutChange}
           placeholder="Profile URL (Not requered)"
-          className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%]"
+          className="focus:outline-none rounded-lg px-3 py-1 text-xs"
         />
-        <div className="min-w-1 relative">
+        <div className="flex justify-between gap-2 w-[100%]">
+        <div className="min-w-1 relative w-[50%]">
           <input
             required
             value={inputData.password}
@@ -117,7 +118,7 @@ function SignIn() {
             type={`${passToggle ? "text" : "password"}`}
             onChange={handleInutChange}
             placeholder="Password"
-            className="focus:outline-none border-2 border-[#333333] px-[3%] py-[2%] text-xs mt-[3%] w-[100%]"
+            className="focus:outline-none rounded-lg px-3 py-1 text-xs w-[100%]"
           />
           <FontAwesomeIcon
             className="text-xs absolute bottom-2 right-2"
@@ -125,14 +126,14 @@ function SignIn() {
             icon={passToggle ? faEyeSlash : faEye}
           />
         </div>
-        <div className="min-w-1 relative">
+        <div className="min-w-1 relative w-[50%]">
           <input
             required
             value={conformPassword}
             type={`${passToggle ? "text" : "password"}`}
             onChange={(e) => setConformPassword(e.target.value)}
             placeholder="Conform password"
-            className="focus:outline-none border-2 border-[#1C1C1C] px-[3%] py-[2%] text-xs mt-[3%] w-[100%]"
+            className="focus:outline-none rounded-lg px-3 py-1 text-xs w-[100%]"
           />
           <FontAwesomeIcon
             className="text-xs absolute bottom-2 right-2"
@@ -140,14 +141,15 @@ function SignIn() {
             icon={passToggle ? faEyeSlash : faEye}
           />
         </div>
+        </div>
         <p className={`${errorMessage===""?"hidden":"block"} text-xs text-red-600`}>{errorMessage}</p>
-        <Link className="text-xs block" to={"/login"}>
+        <Link className="text-xs block text-[#F9FCFA]" to={"/login"}>
           Already have an account?
         </Link>
-        <div className="text-center mt-[2%]">
+        <div className="text-center mt-2">
           <button
             type="submit"
-            className="bg-black text-[#F5F2E9] text-xs active:scale-95 py-1 px-5 sm:py-2"
+            className="bg-[#D7D2C9] text-[#000000] font-bold rounded-lg shadow-sm shadow-black border-none hover:scale-[1.01] hover:shadow-md hover:shadow-black transition-all duration-200 text-xs active:scale-95 py-1 px-5 sm:py-2"
           >
             {loading ? "Registering..." : "Register"}
           </button>
