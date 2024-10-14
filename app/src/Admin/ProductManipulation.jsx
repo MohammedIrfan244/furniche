@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Contexts/ShopContext";
 
@@ -18,6 +18,19 @@ function ProductManipulation() {
     category: "",
     review: "",
   });
+
+  useEffect(()=>{
+    setProductData({
+      name: product?.name,
+    rating: product?.rating,
+    price: product?.price,
+    image: product?.image,
+    description: product?.description,
+    original: product?.original,
+    category: product?.category,
+    review: product?.review
+    })
+  },[product])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,10 +56,9 @@ function ProductManipulation() {
   };
 
   return (
-    <div className="flex flex-col sm:flex-row justify-around py-10 px-5">
-      {/* Product Details */}
-      <div className="w-full sm:w-1/2 bg-[#F9FCFA] p-5">
-        <h2 className="text-xl font-semibold mb-4">Product Details</h2>
+    <div className="flex flex-col sm:flex-row justify-around min-h-screen">
+      <div className="w-full sm:w-1/2 bg-[#F9FCFA] p-5 space-y-3">
+        <h2 className="text-xl font-semibold space-y-5">Product Details</h2>
         <p>
           <strong>Name:</strong> {product?.name}
         </p>
@@ -85,10 +97,10 @@ function ProductManipulation() {
         </div>
       </div>
 
-      {/* Edit Product Form */}
-      <div className="w-full sm:w-1/2 bg-[#F9FCFA] p-5 mt-5 sm:mt-0">
+    {/* edit sec */}
+      <div className="w-full sm:w-1/2 bg-[#F9FCFA] p-5 space-y-7 mt-5 sm:mt-0">
         <h2 className="text-xl font-semibold mb-4">Edit Product</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <input
             placeholder="Name"
             required
@@ -105,7 +117,7 @@ function ProductManipulation() {
             min={1}
             max={5}
             value={productData.rating}
-            type="number"
+            type="text"
             className="border border-gray-300 p-2 text-xs"
             onChange={handleInputChange}
           />
@@ -114,7 +126,7 @@ function ProductManipulation() {
             required
             name="price"
             value={productData.price}
-            type="number"
+            type="text"
             className="border border-gray-300 p-2 text-xs"
             onChange={handleInputChange}
           />

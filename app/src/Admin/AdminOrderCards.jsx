@@ -6,6 +6,7 @@ import AdminOrderItemCards from "./AdminOrderItemsCard";
 
 // eslint-disable-next-line react/prop-types
 function AdminOrderCards({ orderItems = {}, user = {} }) {
+  // orderItem ll recieve from parent as a objects
   const { products } = useContext(ShopContext);
   const orderProducts = products.filter(
     (items) => orderItems?.products[items.id]

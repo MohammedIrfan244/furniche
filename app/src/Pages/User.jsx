@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../Contexts/UserContext";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../Contexts/ShopContext";
 import OrderCards from "../shared/OrderCards";
 import ScrollTop from "../shared/ScrollTop";
@@ -17,9 +17,13 @@ function User() {
     userOrders,
   } = useContext(UserContext);
   const { setCartCount } = useContext(ShopContext);
+  const navigate=useNavigate()
+
 
   const handleLogOut = () => {
-    setCurrentUser(null);
+    const checkLogout=confirm("Are you sure you want to logout")
+    if(checkLogout){
+      setCurrentUser(null);
     setCartItems({});
     setCartCount(0);
     setUserOrders([]);
@@ -27,6 +31,8 @@ function User() {
     localStorage.removeItem("currentUser");
     localStorage.removeItem("cartCount");
     localStorage.removeItem("userOrders");
+    navigate("/");
+    }
   };
 
   return (
@@ -64,14 +70,14 @@ function User() {
             <p className="w-[20%]">Mobile</p>
             <p className="flex w-[60%]">{currentUser.mobile}</p>
           </div>
-          <Link className="w-[100%] flex justify-end" to={"/"}>
+          <div className="w-[100%] flex justify-end">
             <button
               className="bg-[#544A3E] rounded-lg shadow-md shadow-black text-[#F5F2E9] text-xs active:scale-95 py-1 px-5 sm:py-2 mt-[2%]"
               onClick={handleLogOut}
             >
               Logout
             </button>
-          </Link>
+          </div>
         </div>
       </div>
       <div className="w-[100%] sm:w-[70%]">

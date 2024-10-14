@@ -850,15 +850,15 @@
       "review": "One of the best chairs ever used"
     },
     {
-      "id": "8e81",
       "name": "Test product 1",
       "rating": 4,
       "price": 100,
-      "image": "image",
-      "description": "good",
-      "original": "false",
-      "category": "chairs",
-      "review": "good"
+      "image": "images",
+      "description": "goodsjlj",
+      "original": "true",
+      "category": "bed",
+      "review": "goodakhflajdkf",
+      "id": "8e81"
     }
   ]
 }

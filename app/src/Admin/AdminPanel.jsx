@@ -7,7 +7,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Contexts/ShopContext";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronRight,
+  faDashboard,
+  faTag,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import AdminProfile from "../assets/Me.jpeg";
 
 function AdminPanel() {
@@ -20,7 +25,9 @@ function AdminPanel() {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    setCurrentUser(null);
+    const checkLogout=confirm("Are you sure you want to logout")
+    if(checkLogout){
+      setCurrentUser(null);
     setCartItems({});
     setCartCount(0);
     setUserOrders([]);
@@ -29,6 +36,7 @@ function AdminPanel() {
     localStorage.removeItem("cartCount");
     localStorage.removeItem("userOrders");
     navigate("/");
+    }
   };
   useEffect(() => {
     setLoading(true);
@@ -82,15 +90,10 @@ function AdminPanel() {
                   className="avatar"
                   src={AdminProfile}
                   alt="User avatar"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src =
-                      "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg";
-                  }}
                 />
                 <div>
                   <p>{currentUser?.name}</p>
-                  <p>Admin</p>
+                  <p className="text-green-500">Admin</p>
                 </div>
               </div>
               <p className="text-xs ps-2 text-red-700">
@@ -102,6 +105,7 @@ function AdminPanel() {
                 className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]"
                 onClick={() => setComponent("dashboard")}
               >
+                <FontAwesomeIcon icon={faDashboard} />
                 Dashboard{" "}
                 <FontAwesomeIcon
                   className={`${
@@ -114,6 +118,7 @@ function AdminPanel() {
                 className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]"
                 onClick={() => setComponent("users")}
               >
+                <FontAwesomeIcon icon={faUser} />
                 Users{" "}
                 <FontAwesomeIcon
                   className={`${component === "users" ? "text-xs" : "hidden"}`}
@@ -124,6 +129,7 @@ function AdminPanel() {
                 className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]"
                 onClick={() => setComponent("products")}
               >
+                <FontAwesomeIcon icon={faTag} />
                 Products{" "}
                 <FontAwesomeIcon
                   className={`${

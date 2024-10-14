@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { useNavigate } from "react-router-dom";
 
@@ -15,7 +15,29 @@ function AdminProduct({ products = [] }) {
     review: "",
   });
   const { addProduct } = useContext(ShopContext);
+  const [filteredProduct, setFilteredProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+
+  // for category
+  const checkCategory = (e) => {
+    if (categories.includes(e.target.value)) {
+      setCategories((prev) => prev.filter((item) => item !== e.target.value));
+    } else {
+      setCategories((prev) => [...prev, e.target.value]);
+    }
+  };
+  useEffect(() => {
+    if (categories.length === 0) {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(
+        products.filter((items) => categories.includes(items.category))
+      );
+    }
+  }, [categories, products]);
+
   const navigate = useNavigate();
+  // for addpro
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     const newValue =
@@ -52,7 +74,7 @@ function AdminProduct({ products = [] }) {
             </tr>
           </thead>
           <tbody>
-            {products?.map((product, index) => (
+            {filteredProduct?.map((product, index) => (
               <tr key={index}>
                 <td className="border border-gray-300 p-2">{product.id}</td>
                 <td className="border border-gray-300 p-2">
@@ -85,7 +107,31 @@ function AdminProduct({ products = [] }) {
           </tbody>
         </table>
       </div>
-      <div className="">
+      <div className="flex flex-col items-center">
+        <h1>CATEGORIES</h1>
+        <div className="bg-[#F9FCFA] shadow-sm flex text-xs py-5 px-2 rounded-md  w-[320px] ms-2 mb-3 justify-between">
+          <p className="text-nowrap text-xs sm:text-[100%]">
+            <input type="checkbox" onChange={checkCategory} value={"bed"} />{" "}
+            BEDS
+          </p>
+          <p className="text-nowrap text-xs sm:text-[100%]">
+            <input type="checkbox" onChange={checkCategory} value={"lamps"} />{" "}
+            LAMPS
+          </p>
+          <p className="text-nowrap text-xs sm:text-[100%]">
+            <input type="checkbox" onChange={checkCategory} value={"tables"} />{" "}
+            TABLES
+          </p>
+          <p className="text-nowrap text-xs sm:text-[100%]">
+            <input type="checkbox" onChange={checkCategory} value={"chairs"} />{" "}
+            CHAIRS
+          </p>
+          <p className="text-nowrap text-xs sm:text-[100%]">
+            <input type="checkbox" onChange={checkCategory} value={"sofas"} />{" "}
+            SOFAS
+          </p>
+        </div>
+        <h1>ADD PRODUCT</h1>
         <form
           onSubmit={formSubmit}
           className="p-2 w-[320px] ms-2 bg-[#F9FCFA] shadow-md rounded-lg space-y-2"

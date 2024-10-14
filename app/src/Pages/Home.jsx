@@ -20,7 +20,7 @@ function Home() {
         <div className="text-center flex flex-col items-center">
           <h1
             className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-wide"
-            style={{ textShadow: "0 0 15px rgba(255, 255, 255)" }}
+            style={{ textShadow: "0 0 15px rgba(255, 255, 255,0.5)" }}
           >
             Settle.com
           </h1>
@@ -31,13 +31,13 @@ function Home() {
           <div className="text-xs text-center gap-16 flex mt-6">
             <Link
               to={currentUser ? "/collection" : "/login"}
-              className="bg-[#F9FCFA] shadow-md shadow-[#000000] text-[#000000] w-24 md:w-36 border-none rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1 font-bold"
+              className="bg-[#F9FCFA] shadow-md shadow-[#544A3E] text-[#000000] w-24 md:w-36 border-none rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1 font-bold"
             >
               Dive in <FontAwesomeIcon className="text-[10px]" icon={faShop} />
             </Link>
             <Link
               to={"/signin"}
-              className="bg-[#000000] text-[#F9FCFA] shadow-lg shadow-[#F9FCFA] border-none w-24 md:w-36 rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1"
+              className="bg-[#000000] text-[#F9FCFA] shadow-lg shadow-[#544A3E] border-none w-24 md:w-36 rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1"
             >
               Sign up now
             </Link>

@@ -13,6 +13,7 @@ const ShopContextProvider = ({ children }) => {
   const navigate=useNavigate()
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+  // the nav count
   const [cartCount, setCartCount] = useState(() => {
     const storedCartCount = localStorage.getItem("cartCount");
     return storedCartCount ? JSON.parse(storedCartCount) : 0;
@@ -35,7 +36,6 @@ const ShopContextProvider = ({ children }) => {
     axios.delete(`http://localhost:3000/products/${id}`)
     .then(()=>{
       setProduct((prevProducts)=>prevProducts.filter((items)=>items.id!==id))
-      // axios.get("http://localhost:3000/users")
       navigate('/adminpanel')
       toast.success("Product removed")
     })
