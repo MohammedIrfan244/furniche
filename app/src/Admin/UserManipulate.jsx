@@ -66,19 +66,19 @@ function UserManipulate() {
         </div>
         <div className="flex justify-between">
           <button
-            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 text-xs rounded-lg"
-            onClick={() => blockUser(userId, !user?.isBlocked)}
-          >
-            {user?.isBlocked ? "Unblock" : "Block"}
-          </button>
-          <button
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 text-xs rounded-lg"
+            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-xs rounded-md"
             onClick={() => removeUser(user.id)}
           >
             Delete
           </button>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-xs rounded-md"
+            onClick={() => blockUser(userId, !user?.isBlocked)}
+          >
+            {user?.isBlocked ? "Unblock" : "Block"}
+          </button>
           <Link
-            className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 text-xs rounded-lg"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-xs rounded-md"
             to={"/adminpanel"}
           >
             Go back

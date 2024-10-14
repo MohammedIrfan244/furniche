@@ -71,7 +71,7 @@ function AdminOrderCards({ orderItems = {}, user = {} }) {
           <p className="w-[20%]">{orderItems?.delivaryStatus}</p>
 
           <button
-            className="bg-blue-500 rounded-md py-1 px-2"
+            className="bg-blue-500 rounded-md py-2 px-3"
             onClick={() => handleStatusPatch("delivaryStatus", "done")}
           >
             Delivery done
@@ -82,7 +82,7 @@ function AdminOrderCards({ orderItems = {}, user = {} }) {
           <p className="w-[20%]">Payment</p>
           <p className="w-[20%]">{orderItems.paymentStatus}</p>
           <button
-            className="bg-blue-500 rounded-md py-1 px-2"
+            className="bg-blue-500 rounded-md py-2 px-3"
             onClick={() => handleStatusPatch("paymentStatus", "paid")}
           >
             Payment done

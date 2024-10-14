@@ -40,7 +40,6 @@ function Contact() {
   };
 
   return (
-    // <form onSubmit={sendMail} className="pt-[30%] min-h-[90vh] flex flex-col justify-center sm:pt-[10%]">
     <div className="pt-[26%] sm:pt-[8%] flex flex-col items-center px-5">
       <h1
         className="text-xl sm:text-2xl font-serif tracking-wide underline mb-8 sm:mb-14"
@@ -48,7 +47,7 @@ function Contact() {
       >
         CONTACT US
       </h1>
-      <div className="shadow-xl shadow-[#000000] gap-5 sm:gap-0 flex flex-col sm:flex-row w-[100%] sm:w-[80%] md:w-[65%] overflow-hidden bg-[#544A3E] p-2 rounded-3xl">
+      <div className="shadow-md shadow-[#000000] gap-5 sm:gap-0 flex flex-col sm:flex-row w-[100%] sm:w-[80%] md:w-[65%] overflow-hidden bg-[#544A3E] p-2 rounded-3xl">
         <div className="w-[100%] sm:w-[45%]">
           <div className="rounded-2xl flex items-end overflow-hidden h-[400px]">
             <img

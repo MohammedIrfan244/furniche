@@ -27,7 +27,7 @@ function Product() {
         <span className="loader"></span>
       ) : (
         <div className="pt-[26%] sm:pt-[10%] flex flex-col items-center">
-          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-[#F9FCFA] rounded-3xl shadow-lg shadow-[#544A3E]">
+          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-[#F9FCFA] rounded-3xl shadow-md shadow-[#544A3E]">
             <div className="w-[100%] sm:w-[50%] flex justify-center rounded-2xl overflow-hidden items-center">
               <img
                 className="hover:scale-[1.01] transition duration-500 ease-in-out ProductPage w-[400px] h-[200px] sm:w-[610px] sm:h-[410px] object-cover"

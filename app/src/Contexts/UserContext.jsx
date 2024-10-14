@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 export const UserContext = createContext();
 
@@ -42,7 +41,6 @@ function UserContextProvider({ children }) {
 
   const addCart = (Id) => {
     setCartItems((prev) => ({ ...prev, [Id]: 1 }));
-    toast.success("Item added to cart");
   };
   useEffect(() => {
     if (currentUser) {

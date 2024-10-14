@@ -70,13 +70,13 @@ function AdminPanel() {
             </h2>
             <div>
               <button
-                className="py-1 px-3 me-5 rounded-md shadow-sm shadow-black bg-[#544A3E] text-[#F9FCFA] text-xs"
+                className="py-2 px-3 me-5 rounded-md bg-blue-500 text-[#F9FCFA] text-xs"
                 onClick={handleLogOut}
               >
                 Log out
               </button>
               <Link
-                className="py-1 px-3 me-5 rounded-md shadow-sm shadow-black bg-[#544A3E] text-[#F9FCFA] text-xs"
+                className="py-2 px-3 me-5 rounded-md bg-blue-500 text-[#F9FCFA] text-xs"
                 to={"/"}
               >
                 Go back

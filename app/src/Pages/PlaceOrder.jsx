@@ -73,7 +73,7 @@ function PlaceOrder() {
               DELIVARY ADDRESS
             </h1>
             <div>
-              <div className="flex flex-col gap-3 mt-[10%] bg-[#F9FCFA] p-3 rounded-lg shadow-md shadow-[#544A3E]">
+              <div className="flex flex-col gap-3 mt-[10%] bg-[#F9FCFA] p-3 rounded-lg shadow-sm shadow-[#544A3E]">
                 <div className="flex gap-3 w-[100%] justify-between">
                   <input
                     required
@@ -135,7 +135,7 @@ function PlaceOrder() {
                   />
                 </div>
               </div>
-              <div className="bg-[#F9FCFA] mt-5 rounded-md text-xs text-red-800 shadow-md shadow-[#544A3E] p-3">
+              <div className="bg-[#F9FCFA] mt-5 rounded-md text-xs text-red-800 shadow-sm shadow-[#544A3E] p-3">
                 <input type="checkbox" required />
                 <label>
                   {" "}
@@ -154,7 +154,7 @@ function PlaceOrder() {
             >
               PAYMENT DETAILS
             </h1>
-            <div className="flex flex-col gap-3 mt-12 bg-[#F9FCFA] p-3 rounded-lg shadow-md shadow-[#544A3E]">
+            <div className="flex flex-col gap-3 mt-12 bg-[#F9FCFA] p-3 rounded-lg shadow-sm shadow-[#544A3E]">
               <div className="flex justify-between">
                 Total :
                 <p className="font-bold">

@@ -7,8 +7,6 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { UserContext } from "../Contexts/UserContext";
 
-// "mobile":"1234567890",
-//       "profile":"",
 function SignIn() {
   const [inputData, setInputData] = useState({
     name: "",

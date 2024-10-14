@@ -44,7 +44,7 @@ function User() {
         >
           USER DETAILS
         </h1>
-        <div className="mt-10 bg-[#F9FCFA] rounded-2xl shadow-md shadow-[#544A3E] p-3 flex flex-col gap-3">
+        <div className="mt-10 bg-[#F9FCFA] rounded-2xl shadow-sm shadow-[#544A3E] p-3 flex flex-col gap-3">
           <div className="flex justify-center">
             <div className="h-36 flex justify-center items-center rounded-full mb-5 overflow-hidden w-36">
               <img

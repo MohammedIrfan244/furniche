@@ -9,7 +9,7 @@ function ProductItems({ id, name, price, image,rating ,original}) {
   const { currency } = useContext(ShopContext);
 
   return (
-    <div className="transition duration-200 overflow-hidden relative border-none rounded-lg shadow-[#544A3E] shadow-md bg-[#F9FCFA] hover:scale-[1.03] hover:shadow-lg ease-in-out hover:shadow-[#544A3E]">
+    <div className="transition duration-200 overflow-hidden relative border-none rounded-lg shadow-[#544A3E] shadow-sm bg-[#F9FCFA] hover:scale-[1.03] hover:shadow-md ease-in-out hover:shadow-[#544A3E]">
       <Link to={`/product/${id}`}>
       {original==="true"?<FontAwesomeIcon title="Hand crafted by our own designers" className="absolute top-2 right-2 z-10 text-[#FFD700]" icon={faCertificate}/>:null}
         <img

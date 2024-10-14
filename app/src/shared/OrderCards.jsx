@@ -1,10 +1,6 @@
 import { useContext} from "react"
 import { ShopContext } from "../Contexts/ShopContext"
 import OrderItemCards from "../Components/OrderItemCards"
-// import { UserContext } from "../Contexts/UserContext"
-// import axios from "axios"
-// import { toast } from "react-toastify"
-
 
 // eslint-disable-next-line react/prop-types
 function OrderCards({orderItems={}}) {
@@ -13,16 +9,9 @@ function OrderCards({orderItems={}}) {
   const orderProducts=products.filter((items) => orderItems?.products[items.id])
   const orderAdress=orderItems?.address
 
-
-  // const handleStatusPatch=(key,value)=>{
-  //   const updatedOrder=user?.orders?.map(items=>items.id==orderItems.id?{...items,[key]:value}:items)
-  //   axios.patch(`http://localhost:3000/users/${user.id}`,{orders:updatedOrder})
-  //   .then(()=>toast.success("Status updated successfully"))
-  //   .catch((err)=>console.log(err.message))
-  // }
   
   return (
-    <div className="border-2 border-[#F9FCFA] bg-[#F9FCFA] w-[100%] flex flex-col gap-3 bg-opacity-75 rounded-lg p-5 shadow-md shadow-[#544A3E]">
+    <div className="border-2 border-[#F9FCFA] bg-[#F9FCFA] w-[100%] flex flex-col gap-3 bg-opacity-75 rounded-lg p-5 shadow-sm shadow-[#544A3E]">
       <div className="flex flex-col gap-3">
       {
         orderProducts?.map((items,index)=><OrderItemCards key={index} id={items.id} count={orderItems.products[items.id]} name={items.name} image={items.image} price={items.price} />)

@@ -94,7 +94,7 @@ function Cart() {
             >
               CART DETAILS
             </h1>
-            <div className="flex flex-col p-3 rounded-md shadow-md shadow-[#544A3E] gap-6 bg-[#F9FCFA] text-xs sm:text-sm">
+            <div className="flex flex-col p-3 rounded-md shadow-sm shadow-[#544A3E] gap-6 bg-[#F9FCFA] text-xs sm:text-sm">
               <div className="flex justify-between">
                 Total Items :<p className="font-bold">{cartCount}</p>
               </div>
