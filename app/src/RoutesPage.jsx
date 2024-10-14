@@ -19,13 +19,11 @@ import UserManipulate from "./Admin/UserManipulate";
 import ProductManipulation from "./Admin/ProductManipulation";
 import Layout from "./Layout/Layout";
 
-
-
 function RoutesPage() {
-  const {currentUser,isAdmin}=useContext(UserContext)
+  const { currentUser, isAdmin } = useContext(UserContext);
   return (
     <div>
-         <Layout>
+      <Layout>
         <Routes>
           <Route
             path="/"
@@ -40,21 +38,39 @@ function RoutesPage() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/product/:Id" element={<Product />} />
-            <Route path="/cart" element={currentUser!=null?<Cart />:<NotFound/>} />
+            <Route
+              path="/cart"
+              element={currentUser != null ? <Cart /> : <NotFound />}
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signin" element={<SignIn />} />
-            <Route path="/placeorder" element={currentUser!=null?<PlaceOrder />:<NotFound/>} />
-            <Route path="/user" element={currentUser!=null?<User />:<Login/>} />
+            <Route
+              path="/placeorder"
+              element={currentUser != null ? <PlaceOrder /> : <NotFound />}
+            />
+            <Route
+              path="/user"
+              element={currentUser != null ? <User /> : <Login />}
+            />
             <Route path="/search" element={<Search />} />
           </Route>
           <Route path="*" element={<NotFound />} />
-            <Route path="/adminpanel" element={isAdmin?<AdminPanel/>:<NotFound/>}/>
-            <Route path="/adminpanel/useraction/:userId" element={isAdmin?<UserManipulate/>:<NotFound/>} />
-            <Route path="/adminpanel/productaction/:productId" element={isAdmin?<ProductManipulation/>:<NotFound/>}/>
+          <Route
+            path="/adminpanel"
+            element={isAdmin ? <AdminPanel /> : <NotFound />}
+          />
+          <Route
+            path="/adminpanel/useraction/:userId"
+            element={isAdmin ? <UserManipulate /> : <NotFound />}
+          />
+          <Route
+            path="/adminpanel/productaction/:productId"
+            element={isAdmin ? <ProductManipulation /> : <NotFound />}
+          />
         </Routes>
       </Layout>
-      </div>
-  )
+    </div>
+  );
 }
 
-export default RoutesPage
+export default RoutesPage;

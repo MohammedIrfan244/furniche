@@ -2,6 +2,7 @@ import { createContext,useContext,useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "./UserContext";
+import { useNavigate } from "react-router-dom";
 export const ShopContext = createContext();
 
 
@@ -9,6 +10,7 @@ export const ShopContext = createContext();
 // eslint-disable-next-line react/prop-types
 const ShopContextProvider = ({ children }) => {
   const {cartItems}=useContext(UserContext)
+  const navigate=useNavigate()
   const [products, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cartCount, setCartCount] = useState(() => {
@@ -27,15 +29,19 @@ const ShopContextProvider = ({ children }) => {
     .finally(()=>setLoading(false))
   }
   const removeProduct=(id)=>{
-    setLoading(true)
+    const checkDelete=confirm("Are you sure you want to delete the product ?")
+    if(checkDelete){
+      setLoading(true)
     axios.delete(`http://localhost:3000/products/${id}`)
     .then(()=>{
       setProduct((prevProducts)=>prevProducts.filter((items)=>items.id!==id))
-      axios.get("http://localhost:3000/users")
+      // axios.get("http://localhost:3000/users")
+      navigate('/adminpanel')
       toast.success("Product removed")
     })
     .catch((err)=>console.log(err))
     .finally(()=>setLoading(false))
+    }
   }
   const editProduct=(id,editedProduct)=>{
     setLoading(true)

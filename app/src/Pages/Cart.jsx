@@ -43,48 +43,57 @@ function Cart() {
         <div className="w-[100%] flex flex-col sm:flex-row gap-9 px-5 pt-[26%] sm:pt-[8%] ">
           {cartProducts.length == 0 && !loading ? (
             <div className="text-gray-500 h-[60vh] w-[100vw] flex justify-center items-center">
-              <FontAwesomeIcon className="text-xl sm:text-3xl md:text-6xl" icon={faCartArrowDown}/>
+              <FontAwesomeIcon
+                className="text-xl sm:text-3xl md:text-6xl"
+                icon={faCartArrowDown}
+              />
             </div>
           ) : null}
 
           <div
             className={
-              cartProducts.length == 0
-                ? "hidden"
-                : "w-[100%] sm:w-[65%]"
+              cartProducts.length == 0 ? "hidden" : "w-[100%] sm:w-[65%]"
             }
           >
-           <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>CART ITEMS</h1>
-           <div className="flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin sm:h-[70vh]">
-            {cartProducts.map((item, index) => (
-              <CartCards
-                key={index}
-                count={cartItems[item.id]}
-                incCartCount={() => incCart(item)}
-                decCartCount={() => decCart(item)}
-                removeCart={() =>
-                  setCartItems((prev) => {
-                    const newItems = { ...prev };
-                    delete newItems[item.id];
-                    return newItems;
-                  })
-                }
-                image={item.image}
-                price={item.price}
-                name={item.name}
-                id={item.id}
-              />
-            ))}
+            <h1
+              className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10"
+              style={{ textShadow: "0 0 1px #000000" }}
+            >
+              CART ITEMS
+            </h1>
+            <div className="flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin sm:h-[70vh]">
+              {cartProducts.map((item, index) => (
+                <CartCards
+                  key={index}
+                  count={cartItems[item.id]}
+                  incCartCount={() => incCart(item)}
+                  decCartCount={() => decCart(item)}
+                  removeCart={() =>
+                    setCartItems((prev) => {
+                      const newItems = { ...prev };
+                      delete newItems[item.id];
+                      return newItems;
+                    })
+                  }
+                  image={item.image}
+                  price={item.price}
+                  name={item.name}
+                  id={item.id}
+                />
+              ))}
             </div>
           </div>
           <div
             className={
-              cartProducts.length == 0
-                ? "hidden"
-                : "w-[100%] sm:w-[30%]"
+              cartProducts.length == 0 ? "hidden" : "w-[100%] sm:w-[30%]"
             }
           >
-            <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>CART DETAILS</h1>
+            <h1
+              className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10"
+              style={{ textShadow: "0 0 1px #000000" }}
+            >
+              CART DETAILS
+            </h1>
             <div className="flex flex-col p-3 rounded-md shadow-md shadow-[#544A3E] gap-6 bg-[#F9FCFA] text-xs sm:text-sm">
               <div className="flex justify-between">
                 Total Items :<p className="font-bold">{cartCount}</p>
@@ -110,19 +119,19 @@ function Cart() {
                   {cartTotal + shippingFee}.00
                 </p>
               </div>
-            <div className="text-right bg mt-[3%]">
-              <Link
-                className="bg-[#544A3E] rounded-lg shadow-sm shadow-[#544A3E] text-[#F5F2E9] active:scale-75 transition duration-200 px-5 py-1 sm:py-2 w-[40%] text-xs text-center"
-                to={"/placeorder"}
-              >
-                Proceed to payment
-              </Link>
-            </div>
+              <div className="text-right bg mt-[3%]">
+                <Link
+                  className="bg-[#544A3E] rounded-lg shadow-sm shadow-[#544A3E] text-[#F5F2E9] active:scale-75 transition duration-200 px-5 py-1 sm:py-2 w-[40%] text-xs text-center"
+                  to={"/placeorder"}
+                >
+                  Proceed to payment
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       )}
-      <ScrollTop/>
+      <ScrollTop />
     </div>
   );
 }

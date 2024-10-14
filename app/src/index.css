@@ -8,11 +8,11 @@ background:#D7D2C9
 dark bg:#544A3E 
 gold:#FFD700 */
 body {
-  background-color: #D7D2C9;
+  background-color: #d7d2c9;
   color: #000000;
   font-weight: 500;
 }
-a{
+a {
   transition-duration: 150ms;
 }
 a.active {
@@ -23,17 +23,19 @@ a.active hr {
   border-radius: 100%;
   background-color: #000000;
 }
-img:not(.Logo,.ProductPage,.cartCard,.payments) {
+img:not(.Logo, .ProductPage, .cartCard, .payments) {
   width: 200px;
   height: 150px;
   object-fit: cover;
 }
-img.avatar{
+img.avatar {
   height: 50px;
   width: 50px;
   border-radius: 50%;
 }
-.loader, .loader:before, .loader:after {
+.loader,
+.loader:before,
+.loader:after {
   border-radius: 50%;
   width: 2.5em;
   height: 2.5em;
@@ -41,7 +43,7 @@ img.avatar{
   animation: bblFadInOut 1.8s infinite ease-in-out;
 }
 .loader {
-  color: #544A3E;
+  color: #544a3e;
   font-size: 7px;
   position: relative;
   text-indent: -9999em;
@@ -50,7 +52,7 @@ img.avatar{
 }
 .loader:before,
 .loader:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
 }
@@ -63,16 +65,20 @@ img.avatar{
 }
 
 @keyframes bblFadInOut {
-  0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em }
-  40% { box-shadow: 0 2.5em 0 0 }
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0;
+  }
 }
 
 body {
   scrollbar-width: none;
 }
 
-
 ::-webkit-scrollbar {
   display: none;
 }
-

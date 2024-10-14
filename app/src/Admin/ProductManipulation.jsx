@@ -21,7 +21,8 @@ function ProductManipulation() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const newValue = name === "rating" || name === "price" ? Number(value) : value;
+    const newValue =
+      name === "rating" || name === "price" ? Number(value) : value;
     setProductData((prevData) => ({ ...prevData, [name]: newValue }));
   };
 
@@ -46,14 +47,42 @@ function ProductManipulation() {
       {/* Product Details */}
       <div className="w-full sm:w-1/2 bg-[#F9FCFA] p-5">
         <h2 className="text-xl font-semibold mb-4">Product Details</h2>
-        <p><strong>Name:</strong> {product?.name}</p>
-        <p><strong>Image:</strong> <img src={product?.image} alt="Product" className="w-32 h-auto" /></p>
-        <p><strong>Price:</strong> ${product?.price}</p>
-        <p><strong>Rating:</strong> {product?.rating}</p>
-        <p><strong>Description:</strong> {product?.description}</p>
-        <p><strong>Category:</strong> {product?.category}</p>
-        <p><strong>Review:</strong> {product?.review}</p>
-        <button onClick={() => removeProduct(product.id)} className="mt-4 px-4 py-2 rounded-md bg-red-500 text-white">Remove</button>
+        <p>
+          <strong>Name:</strong> {product?.name}
+        </p>
+        <p>
+          <strong>Image:</strong>{" "}
+          <img src={product?.image} alt="Product" className="w-32 h-auto" />
+        </p>
+        <p>
+          <strong>Price:</strong> ${product?.price}
+        </p>
+        <p>
+          <strong>Rating:</strong> {product?.rating}
+        </p>
+        <p>
+          <strong>Description:</strong> {product?.description}
+        </p>
+        <p>
+          <strong>Category:</strong> {product?.category}
+        </p>
+        <p>
+          <strong>Review:</strong> {product?.review}
+        </p>
+        <div className="flex justify-between">
+          <button
+            onClick={() => removeProduct(product.id)}
+            className="mt-4 px-4 py-2 rounded-md bg-red-500 text-white"
+          >
+            Remove
+          </button>
+          <button
+            onClick={() => navigate("/adminpanel")}
+            className="mt-4 px-4 py-2 rounded-md bg-blue-500 text-white"
+          >
+            Go back
+          </button>
+        </div>
       </div>
 
       {/* Edit Product Form */}
@@ -141,7 +170,12 @@ function ProductManipulation() {
             className="border border-gray-300 p-2 text-xs"
             onChange={handleInputChange}
           />
-          <button type="submit" className="px-4 rounded-md py-2 bg-blue-500 text-white">Edit Product</button>
+          <button
+            type="submit"
+            className="px-4 rounded-md py-2 bg-blue-500 text-white"
+          >
+            Edit Product
+          </button>
         </form>
       </div>
     </div>

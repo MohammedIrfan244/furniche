@@ -4,22 +4,23 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 function Login() {
-  const { setCurrentUser ,setCartItems ,setUserOrders} = useContext(UserContext);
-  const[loginData,setLoginData]=useState({
-    email:"",
-    password:""
-  })
+  const { setCurrentUser, setCartItems, setUserOrders } =
+    useContext(UserContext);
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleInutChange=(e)=>{
-    const {name,value}=e.target
-    setLoginData((prev)=>({...prev,[name]:value}))
-  }
+  const handleInutChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,14 +30,17 @@ function Login() {
       .then((response) => {
         const users = response.data;
         const inputUser = users.find(
-          (items) => items.email == loginData.email && items.password == loginData.password
+          (items) =>
+            items.email == loginData.email &&
+            items.password == loginData.password
         );
         if (inputUser) {
-          inputUser.isBlocked?toast.error("User is blocked by admin")
-          :(setCurrentUser(inputUser),
-          setCartItems(inputUser.cart),
-          setUserOrders(inputUser.orders),
-          toast.success("You have been logged in"))
+          inputUser.isBlocked
+            ? toast.error("User is blocked by admin")
+            : (setCurrentUser(inputUser),
+              setCartItems(inputUser.cart),
+              setUserOrders(inputUser.orders),
+              toast.success("You have been logged in"));
           navigate("/");
         } else {
           toast.error("Invalid email or password");
@@ -49,10 +53,15 @@ function Login() {
   };
   return (
     <div className="w-[100%] flex flex-col items-center pt-[26%] sm:pt-[8%] h-[100vh]">
-      <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{textShadow:'0 0 1px #000000'}}>LOGIN</h1>
+      <h1
+        className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10"
+        style={{ textShadow: "0 0 1px #000000" }}
+      >
+        LOGIN
+      </h1>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-2 w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] mt-10 bg-[#544A3E] shadow-lg shadow-[#000000] p-5 rounded-2xl" 
+        className="flex flex-col gap-2 w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] mt-10 bg-[#544A3E] shadow-lg shadow-[#000000] p-5 rounded-2xl"
       >
         <input
           required

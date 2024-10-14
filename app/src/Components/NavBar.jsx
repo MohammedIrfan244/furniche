@@ -2,27 +2,29 @@ import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
-  faUser,
   faCartShopping,
-  faBars
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import { ShopContext } from "../Contexts/ShopContext";
-
-
-
+import AdminProfile from '../assets/Me.jpeg'
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
-  const { currentUser,isAdmin  } = useContext(UserContext);
-  const{cartCount}=useContext(ShopContext)
+  const { currentUser, isAdmin } = useContext(UserContext);
+  const { cartCount } = useContext(ShopContext);
   return (
     <div className="fixed w-[100%] pt-5 px-5 bg-[#D7D2C9] z-20 border-b-2 border-[#544A3E]">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <h2 className="font-serif text-2xl sm:text-3xl font-medium" style={{textShadow:'0 0 1px #000000'}}>Settle.com</h2>
+            <h2
+              className="font-serif text-2xl sm:text-3xl font-medium"
+              style={{ textShadow: "0 0 1px #000000" }}
+            >
+              Settle.com
+            </h2>
           </Link>
         </div>
         <ul className="hidden sm:flex gap-4 text-sm font-bold">
@@ -50,7 +52,9 @@ function NavBar() {
           </NavLink>
           <NavLink
             to={"/adminpanel"}
-            className={`${isAdmin?"flex flex-col items-center gap-1":"hidden"}`}
+            className={`${
+              isAdmin ? "flex flex-col items-center gap-1" : "hidden"
+            }`}
           >
             <p>ADMIN PANEL</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
@@ -79,10 +83,26 @@ function NavBar() {
             to={currentUser == null ? "/login" : "/user"}
             className=" group relative"
           >
-           {currentUser==null?<p className="bg-[#000000] text-[#F9FCFA] text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2 shadow-md">Login</p>: <FontAwesomeIcon
-              className=" cursor-pointer hover:scale-110 transition duration-300"
-              icon={faUser}
-            />}
+            {currentUser == null ? (
+              <p className="bg-[#000000] text-[#F9FCFA] text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2 shadow-md">
+                Login
+              </p>
+            ) : (
+              <div>
+                <div className="h-8 flex justify-center items-center rounded-full overflow-hidden w-8 mb-1">
+              <img
+              className="Logo"
+                src={currentUser.isAdmin ? AdminProfile : currentUser.avatar}
+                alt="User avatar"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg";
+                }}
+              />
+            </div>
+              </div>
+            )}
           </Link>
           <FontAwesomeIcon
             onClick={() => setVisible(true)}
@@ -107,7 +127,11 @@ function NavBar() {
               <NavLink onClick={() => setVisible(false)} to={"/contact"}>
                 CONTACT
               </NavLink>
-              <NavLink onClick={() => setVisible(false)} to={"/adminpanel"} className="whitespace-nowrap">
+              <NavLink
+                onClick={() => setVisible(false)}
+                to={"/adminpanel"}
+                className={`${!isAdmin?"hidden":null} whitespace-nowrap`}
+              >
                 ADMIN PANEL
               </NavLink>
               <Link onClick={() => setVisible(false)}>CLOSE</Link>
