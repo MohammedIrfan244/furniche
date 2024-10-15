@@ -18,9 +18,11 @@ import AdminPanel from "./Admin/AdminPanel";
 import UserManipulate from "./Admin/UserManipulate";
 import ProductManipulation from "./Admin/ProductManipulation";
 import Layout from "./Layout/Layout";
+import { ShopContext } from "./Contexts/ShopContext";
 
 function RoutesPage() {
   const { currentUser, isAdmin } = useContext(UserContext);
+  const {cartCount}=useContext(ShopContext)
   return (
     <div>
       <Layout>
@@ -46,7 +48,7 @@ function RoutesPage() {
             <Route path="/signin" element={<SignIn />} />
             <Route
               path="/placeorder"
-              element={currentUser != null ? <PlaceOrder /> : <NotFound />}
+              element={currentUser != null && cartCount!==0 ? <PlaceOrder /> : <NotFound />}
             />
             <Route
               path="/user"
