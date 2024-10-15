@@ -32,12 +32,11 @@ function UserContextProvider({ children }) {
     if (cartItems) {
       updateLocalStorage("cartItems", cartItems);
     }
-  }, [cartItems]);
-  useEffect(() => {
     if (userOrders) {
       updateLocalStorage("userOrders", userOrders);
     }
-  }, [userOrders]);
+  }, [cartItems, userOrders]);
+
 
   const addCart = (Id) => {
     setCartItems((prev) => ({ ...prev, [Id]: 1 }));

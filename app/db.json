@@ -859,15 +859,15 @@
       "review": "One of the best chairs ever used"
     },
     {
-      "name": "Test product 1",
+      "name": "new product new",
       "rating": 4,
-      "price": 100,
-      "image": "images",
-      "description": "goodsjlj",
+      "price": 10000,
+      "image": "image",
+      "description": "good",
       "original": "true",
-      "category": "bed",
-      "review": "goodakhflajdkf",
-      "id": "8e81"
+      "category": "sofas",
+      "review": "ook",
+      "id": "6473"
     }
   ]
 }
