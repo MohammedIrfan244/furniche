@@ -89,7 +89,7 @@ function NavBar() {
               </p>
             ) : (
               <div>
-                <div className="h-8 flex justify-center items-center rounded-full overflow-hidden w-8 mb-1">
+                <div className="h-6 flex justify-center items-center rounded-full overflow-hidden w-6">
               <img
               className="Logo"
                 src={currentUser.isAdmin ? AdminProfile : currentUser.avatar}

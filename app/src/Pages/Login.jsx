@@ -5,7 +5,6 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { fallbackData } from "../data";
 
 function Login() {
   const { setCurrentUser, setCartItems, setUserOrders } =
@@ -49,23 +48,6 @@ function Login() {
       })
       .catch((err) => {
         console.log(err)
-        const users = fallbackData.users;
-        const inputUser = users.find(
-          (items) =>
-            items.email == loginData.email &&
-            items.password == loginData.password
-        );
-        if (inputUser) {
-          inputUser.isBlocked
-            ? toast.error("User is blocked by admin")
-            : (setCurrentUser(inputUser),
-              setCartItems(inputUser.cart),
-              setUserOrders(inputUser.orders),
-              toast.success("You have been logged in"));
-          navigate("/");
-        } else {
-          toast.error("Invalid email or password");
-        }
       })
       .finally(() => {
         setLoading(false);
