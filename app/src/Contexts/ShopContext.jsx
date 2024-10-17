@@ -3,6 +3,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { UserContext } from "./UserContext";
 import { useNavigate } from "react-router-dom";
+import { fallbackData } from "../data";
+
+
+
 export const ShopContext = createContext();
 
 
@@ -72,7 +76,10 @@ const ShopContextProvider = ({ children }) => {
     axios
       .get("http://localhost:3000/products")
       .then((response) => setProduct(response.data))
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err)
+        setProduct(fallbackData)
+      })
       .finally(() => setLoading(false));
   }, []);
 
