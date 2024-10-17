@@ -51,7 +51,7 @@ function Contact() {
         <div className="w-[100%] sm:w-[45%]">
           <div className="rounded-2xl flex items-end overflow-hidden h-[400px]">
             <img
-              className="hover:scale-[1.01] transition duration-500 ease-in-out Logo h-[600px]"
+              className="hover:scale-[1.01] object-cover transition duration-500 ease-in-out Logo h-[600px] w-full sm:w-auto"
               src={ContactImage}
               alt="image"
             />
@@ -78,7 +78,7 @@ function Contact() {
                 onChange={(e) =>
                   setFormData({ ...formData, ["name"]: e.target.value })
                 }
-                className="text-xs w-full rounded-md sm:rounded-lg px-3 sm:py-1 focus:outline-none"
+                className="text-xs w-full rounded-md sm:rounded-lg px-3 py-1 focus:outline-none"
                 type="text"
                 placeholder="Username"
               />
@@ -91,7 +91,7 @@ function Contact() {
                 onChange={(e) =>
                   setFormData({ ...formData, ["email"]: e.target.value })
                 }
-                className="text-xs px-3 sm:py-1 w-full rounded-md sm:rounded-lg focus:outline-none"
+                className="text-xs px-3 py-1 w-full rounded-md sm:rounded-lg focus:outline-none"
                 type="email"
                 placeholder="Email"
               />
@@ -105,7 +105,7 @@ function Contact() {
                 onChange={(e) =>
                   setFormData({ ...formData, ["message"]: e.target.value })
                 }
-                className="text-xs w-full rounded-md sm:rounded-lg px-3 sm:py-1 focus:outline-none"
+                className="text-xs w-full rounded-md sm:rounded-lg px-3 py-1 focus:outline-none"
               />
             </div>
             <button
