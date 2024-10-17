@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ScrollTop from "../shared/ScrollTop";
 import AdminOrderCards from "./AdminOrderCards";
@@ -9,20 +9,20 @@ function UserManipulate() {
   const { userId } = useParams();
   const { state } = useLocation();
   const [user, setUser] = useState(state?.user);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const removeUser = (userId) => {
-    const checkDelete=confirm("Are you sure you want to delete ?")
-    if(checkDelete){
-        axios
-      .delete(`http://localhost:3000/users/${userId}`)
-      .then(() => {
-        navigate("/adminpanel");
-        toast.success("User has been removed");
-      })
-      .catch((err) => console.log(err));    
-    }
-  };
+  // const removeUser = (userId) => {
+  //   const checkDelete=confirm("Are you sure you want to delete ?")
+  //   if(checkDelete){
+  //       axios
+  //     .delete(`http://localhost:3000/users/${userId}`)
+  //     .then(() => {
+  //       navigate("/adminpanel");
+  //       toast.success("User has been removed");
+  //     })
+  //     .catch((err) => console.log(err));    
+  //   }
+  // };
 
   const blockUser = (userId, blockToggle) => {
     axios
@@ -65,12 +65,12 @@ function UserManipulate() {
           <p className="w-2/3">{user.mobile}</p>
         </div>
         <div className="flex justify-between">
-          <button
+          {/* <button
             className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-xs rounded-md"
             onClick={() => removeUser(user.id)}
           >
             Delete
-          </button>
+          </button> */}
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-xs rounded-md"
             onClick={() => blockUser(userId, !user?.isBlocked)}
