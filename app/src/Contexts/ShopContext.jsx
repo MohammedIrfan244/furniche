@@ -78,7 +78,7 @@ const ShopContextProvider = ({ children }) => {
       .then((response) => setProduct(response.data))
       .catch((err) => {
         console.log(err)
-        setProduct(fallbackData)
+        setProduct(fallbackData.products)
       })
       .finally(() => setLoading(false));
   }, []);
