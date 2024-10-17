@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShop } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import { UserContext } from "../Contexts/UserContext";
-import HomeImage from "../assets/LandingPageBackground.jpg";
+// import HomeImage from "../assets/LandingPageBackground.jpg";
 import ScrollTop from "../shared/ScrollTop";
 
 function Home() {
@@ -15,7 +15,7 @@ function Home() {
     <div>
       <div
         className="w-[100%] h-[110vh] pt-32 sm:pt-36 lg:pt-20 bg-center bg-cover shadow-md shadow-[#000000]"
-        style={{ backgroundImage: `url(${HomeImage})` }}
+        // style={{ backgroundImage: `url(${HomeImage})` }}
       >
         <div className="text-center flex flex-col items-center">
           <h1
