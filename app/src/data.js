@@ -450,17 +450,6 @@ export const fallbackData = [
         original: "false",
         category: "chairs",
         review: "One of the best chairs ever used"
-      },
-      {
-        name: "new product new",
-        rating: 4,
-        price: 10000,
-        image: "image",
-        description: "good",
-        original: "true",
-        category: "sofas",
-        review: "ook",
-        id: "6473"
       }
     ]
   ;
