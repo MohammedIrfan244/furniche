@@ -22,9 +22,7 @@
       "avatar": "https://cdn.inflact.com/media/447239586_1168904911117798_7884012072017660112_n.jpg?url=https%3A%2F%2Fscontent.cdninstagram.com%2Fv%2Ft51.2885-19%2F447239586_1168904911117798_7884012072017660112_n.jpg%3Fstp%3Ddst-jpg_s320x320%26_nc_ht%3Dinstagram.fbkk10-1.fna.fbcdn.net%26_nc_cat%3D110%26_nc_ohc%3D0vDYyjJJL9gQ7kNvgGQynOB%26_nc_gid%3D2d4378dbff1143febe050942a85ec236%26edm%3DAOQ1c0wBAAAA%26ccb%3D7-5%26oh%3D00_AYDkCvd3nd2GN_tGZIHxJIiF2UJ1aG_emBJKTsHJ_1oRyA%26oe%3D67126D29%26_nc_sid%3D8b3546&time=1728882000&key=fc4b55f05c41be67fcd5d963abdff0d6",
       "mobile": "1234567890",
       "password": "anasaa",
-      "cart": {
-        "1": 1
-      },
+      "cart": {},
       "isAdmin": false,
       "isBlocked": false,
       "orders": [
@@ -106,6 +104,26 @@
           "totalAmount": 50550,
           "paymentStatus": "paid",
           "delivaryStatus": "done"
+        },
+        {
+          "id": "8bdc551a-ee3c-4a76-967d-6879f3d3100b",
+          "products": {
+            "1": 5,
+            "19": 1,
+            "28": 1,
+            "41": 1
+          },
+          "address": {
+            "firstName": "mohammed",
+            "lastName": "Anas",
+            "email": "anas@gmail.com",
+            "mobile": "1234567890",
+            "place": "Perinthalmanna",
+            "pin": "679324"
+          },
+          "totalAmount": 86050,
+          "paymentStatus": "pending",
+          "delivaryStatus": "pending"
         }
       ]
     },
