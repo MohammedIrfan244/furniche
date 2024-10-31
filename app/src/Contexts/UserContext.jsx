@@ -53,7 +53,7 @@ function UserContextProvider({ children }) {
       JSON.stringify(currentUser ? currentUser : null)
     );
   }, [currentUser]);
-
+  
   const value = {
     currentUser,
     setCurrentUser,

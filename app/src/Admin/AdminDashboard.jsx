@@ -17,6 +17,7 @@ ChartJS.register(
   Legend
 );
 
+
 // eslint-disable-next-line react/prop-types
 function AdminDashboard({ users = [], products = [] }) {
   const userCount = users?.length;

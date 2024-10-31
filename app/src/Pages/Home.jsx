@@ -22,7 +22,7 @@ function Home() {
             className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-wide"
             style={{ textShadow: "0 0 15px rgba(255, 255, 255,0.5)" }}
           >
-            Settle.com
+            Furniche
           </h1>
           <div className="text-xs sm:text-[10px] font-bold mt-3 md:mt-2 lg:mt-1">
             <p>A place where craft meets comforts, blending timeless</p>

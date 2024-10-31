@@ -14,7 +14,6 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import AdminProfile from "../assets/Me.jpeg";
-
 function AdminPanel() {
   const { currentUser, setCurrentUser, setCartItems, setUserOrders } =
     useContext(UserContext);
@@ -25,17 +24,17 @@ function AdminPanel() {
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    const checkLogout=confirm("Are you sure you want to logout")
-    if(checkLogout){
+    const checkLogout = confirm("Are you sure you want to logout");
+    if (checkLogout) {
       setCurrentUser(null);
-    setCartItems({});
-    setCartCount(0);
-    setUserOrders([]);
-    localStorage.removeItem("cartItems");
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("cartCount");
-    localStorage.removeItem("userOrders");
-    navigate("/");
+      setCartItems({});
+      setCartCount(0);
+      setUserOrders([]);
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("cartCount");
+      localStorage.removeItem("userOrders");
+      navigate("/");
     }
   };
   useEffect(() => {
@@ -66,7 +65,7 @@ function AdminPanel() {
               className="font-serif text-2xl sm:text-3xl font-medium"
               style={{ textShadow: "0 0 1px #000000" }}
             >
-              Settle.com
+              Furniche
             </h2>
             <div>
               <button
@@ -86,11 +85,7 @@ function AdminPanel() {
           <div className="flex">
             <div className="w-[20%] border-r-2 border-[#544A3E] h-screen bg-[#FFFFFF] flex flex-col gap-5 px-5 pt-10">
               <div className="flex w-[100%] gap-5 text-sm">
-                <img
-                  className="avatar"
-                  src={AdminProfile}
-                  alt="User avatar"
-                />
+                <img className="avatar" src={AdminProfile} alt="User avatar" />
                 <div>
                   <p>{currentUser?.name}</p>
                   <p className="text-green-500">Admin</p>

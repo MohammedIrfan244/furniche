@@ -23,7 +23,7 @@ function NavBar() {
               className="font-serif text-2xl sm:text-3xl font-medium"
               style={{ textShadow: "0 0 1px #000000" }}
             >
-              Settle.com
+              Furniche
             </h2>
           </Link>
         </div>

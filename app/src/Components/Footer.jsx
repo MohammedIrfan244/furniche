@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 function Footer() {
   return (
     <>
@@ -9,10 +8,10 @@ function Footer() {
             className="font-serif text-sm sm:text-md md:text-lg"
             style={{ textShadow: "0 0 1px #000000" }}
           >
-            Settle.com
+            Furniche
           </h1>
           <p className="text-[3%] sm:text-[5%] md:text-xs">
-            At Settle.com, we believe in delivering quality furniture that
+            At Furniche, we believe in delivering quality furniture that
             brings style and comfort to your home. With a commitment to
             exceptional craftsmanship and customer satisfaction, we make it easy
             to find pieces you’ll love for years to come.
@@ -42,13 +41,13 @@ function Footer() {
               +91 88915 55811
             </li>
             <li className="text-[3%] sm:text-[5%] md:text-xs">
-              <Link to={"/contact"}>settlecom@gmail.com</Link>
+              <Link to={"/contact"}>furniche@gmail.com</Link>
             </li>
           </ul>
         </div>
       </div>
       <p className="text-center text-xs mb-2 font-bold">
-        &copy; 2024 Settle.com . All Rights Reserved
+        &copy; 2024 Furniche . All Rights Reserved
       </p>
     </>
   );

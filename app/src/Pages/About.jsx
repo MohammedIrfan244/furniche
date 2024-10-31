@@ -15,14 +15,14 @@ function About() {
         </h1>
         <div className="mt-3 md:mt-5 text-xs sm:text-sm md:text-base lg:mt-10 bg-[rgba(215,210,201,0.5)] backdrop-blur-sm p-5 rounded-lg">
           <p>
-            Welcome to Settle.com, your destination for modern and stylish
+            Welcome to Furniche, your destination for modern and stylish
             e-commerce shopping. We pride ourselves on offering a carefully
             curated selection of products from a variety of reputable brand
             companies, ensuring that you find only the best for your home. In
             addition to showcasing exceptional brands, we are excited to present
             our exclusive line of furniture and decor under our &quot;In-House
             Design&quot; label, which embodies our commitment to quality and
-            design innovation. At Settle, we believe that furniture should not
+            design innovation. At Furniche, we believe that furniture should not
             only be functional but also reflect your personal style. Our
             collection combines classic sophistication with modern trends,
             helping you create a space that feels like home. We prioritize
@@ -31,10 +31,10 @@ function About() {
             confidence knowing that your choices support a healthier planet.
             Join us in transforming your living spaces into places of comfort
             and inspiration, and experience the perfect blend of quality, style,
-            and sustainability with Settle.com.
+            and sustainability with Furniche.
           </p>
           <p className="mt-4">
-            Thank you for choosing Settle.com to furnish your homes. Your
+            Thank you for choosing Furniche to furnish your homes. Your
             support means the world to us and helps promote a more sustainable
             future.
           </p>

@@ -63,7 +63,7 @@ function Contact() {
               <FontAwesomeIcon icon={faPhone} /> +91 8987675643
             </p>
             <p className="">
-              <FontAwesomeIcon icon={faEnvelope} /> settle@gmail.com
+              <FontAwesomeIcon icon={faEnvelope} /> furniche@gmail.com
             </p>
           </div>
           <form

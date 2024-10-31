@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // eslint-disable-next-line react/prop-types
 function AdminOrderItemCards({ image, name, price, count, id }) {
   const { currency } = useContext(ShopContext);
-
+  
   return (
     <div className="flex justify-between bg-white p-1 w-full items-center">
       <div className="flex gap-4">
