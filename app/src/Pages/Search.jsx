@@ -30,7 +30,7 @@ function Search() {
       {loading ? (
         <span className="loader"></span>
       ) : (
-        <div className="flex flex-col items-center h-screen w-[100%] pt-[30%] sm:pt-[10%]">
+        <div className="flex flex-col items-center h-auto w-[100%] pt-[30%] sm:pt-[10%]">
           <input
             type="text"
             value={search}
