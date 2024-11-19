@@ -1,19 +1,23 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
-import mongoDb from "./config/mongodb.js";
+import connectCloudinary from "./config/cloudinary.js";
+import connectDb from './config/mongodb.js'
+import authRoute from './routes/authRoutes.js'
 
 // app config
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
-mongoDb();
+connectDb()
+connectCloudinary()
 
 // middlewares
 app.use(express.json());
-app.use(cors());
 
 // api endpoints
+app.use('/user',authRoute)
+
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
