@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import connectCloudinary from "./config/cloudinary.js";
 import connectDb from './config/mongodb.js'
-import authRoute from './routes/authRoutes.js'
+import userRoute from './routes/userRoutes.js'
 
 // app config
 dotenv.config();
@@ -15,7 +15,7 @@ connectCloudinary()
 app.use(express.json());
 
 // api endpoints
-app.use('/user',authRoute)
+app.use('/user',userRoute)
 
 
 app.get("/", (req, res) => {
