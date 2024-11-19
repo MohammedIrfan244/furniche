@@ -24,9 +24,7 @@ a.active hr {
   background-color: #000000;
 }
 img:not(.Logo, .ProductPage, .cartCard, .payments) {
-  width: 200px;
   height: 150px;
-  object-fit: cover;
 }
 img.avatar {
   height: 50px;

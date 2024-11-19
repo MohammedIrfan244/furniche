@@ -41,8 +41,8 @@ function Collection() {
           >
             SHOP COLLECTIONS
           </h1>
-          <div className="flex flex-col sm:flex-row justify-between w-full px-1 sm:px-2">
-            <div className="bg-[#F9FCFA] sm:w-[25%] md:w-[20%] lg:w-[10%] sm:h-36 sm:ps-3 hover:scale-[1.02] transition duration-200 flex sm:flex-col justify-around py-3 mb-10 rounded-md shadow-md shadow-[#544A3E]">
+          <div className="w-full px-2">
+            <div className="bg-[#F9FCFA] flex items-center justify-between h-10 mb-5 p-3 rounded-md">
               <p className="text-nowrap text-xs sm:text-[100%]">
                 <input type="checkbox" onChange={checkCategory} value={"bed"} />{" "}
                 BEDS
@@ -80,7 +80,8 @@ function Collection() {
                 SOFAS
               </p>
             </div>
-            <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12">
+            
+            <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 w-full">
               {filteredProducts.map((item, index) => (
                 <ProductItems
                   key={index}

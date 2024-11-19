@@ -14,7 +14,7 @@ function Home() {
   return (
     <div>
       <div
-        className="w-[100%] h-[110vh] pt-32 sm:pt-36 lg:pt-20 bg-center bg-cover shadow-md shadow-[#000000]"
+        className="w-[100%] h-[110vh] pt-32 sm:pt-36 lg:pt-20 bg-center bg-cover "
         style={{ backgroundImage: `url(${Hero})` }}
       >
         <div className="text-center flex flex-col items-center">
