@@ -16,8 +16,8 @@ connectCloudinary();
 app.use(express.json());
 
 // api endpoints for each routes
-app.use("/api/user", authRoute);
-app.use("/api/products", userRoute);
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");

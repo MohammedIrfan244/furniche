@@ -4,8 +4,8 @@ import { allProducts, productByCategory, productById } from "../controllers/user
 const router = express.Router();
 
 router
-.get("/", allProducts)
-.get('/byId/:id',productById)
-.get('/:category',productByCategory)
+.get("/products", allProducts)
+.get('/product/:id',productById)
+.get('/products/:category',productByCategory)
 
 export default router;
