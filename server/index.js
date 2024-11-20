@@ -11,10 +11,10 @@ const PORT = process.env.PORT || 3000;
 connectDb()
 connectCloudinary()
 
-// middlewares
+// middlewares used for app
 app.use(express.json());
 
-// api endpoints
+// api endpoints for each routes
 app.use('/user',userRoute)
 
 
@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+// app listener handler
 app.listen(PORT, () => {
   console.log("Server is running on port ", PORT);
 });

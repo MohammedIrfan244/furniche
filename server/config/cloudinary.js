@@ -1,5 +1,7 @@
  import {v2 as cloudinary} from 'cloudinary';
 
+// cloudinary configuration
+
  const connectCloudinary=async()=>{
     cloudinary.config({
         cloud_name:process.env.CLOUDINARY_NAME,
