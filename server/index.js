@@ -4,26 +4,36 @@ import connectCloudinary from "./config/cloudinary.js";
 import connectDb from "./config/mongodb.js";
 import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
+import manageError from "./middlewares/manageError.js";
 
 // app config
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Connect to the database and Cloudinary
 connectDb();
 connectCloudinary();
 
-// middlewares used for app
+// Middlewares
 app.use(express.json());
 
-// api endpoints for each routes
+// API routes
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 
+// Home end point
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// app listener handler
-app.listen(PORT, () => {
-  console.log("Server is running on port ", PORT);
+// Undefined endpoint handling
+app.all("*", (req, res) => {
+  res.status(404).json({ message: `Cannot access this end point` });
 });
+
+app.listen(PORT, () => {
+  console.log("Server is running on port", PORT);
+});
+
+app.use(manageError)
