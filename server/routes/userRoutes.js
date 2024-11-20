@@ -1,11 +1,11 @@
 import express from "express";
-import { loginUser, registerUser } from "../controllers/userController.js";
+import { allProducts, productByCategory, productById } from "../controllers/user/userProductController.js";
 
-// route for user, the path start with /user/
 const router = express.Router();
 
-
-router.post("/register", registerUser);
-router.post("/login",loginUser);
+router
+.get("/", allProducts)
+.get('/byId/:id',productById)
+.get('/:category',productByCategory)
 
 export default router;

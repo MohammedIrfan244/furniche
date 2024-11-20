@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     image: { type: String, required: true },
     description: { type: String },
-    original: { type: Boolean, required: false },
+    original: { type: Boolean, default: false },
     category: { type: String, required: true },
     review: { type: String },
   },
