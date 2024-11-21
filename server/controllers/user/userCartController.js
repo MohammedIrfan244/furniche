@@ -15,7 +15,7 @@ const getUserCart = async (req, res) => {
   }
 };
 
-//controller to add to cart
+//controller to update cart
 const updateCart = async (req, res, next) => {
   const { productId, quantity } = req.body;
 

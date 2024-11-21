@@ -6,7 +6,7 @@ import tryCatch from "../utils/tryCatch.js";
 const router = express.Router();
 
 router
-    .post("/register", tryCatch(registerUser)) 
-    .post("/login", tryCatch(loginUser)); 
+  .post("/register", tryCatch(registerUser))
+  .post("/login", tryCatch(loginUser));
 
 export default router;

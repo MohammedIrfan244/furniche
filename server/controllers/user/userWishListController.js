@@ -4,7 +4,10 @@ import CustomError from "../../utils/CustomError.js";
 // Controller to get the verified user's wishList
 const getUserWishList = async (req, res) => {
   // getting the wishlist and populate with product
-  const data = await WishList.findOne({ userId: req.user.id }).populate(    "products");
+  const data = await WishList.findOne({ userId: req.user.id }).populate(
+    // the ids will the ones in the products
+    "products"
+  );
   if (data) {
     // if data exists , send the data as wishlist
     res.status(200).json(data);

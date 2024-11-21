@@ -8,6 +8,7 @@ const wishListSchema = mongoose.Schema(
       ref: "User",
       required: true,
     },
+    // each products will be their ids. we will populate it
     products: [
       {
         type: mongoose.Schema.Types.ObjectId,

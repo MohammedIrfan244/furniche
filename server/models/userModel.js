@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 // model for user, the cart and order can be populated later
 const userSchema = new mongoose.Schema(
   {
@@ -10,7 +9,7 @@ const userSchema = new mongoose.Schema(
     avatar: { type: String, required: false },
     password: { type: String, required: true },
     isBlocked: { type: Boolean, default: false },
-    refreshToken:{type:String}
+    refreshToken: { type: String },
   },
   { timestamps: true }
 );
