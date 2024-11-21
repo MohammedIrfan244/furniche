@@ -22,7 +22,7 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 
-// Home end point
+// Home end point for test
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
@@ -36,4 +36,5 @@ app.listen(PORT, () => {
   console.log("Server is running on port", PORT);
 });
 
+// manage error middleware
 app.use(manageError)
