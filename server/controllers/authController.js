@@ -10,18 +10,14 @@ const createToken = (id) => {
 // Controller to handle register
 const registerUser = async (req, res) => {
   const { name, email, password, mobile } = req.body;
-
-  // Check if user already exists
   const exist = await User.findOne({ email });
   if (exist) {
     return res.status(400).send("User already exists");
   }
 
-  // Creating salt and hash
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  // Creating user
   const newUser = new User({
     name,
     email,
@@ -29,7 +25,6 @@ const registerUser = async (req, res) => {
     password: hashedPassword,
   });
 
-  // Adding user to db and returning
   const user = await newUser.save();
   res.status(201).json({ success: true, data: user });
 };
@@ -58,6 +53,7 @@ const loginUser = async (req, res, next) => {
     name: user.name,
     email: user.email,
     mobile: user.mobile,
+    avatar: user.avatar,
   };
   res.json({ success: true, token, data: userDetail });
 };

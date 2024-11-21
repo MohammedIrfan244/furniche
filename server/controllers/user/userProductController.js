@@ -1,4 +1,4 @@
-import Products from "../../models/productModel.js"
+import Products from "../../models/productModel.js";
 
 // to get all the products
 const allProducts = async (req, res) => {
@@ -22,9 +22,11 @@ const productById = async (req, res) => {
 const productByCategory = async (req, res) => {
   const products = await Products.find({ category: req.params.category });
   if (!products) {
-    return res.status(404).json({ message: "No products found in this category" });
+    return res
+      .status(404)
+      .json({ message: "No products found in this category" });
   }
   res.json({ data: products });
 };
 
-export { allProducts, productByCategory, productById }
+export { allProducts, productByCategory, productById };

@@ -6,7 +6,7 @@ import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
 import manageError from "./middlewares/manageError.js";
 
-// app config
+// Config of app
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,11 +22,6 @@ app.use(express.json());
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
 
-// Home end point for test
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 // Undefined endpoint handling
 app.all("*", (req, res) => {
   res.status(404).json({ message: `Cannot access this end point` });
@@ -37,4 +32,4 @@ app.listen(PORT, () => {
 });
 
 // manage error middleware
-app.use(manageError)
+app.use(manageError);
