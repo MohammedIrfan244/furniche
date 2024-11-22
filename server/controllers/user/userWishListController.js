@@ -31,7 +31,7 @@ const addToWishList = async (req, res, next) => {
   );
   //   if no wishlist found , create one
   if (!newWishList) {
-    newWishList = new WishList({
+    newWishList =new WishList({
       userId: req.user.id,
       products: [productId],
     });

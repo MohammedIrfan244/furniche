@@ -70,7 +70,7 @@ const getOneOrder = async (req, res, next) => {
 
 // Controller to cancel one order by id
 const cancelOneOrder = async (req, res, next) => {
-  //  getting the order id by params and updating teh delivery status to cancelled
+  //  getting the order id by params and updating the delivery status to cancelled
   const newOrder = await Order.findOneAndUpdate(
     { _id: req.params.orderId, userId: req.user.id },
     { $set: { shippingStatus: "Cancelled" } },

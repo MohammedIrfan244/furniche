@@ -1,0 +1,20 @@
+{
+  "products": [
+    {
+      "productId": "673d92cd89afd31f0774c29a",
+      "quantity": 2
+    },
+    {
+      "productId": "673d939389afd31f0774c2a2",
+      "quantity": 1
+    }
+  ],
+  "sessionId": "abc123",
+  "address": {
+    "street": "123 Main St",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10001"
+  },
+  "totalAmount": 299.99
+}

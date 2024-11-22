@@ -2,17 +2,25 @@ import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import CustomError from "../utils/CustomError.js";
+import { joiUserSchema } from "../models/validation.js";
 
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_TOKEN);
 };
 
 // Controller to handle register
-const registerUser = async (req, res) => {
-  const { name, email, password, mobile } = req.body;
+const registerUser = async (req, res, next) => {
+  // validating the input by joi
+  const { value, error } = joiUserSchema.validate(req.body);
+  const { name, email, password, mobile } = value;
+
+  if (error) {
+    return next(new CustomError("Input is not valid", 400));
+  }
+
   const exist = await User.findOne({ email });
   if (exist) {
-    return res.status(400).send("User already exists");
+    return next(new CustomError("User already exist", 400));
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -24,9 +32,14 @@ const registerUser = async (req, res) => {
     mobile,
     password: hashedPassword,
   });
+  const userDetail = {
+    name,
+    email,
+    mobile,
+  };
 
   const user = await newUser.save();
-  res.status(201).json({ success: true, data: user });
+  res.status(201).json({ success: true, data: userDetail });
 };
 
 // Controller to handle login
@@ -53,7 +66,6 @@ const loginUser = async (req, res, next) => {
     name: user.name,
     email: user.email,
     mobile: user.mobile,
-    avatar: user.avatar,
   };
   res.json({ success: true, token, data: userDetail });
 };
