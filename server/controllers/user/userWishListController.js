@@ -38,7 +38,7 @@ const addToWishList = async (req, res, next) => {
     await newWishList.save();
     return res.status(201).json(newWishList);
   }
-  res.status(200).json(newWishList);
+  res.status(200).json({message: "Product added to wishlist successfully"});
 };
 
 // delete wish list
@@ -50,7 +50,7 @@ const removeFromWishList = async (req, res, next) => {
     { new: true }
   );
   if (newWishList) {
-    res.status(201).json(newWishList);
+    res.status(201).json({message: "Product removed from wishlist successfully"});
   } else {
     next(new CustomError("product not found in wishlist", 404));
   }

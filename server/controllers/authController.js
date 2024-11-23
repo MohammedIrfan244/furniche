@@ -15,7 +15,7 @@ const registerUser = async (req, res, next) => {
   const { name, email, password, mobile } = value;
 
   if (error) {
-    return next(new CustomError("Input is not valid", 400));
+    return next(new CustomError(error.details[0].message, 400));
   }
 
   const exist = await User.findOne({ email });
@@ -32,14 +32,9 @@ const registerUser = async (req, res, next) => {
     mobile,
     password: hashedPassword,
   });
-  const userDetail = {
-    name,
-    email,
-    mobile,
-  };
 
-  const user = await newUser.save();
-  res.status(201).json({ success: true, data: userDetail });
+  await newUser.save();
+  res.status(201).json({ message: "Registered successfully" });
 };
 
 // Controller to handle login
@@ -61,13 +56,8 @@ const loginUser = async (req, res, next) => {
   // Creating token for logged-in user
   const token = createToken(user._id);
 
-  // creating only the necessary detail for the user
-  const userDetail = {
-    name: user.name,
-    email: user.email,
-    mobile: user.mobile,
-  };
-  res.json({ success: true, token, data: userDetail });
+  
+  res.json({ message: "Logged in successfully", token });
 };
 
 export { loginUser, registerUser };

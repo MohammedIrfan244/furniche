@@ -19,8 +19,8 @@ connectCloudinary();
 app.use(express.json());
 
 // API routes
-app.use("/api/auth", authRoute);
-app.use("/api/user", userRoute);
+app.use("/api/users", authRoute);
+app.use("/api/users", userRoute);
 app.get('/',(req,res)=>{
   res.send("welcome to furniche")
 })

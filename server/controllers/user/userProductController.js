@@ -15,7 +15,7 @@ const productById = async (req, res) => {
   if (!product) {
     return res.status(401).json({ message: "Product not found" });
   }
-  res.json(product);
+  res.json({ data: product });
 };
 
 // to get the products by category

@@ -36,9 +36,9 @@ const orderCashOnDel = async (req, res, next) => {
 
   let order = await (
     await newOrder.save()
-  ).populate("products.productId", "name price image");
+  )
 
-  res.status(201).json({ data: order, cart: cart });
+  res.status(201).json({ message: "Order placed successfully" });
 };
 
 // Controller to get all orders by a user
@@ -79,7 +79,7 @@ const cancelOneOrder = async (req, res, next) => {
   if (!newOrder) {
     return next(new CustomError("Order not found", 404));
   }
-  res.status(200).json({ message: "Order cancelled", order: newOrder });
+  res.status(200).json({ message: "Order cancelled" });
 };
 
 export { orderCashOnDel, getAllOrders, getOneOrder, cancelOneOrder };

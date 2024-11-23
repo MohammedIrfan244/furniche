@@ -11,7 +11,7 @@ const getUserCart = async (req, res) => {
   if (data) {
     res.status(200).json(data);
   } else {
-    res.status(200).json({ products: [] });
+    res.status(200).json({ data: [] });
   }
 };
 
@@ -43,14 +43,9 @@ const updateCart = async (req, res, next) => {
       newCart.products.push({ productId, quantity });
     }
   }
-  const cart = await newCart.save();
+  await newCart.save();
 
-  // populate cart with product
-  await cart.populate({
-    path: "products.productId",
-    select: "name price image",
-  });
-  res.status(200).json(cart);
+  res.status(200).json({message: "Cart updated successfully"});
 };
 
 // Controller for removing item from cart
@@ -64,13 +59,9 @@ const removeFromCart = async (req, res, next) => {
     // it will make it to return the updated cart
     { new: true }
   );
-  // if cart exists, populate it and return
+  // if cart exists, send success message
   if (cart) {
-    await cart.populate({
-      path: "products.productId",
-      select: "name price image",
-    });
-    res.status(200).json(cart);
+    res.status(200).json({message: "Product removed from cart successfully"});
   } else {
     next(new CustomError("Product not found in the cart", 404));
   }
