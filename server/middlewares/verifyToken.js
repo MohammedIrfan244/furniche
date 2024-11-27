@@ -24,7 +24,13 @@ export const verifyToken = (req, res, next) => {
 
 export const verifyTokenAdmin = (req, res, next) => {
   verifyToken(req,res,async () => {
-    const admin= await User.findOne({_id:req.user.id})
+    if(!req.user){
+      return next(new CustomError("You are not authorized",403))
+    }
+    const admin= await User.findById(req.user.id)
+    if(!admin){
+      next(new CustomError("Admin doesn't exist",403))
+    }
     if (admin.role==="Admin") {
       next();
     } else {
