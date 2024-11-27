@@ -6,7 +6,8 @@ const getUserWishList = async (req, res) => {
   // getting the wishlist and populate with product
   const data = await WishList.findOne({ userId: req.user.id }).populate(
     // the ids will the ones in the products
-    "products"
+    "products",
+    "name price image"
   );
   if (data) {
     // if data exists , send the data as wishlist
@@ -36,7 +37,6 @@ const addToWishList = async (req, res, next) => {
       products: [productId],
     });
     await newWishList.save();
-    return res.status(201).json(newWishList);
   }
   res.status(200).json({message: "Product added to wishlist successfully"});
 };

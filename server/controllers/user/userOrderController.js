@@ -43,13 +43,13 @@ const orderCashOnDel = async (req, res, next) => {
 
 // Controller to get all orders by a user
 const getAllOrders = async (req, res) => {
-  const newOrders = await Order.find({ userId: req.user.id })
+  const Orders = await Order.find({ userId: req.user.id })
     .populate("products.productId", "name price image")
     .sort({ createdAt: -1 });
 
   // sending the orders or an empty array if none found
-  if (newOrders) {
-    res.status(200).json({ data: newOrders });
+  if (Orders) {
+    res.status(200).json({ data: Orders });
   } else {
     res.status(200).json({ data: [] });
   }

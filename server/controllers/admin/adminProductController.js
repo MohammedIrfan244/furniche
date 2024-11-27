@@ -12,7 +12,6 @@ const totalNumberOfProducts = async (req, res) => {
 
 const addNewProduct=async (req,res,next)=>{
     const {value,error}=joiProductSchema.validate((req.body))
-    console.log(value)
     if(error){
         return next(new CustomError(error.details[0].message, 400));
     }
