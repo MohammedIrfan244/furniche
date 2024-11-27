@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import CustomError from "../utils/CustomError.js";
+import User from "../models/userModel.js"
 
 export const verifyToken = (req, res, next) => {
   try {
@@ -14,9 +15,20 @@ export const verifyToken = (req, res, next) => {
         next();
       });
     } else {
-      throw new CustomError("You are not authenticated", 403);
+      next( new CustomError("You are not authenticated", 403))
     }
   } catch (err) {
     next(err);
   }
+};
+
+export const verifyTokenAdmin = (req, res, next) => {
+  verifyToken(req,res,async () => {
+    const admin= await User.findOne({_id:req.user.id})
+    if (admin.role==="Admin") {
+      next();
+    } else {
+      next(new CustomError("You are not authorized", 403))
+    }
+  })
 };

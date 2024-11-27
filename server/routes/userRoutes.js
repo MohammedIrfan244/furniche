@@ -1,9 +1,4 @@
 import express from "express";
-import {
-  allProducts,
-  productByCategory,
-  productById,
-} from "../controllers/user/userProductController.js";
 import tryCatch from "../utils/tryCatch.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
 import {
@@ -26,10 +21,6 @@ import {
 const router = express.Router();
 
 router
-  // routes for the products to show, doesn't need any verification
-  .get("/products", tryCatch(allProducts)) // getting all the products
-  .get("/products/:id", tryCatch(productById)) // getting a product by id
-  .get("/products/category/:category", tryCatch(productByCategory)) // getting products by category
 
   //routes for cart handling
   .get("/cart", verifyToken, tryCatch(getUserCart)) // getting user's cart

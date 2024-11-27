@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     mobile: { type: String, required: true },
     password: { type: String, required: true },
     isBlocked: { type: Boolean, default: false },
+    role:{type:String,default:"User"},
     refreshToken: { type: String },
   },
   { timestamps: true }

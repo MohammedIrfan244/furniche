@@ -47,6 +47,9 @@ const loginUser = async (req, res, next) => {
     return next(new CustomError("User does not exist", 401));
   }
 
+  if(user.isBlocked){
+    return next(new CustomError("User is blocked", 401));
+  }
   // Check if password matches
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
@@ -56,8 +59,24 @@ const loginUser = async (req, res, next) => {
   // Creating token for logged-in user
   const token = createToken(user._id);
 
-  
   res.json({ message: "Logged in successfully", token });
 };
 
-export { loginUser, registerUser };
+const adminLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new CustomError("User does not exist", 401));
+  }
+  if (user.role!=="Admin"){
+    return next(new CustomError("You are not authorized", 403));
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return next(new CustomError("Invalid credentials", 401));
+  }
+  const token = createToken(user._id);
+  res.json({ message: "Logged in successfully", token });
+};
+
+export { loginUser, registerUser, adminLogin };

@@ -2,8 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import connectCloudinary from "./config/cloudinary.js";
 import connectDb from "./config/mongodb.js";
+import publicRoute from './routes/publicRoutes.js'
 import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
+import adminRout from './routes/adminRoutes.js'
 import manageError from "./middlewares/manageError.js";
 
 // Config of app
@@ -19,11 +21,10 @@ connectCloudinary();
 app.use(express.json());
 
 // API routes
+app.use("/api/public", publicRoute);
 app.use("/api/users", authRoute);
 app.use("/api/users", userRoute);
-app.get('/',(req,res)=>{
-  res.send("welcome to furniche")
-})
+app.use("/api/admin", adminRout);
 
 // Undefined endpoint handling
 app.all("*", (req, res) => {

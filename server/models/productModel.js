@@ -11,6 +11,7 @@ const productSchema = new mongoose.Schema(
     original: { type: Boolean, default: false },
     category: { type: String, required: true },
     review: { type: String },
+    isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
