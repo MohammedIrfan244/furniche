@@ -1,6 +1,6 @@
 import express from "express";
 import tryCatch from "../utils/tryCatch.js";
-import { allProducts, productByCategory, productById } from "../controllers/user/userProductController.js";
+import { allProducts, productByCategory, productById } from "../controllers/publicController.js";
 
 const router = express.Router();
 

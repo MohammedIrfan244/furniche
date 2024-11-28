@@ -27,14 +27,9 @@ export const verifyTokenAdmin = (req, res, next) => {
     if(!req.user){
       return next(new CustomError("You are not authorized",403))
     }
-    const admin= await User.findById(req.user.id)
-    if(!admin){
-      next(new CustomError("Admin doesn't exist",403))
-    }
-    if (admin.role==="Admin") {
-      next();
-    } else {
-      next(new CustomError("You are not authorized", 403))
-    }
+   if(req.user.role!=="Admin"){ 
+    return next(new CustomError("You are not authorized",403))
+   }
+   next()
   })
 };

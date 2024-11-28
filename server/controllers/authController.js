@@ -4,8 +4,12 @@ import jwt from "jsonwebtoken";
 import CustomError from "../utils/CustomError.js";
 import { joiUserSchema } from "../models/validation.js";
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_TOKEN);
+const createAccessToken = (id,role,expiresIn) => {
+  return jwt.sign({ id,role}, process.env.JWT_TOKEN,expiresIn);
+};
+
+const createRefreshToken = (id,role,expiresIn) => {
+  return jwt.sign({ id,role }, process.env.JWT_REFRESH_TOKEN,expiresIn);
 };
 
 // Controller to handle register
@@ -57,10 +61,21 @@ const loginUser = async (req, res, next) => {
   }
 
   // Creating token for logged-in user
-  const token = createToken(user._id);
+  const accessToken = createAccessToken(user._id,user.role,"1h");
+  const refreshToken = createRefreshToken(user._id,user.role,"1d");
 
-  res.json({ message: "Logged in successfully", token });
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "none"
+  });
+
+  res.json({ message: "Logged in successfully", token: accessToken });
 };
+
 
 const adminLogin = async (req, res, next) => {
   const { email, password } = req.body;
@@ -75,8 +90,33 @@ const adminLogin = async (req, res, next) => {
   if (!isMatch) {
     return next(new CustomError("Invalid credentials", 401));
   }
-  const token = createToken(user._id);
+  const token = createAccessToken(user._id,user.role,"1h");
+  const refreshToken = createRefreshToken(user._id,user.role,"1d");
+
+  user.refreshToken = refreshToken;
+  await user.save();
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: false,
+    sameSite: "none"
+  });
   res.json({ message: "Logged in successfully", token });
 };
 
-export { loginUser, registerUser, adminLogin };
+const refreshingToken=async(req,res,next)=>{
+  const refreshToken=req.cookies.refreshToken;
+  
+  if(!refreshToken){
+    next(new CustomError("No refresh token found",401)) 
+  }
+  const decoded=jwt.verify(refreshToken,process.env.JWT_REFRESH_TOKEN);
+  const user=await User.findById(decoded.id);
+  if(!user){
+    next(new CustomError("User not found",401))
+  }
+  const accessToken=createAccessToken(user._id,user.role,"1h");
+  res.status(200).json({message:"Token refreshed",token:accessToken});
+}
+
+export { loginUser, registerUser, adminLogin, refreshingToken };
