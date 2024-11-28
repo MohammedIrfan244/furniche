@@ -5,6 +5,7 @@ import { blockUser, getAllUsers, getUserById, totalNumberOfUsers } from "../cont
 import { adminLogin } from "../controllers/authController.js";
 import { addNewProduct, deleteProduct, editProduct, totalNumberOfProducts } from "../controllers/admin/adminProductController.js";
 import { getOrderByUser, getTotalOrders, getTotalRevenue,totalNumberOfOrders, updatePaymentStatus, updateShippingStatus } from "../controllers/admin/adminOrderController.js";
+import upload from "../middlewares/multer.js";
 
 
 
@@ -24,12 +25,12 @@ router
 
 
 .get('/products/total',verifyTokenAdmin,tryCatch(totalNumberOfProducts))
-.post('/products/add',verifyTokenAdmin,tryCatch(addNewProduct))
-.put('/products/edit/:id',verifyTokenAdmin,tryCatch(editProduct))
+.post('/products/add',verifyTokenAdmin,upload.single('image'),tryCatch(addNewProduct))
+.put('/products/edit/:id',verifyTokenAdmin,upload.single('image'),tryCatch(editProduct))
 .delete('/products/delete/:id',verifyTokenAdmin,tryCatch(deleteProduct))
 
 .get('/orders',verifyTokenAdmin,tryCatch(getTotalOrders))
-.get('/orders/:id',verifyTokenAdmin,tryCatch(getOrderByUser))
+.get('/orders/user/:id',verifyTokenAdmin,tryCatch(getOrderByUser))
 .get('/orders/total',verifyTokenAdmin,tryCatch(totalNumberOfOrders))
 .get('/orders/revenue',verifyTokenAdmin,tryCatch(getTotalRevenue))
 .patch('/orders/shipping/:id',verifyTokenAdmin,tryCatch(updateShippingStatus))

@@ -13,7 +13,6 @@ const joiProductSchema = joi.object({
   name: joi.string().required(),
   rating: joi.number().required().min(1).max(5),
   price: joi.number().required(),
-  image: joi.string().required(),
   description: joi.string().optional(),
   original: joi.boolean().optional().default(false),
   category: joi.string().required(),

@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectCloudinary from "./config/cloudinary.js";
+import {connectCloudinary} from "./config/cloudinary.js";
 import connectDb from "./config/mongodb.js";
 import publicRoute from './routes/publicRoutes.js'
 import authRoute from "./routes/authRoutes.js";

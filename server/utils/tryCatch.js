@@ -5,6 +5,7 @@ const tryCatch = (func) => async (req, res, next) => {
     //  take the fuc with the req,res and next function
     await func(req, res, next);
   } catch (err) {
+    console.log("error in tryCatch", err.message);
     next(err);
   }
 };

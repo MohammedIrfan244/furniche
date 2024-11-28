@@ -1,6 +1,8 @@
 import Products from "../../models/productModel.js";
 import { joiProductSchema } from "../../models/validation.js";
+import upload from "../../middlewares/multer.js";
 import CustomError from "../../utils/CustomError.js";
+import cloudinary from "../../config/cloudinary.js";
 
 const totalNumberOfProducts = async (req, res) => {
   const products = await Products.find({ isDeleted: false });
@@ -15,23 +17,34 @@ const addNewProduct=async (req,res,next)=>{
     if(error){
         return next(new CustomError(error.details[0].message, 400));
     }
+
+    if(!req.file||!req.file.path){
+        return next(new CustomError("Product image is required",400))
+    }
     const newProduct= new Products({
-        ...value
+        ...value,
+        image:req.file.path
     })
 
     if(!newProduct){
         return next(new CustomError("couldn't create the product"))
     }
-    newProduct.save()
+    await newProduct.save()
     res.status(201).json({message:"Product created successfully"})
 }
 
 const editProduct=async (req,res,next)=>{
-    const newProduct = await Products.findByIdAndUpdate(req.params.id,{...req.body},{new:true})
-    if(!newProduct){
-        return next(new CustomError("Couldn't update product",400))
-    }
-    res.status(201).json({message:"Product updated successfully"})
+const newProduct=await Products.findById(req.params.id)
+if(!newProduct){
+    return next(new CustomError("Product not found",400))
+}
+let image=newProduct.image
+if(req.file){
+   image=req.file.path
+}
+newProduct.set({...req.body,image})
+await newProduct.save()
+res.status(200).json({message:"Product updated successfully"})
 }
 
 const deleteProduct = async (req, res,next) => {

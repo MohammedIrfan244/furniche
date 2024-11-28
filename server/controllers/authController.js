@@ -5,11 +5,11 @@ import CustomError from "../utils/CustomError.js";
 import { joiUserSchema } from "../models/validation.js";
 
 const createAccessToken = (id,role,expiresIn) => {
-  return jwt.sign({ id,role}, process.env.JWT_TOKEN,expiresIn);
+  return jwt.sign({ id,role}, process.env.JWT_TOKEN,{expiresIn});
 };
 
 const createRefreshToken = (id,role,expiresIn) => {
-  return jwt.sign({ id,role }, process.env.JWT_REFRESH_TOKEN,expiresIn);
+  return jwt.sign({ id,role }, process.env.JWT_REFRESH_TOKEN,{expiresIn});
 };
 
 // Controller to handle register
