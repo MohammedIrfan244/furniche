@@ -16,6 +16,8 @@ import {
   getAllOrders,
   getOneOrder,
   orderCashOnDel,
+  publicKeySend,
+  stripePayment,
 } from "../controllers/user/userOrderController.js";
 
 const router = express.Router();
@@ -36,6 +38,8 @@ router
   .get("/orders", verifyToken, tryCatch(getAllOrders)) // getting all orders by user
   .get("/orders/:orderId", verifyToken, tryCatch(getOneOrder)) // getting order by id
   .post("/orders/cod", verifyToken, tryCatch(orderCashOnDel)) // making an order by cash on delivery
+  .post('/orders/stripe',verifyToken,tryCatch(stripePayment))
+  .get('/orders/publicKey',verifyToken,tryCatch(publicKeySend))
   .patch("/orders/cancel/:orderId", verifyToken, tryCatch(cancelOneOrder)); // cancelling an order by id
 
 export default router;

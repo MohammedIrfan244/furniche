@@ -1,10 +1,18 @@
 import Order from "../../models/orderModel.js";
 import CustomError from "../../utils/CustomError.js";
 import Cart from "../../models/cartModel.js";
+import Product from '../../models/productModel.js'
+import stripe from "stripe";
+
+
+
 
 // to make an order with cash on delivery
 const orderCashOnDel = async (req, res, next) => {
-  // getting and populating the order in order to check incase of deletion by admin
+  const {products} = req.body
+  if(!products||products.length===0){
+    return next(new CustomError("No products found",400))
+  }
   const newOrder = await new Order({
     ...req.body,
     userId: req.user.id,
@@ -15,7 +23,7 @@ const orderCashOnDel = async (req, res, next) => {
 
   //   checking if the any product is deleted by the admin
   const checkUnAvailableProducts = newOrder.products.some(
-    (p) => !p.productId || !p.productId.name
+    (p) => p.isDeleted===true
   );
 
   //   if deleted , throw error to user
@@ -32,7 +40,7 @@ const orderCashOnDel = async (req, res, next) => {
     { userId: req.user.id },
     { $set: { products: [] } }
   );
-  let cart = await currUserCart.save();
+   await currUserCart.save();
 
   let order = await (
     await newOrder.save()
@@ -40,6 +48,60 @@ const orderCashOnDel = async (req, res, next) => {
 
   res.status(201).json({ message: "Order placed successfully" });
 };
+
+const stripePayment=async(req,res,next)=>{
+const {products,address,totalAmount}=req.body
+if(!products||products.length===0){
+    return next(new CustomError("No products found",400))
+}
+const productDetails= await Promise.all(
+    products.map(async (p) => {
+      const product = await Product.findById(p.productId);
+      return {
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: p.quantity,
+      };
+    })
+  );
+  const newTotal=Math.round(totalAmount)
+
+  const lineItems=productDetails.map((p)=>{
+    return{
+        price_data:{
+            currency:"inr",
+            product_data:{
+                name:p.name,
+                images:[p.image],
+            },
+            unit_amount:Math.round(p.price*p.quantity)
+        },
+        quantity:p.quantity
+    }
+  })
+  const stripeClient= new stripe(process.env.STRIPE_SECRET_KEY)
+  const session=await stripeClient.checkout.sessions.create({
+    payment_method_types:["card"],
+    line_items:lineItems,
+    mode:"payment",
+    success_url:`http://localhost:3000/success/{CHECKOUT_SESSION_ID}`,
+    cancel_url:`http://localhost:3000/cancel`,
+  })
+
+  const newOrder=await new Order({
+    userId:req.user.id,
+    products,
+    address,
+    paymentStatus:"pending",
+    shippingStatus:"pending",
+    totalAmount:newTotal,
+    sessionId:session.id
+  })
+
+  await newOrder.save()
+  res.status(201).json({message:"Order placed successfully",sessionId:session.id,stripeUrl:session.url})
+}
 
 // Controller to get all orders by a user
 const getAllOrders = async (req, res) => {
@@ -82,4 +144,8 @@ const cancelOneOrder = async (req, res, next) => {
   res.status(200).json({ message: "Order cancelled" });
 };
 
-export { orderCashOnDel, getAllOrders, getOneOrder, cancelOneOrder };
+const publicKeySend=async(req,res)=>{
+  res.status(200).json({publicKey:process.env.STRIPE_PUBLIC_KEY})
+}
+
+export { orderCashOnDel, getAllOrders, getOneOrder, cancelOneOrder, stripePayment ,publicKeySend};

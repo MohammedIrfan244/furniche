@@ -9,7 +9,6 @@
       "quantity": 1
     }
   ],
-  "sessionId": "abc123",
   "address": {
     "street": "123 Main St",
     "city": "New York",

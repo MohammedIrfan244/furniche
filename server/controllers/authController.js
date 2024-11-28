@@ -119,4 +119,13 @@ const refreshingToken=async(req,res,next)=>{
   res.status(200).json({message:"Token refreshed",token:accessToken});
 }
 
-export { loginUser, registerUser, adminLogin, refreshingToken };
+const logout=async(req,res,next)=>{
+  res.clearCookie("refreshToken",{
+    httpOnly: true,
+    secure: false,
+    sameSite: "none"
+  });
+  res.status(200).json({message:"Logged out successfully"})
+}
+
+export { loginUser, registerUser, adminLogin, refreshingToken,logout };
