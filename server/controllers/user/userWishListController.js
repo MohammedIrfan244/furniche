@@ -14,7 +14,9 @@ const getUserWishList = async (req, res) => {
     res.status(200).json(data);
   } else {
     // if doesn't exists, send an empty array
-    res.status(200).json({ products: [] });
+    res
+      .status(200)
+      .json({ status: "success", message: "Wishlist is empty", products: [] });
   }
 };
 
@@ -32,13 +34,18 @@ const addToWishList = async (req, res, next) => {
   );
   //   if no wishlist found , create one
   if (!newWishList) {
-    newWishList =new WishList({
+    newWishList = new WishList({
       userId: req.user.id,
       products: [productId],
     });
     await newWishList.save();
   }
-  res.status(200).json({message: "Product added to wishlist successfully"});
+  res
+    .status(200)
+    .json({
+      status: "success",
+      message: "Product added to wishlist successfully",
+    });
 };
 
 // delete wish list
@@ -50,7 +57,12 @@ const removeFromWishList = async (req, res, next) => {
     { new: true }
   );
   if (newWishList) {
-    res.status(201).json({message: "Product removed from wishlist successfully"});
+    res
+      .status(201)
+      .json({
+        status: "success",
+        message: "Product removed from wishlist successfully",
+      });
   } else {
     next(new CustomError("product not found in wishlist", 404));
   }

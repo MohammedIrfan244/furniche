@@ -1,40 +1,86 @@
 import express from "express";
 import tryCatch from "../utils/tryCatch.js";
 import { verifyTokenAdmin } from "../middlewares/verifyToken.js";
-import { blockUser, getAllUsers, getUserById, totalNumberOfUsers } from "../controllers/admin/adminUserController.js";
+import {
+  blockUser,
+  getAllUsers,
+  getUserById,
+  totalNumberOfUsers,
+} from "../controllers/admin/adminUserController.js";
 import { adminLogin } from "../controllers/authController.js";
-import { addNewProduct, deleteProduct, editProduct, totalNumberOfProducts } from "../controllers/admin/adminProductController.js";
-import { getOrderByUser, getTotalOrders, getTotalRevenue,totalNumberOfOrders, updatePaymentStatus, updateShippingStatus } from "../controllers/admin/adminOrderController.js";
+import {
+  addNewProduct,
+  deleteProduct,
+  editProduct,
+  totalNumberOfProducts,
+} from "../controllers/admin/adminProductController.js";
+import {
+  getOrderByUser,
+  getTotalOrders,
+  getTotalRevenue,
+  totalNumberOfOrders,
+  updatePaymentStatus,
+  updateShippingStatus,
+} from "../controllers/admin/adminOrderController.js";
 import upload from "../middlewares/multer.js";
+import {
+  allProducts,
+  productByCategory,
+  productById,
+} from "../controllers/publicController.js";
 
+const router = express.Router();
 
-
-const router=express.Router();
-
-// router for admin
 router
+  .post("/login", tryCatch(adminLogin)) // login route for admin
 
-.post("/login",tryCatch(adminLogin)) // login route for admin
+  // routes for accessing users
+  .get("/users", verifyTokenAdmin, tryCatch(getAllUsers)) // route to get the list for all users
+  .get("/users/:id", verifyTokenAdmin, tryCatch(getUserById)) // route for getting a single user
+  .get("/users/details/stats", verifyTokenAdmin, tryCatch(totalNumberOfUsers)) // route for getting the total number of uses
+  .patch("/users/:id", verifyTokenAdmin, tryCatch(blockUser)) // route for block a single user
 
+  // routes for accessing products
+  .get("/products", verifyTokenAdmin, tryCatch(allProducts)) // getting all the products
+  .get("/products/:id", verifyTokenAdmin, tryCatch(productById)) // getting a product by id
+  .get(
+    "/products/category/:category",
+    verifyTokenAdmin,
+    tryCatch(productByCategory)
+  )
+  .get(
+    "/products/details/stats",
+    verifyTokenAdmin,
+    tryCatch(totalNumberOfProducts)
+  ) // route for getting the total number of products
+  .post(
+    "/products",
+    verifyTokenAdmin,
+    upload.single("image"),
+    tryCatch(addNewProduct)
+  ) // route for adding a new product
+  .put(
+    "/products/:id",
+    verifyTokenAdmin,
+    upload.single("image"),
+    tryCatch(editProduct)
+  ) // route for editing a product
+  .delete("/products/:id", verifyTokenAdmin, tryCatch(deleteProduct)) // route for deleting a product
 
-// routes for accessing users
-.get('/users',verifyTokenAdmin,tryCatch(getAllUsers)) // route to get the list for all users
-.get('/user/:id',verifyTokenAdmin,tryCatch(getUserById)) // route for getting a single user
-.get('/users/total',verifyTokenAdmin,tryCatch(totalNumberOfUsers)) // route for getting the total number of uses
-.patch('/user/:id',verifyTokenAdmin,tryCatch(blockUser)) // route for block a single user
+  // routes for accessing orders
+  .get("/orders", verifyTokenAdmin, tryCatch(getTotalOrders)) // route for getting all the orders
+  .get("/orders/user/:id", verifyTokenAdmin, tryCatch(getOrderByUser)) // route for getting all the orders by a user
+  .get("/orders/details/stats", verifyTokenAdmin, tryCatch(totalNumberOfOrders)) // route for getting the total number of orders
+  .get("/orders/details/revenue", verifyTokenAdmin, tryCatch(getTotalRevenue)) // route for getting the total revenue
+  .patch(
+    "/orders/shipping/:id",
+    verifyTokenAdmin,
+    tryCatch(updateShippingStatus)
+  ) // route for updating the shipping status
+  .patch(
+    "/orders/payment/:id",
+    verifyTokenAdmin,
+    tryCatch(updatePaymentStatus)
+  ); // route for updating the payment status
 
-
-.get('/products/total',verifyTokenAdmin,tryCatch(totalNumberOfProducts))
-.post('/products/add',verifyTokenAdmin,upload.single('image'),tryCatch(addNewProduct))
-.put('/products/edit/:id',verifyTokenAdmin,upload.single('image'),tryCatch(editProduct))
-.delete('/products/delete/:id',verifyTokenAdmin,tryCatch(deleteProduct))
-
-.get('/orders',verifyTokenAdmin,tryCatch(getTotalOrders))
-.get('/orders/user/:id',verifyTokenAdmin,tryCatch(getOrderByUser))
-.get('/orders/total',verifyTokenAdmin,tryCatch(totalNumberOfOrders))
-.get('/orders/revenue',verifyTokenAdmin,tryCatch(getTotalRevenue))
-.patch('/orders/shipping/:id',verifyTokenAdmin,tryCatch(updateShippingStatus))
-.patch('/orders/payment/:id',verifyTokenAdmin,tryCatch(updatePaymentStatus))
-
-
-export default router
+export default router;

@@ -4,7 +4,7 @@ const joiUserSchema = joi.object({
   name: joi.string(),
   password: joi.string().min(4).required(),
   email: joi.string().email().required(),
-  mobile: joi.string().required(),
+  mobile: joi.string().optional(),
   isBlocked: joi.boolean().default(false).optional(),
   refreshToken: joi.string().optional(),
 });

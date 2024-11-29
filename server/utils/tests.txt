@@ -1,12 +1,12 @@
 {
   "products": [
     {
-      "productId": "673d92cd89afd31f0774c29a",
+      "productId": "6747467097d64c7503ebfb23",
       "quantity": 2
     },
     {
-      "productId": "673d939389afd31f0774c2a2",
-      "quantity": 1
+      "productId": "6747469f97d64c7503ebfb29",
+      "quantity": 3
     }
   ],
   "address": {
@@ -15,7 +15,7 @@
     "state": "NY",
     "postalCode": "10001"
   },
-  "totalAmount": 299.99
+  "totalAmount": 19000
 }
 
 name: { type: String, required: true },

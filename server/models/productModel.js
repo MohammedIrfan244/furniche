@@ -7,10 +7,10 @@ const productSchema = new mongoose.Schema(
     rating: { type: Number, required: true, min: 1, max: 5 },
     price: { type: Number, required: true },
     image: { type: String },
-    description: { type: String ,default:""},
+    description: { type: String, default: "" },
     original: { type: Boolean, default: false },
     category: { type: String, required: true },
-    review: { type: String ,default:""},
+    review: { type: String, default: "" },
     isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true }

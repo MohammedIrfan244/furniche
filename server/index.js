@@ -1,11 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
-import {connectCloudinary} from "./config/cloudinary.js";
+import { connectCloudinary } from "./config/cloudinary.js";
 import connectDb from "./config/mongodb.js";
-import publicRoute from './routes/publicRoutes.js'
+import publicRoute from "./routes/publicRoutes.js";
 import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
-import adminRout from './routes/adminRoutes.js'
+import adminRout from "./routes/adminRoutes.js";
 import manageError from "./middlewares/manageError.js";
 
 // Config of app
@@ -32,7 +32,7 @@ app.all("*", (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log("Server is running on port", PORT)
+  console.log("Server is running on port", PORT);
 });
 
 // manage error middleware

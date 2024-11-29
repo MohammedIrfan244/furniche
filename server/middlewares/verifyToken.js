@@ -14,7 +14,7 @@ export const verifyToken = (req, res, next) => {
         next();
       });
     } else {
-      next( new CustomError("You are not authenticated", 403))
+      next(new CustomError("You are not authenticated", 403));
     }
   } catch (err) {
     next(err);
@@ -22,13 +22,13 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const verifyTokenAdmin = (req, res, next) => {
-  verifyToken(req,res,async () => {
-    if(!req.user){
-      return next(new CustomError("You are not authorized",403))
+  verifyToken(req, res, async () => {
+    if (!req.user) {
+      return next(new CustomError("You are not authorized", 403));
     }
-   if(req.user.role!=="Admin"){ 
-    return next(new CustomError("You are not authorized",403))
-   }
-   next()
-  })
+    if (req.user.role !== "Admin") {
+      return next(new CustomError("You are not authorized", 403));
+    }
+    next();
+  });
 };

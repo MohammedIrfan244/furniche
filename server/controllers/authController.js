@@ -4,12 +4,12 @@ import jwt from "jsonwebtoken";
 import CustomError from "../utils/CustomError.js";
 import { joiUserSchema } from "../models/validation.js";
 
-const createAccessToken = (id,role,expiresIn) => {
-  return jwt.sign({ id,role}, process.env.JWT_TOKEN,{expiresIn});
+const createAccessToken = (id, role, expiresIn) => {
+  return jwt.sign({ id, role }, process.env.JWT_TOKEN, { expiresIn });
 };
 
-const createRefreshToken = (id,role,expiresIn) => {
-  return jwt.sign({ id,role }, process.env.JWT_REFRESH_TOKEN,{expiresIn});
+const createRefreshToken = (id, role, expiresIn) => {
+  return jwt.sign({ id, role }, process.env.JWT_REFRESH_TOKEN, { expiresIn });
 };
 
 // Controller to handle register
@@ -17,6 +17,8 @@ const registerUser = async (req, res, next) => {
   // validating the input by joi
   const { value, error } = joiUserSchema.validate(req.body);
   const { name, email, password, mobile } = value;
+
+  const newMobile = mobile ? mobile : "Not Provided";
 
   if (error) {
     return next(new CustomError(error.details[0].message, 400));
@@ -33,12 +35,14 @@ const registerUser = async (req, res, next) => {
   const newUser = new User({
     name,
     email,
-    mobile,
+    mobile: newMobile,
     password: hashedPassword,
   });
 
   await newUser.save();
-  res.status(201).json({ message: "Registered successfully" });
+  res
+    .status(201)
+    .json({ status: "success", message: "Registered successfully" });
 };
 
 // Controller to handle login
@@ -51,7 +55,7 @@ const loginUser = async (req, res, next) => {
     return next(new CustomError("User does not exist", 401));
   }
 
-  if(user.isBlocked){
+  if (user.isBlocked) {
     return next(new CustomError("User is blocked", 401));
   }
   // Check if password matches
@@ -61,8 +65,8 @@ const loginUser = async (req, res, next) => {
   }
 
   // Creating token for logged-in user
-  const accessToken = createAccessToken(user._id,user.role,"1h");
-  const refreshToken = createRefreshToken(user._id,user.role,"1d");
+  const accessToken = createAccessToken(user._id, user.role, "1h");
+  const refreshToken = createRefreshToken(user._id, user.role, "1d");
 
   user.refreshToken = refreshToken;
   await user.save();
@@ -70,28 +74,32 @@ const loginUser = async (req, res, next) => {
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: false,
-    sameSite: "none"
+    sameSite: "none",
   });
 
-  res.json({ message: "Logged in successfully", token: accessToken });
+  res.json({
+    status: "success",
+    message: "Logged in successfully",
+    token: accessToken,
+  });
 };
 
-
+// Controller to handle admin login
 const adminLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
     return next(new CustomError("User does not exist", 401));
   }
-  if (user.role!=="Admin"){
+  if (user.role !== "Admin") {
     return next(new CustomError("You are not authorized", 403));
   }
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
     return next(new CustomError("Invalid credentials", 401));
   }
-  const token = createAccessToken(user._id,user.role,"1h");
-  const refreshToken = createRefreshToken(user._id,user.role,"1d");
+  const token = createAccessToken(user._id, user.role, "1h");
+  const refreshToken = createRefreshToken(user._id, user.role, "1d");
 
   user.refreshToken = refreshToken;
   await user.save();
@@ -99,33 +107,39 @@ const adminLogin = async (req, res, next) => {
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: false,
-    sameSite: "none"
+    sameSite: "none",
   });
-  res.json({ message: "Logged in successfully", token });
+  res.json({ status: "success", message: "Logged in successfully", token });
 };
 
-const refreshingToken=async(req,res,next)=>{
-  const refreshToken=req.cookies.refreshToken;
-  
-  if(!refreshToken){
-    next(new CustomError("No refresh token found",401)) 
-  }
-  const decoded=jwt.verify(refreshToken,process.env.JWT_REFRESH_TOKEN);
-  const user=await User.findById(decoded.id);
-  if(!user){
-    next(new CustomError("User not found",401))
-  }
-  const accessToken=createAccessToken(user._id,user.role,"1h");
-  res.status(200).json({message:"Token refreshed",token:accessToken});
-}
+// Controller to handle token refresh
+const refreshingToken = async (req, res, next) => {
+  const refreshToken = req.cookies.refreshToken;
 
-const logout=async(req,res,next)=>{
-  res.clearCookie("refreshToken",{
+  if (!refreshToken) {
+    next(new CustomError("No refresh token found", 401));
+  }
+  // Verifying the refresh token
+  const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
+  const user = await User.findById(decoded.id);
+  if (!user) {
+    next(new CustomError("User not found", 401));
+  }
+  const accessToken = createAccessToken(user._id, user.role, "1h");
+  res.status(200).json({ message: "Token refreshed", token: accessToken });
+};
+
+// Controller to handle logout
+const logout = async (req, res, next) => {
+  // Clearing the refresh token cookie
+  res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: false,
-    sameSite: "none"
+    sameSite: "none",
   });
-  res.status(200).json({message:"Logged out successfully"})
-}
+  res
+    .status(200)
+    .json({ status: "success", message: "Logged out successfully" });
+};
 
-export { loginUser, registerUser, adminLogin, refreshingToken,logout };
+export { loginUser, registerUser, adminLogin, refreshingToken, logout };

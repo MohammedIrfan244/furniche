@@ -9,9 +9,17 @@ const getUserCart = async (req, res) => {
     select: "name price image",
   });
   if (data) {
-    res.status(200).json(data);
+    res
+      .status(200)
+      .json({
+        status: "success",
+        message: "Cart fetched successfully",
+        data: data,
+      });
   } else {
-    res.status(200).json({ data: [] });
+    res
+      .status(200)
+      .json({ status: "success", message: "Cart is empty", data: [] });
   }
 };
 
@@ -45,7 +53,9 @@ const updateCart = async (req, res, next) => {
   }
   await newCart.save();
 
-  res.status(200).json({message: "Cart updated successfully"});
+  res
+    .status(200)
+    .json({ status: "success", message: "Cart updated successfully" });
 };
 
 // Controller for removing item from cart
@@ -61,7 +71,12 @@ const removeFromCart = async (req, res, next) => {
   );
   // if cart exists, send success message
   if (cart) {
-    res.status(200).json({message: "Product removed from cart successfully"});
+    res
+      .status(200)
+      .json({
+        status: "success",
+        message: "Product removed from cart successfully",
+      });
   } else {
     next(new CustomError("Product not found in the cart", 404));
   }

@@ -1,17 +1,14 @@
 import Order from "../../models/orderModel.js";
 import CustomError from "../../utils/CustomError.js";
 import Cart from "../../models/cartModel.js";
-import Product from '../../models/productModel.js'
+import Product from "../../models/productModel.js";
 import stripe from "stripe";
-
-
-
 
 // to make an order with cash on delivery
 const orderCashOnDel = async (req, res, next) => {
-  const {products} = req.body
-  if(!products||products.length===0){
-    return next(new CustomError("No products found",400))
+  const { products } = req.body;
+  if (!products || products.length === 0) {
+    return next(new CustomError("No products found", 400));
   }
   const newOrder = await new Order({
     ...req.body,
@@ -23,7 +20,7 @@ const orderCashOnDel = async (req, res, next) => {
 
   //   checking if the any product is deleted by the admin
   const checkUnAvailableProducts = newOrder.products.some(
-    (p) => p.isDeleted===true
+    (p) => p.isDeleted === true
   );
 
   //   if deleted , throw error to user
@@ -32,29 +29,39 @@ const orderCashOnDel = async (req, res, next) => {
   }
 
   //   setting the statuses for payment and delivery
-  newOrder.paymentStatus = "Cash On Delivery";
-  newOrder.shippingStatus = "Processing";
+  newOrder.paymentStatus = "COD";
+  newOrder.shippingStatus = "Pending";
 
-  //   making the cart empty after the ordering
-  let currUserCart = await Cart.findOneAndUpdate(
-    { userId: req.user.id },
-    { $set: { products: [] } }
-  );
-   await currUserCart.save();
+  //   checking if the order is already in cart
 
-  let order = await (
-    await newOrder.save()
-  )
+  const currUserCart = await Cart.findOne({ userId: req.user.id });
+  let currUserCartProducts = currUserCart.products;
+  currUserCartProducts = currUserCartProducts.filter((p) => {
+    return !newOrder.products.some(
+      (o) => o.productId.toString() === p.productId
+    );
+  });
 
-  res.status(201).json({ message: "Order placed successfully" });
+  currUserCart.products = currUserCartProducts;
+
+  await currUserCart.save();
+
+  await newOrder.save();
+
+  res
+    .status(201)
+    .json({ status: "success", message: "Order placed successfully" });
 };
 
-const stripePayment=async(req,res,next)=>{
-const {products,address,totalAmount}=req.body
-if(!products||products.length===0){
-    return next(new CustomError("No products found",400))
-}
-const productDetails= await Promise.all(
+// to make an order with stripe
+const stripePayment = async (req, res, next) => {
+  // getting the products, address and total amount
+  const { products, address, totalAmount } = req.body;
+  if (!products || products.length === 0) {
+    return next(new CustomError("No products found", 400));
+  }
+  // getting the details of the products
+  const productDetails = await Promise.all(
     products.map(async (p) => {
       const product = await Product.findById(p.productId);
       return {
@@ -65,44 +72,71 @@ const productDetails= await Promise.all(
       };
     })
   );
-  const newTotal=Math.round(totalAmount)
-
-  const lineItems=productDetails.map((p)=>{
-    return{
-        price_data:{
-            currency:"inr",
-            product_data:{
-                name:p.name,
-                images:[p.image],
-            },
-            unit_amount:Math.round(p.price*p.quantity)
+  const newTotal = Math.round(totalAmount);
+  // creating the stripe line items
+  const lineItems = productDetails.map((p) => {
+    return {
+      price_data: {
+        currency: "inr",
+        product_data: {
+          name: p.name,
+          images: [p.image],
         },
-        quantity:p.quantity
-    }
-  })
-  const stripeClient= new stripe(process.env.STRIPE_SECRET_KEY)
-  const session=await stripeClient.checkout.sessions.create({
-    payment_method_types:["card"],
-    line_items:lineItems,
-    mode:"payment",
-    success_url:`http://localhost:3000/success/{CHECKOUT_SESSION_ID}`,
-    cancel_url:`http://localhost:3000/cancel`,
-  })
+        unit_amount: Math.round(p.price * p.quantity),
+      },
+      quantity: p.quantity,
+    };
+  });
+  // creating the stripe session
+  const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY);
+  const session = await stripeClient.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: lineItems,
+    mode: "payment",
+    success_url: `http://localhost:3000/success/{CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:3000/cancel`,
+  });
 
-  const newOrder=await new Order({
-    userId:req.user.id,
+  const newOrder = await new Order({
+    userId: req.user.id,
     products,
     address,
-    paymentStatus:"pending",
-    shippingStatus:"pending",
-    totalAmount:newTotal,
-    sessionId:session.id
-  })
+    paymentStatus: "Pending",
+    shippingStatus: "Pending",
+    totalAmount: newTotal,
+    sessionId: session.id,
+  });
 
-  await newOrder.save()
-  res.status(201).json({message:"Order placed successfully",sessionId:session.id,stripeUrl:session.url})
-}
+  await newOrder.save();
+  res.status(201).json({
+    status: "success",
+    message: "Order placed successfully",
+    sessionId: session.id,
+    stripeUrl: session.url,
+  });
+};
 
+const stripeSuccess = async (req, res) => {
+  const sessionId = req.params.sessionId;
+  const order = await Order.findOne({ sessionId: sessionId });
+  if (!order) {
+    return next(new CustomError("Order not found", 404));
+  }
+  // checking if the order is already in cart
+  let currUserCart = await Cart.findOne({ userId: req.user.id });
+  let currUserCartProducts = currUserCart.products;
+  currUserCartProducts = currUserCartProducts.filter((p) => {
+    return !order.products.some((o) => o.productId.toString() === p.productId);
+  });
+  currUserCart.products = currUserCartProducts;
+  await currUserCart.save();
+  order.shippingStatus = "Pending";
+  order.paymentStatus = "Paid";
+  await order.save();
+  res
+    .status(200)
+    .json({ status: "success", message: "Order placed successfully" });
+};
 // Controller to get all orders by a user
 const getAllOrders = async (req, res) => {
   const Orders = await Order.find({ userId: req.user.id })
@@ -113,7 +147,9 @@ const getAllOrders = async (req, res) => {
   if (Orders) {
     res.status(200).json({ data: Orders });
   } else {
-    res.status(200).json({ data: [] });
+    res
+      .status(200)
+      .json({ status: "success", message: "No orders found", data: [] });
   }
 };
 
@@ -127,25 +163,43 @@ const getOneOrder = async (req, res, next) => {
   if (!newOrder) {
     return next(new CustomError("Order not found", 404));
   }
-  res.status(200).json({ newOrder });
+  res.status(200).json({
+    status: "success",
+    message: "Order fetched successfully",
+    data: newOrder,
+  });
 };
 
 // Controller to cancel one order by id
 const cancelOneOrder = async (req, res, next) => {
   //  getting the order id by params and updating the delivery status to cancelled
-  const newOrder = await Order.findOneAndUpdate(
-    { _id: req.params.orderId, userId: req.user.id },
-    { $set: { shippingStatus: "Cancelled" } },
-    { new: true }
-  );
+  const newOrder = await Order.findOne({
+    _id: req.params.orderId,
+    userId: req.user.id,
+  });
   if (!newOrder) {
     return next(new CustomError("Order not found", 404));
   }
-  res.status(200).json({ message: "Order cancelled" });
+  if (newOrder.paymentStatus === "Paid") {
+    return next(new CustomError("You can't cancel this order", 400));
+  }
+
+  newOrder.shippingStatus = "Cancelled";
+  newOrder.paymentStatus = "Cancelled";
+  await newOrder.save();
+  res.status(200).json({ status: "success", message: "Order cancelled" });
 };
 
-const publicKeySend=async(req,res)=>{
-  res.status(200).json({publicKey:process.env.STRIPE_PUBLIC_KEY})
-}
+const publicKeySend = async (req, res) => {
+  res.status(200).json({ publicKey: process.env.STRIPE_PUBLIC_KEY });
+};
 
-export { orderCashOnDel, getAllOrders, getOneOrder, cancelOneOrder, stripePayment ,publicKeySend};
+export {
+  orderCashOnDel,
+  getAllOrders,
+  getOneOrder,
+  cancelOneOrder,
+  stripePayment,
+  publicKeySend,
+  stripeSuccess,
+};

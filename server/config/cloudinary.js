@@ -8,6 +8,4 @@ export const connectCloudinary = () => {
   });
 };
 
-// connectCloudinary(); // Ensure configuration is executed
-
 export default cloudinary; // Export the configured Cloudinary instance
