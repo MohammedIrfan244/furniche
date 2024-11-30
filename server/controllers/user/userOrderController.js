@@ -72,6 +72,7 @@ const stripePayment = async (req, res, next) => {
       };
     })
   );
+  if(!productDetails) return next(new CustomError("No products found", 400));
   const newTotal = Math.round(totalAmount);
   // creating the stripe line items
   const lineItems = productDetails.map((p) => {

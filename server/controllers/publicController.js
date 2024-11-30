@@ -3,7 +3,7 @@ import Products from "../models/productModel.js";
 // to get all the products
 const allProducts = async (req, res) => {
   const products = await Products.find(
-    { isDeleted: false },
+    {},
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
   );
   if (!products) {
@@ -21,7 +21,7 @@ const allProducts = async (req, res) => {
 // to get the product by id
 const productById = async (req, res) => {
   const product = await Products.findOne(
-    { _id: req.params.id, isDeleted: false },
+    { _id: req.params.id },
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
   );
   if (!product) {
@@ -37,7 +37,7 @@ const productById = async (req, res) => {
 // to get the products by category
 const productByCategory = async (req, res) => {
   const products = await Products.find(
-    { category: req.params.category, isDeleted: false },
+    { category: req.params.category },
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
   );
   if (!products) {

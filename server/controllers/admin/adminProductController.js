@@ -79,16 +79,26 @@ const editProduct = async (req, res, next) => {
 
 // deleting the product
 const deleteProduct = async (req, res, next) => {
-  const newProduct = await Products.findByIdAndUpdate(req.params.id, {
-    $set: { isDeleted: true },
-  });
-  if (!newProduct) {
-    return next(new CustomError("Product not found", 400));
+  try {
+    // Find the product by its ID
+    const product = await Products.findById(req.params.id);
+
+    if (!product) {
+      return next(new CustomError("Product not found", 404));
+    }
+
+    // Toggle the isDeleted status
+    product.isDeleted = !product.isDeleted;
+    await product.save();
+
+    res.status(200).json({
+      status: "success",
+      message: `Product ${product.isDeleted ? "deleted" : "restored"} successfully`,
+    });
+  } catch (err) {
+    next(err);
   }
-  await newProduct.save();
-  res
-    .status(200)
-    .json({ status: "success", message: "Product deleted successfully" });
 };
+
 
 export { totalNumberOfProducts, addNewProduct, editProduct, deleteProduct };
