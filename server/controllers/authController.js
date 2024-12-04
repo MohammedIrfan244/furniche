@@ -8,6 +8,10 @@ const createAccessToken = (id, role, expiresIn) => {
   return jwt.sign({ id, role }, process.env.JWT_TOKEN, { expiresIn });
 };
 
+const createAdminAccessToken = (id, role, expiresIn) => {
+  return jwt.sign({ id, role }, process.env.JWT_ADMIN_TOKEN, { expiresIn });
+};
+
 const createRefreshToken = (id, role, expiresIn) => {
   return jwt.sign({ id, role }, process.env.JWT_REFRESH_TOKEN, { expiresIn });
 };
@@ -32,11 +36,14 @@ const registerUser = async (req, res, next) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
+  const profile=req.file?req.file.path:"https://i.pinimg.com/736x/c4/34/d8/c434d8c366517ca20425bdc9ad8a32de.jpg";
+
   const newUser = new User({
     name,
     email,
     mobile: newMobile,
     password: hashedPassword,
+    profile,
   });
 
   await newUser.save();
@@ -44,6 +51,7 @@ const registerUser = async (req, res, next) => {
     .status(201)
     .json({ status: "success", message: "Registered successfully" });
 };
+
 
 // Controller to handle login
 const loginUser = async (req, res, next) => {
@@ -98,7 +106,7 @@ const adminLogin = async (req, res, next) => {
   if (!isMatch) {
     return next(new CustomError("Invalid credentials", 401));
   }
-  const token = createAccessToken(user._id, user.role, "1h");
+  const token = createAdminAccessToken(user._id, user.role, "1h");
   const refreshToken = createRefreshToken(user._id, user.role, "1d");
 
   user.refreshToken = refreshToken;

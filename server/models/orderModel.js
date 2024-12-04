@@ -22,6 +22,7 @@ const orderSchema = new mongoose.Schema(
     ],
     // session id will be hard coded rn, will make it functional after adding the stripe
     sessionId: { type: String },
+    orderType: { type: String, required: true },
     purchasedDate: { type: Date, default: Date.now },
     address: { type: Object, required: true },
     totalAmount: { type: Number, required: true },

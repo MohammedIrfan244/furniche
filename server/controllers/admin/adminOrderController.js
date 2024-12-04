@@ -43,12 +43,8 @@ const totalNumberOfOrders = async (req, res) => {
   if (!totalOrders) {
     return res.status(200).json({ message: "No orders found" });
   }
-  const cancelled = totalOrders.filter(
-    (order) => order.shippingStatus === "Cancelled"
-  );
-  const nonCancelled = totalOrders.filter(
-    (order) => order.shippingStatus !== "Cancelled"
-  );
+  const cancelled=await Orders.find({shippingStatus:"Cancelled"});
+  const nonCancelled = await Orders.find({shippingStatus:{$ne:"Cancelled"}});
   res.status(200).json({
     status: "success",
     message: "Orders stats fetched successfully",
@@ -68,6 +64,8 @@ const updateShippingStatus = async (req, res, next) => {
   if (!order) {
     return next(new CustomError("Order not found", 404));
   }
+  if(order.shippingStatus === "Cancelled") return next(new CustomError("You can't update this order", 400));
+  if(order.shippingStatus === "Delivered") return next(new CustomError("You can't update this order", 400));
   res
     .status(200)
     .json({ status: "success", message: "Order status updated successfully" });
@@ -91,23 +89,15 @@ const updatePaymentStatus = async (req, res, next) => {
 
 // getting the total revenue
 const getTotalRevenue = async (req, res) => {
-  const totalOrders = await Orders.find();
-  if (!totalOrders) {
-    return res.status(200).json({ message: "No orders found" });
-  }
-  const nonCancelledOrders = totalOrders.filter(
-    (order) => order.shippingStatus !== "Cancelled"
-  );
-  const revenue = nonCancelledOrders.reduce((acc, order) => {
-    return acc + order.totalAmount;
-  }, 0);
-  res
-    .status(200)
-    .json({
-      status: "success",
-      message: "Revenue fetched successfully",
-      data: revenue,
-    });
+  const orderRevenue = await Orders.aggregate([
+    {$match: {paymentStatus:"Paid"}},
+    {$group: {_id: null, totalRevenue: {$sum: "$totalAmount"}}}
+  ])
+  res.status(200).json({
+    status: "success",
+    message: "Orders stats fetched successfully",
+    totalRevenue: orderRevenue[0].totalRevenue,
+  });
 };
 
 export {

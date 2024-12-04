@@ -7,6 +7,7 @@ import stripe from "stripe";
 // to make an order with cash on delivery
 const orderCashOnDel = async (req, res, next) => {
   const { products } = req.body;
+  const { orderType } = req.body;
   if (!products || products.length === 0) {
     return next(new CustomError("No products found", 400));
   }
@@ -14,37 +15,22 @@ const orderCashOnDel = async (req, res, next) => {
     ...req.body,
     userId: req.user.id,
   }).populate("products.productId", "name price image");
-
-  //   sending error if creation of order failed
   if (!newOrder) return next(new CustomError("order not created", 400));
-
-  //   checking if the any product is deleted by the admin
   const checkUnAvailableProducts = newOrder.products.some(
     (p) => p.isDeleted === true
   );
 
-  //   if deleted , throw error to user
   if (checkUnAvailableProducts) {
     return next(new CustomError("some products are not available", 400));
   }
 
-  //   setting the statuses for payment and delivery
   newOrder.paymentStatus = "COD";
   newOrder.shippingStatus = "Pending";
 
-  //   checking if the order is already in cart
 
-  const currUserCart = await Cart.findOne({ userId: req.user.id });
-  let currUserCartProducts = currUserCart.products;
-  currUserCartProducts = currUserCartProducts.filter((p) => {
-    return !newOrder.products.some(
-      (o) => o.productId.toString() === p.productId
-    );
-  });
-
-  currUserCart.products = currUserCartProducts;
-
-  await currUserCart.save();
+  if(orderType === "cart"){
+     await Cart.findOne({ userId: req.user.id },{$set:{products:[]}},{new:true});
+  }
 
   await newOrder.save();
 
@@ -72,7 +58,7 @@ const stripePayment = async (req, res, next) => {
       };
     })
   );
-  if(!productDetails) return next(new CustomError("No products found", 400));
+  if (!productDetails) return next(new CustomError("No products found", 400));
   const newTotal = Math.round(totalAmount);
   // creating the stripe line items
   const lineItems = productDetails.map((p) => {
@@ -119,18 +105,16 @@ const stripePayment = async (req, res, next) => {
 
 const stripeSuccess = async (req, res) => {
   const sessionId = req.params.sessionId;
+  const {orderType}= req.body
   const order = await Order.findOne({ sessionId: sessionId });
   if (!order) {
     return next(new CustomError("Order not found", 404));
   }
-  // checking if the order is already in cart
-  let currUserCart = await Cart.findOne({ userId: req.user.id });
-  let currUserCartProducts = currUserCart.products;
-  currUserCartProducts = currUserCartProducts.filter((p) => {
-    return !order.products.some((o) => o.productId.toString() === p.productId);
-  });
-  currUserCart.products = currUserCartProducts;
-  await currUserCart.save();
+  
+  if(orderType === "cart"){
+    await Cart.findOne({ userId: req.user.id },{$set:{products:[]}},{new:true});
+  }
+  
   order.shippingStatus = "Pending";
   order.paymentStatus = "Paid";
   await order.save();

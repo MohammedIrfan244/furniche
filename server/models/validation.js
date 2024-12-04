@@ -6,6 +6,8 @@ const joiUserSchema = joi.object({
   email: joi.string().email().required(),
   mobile: joi.string().optional(),
   isBlocked: joi.boolean().default(false).optional(),
+  profile: joi.string().optional(),
+  role: joi.string().default("User").optional(),
   refreshToken: joi.string().optional(),
 });
 
