@@ -7,17 +7,18 @@ import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
 import adminRout from "./routes/adminRoutes.js";
 import manageError from "./middlewares/manageError.js";
-
+import cors from 'cors'
 // Config of app
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 // Connect to the database and Cloudinary
 connectDb();
 connectCloudinary();
 
 // Middlewares
+app.use(cors())
 app.use(express.json());
 
 // API routes
@@ -25,6 +26,10 @@ app.use("/api/public", publicRoute);
 app.use("/api/users", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/admin", adminRout);
+
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Server is running" });
+});
 
 // Undefined endpoint handling
 app.all("*", (req, res) => {

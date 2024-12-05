@@ -1,6 +1,7 @@
 import express from "express";
 import tryCatch from "../utils/tryCatch.js";
 import { verifyToken } from "../middlewares/verifyToken.js";
+import idValidation from "../middlewares/idValidation.js";
 import {
   getUserCart,
   removeFromCart,
@@ -37,7 +38,7 @@ router
 
   // routes for orders
   .get("/orders", verifyToken, tryCatch(getAllOrders)) // getting all orders by user
-  .get("/orders/:orderId", verifyToken, tryCatch(getOneOrder)) // getting order by id
+  .get("/orders/:orderId", verifyToken,idValidation, tryCatch(getOneOrder)) // getting order by id
   .post("/orders/cod", verifyToken, tryCatch(orderCashOnDel)) // making an order by cash on delivery
   .post("/orders/stripe/checkout", verifyToken, tryCatch(stripePayment)) // making an order by stripe
   .put(
@@ -46,6 +47,6 @@ router
     tryCatch(stripeSuccess)
   ) // success route for stripe
   .get("/orders/publicKey", verifyToken, tryCatch(publicKeySend)) // getting stripe public key on the client
-  .patch("/orders/cancel/:orderId", verifyToken, tryCatch(cancelOneOrder)); // cancelling an order by id
+  .patch("/orders/cancel/:orderId", verifyToken, idValidation,tryCatch(cancelOneOrder)); // cancelling an order by id
 
 export default router;

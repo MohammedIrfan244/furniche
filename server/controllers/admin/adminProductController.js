@@ -40,6 +40,10 @@ const addNewProduct = async (req, res, next) => {
   if (error) {
     return next(new CustomError(error.details[0].message, 400));
   }
+  const existingProduct=await Products.findOne({name:value.name,category:value.category});
+  if(existingProduct){
+    return next(new CustomError("Product already exist", 400));
+  }
   if (!req.file || !req.file.path) {
     return next(new CustomError("Product image is required", 400));
   }

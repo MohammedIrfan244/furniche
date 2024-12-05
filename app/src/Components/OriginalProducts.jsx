@@ -4,7 +4,7 @@ import ProductItems from "../shared/ProductItems";
 
 function OriginalProducts() {
   const { products, loading } = useContext(ShopContext);
-  const originaProduct = products.filter((items) => items.original === "true");
+  const originaProduct = products.filter((items) => items.original === true);
 
   return (
     <div

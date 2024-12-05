@@ -1,6 +1,7 @@
 import express from "express";
 import tryCatch from "../utils/tryCatch.js";
 import { verifyTokenAdmin } from "../middlewares/verifyToken.js";
+import idValidation from "../middlewares/idValidation.js";
 import {
   blockUser,
   getAllUsers,
@@ -36,13 +37,13 @@ router
 
   // routes for accessing users
   .get("/users", verifyTokenAdmin, tryCatch(getAllUsers)) // route to get the list for all users
-  .get("/users/:id", verifyTokenAdmin, tryCatch(getUserById)) // route for getting a single user
+  .get("/users/:id", verifyTokenAdmin, idValidation,tryCatch(getUserById)) // route for getting a single user
   .get("/users/details/stats", verifyTokenAdmin, tryCatch(totalNumberOfUsers)) // route for getting the total number of uses
-  .patch("/users/:id", verifyTokenAdmin, tryCatch(blockUser)) // route for block a single user
+  .patch("/users/:id", verifyTokenAdmin, idValidation,tryCatch(blockUser)) // route for block a single user
 
   // routes for accessing products
   .get("/products", verifyTokenAdmin, tryCatch(allProducts)) // getting all the products
-  .get("/products/:id", verifyTokenAdmin, tryCatch(productById)) // getting a product by id
+  .get("/products/:id", verifyTokenAdmin, idValidation,tryCatch(productById)) // getting a product by id
   .get(
     "/products/category/:category",
     verifyTokenAdmin,
@@ -63,23 +64,26 @@ router
     "/products/:id",
     verifyTokenAdmin,
     upload.single("image"),
+    idValidation,
     tryCatch(editProduct)
   ) // route for editing a product
-  .delete("/products/:id", verifyTokenAdmin, tryCatch(deleteProduct)) // route for deleting a product
+  .delete("/products/:id", verifyTokenAdmin, idValidation,tryCatch(deleteProduct)) // route for deleting a product
 
   // routes for accessing orders
   .get("/orders", verifyTokenAdmin, tryCatch(getTotalOrders)) // route for getting all the orders
-  .get("/orders/user/:id", verifyTokenAdmin, tryCatch(getOrderByUser)) // route for getting all the orders by a user
+  .get("/orders/user/:id", verifyTokenAdmin, idValidation,tryCatch(getOrderByUser)) // route for getting all the orders by a user
   .get("/orders/details/stats", verifyTokenAdmin, tryCatch(totalNumberOfOrders)) // route for getting the total number of orders
   .get("/orders/details/revenue", verifyTokenAdmin, tryCatch(getTotalRevenue)) // route for getting the total revenue
   .patch(
     "/orders/shipping/:id",
     verifyTokenAdmin,
+    idValidation,
     tryCatch(updateShippingStatus)
   ) // route for updating the shipping status
   .patch(
     "/orders/payment/:id",
     verifyTokenAdmin,
+    idValidation,
     tryCatch(updatePaymentStatus)
   ); // route for updating the payment status
 
