@@ -3,8 +3,8 @@ import Products from "../models/productModel.js";
 // to get all the products
 const allProducts = async (req, res) => {
   const products = await Products.find(
-    {},
-    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
+    {isDeleted:false},
+    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1,description:1 ,review:1 }
   );
   if (!products) {
     return res
@@ -21,7 +21,7 @@ const allProducts = async (req, res) => {
 const getOriginalProducts = async (req, res) => {
   const products = await Products.find(
     { original: true },
-    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
+    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 ,description:1 ,review:1}
   );
   if (!products) {
     return res
@@ -38,7 +38,7 @@ const getOriginalProducts = async (req, res) => {
 const lastAddedTenProducts = async (req, res) => {
   const products = await Products.find(
     {},
-    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
+    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1,description:1 ,review:1 }
   )
     .sort({ createdAt: -1 })
     .limit(10);
@@ -58,7 +58,7 @@ const lastAddedTenProducts = async (req, res) => {
 const productById = async (req, res) => {
   const product = await Products.findOne(
     { _id: req.params.id },
-    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
+    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1,description:1 ,review:1 }
   );
   if (!product) {
     return res.status(401).json({ message: "Product not found" });
@@ -74,7 +74,7 @@ const productById = async (req, res) => {
 const productByCategory = async (req, res) => {
   const products = await Products.find(
     { category: req.params.category },
-    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
+    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 ,description:1 ,review:1}
   );
   if (!products) {
     return res

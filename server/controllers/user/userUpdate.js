@@ -6,11 +6,11 @@ export const updateUser = async (req, res, next) => {
         if (!user) {    
             return next(new CustomError("User not found", 404));
         }
-        const profile=user.profile
+        const image=user.image
         if (req.file) {
-            profile = req.file.path;
+            image = req.file.path;
         }
-        user.set(...req.body, profile);
+        user.set(...req.body, image);
         await user.save();
         res.status(200).json({ status: "success", message: "User updated successfully" });
 };

@@ -12,7 +12,7 @@ import upload from "../middlewares/multer.js";
 const router = express.Router();
 
 router
-  .post("/register",upload.single("image"), tryCatch(registerUser)) // handling the registration of new user
+  .post("/register",upload.single("profile"), tryCatch(registerUser)) // handling the registration of new user
   .post("/login", tryCatch(loginUser)) // handling the login in of existing user
   .post("/refreshToken", tryCatch(refreshingToken)) // handling the token refresh
   .post("/logout", tryCatch(logout)); // handling the logout
