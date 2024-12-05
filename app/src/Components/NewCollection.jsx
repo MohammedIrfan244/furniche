@@ -1,10 +1,19 @@
-import { useContext } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+import {   useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
+import axios from "axios";
 
 function NewCollection() {
-  const { products, loading } = useContext(ShopContext);
-  const newProducts = products.slice(-10);
+  const [newProducts, setNewProducts] = useState([])
+  const [loading, setLoading] = useState(true);
+  useEffect(()=>{
+    setLoading(true)
+    axios.get("http://localhost:3001/api/public/products/collection/latest")
+    .then((response)=>{
+      setNewProducts(response.data.data)
+    })
+    .catch((err)=>console.log(err))
+    .finally(()=>setLoading(false))
+  },[])
   return (
     <div
       className={`${

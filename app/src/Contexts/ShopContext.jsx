@@ -76,7 +76,6 @@ const ShopContextProvider = ({ children }) => {
       .get("http://localhost:3001/api/public/products")
       .then((response) =>{
         setProduct(response.data.data)
-        console.log(response.data?.data)
       } )
       .catch((err) => {
         console.log(err)
