@@ -18,6 +18,42 @@ const allProducts = async (req, res) => {
   });
 };
 
+const getOriginalProducts = async (req, res) => {
+  const products = await Products.find(
+    { original: true },
+    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
+  );
+  if (!products) {
+    return res
+      .status(204)
+      .json({ status: "success", message: "No item in products" });
+  }
+  res.json({
+    status: "success",
+    message: "Products fetched successfully",
+    data: products,
+  });
+};
+
+const lastAddedTenProducts = async (req, res) => {
+  const products = await Products.find(
+    {},
+    { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 }
+  )
+    .sort({ createdAt: -1 })
+    .limit(10);
+  if (!products) {
+    return res
+      .status(204)
+      .json({ status: "success", message: "No item in products" });
+  }
+  res.json({
+    status: "success",
+    message: "Products fetched successfully",
+    data: products,
+  });
+};
+
 // to get the product by id
 const productById = async (req, res) => {
   const product = await Products.findOne(
@@ -52,4 +88,4 @@ const productByCategory = async (req, res) => {
   });
 };
 
-export { allProducts, productByCategory, productById };
+export { allProducts, productByCategory, productById , getOriginalProducts, lastAddedTenProducts};
