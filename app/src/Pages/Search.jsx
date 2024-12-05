@@ -1,24 +1,37 @@
-import { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+import { useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import ScrollTop from "../shared/ScrollTop";
+import axios from "axios";
 
 function Search() {
-  const { products, loading } = useContext(ShopContext);
+  const [products,setProducts] = useState([])
+  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [searchedProduct, setSearchedProduct] = useState([]);
 
+  useEffect(()=>{
+setLoading(true)
+axios.get("http://localhost:3001/api/public/products")
+.then((response)=>{
+  setProducts(response.data.data)
+})
+.catch((err)=>console.log(err))
+.finally(()=>setLoading(false))
+  },[])
+
   useEffect(() => {
+    setLoading(true)
     setSearchedProduct(
-      products.filter(
+      products?.filter(
         (items) =>
           items.name.toLowerCase().includes(search.toLowerCase()) ||
           items.description.toLowerCase().includes(search.toLowerCase()) ||
           items.category.toLowerCase().includes(search.toLowerCase())
       )
     );
+    setLoading(false)
   }, [products, search]);
 
   return (

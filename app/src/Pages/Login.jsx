@@ -5,6 +5,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 function Login() {
   const { setCurrentUser, setCartItems, setUserOrders } =
@@ -26,28 +27,16 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     axios
-      .get("http://localhost:3000/users")
+      .post("http://localhost:3001/api/users/login", loginData)
       .then((response) => {
-        const users = response.data;
-        const inputUser = users.find(
-          (items) =>
-            items.email == loginData.email &&
-            items.password == loginData.password
-        );
-        if (inputUser) {
-          inputUser.isBlocked
-            ? toast.error("User is blocked by admin")
-            : (setCurrentUser(inputUser),
-              setCartItems(inputUser.cart),
-              setUserOrders(inputUser.orders),
-              toast.success("You have been logged in"));
-          navigate("/");
-        } else {
-          toast.error("Invalid email or password");
-        }
+        console.log(response.data);
+        // setCurrentUser(response.data.data.user);
+        // localStorage.setItem("token", response.data.data.token);
+        navigate('/')
       })
       .catch((err) => {
-        console.log(err)
+        console.log(axiosErrorManager(err));
+        toast.error("Something went wrong");
       })
       .finally(() => {
         setLoading(false);

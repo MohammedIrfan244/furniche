@@ -1,10 +1,11 @@
-import { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+import {useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
 import ScrollTop from "../shared/ScrollTop";
+import axios from "axios";
 
 function Collection() {
-  const { products, loading } = useContext(ShopContext);
+  const [products,setProducts] = useState([])
+  const [loading,setLoading] = useState(true)
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -17,13 +18,20 @@ function Collection() {
   };
   useEffect(() => {
     if (categories.length === 0) {
-      setFilteredProducts(products);
+      setLoading(true);
+      axios.get("http://localhost:3001/api/public/products").then((response) => {
+        setProducts(response.data.data);
+        setFilteredProducts(response.data.data);
+      })
+      .catch((err)=>console.log(err))
+      .finally(()=>setLoading(false))
     } else {
       setFilteredProducts(
-        products.filter((items) => categories.includes(items.category))
+        products.filter((item) => categories.includes(item.category))
       );
     }
-  }, [categories, products]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [categories]);
 
   return (
     <div
@@ -85,7 +93,7 @@ function Collection() {
               {filteredProducts.map((item, index) => (
                 <ProductItems
                   key={index}
-                  id={item.id}
+                  id={item._id}
                   image={item.image}
                   name={item.name}
                   price={item.price}

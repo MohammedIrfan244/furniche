@@ -6,18 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { UserContext } from "../Contexts/UserContext";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 function SignIn() {
   const [inputData, setInputData] = useState({
     name: "",
     email: "",
     password: "",
-    cart: {},
     mobile: "",
-    avatar: "",
-    isAdmin: false,
-    isBlocked: false,
-    orders: [],
+    profile: null
   });
   const [conformPassword, setConformPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -31,38 +28,24 @@ function SignIn() {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
   };
+  const handleFileChange=(e)=>{
+    setInputData((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     axios
-      .get("http://localhost:3000/users")
+      .post("http://localhost:3001/api/users/register", inputData)
       .then((response) => {
-        const users = response.data;
-        users.some((item) => item.email == inputData.email)
-          ? setErrorMessage("User already registered")
-          : inputData.password !== conformPassword
-          ? setErrorMessage("Passwords do not match")
-          : axios
-              .post("http://localhost:3000/users", inputData)
-              .then(() => {
-                axios.get("http://localhost:3000/users").then((getResp) => {
-                  const datas = getResp.data;
-                  const inputUser = datas.find(
-                    (items) =>
-                      items.email == inputData.email &&
-                      inputData.password == items.password
-                  );
-                  setCurrentUser(inputUser);
-                  setCartItems(inputUser?.cart);
-                  setUserOrders(inputUser?.orders);
-                  toast.success("You have been registered");
-                  navigate("/");
-                });
-              })
-              .catch((err) => console.log(err));
+        console.log(response.data)
+        toast.success("You have been registered successfully");
+        navigate("/login");
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(axiosErrorManager(err))
+        toast.error("Something went wrong");
+      })
       .finally(() => {
         setLoading(false);
       });
@@ -109,11 +92,10 @@ function SignIn() {
           className="focus:outline-none rounded-lg px-3 py-1 text-xs"
         />
         <input
-          value={inputData.avatar}
-          name="avatar"
-          type="text"
-          onChange={handleInutChange}
-          placeholder="Profile URL (Not requered)"
+          name="profile"
+          type="file"
+          onChange={handleFileChange}
+          placeholder="Profile picture"
           className="focus:outline-none rounded-lg px-3 py-1 text-xs"
         />
         <div className="flex justify-between gap-2 w-[100%]">

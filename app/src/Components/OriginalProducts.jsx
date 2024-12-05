@@ -1,10 +1,24 @@
-import { useContext } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+
+import { useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
+import axios from "axios";
 
 function OriginalProducts() {
-  const { products, loading } = useContext(ShopContext);
-  const originaProduct = products.filter((items) => items.original === true);
+  
+  const [loading, setLoading] = useState(true);
+
+  const [originalProduct, setOriginalProduct] = useState([]);
+
+  useEffect(()=>{
+    setLoading(true)
+    axios.get("http://localhost:3001/api/public/products/collection/Original")
+    .then((response)=>{
+      setOriginalProduct(response.data.data)
+    })
+    .catch((err)=>console.log(err))
+    .finally(()=>setLoading(false))
+  },[])
+  
 
   return (
     <div
@@ -23,10 +37,10 @@ function OriginalProducts() {
             IN HOUSE DESIGNS
           </h1>
           <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-20">
-            {originaProduct.map((item, index) => (
+            {originalProduct.map((item, index) => (
               <ProductItems
                 key={index}
-                id={item.id}
+                id={item._id}
                 image={item.image}
                 name={item.name}
                 price={item.price}

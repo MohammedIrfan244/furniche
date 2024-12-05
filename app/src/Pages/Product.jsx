@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,15 +7,32 @@ import ProductItems from "../shared/ProductItems";
 import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import ScrollTop from "../shared/ScrollTop";
+import axios from "axios";
 
 function Product() {
   const { Id } = useParams();
   const { currentUser, addCart, cartItems } = useContext(UserContext);
-  const { products, currency, loading } = useContext(ShopContext);
-  const product = products.find((items) => items.id === Id);
-  const interestedProduct = products.filter(
-    (items) => items.category == product.category && items.id != product.id
-  );
+  const {  currency } = useContext(ShopContext);
+  const [product, setProduct] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [interestedProduct, setInterestedProduct] = useState([]);
+
+  useEffect(()=>{
+setLoading(true)
+axios.get(`http://localhost:3001/api/public/products/${Id}`)
+.then((response)=>{
+  setProduct(response.data.data)
+})
+.catch((err)=>console.log(err))
+
+axios.get(`http://localhost:3001/api/public/products/category/${product?.category}`)
+.then((response)=>{
+  setInterestedProduct(response.data.data)
+})
+.catch((err)=>console.log(err))
+.finally(()=>setLoading(false))
+
+  },[Id, product?.category])
 
   return (
     <div
@@ -89,7 +106,7 @@ function Product() {
               {interestedProduct.map((item, index) => (
                 <ProductItems
                   key={index}
-                  id={item.id}
+                  id={item._id}
                   image={item.image}
                   name={item.name}
                   price={item.price}
