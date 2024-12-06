@@ -4,10 +4,10 @@ import RoutesPage from "./RoutesPage";
 
 function App() {
   return (
-    <div>
+    <>
       <ToastContainer />
       <RoutesPage />
-    </div>
+    </>
   );
 }
 

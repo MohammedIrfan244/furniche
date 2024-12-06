@@ -29,9 +29,7 @@ function Login() {
     axios
       .post("http://localhost:3001/api/users/login", loginData)
       .then((response) => {
-        console.log(response.data);
-        // setCurrentUser(response.data.data.user);
-        // localStorage.setItem("token", response.data.data.token);
+        console.log(response.data);        
         navigate('/')
       })
       .catch((err) => {

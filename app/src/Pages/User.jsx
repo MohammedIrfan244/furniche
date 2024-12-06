@@ -7,6 +7,7 @@ import ScrollTop from "../shared/ScrollTop";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import AdminProfile from "../assets/Me.jpeg";
+import axios from "axios";
 
 function User() {
   const {
@@ -23,14 +24,15 @@ function User() {
   const handleLogOut = () => {
     const checkLogout=confirm("Are you sure you want to logout")
     if(checkLogout){
-      setCurrentUser(null);
-    setCartItems({});
-    setCartCount(0);
-    setUserOrders([]);
-    localStorage.removeItem("cartItems");
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("cartCount");
-    localStorage.removeItem("userOrders");
+    //   setCurrentUser(null);
+    // setCartItems({});
+    // setCartCount(0);
+    // setUserOrders([]);
+    // localStorage.removeItem("cartItems");
+    // localStorage.removeItem("currentUser");
+    // localStorage.removeItem("cartCount");
+    // localStorage.removeItem("userOrders");
+    axios.post("http://localhost:3001/api/users/logout")
     navigate("/");
     }
   };
