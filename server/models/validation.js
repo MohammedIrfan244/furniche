@@ -4,9 +4,9 @@ const joiUserSchema = joi.object({
   name: joi.string(),
   password: joi.string().min(4).required(),
   email: joi.string().email().required(),
-  mobile: joi.string().optional(),
+  mobile: joi.string().allow("").optional(),
   isBlocked: joi.boolean().default(false).optional(),
-  profile:joi.optional(),
+  profile:joi.string().allow("").optional(),
   role: joi.string().default("User").optional(),
   refreshToken: joi.string().optional(),
 });
