@@ -8,6 +8,7 @@ import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import ScrollTop from "../shared/ScrollTop";
 import axios from "axios";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 function Product() {
   const { Id } = useParams();
@@ -23,15 +24,13 @@ axios.get(`http://localhost:3001/api/public/products/${Id}`)
 .then((response)=>{
   setProduct(response.data.data)
 })
-.catch((err)=>console.log(err))
-
+.catch((err)=>console.log("Error from id in params",axiosErrorManager(err)))
 axios.get(`http://localhost:3001/api/public/products/category/${product?.category}`)
 .then((response)=>{
   setInterestedProduct(response.data.data)
 })
-.catch((err)=>console.log(err))
+.catch((err)=>console.log("Error from interested product",axiosErrorManager(err)))
 .finally(()=>setLoading(false))
-
   },[Id, product?.category])
 
   return (

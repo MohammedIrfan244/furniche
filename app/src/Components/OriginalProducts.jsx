@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
 import axios from "axios";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 function OriginalProducts() {
   
@@ -11,11 +12,11 @@ function OriginalProducts() {
 
   useEffect(()=>{
     setLoading(true)
-    axios.get("http://localhost:3001/api/public/products/collection/Original")
+    axios.get("http://localhost:3001/api/public/products/collection/original")
     .then((response)=>{
       setOriginalProduct(response.data.data)
     })
-    .catch((err)=>console.log(err))
+    .catch((err)=>console.log(axiosErrorManager(err)))
     .finally(()=>setLoading(false))
   },[])
   

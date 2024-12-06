@@ -3,26 +3,21 @@ import ProductItems from "../shared/ProductItems";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import ScrollTop from "../shared/ScrollTop";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllProducts } from "../Redux/PublicSlice";
 
 function Search() {
-  const [products,setProducts] = useState([])
-  const [loading, setLoading] = useState(true);
+  const {products,loading,error}=useSelector((state)=>state.public)
   const [search, setSearch] = useState("");
   const [searchedProduct, setSearchedProduct] = useState([]);
+  const dispatch=useDispatch()
 
   useEffect(()=>{
-setLoading(true)
-axios.get("http://localhost:3001/api/public/products")
-.then((response)=>{
-  setProducts(response.data.data)
-})
-.catch((err)=>console.log(err))
-.finally(()=>setLoading(false))
+dispatch(fetchAllProducts())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   useEffect(() => {
-    setLoading(true)
     setSearchedProduct(
       products?.filter(
         (items) =>
@@ -31,8 +26,8 @@ axios.get("http://localhost:3001/api/public/products")
           items.category.toLowerCase().includes(search.toLowerCase())
       )
     );
-    setLoading(false)
-  }, [products, search]);
+    if(error)console.log(error)
+  }, [error, products, search]);
 
   return (
     <div

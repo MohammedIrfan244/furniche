@@ -1,11 +1,13 @@
 import {useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
 import ScrollTop from "../shared/ScrollTop";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllProducts } from "../Redux/PublicSlice";
+
 
 function Collection() {
-  const [products,setProducts] = useState([])
-  const [loading,setLoading] = useState(true)
+  const dispatch=useDispatch()
+  const {products,loading,error}=useSelector((state)=>state.public)
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -16,22 +18,20 @@ function Collection() {
       setCategories((prev) => [...prev, e.target.value]);
     }
   };
+  useEffect(()=>{
+dispatch(fetchAllProducts())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   useEffect(() => {
     if (categories.length === 0) {
-      setLoading(true);
-      axios.get("http://localhost:3001/api/public/products").then((response) => {
-        setProducts(response.data.data);
-        setFilteredProducts(response.data.data);
-      })
-      .catch((err)=>console.log(err))
-      .finally(()=>setLoading(false))
+      setFilteredProducts(products);
     } else {
       setFilteredProducts(
         products.filter((item) => categories.includes(item.category))
       );
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categories]);
+    if(error)console.log(error)
+  }, [categories, error, products]);
 
   return (
     <div

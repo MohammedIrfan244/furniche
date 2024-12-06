@@ -1,12 +1,11 @@
 import axios from "axios";
-import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { UserContext } from "../Contexts/UserContext";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import { useState } from "react";
 
 function SignIn() {
   const [inputData, setInputData] = useState({
@@ -17,11 +16,8 @@ function SignIn() {
     profile: null
   });
   const [conformPassword, setConformPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { setUserOrders, setCurrentUser, setCartItems } =
-    useContext(UserContext);
   const navigate = useNavigate();
 
   const handleInutChange = (e) => {
@@ -34,17 +30,21 @@ function SignIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    if(inputData.password !== conformPassword){
+      toast.error("Password doesn't match");
+      return;
+    }
+    inputData.mobile?inputData.mobile:inputData.mobile="Not Provided";
+    inputData.profile?inputData.profile:inputData.profile="";
+    console.log(inputData.mobile)
     axios
       .post("http://localhost:3001/api/users/register", inputData)
       .then((response) => {
-        console.log(response.data)
-        toast.success("You have been registered successfully");
+        toast.success(response.data.message);
         navigate("/login");
       })
       .catch((err) => {
-        console.log(axiosErrorManager(err))
-        toast.error("Something went wrong");
+        toast.error(axiosErrorManager(err));
       })
       .finally(() => {
         setLoading(false);
@@ -73,7 +73,6 @@ function SignIn() {
             className="focus:outline-none w-[50%] rounded-lg px-3 py-1 text-xs"
           />
           <input
-            required
             value={inputData.mobile}
             name="mobile"
             type="text"
@@ -131,13 +130,13 @@ function SignIn() {
             />
           </div>
         </div>
-        <p
+        {/* <p
           className={`${
             errorMessage === "" ? "hidden" : "block"
           } text-xs text-red-600`}
         >
           {errorMessage}
-        </p>
+        </p> */}
         <Link className="text-xs block text-[#F9FCFA]" to={"/login"}>
           Already have an account?
         </Link>

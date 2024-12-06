@@ -1,15 +1,22 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
-import { fetchNewCollection } from "../Redux/PublicSlice";
-import { useEffect } from "react";
+import axios from "axios";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 
 function NewCollection() {
-const dispatch=useDispatch()
-  const {newCollection,loading,error} = useSelector((state) => state.public);
-useEffect(()=>{
-dispatch(fetchNewCollection())
-},[])
+  const[newCollection, setNewCollection]=useState([])
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/api/public/products/collection/latest")
+      .then((res) => {
+        setNewCollection(res.data?.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(axiosErrorManager(err)));
+  }, []);
   return (
     <div
       className={`${
