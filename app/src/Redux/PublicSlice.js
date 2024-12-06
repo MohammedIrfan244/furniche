@@ -70,4 +70,4 @@ const publicSlice = createSlice({
 });
 
 export { fetchAllProducts, fetchProductsByCategory };
-export default publicSlice;
+export default publicSlice.reducer;

@@ -1,19 +1,23 @@
-import { useContext, useState } from "react";
-import { UserContext } from "../Contexts/UserContext";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../Redux/userSlice";
 
 function Login() {
-  const { setCurrentUser, setCartItems, setUserOrders } =
-    useContext(UserContext);
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch=useDispatch()
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
+  useEffect(()=>{
+console.log(currentUser)
+  },[currentUser])
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -27,14 +31,17 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     axios
-      .post("http://localhost:3001/api/users/login", loginData)
+      .post("http://localhost:3001/api/users/login", loginData,{withCredentials:true})
       .then((response) => {
-        console.log(response.data);        
+        localStorage.setItem("token", response.data.token);
+        dispatch(setCurrentUser(response.data.user));
+        localStorage.setItem("currentUser", JSON.stringify(response.data.user));
+        toast.success(response.data.message);
         navigate('/')
       })
       .catch((err) => {
         console.log(axiosErrorManager(err));
-        toast.error("Something went wrong");
+        toast.error(axiosErrorManager(err));
       })
       .finally(() => {
         setLoading(false);

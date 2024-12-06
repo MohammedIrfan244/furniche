@@ -1,24 +1,18 @@
-import { useContext } from "react";
-import { UserContext } from "../Contexts/UserContext";
+
 import { useNavigate } from "react-router-dom";
-import { ShopContext } from "../Contexts/ShopContext";
-import OrderCards from "../shared/OrderCards";
+// import OrderCards from "../shared/OrderCards";
 import ScrollTop from "../shared/ScrollTop";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
-import AdminProfile from "../assets/Me.jpeg";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
+// import AdminProfile from "../assets/Me.jpeg";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../Redux/userSlice";
 
 function User() {
-  const {
-    currentUser,
-    setCurrentUser,
-    setCartItems,
-    setUserOrders,
-    userOrders,
-  } = useContext(UserContext);
-  const { setCartCount } = useContext(ShopContext);
+ const {currentUser}=useSelector((  state) => state.user);
   const navigate=useNavigate()
+  const dispatch=useDispatch()
 
 
   const handleLogOut = () => {
@@ -33,6 +27,9 @@ function User() {
     // localStorage.removeItem("cartCount");
     // localStorage.removeItem("userOrders");
     axios.post("http://localhost:3001/api/users/logout")
+    localStorage.removeItem("token");
+    localStorage.removeItem("currentUser");
+    dispatch(setCurrentUser(null));
     navigate("/");
     }
   };
@@ -50,13 +47,8 @@ function User() {
           <div className="flex justify-center">
             <div className="h-36 flex justify-center items-center rounded-full mb-5 overflow-hidden w-36">
               <img
-                src={currentUser.isAdmin ? AdminProfile : currentUser.avatar}
-                alt="User avatar"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg";
-                }}
+                src={currentUser?.profile}
+                alt="User Profile"
               />
             </div>
           </div>
@@ -89,7 +81,7 @@ function User() {
         >
           ORDERS
         </h1>
-        <div className="flex flex-col gap-5 overflow-y-auto w-[100%] scrollbar-thin h-[90vh]">
+        {/* <div className="flex flex-col gap-5 overflow-y-auto w-[100%] scrollbar-thin h-[90vh]">
           {userOrders.length === 0 ? (
             <div className="h-56 flex justify-center items-center w-32">
               <FontAwesomeIcon className="text-5xl" icon={faBoxOpen} />
@@ -99,7 +91,7 @@ function User() {
               <OrderCards key={index} orderItems={items} />
             ))
           )}
-        </div>
+        </div> */}
       </div>
       <ScrollTop />
     </div>

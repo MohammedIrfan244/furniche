@@ -9,10 +9,12 @@ import { useContext, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import { ShopContext } from "../Contexts/ShopContext";
 import AdminProfile from '../assets/Me.jpeg'
+import { useSelector } from "react-redux";
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
-  const { currentUser, isAdmin } = useContext(UserContext);
+  const {currentUser}=useSelector((state)=>state.user)
+  const {  isAdmin } = useContext(UserContext);
   const { cartCount } = useContext(ShopContext);
   return (
     <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-[#D7D2C9] z-20">
