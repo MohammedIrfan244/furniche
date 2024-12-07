@@ -1,5 +1,6 @@
 import Cart from "../../models/cartModel.js";
 import CustomError from "../../utils/CustomError.js";
+import mongoose from "mongoose";
 
 // controller to show cart for a specific user
 const getUserCart = async (req, res) => {
@@ -24,16 +25,15 @@ const getUserCart = async (req, res) => {
 };
 
 const totalNumberOfCartItems = async (req, res) => {
-  const totalItems = await Cart.aggregate([
-    { $match: { userId: req.user.id } },
-    { $unwind: "$products" },
-    { $group: { _id: null, total: { $sum: "$products.quantity" } } },
-  ])
-  if (totalItems) {
-   return res.status(200).json({ status: "success",message: "Cart stats fetched successfully", totalItems: totalItems[0].total });
-  }
-  res.status(200).json({ status: "success", message: "Cart stats fetched successfully" ,totalItems: 0 });
+   const data = await Cart.findOne({ userId: req.user.id })
+   if(!data){
+     return res.status(200).json({status:"success",message:"Cart is empty",count:0});
+   }else{
+     res.status(200).json({status:"success",message:"Cart fetched successfully",count:data.products.length});
+   }
 };
+
+
 
 //controller to update cart
 const updateCart = async (req, res, next) => {

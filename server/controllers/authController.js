@@ -146,9 +146,10 @@ const adminLogin = async (req, res, next) => {
 
 // Controller to handle token refresh
 const refreshingToken = async (req, res, next) => {
-  try {
-    const refreshToken = req.cookies.refreshToken;
-
+  if(!req.cookies){
+    return next(new CustomError("No cookies found",401))
+  }
+  const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
       return next(new CustomError("No refresh token found", 401));
     }
@@ -165,9 +166,7 @@ const refreshingToken = async (req, res, next) => {
     const accessToken = createAccessToken(user._id, user.role, "1h");
 
     res.status(200).json({ message: "Token refreshed", token: accessToken });
-  } catch (err) {
-    next(new CustomError("Failed to refresh token", 500));
-  }
+  
 };
 
 
