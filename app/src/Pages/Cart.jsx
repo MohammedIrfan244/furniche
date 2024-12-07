@@ -6,7 +6,6 @@ import { UserContext } from "../Contexts/UserContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import ScrollTop from "../shared/ScrollTop";
-import axiosInstance from "../utilities/axiosInstance";
 
 function Cart() {
 
@@ -15,9 +14,6 @@ function Cart() {
   const { cartItems, setCartItems, cartTotal, setCartTotal } =
     useContext(UserContext);
   const cartProducts = products.filter((items) => cartItems[items.id]);
-useEffect(()=>{
-axiosInstance.get('/users/orders')
-},[])
   useEffect(() => {
     let total = 0;
     cartProducts.forEach((item) => {

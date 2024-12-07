@@ -37,7 +37,6 @@ axiosInstance.interceptors.response.use(
         // Retry the original request with the new token
         return axiosInstance(originalRequest);
       } catch (err) {
-        console.error("Token refresh failed", err);
         // Optional: Redirect to login or handle logout
         return Promise.reject(err);
       }

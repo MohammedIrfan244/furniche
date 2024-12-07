@@ -5,16 +5,34 @@ import {
   faCartShopping,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
-import { ShopContext } from "../Contexts/ShopContext";
 import { useSelector } from "react-redux";
+import axiosInstance from "../utilities/axiosInstance";
+import axiosErrorManager from "../utilities/axiosErrorManager";
+import axios from "axios";
+import Cookies  from 'js-cookie'
 
 function NavBar() {
   const [visible, setVisible] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const {currentUser}=useSelector((state)=>state.user)
   const {  isAdmin } = useContext(UserContext);
-  const { cartCount } = useContext(ShopContext);
+  useEffect(()=>{
+    const token=Cookies.get('token')
+axios.get("http://localhost:3001/api/users/cart/stats",
+  {
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
+  })
+.then((res)=>{
+  setCartCount(res.data.count)
+})
+.catch((err)=>{
+  console.log(axiosErrorManager(err))
+})
+  },[])
   return (
     <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-[#D7D2C9] z-20">
       <div className="flex items-center justify-between">

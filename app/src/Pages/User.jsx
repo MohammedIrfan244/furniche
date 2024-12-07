@@ -5,6 +5,7 @@ import ScrollTop from "../shared/ScrollTop";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../Redux/userSlice";
+import { toast } from "react-toastify";
 
 function User() {
  const {currentUser}=useSelector((  state) => state.user);
@@ -16,10 +17,11 @@ function User() {
     const checkLogout=confirm("Are you sure you want to logout")
     if(checkLogout){
     axios.post("http://localhost:3001/api/users/logout",{},{withCredentials:true})
-    localStorage.removeItem("token");
-    localStorage.removeItem("currentUser");
-    dispatch(setCurrentUser(null));
-    navigate("/");
+    .then((response) => {
+      toast.success(response.data.message);
+      dispatch(setCurrentUser(null));
+      navigate("/");
+    })
     }
   };
 
