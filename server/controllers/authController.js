@@ -66,26 +66,34 @@ const loginUser = async (req, res, next) => {
 
   user.refreshToken = refreshToken;
   await user.save();
-
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none", 
-    maxAge: 24 * 60 * 60 * 1000, 
-  });
-
+  
   const userDetails = {
     name: user.name,
     email: user.email,
     role: user.role,
     profile: user.profile,
   };
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none", 
+  });
+
+res.cookie("token", accessToken, {
+  httpOnly: false,
+  secure: true,
+  sameSite: "none",
+});
+
+res.cookie("user", JSON.stringify(userDetails), {
+  httpOnly: false,
+  secure: true,
+  sameSite: "none",
+});
 
   res.json({
     status: "success",
     message: "Logged in successfully",
-    token: accessToken,
-    user: userDetails,
   });
 };
 
@@ -109,18 +117,31 @@ const adminLogin = async (req, res, next) => {
   user.refreshToken = refreshToken;
   await user.save();
 
-  res.cookie("refreshToken", refreshToken, {
-    httpOnly: true,
-    secure: false,
-    sameSite: "none",
-  });
   const userDetails = {
     name: user.name,
     email: user.email,
-    role: user.role,
+    mobile: user.mobile,
     profile:user.profile
   }
-  res.json({ status: "success", message: "Logged in successfully", token ,user:userDetails});
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+
+  res.cookie("token", token, {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  });
+
+  res.cookie("user", JSON.stringify(userDetails), {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  });
+
+  res.json({ status: "success", message: "Logged in successfully"});
 };
 
 // Controller to handle token refresh
@@ -155,9 +176,19 @@ const logout = async (req, res, next) => {
   // Clearing the refresh token cookie
   res.clearCookie("refreshToken", {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: "none",
   });
+  res.clearCookie("token", {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  })
+  res.clearCookie("user", {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  })
   res
     .status(200)
     .json({ status: "success", message: "Logged out successfully" });

@@ -23,6 +23,18 @@ const getUserCart = async (req, res) => {
   }
 };
 
+const totalNumberOfCartItems = async (req, res) => {
+  const totalItems = await Cart.aggregate([
+    { $match: { userId: req.user.id } },
+    { $unwind: "$products" },
+    { $group: { _id: null, total: { $sum: "$products.quantity" } } },
+  ])
+  if (totalItems) {
+   return res.status(200).json({ status: "success",message: "Cart stats fetched successfully", totalItems: totalItems[0].total });
+  }
+  res.status(200).json({ status: "success", message: "Cart stats fetched successfully" ,totalItems: 0 });
+};
+
 //controller to update cart
 const updateCart = async (req, res, next) => {
   const { productId, quantity } = req.body;
@@ -82,4 +94,4 @@ const removeFromCart = async (req, res, next) => {
   }
 };
 
-export { getUserCart, updateCart, removeFromCart };
+export { getUserCart, updateCart, removeFromCart ,totalNumberOfCartItems};

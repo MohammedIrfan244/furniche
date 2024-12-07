@@ -5,6 +5,7 @@ import idValidation from "../middlewares/idValidation.js";
 import {
   getUserCart,
   removeFromCart,
+  totalNumberOfCartItems,
   updateCart,
 } from "../controllers/user/userCartController.js";
 import {
@@ -28,6 +29,7 @@ router
 
   //routes for cart handling
   .get("/cart", verifyToken, tryCatch(getUserCart)) // getting user's cart
+  .get("/cart/stats", verifyToken, tryCatch(totalNumberOfCartItems))
   .post("/cart", verifyToken, tryCatch(updateCart)) // updating the products in the cart
   .delete("/cart", verifyToken, tryCatch(removeFromCart)) // removing a product from the cart
 
