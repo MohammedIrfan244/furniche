@@ -37,7 +37,6 @@ function Login() {
         navigate('/')
       })
       .catch((err) => {
-        console.log(axiosErrorManager(err));
         toast.error(axiosErrorManager(err));
       })
       .finally(() => {

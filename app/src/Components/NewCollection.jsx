@@ -37,7 +37,7 @@ function NewCollection() {
             {newCollection?.map((item, index) => (
               <ProductItems
                 key={index}
-                id={item._id}
+                id={item._id}  
                 image={item.image}
                 name={item.name}
                 price={item.price}

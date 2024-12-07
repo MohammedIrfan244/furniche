@@ -8,7 +8,6 @@ import {
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import { useSelector } from "react-redux";
-import axiosInstance from "../utilities/axiosInstance";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import axios from "axios";
 import Cookies  from 'js-cookie'

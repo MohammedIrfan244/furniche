@@ -5,20 +5,18 @@ import ScrollTop from "../shared/ScrollTop";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../Redux/userSlice";
-import { toast } from "react-toastify";
 
 function User() {
  const {currentUser}=useSelector((  state) => state.user);
   const navigate=useNavigate()
   const dispatch=useDispatch()
 
-
   const handleLogOut = () => {
     const checkLogout=confirm("Are you sure you want to logout")
     if(checkLogout){
     axios.post("http://localhost:3001/api/users/logout",{},{withCredentials:true})
     .then((response) => {
-      toast.success(response.data.message);
+      console.log(response.data.message);
       dispatch(setCurrentUser(null));
       navigate("/");
     })
@@ -44,7 +42,6 @@ function User() {
             </div>
           </div>
           <div className="flex justify-start gap-14">
-            <p className="w-[20%]">{currentUser.isAdmin ? "Admin" : "User"}</p>
             <p className="font-bold flex w-[60%]">{currentUser.name}</p>
           </div>
           <div className="flex justify-start gap-14">
