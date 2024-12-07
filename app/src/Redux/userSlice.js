@@ -1,10 +1,12 @@
 import {createSlice} from '@reduxjs/toolkit'
+import Cookies from 'js-cookie'
 
-
+const userCookie=Cookies.get('user')
+const currentUser=userCookie?JSON.parse(userCookie):null
 
 const INITIAL_STATE = {
-    currentUser: localStorage.getItem("currentUser")? JSON.parse(localStorage.getItem("currentUser")) : null
-}
+    currentUser: currentUser,
+};
 
 const userSlice = createSlice({
     name: "user",

@@ -1,23 +1,20 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../Redux/userSlice";
+import Cookies  from 'js-cookie'
 
 function Login() {
-  const { currentUser } = useSelector((state) => state.user);
   const dispatch=useDispatch()
   const [loginData, setLoginData] = useState({
     email: "",
     password: "",
   });
-  useEffect(()=>{
-console.log(currentUser)
-  },[currentUser])
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -33,9 +30,9 @@ console.log(currentUser)
     axios
       .post("http://localhost:3001/api/users/login", loginData,{withCredentials:true})
       .then((response) => {
-        localStorage.setItem("token", response.data.token);
-        dispatch(setCurrentUser(response.data.user));
-        localStorage.setItem("currentUser", JSON.stringify(response.data.user));
+        const userCookie=Cookies.get('user')
+        const currentUser=userCookie?JSON.parse(userCookie):null
+        dispatch(setCurrentUser(currentUser));
         toast.success(response.data.message);
         navigate('/')
       })

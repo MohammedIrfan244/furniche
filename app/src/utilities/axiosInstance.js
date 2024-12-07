@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies  from 'js-cookie'
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:3001/api",
@@ -7,7 +8,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     (config) => {
         // Get the token from localStorage or Redux store (wherever you're storing it)
-        const accessToken = localStorage.getItem('token');
+        const accessToken = Cookies .get('token');
         if (accessToken) {
             // Include the token in the Authorization header
             config.headers['Authorization'] = `Bearer ${accessToken}`;

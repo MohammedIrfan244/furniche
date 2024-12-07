@@ -8,7 +8,6 @@ import {
 import { useContext, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
 import { ShopContext } from "../Contexts/ShopContext";
-import AdminProfile from '../assets/Me.jpeg'
 import { useSelector } from "react-redux";
 
 function NavBar() {
@@ -82,7 +81,7 @@ function NavBar() {
             </p>
           </Link>
           <Link
-            to={currentUser == null ? "/login" : "/user"}
+            to={currentUser?"/user":"/login"}
             className=" group relative"
           >
             {currentUser == null ? (
@@ -94,13 +93,8 @@ function NavBar() {
                 <div className="h-6 flex justify-center items-center rounded-full overflow-hidden w-6">
               <img
               className="Logo"
-                src={currentUser.isAdmin ? AdminProfile : currentUser.avatar}
-                alt="User avatar"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg";
-                }}
+                src={currentUser?.profile}
+                alt="User Profile"
               />
             </div>
               </div>

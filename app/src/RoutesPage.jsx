@@ -19,9 +19,11 @@ import UserManipulate from "./Admin/UserManipulate";
 import ProductManipulation from "./Admin/ProductManipulation";
 import Layout from "./Layout/Layout";
 import { ShopContext } from "./Contexts/ShopContext";
+import { useSelector } from "react-redux";
 
 function RoutesPage() {
-  const { currentUser, isAdmin } = useContext(UserContext);
+  const {  isAdmin } = useContext(UserContext);
+  const {currentUser}=useSelector((state)=>state.user)
   const {cartCount}=useContext(ShopContext)
   return (
     <div>
@@ -52,7 +54,7 @@ function RoutesPage() {
             />
             <Route
               path="/user"
-              element={currentUser != null ? <User /> : <Login />}
+              element={currentUser != null ? <User /> : <NotFound />}
             />
             <Route path="/search" element={<Search />} />
           </Route>
