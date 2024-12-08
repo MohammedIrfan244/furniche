@@ -13,6 +13,7 @@ const INITIAL_STATE = {
   error: null,
   currentUser: currentUser,
   userCart: [],
+  userCartCount: 0,
   userWishlist: [],
 };
 
@@ -27,6 +28,24 @@ const getCart = createAsyncThunk(
         },
       });
       return response.data.data?.products;
+    } catch (err) {
+      const errMessage = axiosErrorManager(err);
+      return rejectWithValue(errMessage);
+    }
+  }
+);
+
+const getCartCount = createAsyncThunk(
+  "user/getCartCount",
+  async (_, { rejectWithValue }) => {
+    try {
+        const token=Cookies.get('token')
+      const response = await axios.get("http://localhost:3001/api/users/cart/stats", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data.count;
     } catch (err) {
       const errMessage = axiosErrorManager(err);
       return rejectWithValue(errMessage);
@@ -49,10 +68,10 @@ const getWishlist=createAsyncThunk('user/getWishlist',async(_, {rejectWithValue}
     }
 })
 
-const addToWishList=createAsyncThunk('user/addToWishList',async({productId}, {rejectWithValue})=>{
+const addToWishList=createAsyncThunk('user/addToWishList',async(productId, {rejectWithValue})=>{
     try{
         const token=Cookies.get('token')
-        const response=await axios.post('http://localhost:3001/api/users/wishList',{"productId":productId},{
+        const response=await axios.post('http://localhost:3001/api/users/wishList',{productId:productId},{
             headers:{
                 Authorization:`Bearer ${token}`
             }
@@ -64,7 +83,7 @@ const addToWishList=createAsyncThunk('user/addToWishList',async({productId}, {re
     }
 })
 
-const removeFromWishList=createAsyncThunk('user/removeFromWishList',async({productId}, {rejectWithValue})=>{
+const removeFromWishList=createAsyncThunk('user/removeFromWishList',async(productId, {rejectWithValue})=>{
     try{
         const token=Cookies.get('token')
         const response=await axios.delete(`http://localhost:3001/api/users/wishList/${productId}`,{
@@ -113,7 +132,9 @@ const userSlice = createSlice({
         state.error=action.payload
     })
     builder.addCase(addToWishList.fulfilled,(state,action)=>{
+       if(!state.userWishlist.find(item=>item._id===action.payload._id)){
         state.userWishlist.push(action.payload)
+       }
         state.loading=false
     })
     builder.addCase(addToWishList.pending,(state)=>{
@@ -122,7 +143,6 @@ const userSlice = createSlice({
     })
     builder.addCase(addToWishList.rejected,(state,action)=>{
         state.loading=false
-        console.log(action.payload)
         state.error=action.payload
     })
     builder.addCase(removeFromWishList.fulfilled,(state,action)=>{
@@ -137,9 +157,22 @@ const userSlice = createSlice({
         state.loading=false
         state.error=action.payload
     })
+    builder.addCase(getCartCount.fulfilled,(state,action)=>{
+        state.userCartCount=action.payload
+        state.loading=false
+    })
+    builder.addCase(getCartCount.pending,(state)=>{
+        state.loading=true
+        state.error=null
+    })
+    builder.addCase(getCartCount.rejected,(state,action)=>{
+      console.log(action.payload)
+        state.loading=false
+        state.error=action.payload
+    })
   },
 });
 
-export { getCart,getWishlist , addToWishList, removeFromWishList};
+export { getCart,getWishlist , addToWishList, removeFromWishList, getCartCount };
 export const { setCurrentUser } = userSlice.actions;
 export default userSlice.reducer;

@@ -1,23 +1,39 @@
-import { useContext } from "react";
+import { useContext,  useEffect,  useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCertificate, faStar } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishList,removeFromWishList, getWishlist } from "../Redux/userSlice";
 
 // eslint-disable-next-line react/prop-types
 function ProductItems({ id, name, price, image,rating ,original}) {
   const { currency } = useContext(ShopContext);
+  const {userWishlist,currentUser,loading}=useSelector(state=>state.user)
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const dispatch=useDispatch()
+  
 
+  useEffect(()=>{
+setIsInWishlist(userWishlist.some(item=>item._id===id))
+  },[id, userWishlist,currentUser])
+
+useEffect(()=>{
+  if(currentUser){
+dispatch(getWishlist())
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+},[currentUser])
   return (
     <div className="transition w-52 duration-200 overflow-hidden relative border-none rounded-lg bg-[#F9FCFA] hover:scale-[1.03] hover:shadow-md ease-in-out">
       <Link to={`/product/${id}`}>
       {original==="true"?<FontAwesomeIcon title="Hand crafted by our own designers" className="absolute top-2 right-2 z-10 text-[#FFD700]" icon={faCertificate}/>:null}
         <img
-          onClick={window.scrollTo(0, 0)}
           className="hover:scale-105 transition duration-500 w-full object-cover ease-in-out"
           src={image}
           alt="image"
-        />
+          />
+          </Link>
       <div className="px-[4%] flex justify-between items-center w-full py-[3%]">
         <div className="w-full">
           <p className="text-xs font-bold">{name}</p>
@@ -33,7 +49,7 @@ function ProductItems({ id, name, price, image,rating ,original}) {
             </div>
         </div>
       </div>
-      </Link>
+      <button onClick={isInWishlist?()=>dispatch(removeFromWishList(id)):()=>dispatch(addToWishList(id))} className={isInWishlist?"text-red-500":"text-black"}>{loading?"loading":isInWishlist?"Remove from wishlist":"Add to wishlist"}</button>
     </div>
   );
 }

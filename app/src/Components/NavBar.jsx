@@ -7,31 +7,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
-import { useSelector } from "react-redux";
-import axiosErrorManager from "../utilities/axiosErrorManager";
-import axios from "axios";
-import Cookies  from 'js-cookie'
+import { useDispatch, useSelector } from "react-redux";
+import { getCartCount } from "../Redux/userSlice";
 
 function NavBar() {
+  const dispatch=useDispatch()
   const [visible, setVisible] = useState(false);
-  const [cartCount, setCartCount] = useState(0);
-  const {currentUser}=useSelector((state)=>state.user)
+  const {currentUser,userCartCount}=useSelector((state)=>state.user)
   const {  isAdmin } = useContext(UserContext);
   useEffect(()=>{
-    const token=Cookies.get('token')
-axios.get("http://localhost:3001/api/users/cart/stats",
-  {
-    headers:{
-      Authorization: `Bearer ${token}`
+    if(currentUser){
+  dispatch(getCartCount())
     }
-  })
-.then((res)=>{
-  setCartCount(res.data.count)
-})
-.catch((err)=>{
-  console.log(axiosErrorManager(err))
-})
-  },[])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[currentUser])
+
   return (
     <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-[#D7D2C9] z-20">
       <div className="flex items-center justify-between">
@@ -94,7 +84,7 @@ axios.get("http://localhost:3001/api/users/cart/stats",
               icon={faCartShopping}
             />
             <p className="absolute right-[-5px] bottom-[-2px]  bg-[#544A3E] text-[10px] text-center w-[15px] rounded-[100%] text-[#FAFAFA]">
-              {cartCount}
+              {userCartCount}
             </p>
           </Link>
           <Link

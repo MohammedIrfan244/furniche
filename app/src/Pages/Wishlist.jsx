@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { addToWishList, getWishlist } from "../Redux/userSlice"
+import { getWishlist, removeFromWishList } from "../Redux/userSlice"
 
 
 function Wishlist() {
@@ -10,14 +10,13 @@ useEffect(()=>{
 dispatch(getWishlist())
 // eslint-disable-next-line react-hooks/exhaustive-deps
 },[])
-const addToWishlist=async()=>{
-  await dispatch(addToWishList("67501313f7cf0572f920a21b"))
+const removeFromWishlist=async(_id)=>{
+  await dispatch(removeFromWishList(_id))   
 }
   return (
     <div className="w-[100%] flex flex-col sm:flex-row gap-9 px-5 pt-[26%] sm:pt-[8%] ">
       {loading&&<p>loading...</p>}
-      {userWishlist?.map((items,index)=><li key={index}>{items?.name}</li>)}
-      <button onClick={addToWishlist}>clidk</button>
+      {userWishlist?.map((items,index)=><li key={index}>{items?.name}{items?._id} <button onClick={()=>removeFromWishlist(items?._id)}>remove</button></li>)}
     </div>
   )
 }
