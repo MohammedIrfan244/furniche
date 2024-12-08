@@ -1,15 +1,55 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faCheckCircle,
   faChevronDown,
   faChevronUp,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { removeFromCart, updateCartQuantity } from "../Redux/userSlice";
+import axios from "axios";
+import Cookies from "js-cookie";
+import axiosErrorManager from "../utilities/axiosErrorManager";
+import { toast } from "react-toastify";
 
 // eslint-disable-next-line react/prop-types
 function CartCards({image,name,price,quantity,id}) {
+  const dispatch=useDispatch()
+  const[newQuantity,setNewQuantity]=useState(quantity)
+
+  const removeFromCartDispatch=async()=>{
+    const token=Cookies.get('token')
+    await axios.delete(`http://localhost:3001/api/users/cart/${id}`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(()=>{
+      toast.success("Product removed from cart successfully")
+      dispatch(removeFromCart(id))
+    })
+    .catch((err)=>{
+      console.log(axiosErrorManager(err))
+    })
+  }
+  const updateCartQuantityDispatch=async(newQuantity)=>{
+    const token=Cookies.get('token')
+    await axios.post('http://localhost:3001/api/users/cart',{productId:id,quantity:newQuantity},{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(()=>{
+      dispatch(updateCartQuantity({productId:id,quantity:newQuantity}))
+      toast.success("Product quantity updated successfully")
+    })
+    .catch((err)=>{
+      console.log(axiosErrorManager(err))
+    })
+  }
 
   const { currency } = useContext(ShopContext);
   return (
@@ -30,24 +70,26 @@ function CartCards({image,name,price,quantity,id}) {
           </p>
         </div>
       </div>
-      <div className="flex justify-between sm:gap-5 md:gap-7 lg:gap-10">
+      <div className="flex justify-between sm:gap-5 md:gap-7 lg:gap-10 items-center">
         <div className="flex flex-col justify-between items-center text-xs sm:text-sm">
           <button >
-            <FontAwesomeIcon className="text-xs" icon={faChevronUp} />
+            <FontAwesomeIcon className="text-xs" onClick={()=>setNewQuantity(newQuantity+1)} icon={faChevronUp} />
           </button>
           <input
             className="min-w-1 bg-[#F9FCFA] w-[40px] text-center lg:ps-3 focus:outline-none "
-            value={quantity}
+            value={newQuantity}
             type="number"
             min={1}
             readOnly
           />
           <button >
-            <FontAwesomeIcon className="text-xs" icon={faChevronDown} />
+            <FontAwesomeIcon className="text-xs" onClick={()=>setNewQuantity(Math.max(1,newQuantity-1))} icon={faChevronDown} />
           </button>
         </div>
+        <FontAwesomeIcon onClick={()=>updateCartQuantityDispatch(newQuantity)} className="text-xs sm:text-sm md:text-[16px] pe-2" icon={faCheckCircle}/>
         <button
-          className="flex items-center text-xs sm:text-sm md:text-[16px]"
+        onClick={removeFromCartDispatch}
+          className=" text-xs sm:text-sm md:text-[16px]"
           
         >
           <FontAwesomeIcon className="p-[6px]" icon={faTrash} />

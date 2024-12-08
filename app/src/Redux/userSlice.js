@@ -105,6 +105,24 @@ const userSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    addToCart: (state, action) => {
+      if(!state.userCart.find(item=>item.productId?._id===action.payload)){
+        state.userCart.push({productId:{_id:action.payload},quantity:1});
+      }
+  },  
+    removeFromCart: (state, action) => {
+      state.userCart = state.userCart.filter(
+        (item) => item.productId._id !== action.payload
+      );
+    },
+    updateCartQuantity: (state, action) => {
+      state.userCart = state.userCart.map((item) => {
+        if (item.productId._id === action.payload.productId) {
+          return { ...item, quantity: action.payload.quantity };
+        }
+        return item;
+      });
+      }
   },
   extraReducers: (builder) => {
     builder.addCase(getCart.fulfilled, (state, action) => {
@@ -174,5 +192,5 @@ const userSlice = createSlice({
 });
 
 export { getCart,getWishlist , addToWishList, removeFromWishList, getCartCount };
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser,addToCart ,removeFromCart,updateCartQuantity} = userSlice.actions;
 export default userSlice.reducer;

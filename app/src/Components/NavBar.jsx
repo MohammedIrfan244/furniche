@@ -4,6 +4,7 @@ import {
   faSearch,
   faCartShopping,
   faBars,
+  faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../Contexts/UserContext";
@@ -13,14 +14,14 @@ import { getCartCount } from "../Redux/userSlice";
 function NavBar() {
   const dispatch=useDispatch()
   const [visible, setVisible] = useState(false);
-  const {currentUser,userCartCount}=useSelector((state)=>state.user)
+  const {currentUser,userCartCount,userCart}=useSelector((state)=>state.user)
   const {  isAdmin } = useContext(UserContext);
   useEffect(()=>{
     if(currentUser){
   dispatch(getCartCount())
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[currentUser])
+  },[currentUser,userCart])
 
   return (
     <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-[#D7D2C9] z-20">
@@ -86,6 +87,15 @@ function NavBar() {
             <p className="absolute right-[-5px] bottom-[-2px]  bg-[#544A3E] text-[10px] text-center w-[15px] rounded-[100%] text-[#FAFAFA]">
               {userCartCount}
             </p>
+          </Link>
+          <Link
+            to={"/wishlist"}
+            className={`${currentUser ? "relative" : "hidden"}`}
+          >
+            <FontAwesomeIcon
+              className="hover:scale-110 transition duration-300"
+              icon={faHeart}
+            />
           </Link>
           <Link
             to={currentUser?"/user":"/login"}

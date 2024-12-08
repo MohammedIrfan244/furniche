@@ -1,25 +1,64 @@
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../Contexts/ShopContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCertificate, faStar } from "@fortawesome/free-solid-svg-icons";
 import ProductItems from "../shared/ProductItems";
-import { UserContext } from "../Contexts/UserContext";
 import { Link } from "react-router-dom";
 import ScrollTop from "../shared/ScrollTop";
 import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, getCart } from "../Redux/userSlice";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 function Product() {
   const { Id } = useParams();
-  const { currentUser, addCart, cartItems } = useContext(UserContext);
+  const {currentUser,userCart}=useSelector(state=>state.user)
+  const dispatch=useDispatch()
+  const navigate=useNavigate()
   const {  currency } = useContext(ShopContext);
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [interestedProduct, setInterestedProduct] = useState([]);
 
+  const addToCartDispatch = async () => {
+    if(!currentUser){
+      navigate('/login')
+      return
+    }
+    if (!userCart.find(item => item.productId._id === Id)) {
+      const token = Cookies.get('token');
+      try {
+        await axios.post(
+          `http://localhost:3001/api/users/cart`,
+          { productId: Id, quantity: 1 },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        dispatch(addToCart(Id));
+        dispatch(getCart());
+        toast.success("Product added to cart successfully");
+      } catch (err) {
+        console.error(err);
+        toast.error(axiosErrorManager(err));
+      }
+    } else {
+      navigate("/cart");
+      toast.error("Product already in cart");
+    }
+  };
+  
+
   useEffect(()=>{
 setLoading(true)
+if(currentUser){
+  dispatch(getCart())
+}
 axios.get(`http://localhost:3001/api/public/products/${Id}`)
 .then((response)=>{
   setProduct(response.data.data)
@@ -31,7 +70,8 @@ axios.get(`http://localhost:3001/api/public/products/category/${product?.categor
 })
 .catch((err)=>console.log("Error from interested product",axiosErrorManager(err)))
 .finally(()=>setLoading(false))
-  },[Id, product?.category])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[Id, product?.category, currentUser])
 
   return (
     <div
@@ -87,9 +127,9 @@ axios.get(`http://localhost:3001/api/public/products/category/${product?.categor
               <div className="flex justify-end">
                 <Link to={currentUser == null ? "/login" : "#"}>
                   <button
-                    onClick={currentUser != null ? () => addCart(Id) : null}
+                    onClick={userCart.some(item=>item.productId?._id===Id)?()=>navigate("/cart"):addToCartDispatch}
                     className="active:scale-95 bg-[#544A3E] hover:scale-[1.01] shadow-md shadow-[#544A3E] text-xs text-[#F5F2E9] px-5 py-2 rounded-xl sm:py-3"
-                  >{`${cartItems[Id] > 0 ? "Added" : "Add to Cart"}`}</button>
+                  >{`${userCart.some(item=>item.productId?._id===Id) ? "Added" : "Add to Cart"}`}</button>
                 </Link>
               </div>
             </div>
