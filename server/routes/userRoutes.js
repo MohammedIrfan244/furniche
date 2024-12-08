@@ -36,7 +36,7 @@ router
   // routes for wishlist handling
   .get("/wishList", verifyToken, tryCatch(getUserWishList)) // getting user's wish list
   .post("/wishList", verifyToken, tryCatch(addToWishList)) // adding item to wish list
-  .delete("/wishList", verifyToken, tryCatch(removeFromWishList)) // removing item from wish list
+  .delete("/wishList/:id", verifyToken, tryCatch(removeFromWishList)) // removing item from wish list
 
   // routes for orders
   .get("/orders", verifyToken, tryCatch(getAllOrders)) // getting all orders by user

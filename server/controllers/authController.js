@@ -70,7 +70,7 @@ const loginUser = async (req, res, next) => {
   const userDetails = {
     name: user.name,
     email: user.email,
-    role: user.role,
+    mobile: user.mobile,
     profile: user.profile,
   };
   res.cookie("refreshToken", refreshToken, {

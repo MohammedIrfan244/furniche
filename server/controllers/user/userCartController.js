@@ -5,10 +5,7 @@ import mongoose from "mongoose";
 // controller to show cart for a specific user
 const getUserCart = async (req, res) => {
   // finding the user based  on the login info and token verification and populating it
-  const data = await Cart.findOne({ userId: req.user.id }).populate({
-    path: "products.productId",
-    select: "name price image",
-  });
+  const data = await Cart.findOne({ userId: req.user.id },{_id:0,userId:0,createdAt:0,updatedAt:0}).sort({ createdAt: -1 }).populate("products.productId", "name price image");
   if (data) {
     res
       .status(200)
