@@ -56,7 +56,6 @@ const updateCart = async (req, res, next) => {
     if (itemIndex > -1) {
       newCart.products[itemIndex].quantity = quantity;
     } else {
-      // if no product found in the cart. add to the cart
       newCart.products.push({ productId, quantity });
     }
   }
@@ -69,16 +68,14 @@ const updateCart = async (req, res, next) => {
 
 // Controller for removing item from cart
 const removeFromCart = async (req, res, next) => {
-  // finding the cart by verified user and product passed through request and pull it from cart
+  const productId=req.params.productId
   const cart = await Cart.findOneAndUpdate(
-    { userId: req.user.id, "products.productId": req.body.productId },
+    { userId: req.user.id, "products.productId": productId },
     {
-      $pull: { products: { productId: req.body.productId } },
+      $pull: { products: { productId: productId } },
     },
-    // it will make it to return the updated cart
     { new: true }
   );
-  // if cart exists, send success message
   if (cart) {
     res
       .status(200)

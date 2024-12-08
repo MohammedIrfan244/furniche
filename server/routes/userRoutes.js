@@ -31,7 +31,7 @@ router
   .get("/cart", verifyToken, tryCatch(getUserCart)) // getting user's cart
   .get("/cart/stats", verifyToken, tryCatch(totalNumberOfCartItems))
   .post("/cart", verifyToken, tryCatch(updateCart)) // updating the products in the cart
-  .delete("/cart", verifyToken, tryCatch(removeFromCart)) // removing a product from the cart
+  .delete("/cart/:productId", verifyToken, tryCatch(removeFromCart)) // removing a product from the cart
 
   // routes for wishlist handling
   .get("/wishList", verifyToken, tryCatch(getUserWishList)) // getting user's wish list
