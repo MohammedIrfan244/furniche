@@ -5,7 +5,7 @@ import CustomError from "../../utils/CustomError.js";
 const getAllUsers = async (req, res) => {
   const users = await User.find(
     {role:{$ne:"Admin"}},
-    { name: 1, email: 1, mobile: 1, isBlocked: 1, role: 1,image:1 }
+    { name: 1, email: 1, mobile: 1, isBlocked: 1, role: 1,profile:1 }
   );
   if (!users) {
     return res.status(200).json({ Users: [], message: "No users found" });

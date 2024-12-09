@@ -4,13 +4,12 @@ import OriginalProducts from "../Components/OriginalProducts";
 import OurPolicy from "../Components/OurPolicy";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShop } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
-import { UserContext } from "../Contexts/UserContext";
 import Hero from "../assets/Hero.jpg";
 import ScrollTop from "../shared/ScrollTop";
+import { useSelector } from "react-redux";
 
 function Home() {
-  const { currentUser } = useContext(UserContext);
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div>
       <div

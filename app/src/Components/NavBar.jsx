@@ -6,16 +6,14 @@ import {
   faBars,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import { useContext, useEffect, useState } from "react";
-import { UserContext } from "../Contexts/UserContext";
+import {  useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartCount } from "../Redux/userSlice";
 
 function NavBar() {
   const dispatch=useDispatch()
   const [visible, setVisible] = useState(false);
-  const {currentUser,userCartCount,userCart}=useSelector((state)=>state.user)
-  const {  isAdmin } = useContext(UserContext);
+  const {currentUser,userCartCount,userCart,isAdmin}=useSelector((state)=>state.user)
   useEffect(()=>{
     if(currentUser){
   dispatch(getCartCount())
@@ -59,15 +57,10 @@ function NavBar() {
             <p>ABOUT</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
-          <NavLink
-            to={"/adminpanel"}
-            className={`${
-              isAdmin ? "flex flex-col items-center gap-1" : "hidden"
-            }`}
-          >
-            <p>ADMIN PANEL</p>
+         {isAdmin && <NavLink to={"/admin/adminPanel"} className="flex flex-col items-center gap-1">
+            <p>ADMIN</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
-          </NavLink>
+          </NavLink>}
         </ul>
         <div className="flex items-center gap-5 sm:gap-6 md:gap-7">
           <Link to={"/search"}>

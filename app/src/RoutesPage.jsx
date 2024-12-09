@@ -51,8 +51,8 @@ function RoutesPage() {
             path="/orders/:id"
             element={currentUser?<Order/>:<NotFound/>}
             />
-            <Route path="/login" element={currentUser?<NotFound/>:<Login/>} />
-            <Route path="/signin" element={currentUser?<NotFound/>:<SignIn/>} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/signin" element={<SignIn/>} />
             <Route
               path="/checkout/product/:id"
               element={currentUser?<CheckoutSingle/>:<NotFound/>}
@@ -77,15 +77,15 @@ function RoutesPage() {
           </Route>
           <Route 
           path="/admin/login"
-          element={currentUser?<NotFound/>:<AdminLogin/>}
+          element={<AdminLogin/>}
           />
           <Route
             path="/admin/adminpanel"
-            element={isAdmin ? <AdminPanel /> : <NotFound />}
+            element={<AdminPanel /> }
           />
           <Route
-            path="/adminpanel/useraction/:userId"
-            element={isAdmin ? <UserManipulate /> : <NotFound />}
+            path="admin/adminpanel/useraction/:userId"
+            element={<UserManipulate />}
           />
           <Route
             path="/adminpanel/productaction/:productId"

@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import {  useState } from "react";
 import AdminProduct from "./AdminProduct";
 import AdminUsers from "./AdminUsers";
 import AdminDashboard from "./AdminDashboard";
-import { UserContext } from "../Contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
-import { ShopContext } from "../Contexts/ShopContext";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,7 +11,6 @@ import {
   faTag,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import AdminProfile from "../assets/Me.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../Redux/userSlice";
 import { toast } from "react-toastify";
@@ -23,13 +20,10 @@ import axiosErrorManager from "../utilities/axiosErrorManager";
 
 
 function AdminPanel() {
-  const {currentUser}=useSelector((state)=>state.user)
+  const {currentUser,loading}=useSelector((state)=>state.user)
+  
+  
   const dispatch=useDispatch()
-  const {   setCartItems, setUserOrders } =
-    useContext(UserContext);
-  const [users, setUsers] = useState([]);
-  const { loading, setLoading, products, setCartCount } =
-    useContext(ShopContext);
   const [component, setComponent] = useState();
   const navigate = useNavigate();
 
@@ -38,23 +32,13 @@ function AdminPanel() {
    .then((res)=>{
      dispatch(setCurrentUser(null));
      toast.success(res.data.message);
-     navigate('/login')
    })
    .catch((err)=>console.log(axiosErrorManager(err)))
+   .finally(()=>{
+     navigate('/')
+   })
   };
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("http://localhost:3000/users")
-      .then((response) => {
-        const exceptCurrentUser = response.data.filter(
-          (items) => items.id !== currentUser.id
-        );
-        setUsers(exceptCurrentUser);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => setLoading(false));
-  }, [currentUser.id, setLoading]);
+  
   return (
     <div
       className={`${
@@ -90,7 +74,7 @@ function AdminPanel() {
           <div className="flex">
             <div className="w-[20%] border-r-2 border-[#544A3E] h-screen bg-[#FFFFFF] flex flex-col gap-5 px-5 pt-10">
               <div className="flex w-[100%] gap-5 text-sm">
-                <img className="avatar" src={AdminProfile} alt="User avatar" />
+                <img className="avatar" src={currentUser?.profile} alt="User Profile" />
                 <div>
                   <p>{currentUser?.name}</p>
                   <p className="text-green-500">Admin</p>
@@ -141,11 +125,11 @@ function AdminPanel() {
             </div>
             <div className="w-[80%] ">
               {component === "users" ? (
-                <AdminUsers users={users} />
+                <AdminUsers />
               ) : component === "products" ? (
-                <AdminProduct products={products} />
+                <AdminProduct />
               ) : (
-                <AdminDashboard users={users} products={products} />
+                <AdminDashboard  />
               )}
             </div>
           </div>
