@@ -41,8 +41,8 @@ router
   // routes for orders
   .get("/orders", verifyToken, tryCatch(getAllOrders)) // getting all orders by user
   .get("/orders/:orderId", verifyToken,idValidation, tryCatch(getOneOrder)) // getting order by id
-  .post("/orders/cod", verifyToken, tryCatch(orderCashOnDel)) // making an order by cash on delivery
-  .post("/orders/stripe/checkout", verifyToken, tryCatch(stripePayment)) // making an order by stripe
+  .post("/orders/checkout/cod", verifyToken, tryCatch(orderCashOnDel)) // making an order by cash on delivery
+  .post("/orders/checkout/stripe", verifyToken, tryCatch(stripePayment)) // making an order by stripe
   .put(
     "/orders/stripe/success/:sessionId",
     verifyToken,

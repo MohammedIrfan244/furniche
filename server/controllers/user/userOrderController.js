@@ -41,26 +41,33 @@ const orderCashOnDel = async (req, res, next) => {
 
 // to make an order with stripe
 const stripePayment = async (req, res, next) => {
-  // getting the products, address and total amount
-  const { products, address, totalAmount } = req.body;
+  const { products, address, totalAmount, orderType } = req.body;
+  if(!orderType) return next(new CustomError("Order type is required", 400));
+
   if (!products || products.length === 0) {
     return next(new CustomError("No products found", 400));
   }
-  // getting the details of the products
+
   const productDetails = await Promise.all(
     products.map(async (p) => {
       const product = await Product.findById(p.productId);
       return {
         name: product.name,
         image: product.image,
-        price: product.price,
+        price: product.price, // Price per unit
         quantity: p.quantity,
       };
     })
   );
+
   if (!productDetails) return next(new CustomError("No products found", 400));
-  const newTotal = Math.round(totalAmount);
-  // creating the stripe line items
+
+  const newTotal = Math.round(totalAmount * 100); 
+
+  if (newTotal < 5000) { // Check for minimum amount
+    return next(new CustomError("Total amount must be at least ₹50", 400));
+  }
+
   const lineItems = productDetails.map((p) => {
     return {
       price_data: {
@@ -69,28 +76,29 @@ const stripePayment = async (req, res, next) => {
           name: p.name,
           images: [p.image],
         },
-        unit_amount: Math.round(p.price * p.quantity),
+        unit_amount: Math.round(p.price * 100),
       },
-      quantity: p.quantity,
+      quantity: p.quantity
     };
   });
-  // creating the stripe session
+
   const stripeClient = new stripe(process.env.STRIPE_SECRET_KEY);
   const session = await stripeClient.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: `http://localhost:3000/success/{CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:3000/cancel`,
+    success_url: `http://localhost:5173/success/{CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:5173/cancel`,
   });
 
   const newOrder = await new Order({
     userId: req.user.id,
     products,
     address,
+    orderType,
     paymentStatus: "Pending",
     shippingStatus: "Pending",
-    totalAmount: newTotal,
+    totalAmount: newTotal / 100, // Store in rupees for consistency
     sessionId: session.id,
   });
 
@@ -103,15 +111,15 @@ const stripePayment = async (req, res, next) => {
   });
 };
 
+
 const stripeSuccess = async (req, res) => {
   const sessionId = req.params.sessionId;
-  const {orderType}= req.body
   const order = await Order.findOne({ sessionId: sessionId });
   if (!order) {
     return next(new CustomError("Order not found", 404));
   }
   
-  if(orderType === "cart"){
+  if(order?.orderType === "cart"){
     await Cart.findOne({ userId: req.user.id },{$set:{products:[]}},{new:true});
   }
   
