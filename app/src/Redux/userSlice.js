@@ -27,7 +27,7 @@ const getCart = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data.data?.products;
+      return response.data.data?.products || [];
     } catch (err) {
       const errMessage = axiosErrorManager(err);
       return rejectWithValue(errMessage);
@@ -45,7 +45,7 @@ const getCartCount = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      return response.data.count;
+      return response.data.count||0
     } catch (err) {
       const errMessage = axiosErrorManager(err);
       return rejectWithValue(errMessage);
@@ -61,7 +61,7 @@ const getWishlist=createAsyncThunk('user/getWishlist',async(_, {rejectWithValue}
                 Authorization:`Bearer ${token}`
             }
         })
-        return response.data?.products
+        return response.data?.products || []
     }catch(err){
         const errMessage=axiosErrorManager(err)
         return rejectWithValue(errMessage)

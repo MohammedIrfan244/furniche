@@ -13,32 +13,45 @@ function SignIn() {
     email: "",
     password: "",
     mobile: "",
-    profile: null
+    profile: null,
   });
   const [conformPassword, setConformPassword] = useState("");
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleInutChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setInputData((prev) => ({ ...prev, [name]: value }));
   };
-  const handleFileChange=(e)=>{
-    setInputData((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
-  }
+
+  const handleFileChange = (e) => {
+    setInputData((prev) => ({ ...prev, profile: e.target.files[0] }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(inputData.password !== conformPassword){
-      toast.error("Password doesn't match");
+    if (inputData.password !== conformPassword) {
+      toast.error("Passwords do not match");
       return;
     }
-    inputData.mobile?inputData.mobile:inputData.mobile="Not Provided";
-    inputData.profile?inputData.profile:inputData.profile="";
-    console.log(inputData.mobile)
+
+    const formData = new FormData();
+    formData.append("name", inputData.name);
+    formData.append("email", inputData.email);
+    formData.append("password", inputData.password);
+    formData.append("mobile", inputData.mobile || "Not Provided");
+    if (inputData.profile) {
+      formData.append("profile", inputData.profile);
+    }
+
+    setLoading(true);
     axios
-      .post("http://localhost:3001/api/users/register", inputData)
+      .post("http://localhost:3001/api/users/register", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
       .then((response) => {
         toast.success(response.data.message);
         navigate("/login");
@@ -50,6 +63,7 @@ function SignIn() {
         setLoading(false);
       });
   };
+
   return (
     <div className="w-[100%] flex flex-col items-center pt-[26%] sm:pt-[8%] h-[100vh]">
       <h1
@@ -67,7 +81,7 @@ function SignIn() {
             required
             value={inputData.name}
             name="name"
-            onChange={handleInutChange}
+            onChange={handleInputChange}
             type="text"
             placeholder="Username"
             className="focus:outline-none w-[50%] rounded-lg px-3 py-1 text-xs"
@@ -76,8 +90,8 @@ function SignIn() {
             value={inputData.mobile}
             name="mobile"
             type="text"
-            onChange={handleInutChange}
-            placeholder="Mobile"
+            onChange={handleInputChange}
+            placeholder="Mobile (Optional)"
             className="focus:outline-none w-[50%] rounded-lg px-3 py-1 text-xs"
           />
         </div>
@@ -86,57 +100,50 @@ function SignIn() {
           value={inputData.email}
           name="email"
           type="email"
-          onChange={handleInutChange}
+          onChange={handleInputChange}
           placeholder="Email"
           className="focus:outline-none rounded-lg px-3 py-1 text-xs"
         />
         <input
           name="profile"
           type="file"
+          accept="image/*"
           onChange={handleFileChange}
-          placeholder="Profile picture"
           className="focus:outline-none rounded-lg px-3 py-1 text-xs"
         />
         <div className="flex justify-between gap-2 w-[100%]">
-          <div className="min-w-1 relative w-[50%]">
+          <div className="relative w-[50%]">
             <input
               required
               value={inputData.password}
               name="password"
-              type={`${passToggle ? "text" : "password"}`}
-              onChange={handleInutChange}
+              type={passToggle ? "text" : "password"}
+              onChange={handleInputChange}
               placeholder="Password"
               className="focus:outline-none rounded-lg px-3 py-1 text-xs w-[100%]"
             />
             <FontAwesomeIcon
-              className="text-xs absolute bottom-2 right-2"
+              className="text-xs absolute bottom-2 right-2 cursor-pointer"
               onClick={() => setPassToggle(!passToggle)}
               icon={passToggle ? faEyeSlash : faEye}
             />
           </div>
-          <div className="min-w-1 relative w-[50%]">
+          <div className="relative w-[50%]">
             <input
               required
               value={conformPassword}
-              type={`${passToggle ? "text" : "password"}`}
+              type={passToggle ? "text" : "password"}
               onChange={(e) => setConformPassword(e.target.value)}
-              placeholder="Conform password"
+              placeholder="Confirm Password"
               className="focus:outline-none rounded-lg px-3 py-1 text-xs w-[100%]"
             />
             <FontAwesomeIcon
-              className="text-xs absolute bottom-2 right-2"
+              className="text-xs absolute bottom-2 right-2 cursor-pointer"
               onClick={() => setPassToggle(!passToggle)}
               icon={passToggle ? faEyeSlash : faEye}
             />
           </div>
         </div>
-        {/* <p
-          className={`${
-            errorMessage === "" ? "hidden" : "block"
-          } text-xs text-red-600`}
-        >
-          {errorMessage}
-        </p> */}
         <Link className="text-xs block text-[#F9FCFA]" to={"/login"}>
           Already have an account?
         </Link>

@@ -18,6 +18,13 @@ const createRefreshToken = (id, role, expiresIn) => {
 
 // Controller to handle register
 const registerUser = async (req, res, next) => {
+  console.log(req.file)
+  let profile=""
+  if(!req.file){
+    profile="https://i.pinimg.com/736x/c4/34/d8/c434d8c366517ca20425bdc9ad8a32de.jpg"
+  }else{
+    profile=req.file.path
+  }
   const { value, error } = joiUserSchema.validate(req.body);
   const { name, email, password, mobile } = value;
   const newMobile = mobile ? mobile : "Not Provided";
@@ -30,9 +37,9 @@ const registerUser = async (req, res, next) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  const profile = req.file!==""
-    ? req.file.path
-    : "https://i.pinimg.com/736x/c4/34/d8/c434d8c366517ca20425bdc9ad8a32de.jpg";
+  // const profile = req.file!==""
+  //   ? req.file.path
+  //   : "https://i.pinimg.com/736x/c4/34/d8/c434d8c366517ca20425bdc9ad8a32de.jpg";
   const newUser = new User({
     name,
     email,

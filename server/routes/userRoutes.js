@@ -22,11 +22,15 @@ import {
   stripePayment,
   stripeSuccess,
 } from "../controllers/user/userOrderController.js";
+import { updateUser } from "../controllers/user/userUpdate.js";
+import upload from "../middlewares/multer.js";
 
 const router = express.Router();
 
 router
 
+  // routes for User edit
+  .put('/update',verifyToken,upload.single("profile"),tryCatch(updateUser))
   //routes for cart handling
   .get("/cart", verifyToken, tryCatch(getUserCart)) // getting user's cart
   .get("/cart/stats", verifyToken, tryCatch(totalNumberOfCartItems))
@@ -40,7 +44,7 @@ router
 
   // routes for orders
   .get("/orders", verifyToken, tryCatch(getAllOrders)) // getting all orders by user
-  .get("/orders/:orderId", verifyToken,idValidation, tryCatch(getOneOrder)) // getting order by id
+  .get("/orders/:id", verifyToken,idValidation, tryCatch(getOneOrder)) // getting order by id
   .post("/orders/checkout/cod", verifyToken, tryCatch(orderCashOnDel)) // making an order by cash on delivery
   .post("/orders/checkout/stripe", verifyToken, tryCatch(stripePayment)) // making an order by stripe
   .put(
@@ -49,6 +53,6 @@ router
     tryCatch(stripeSuccess)
   ) // success route for stripe
   .get("/orders/publicKey", verifyToken, tryCatch(publicKeySend)) // getting stripe public key on the client
-  .patch("/orders/cancel/:orderId", verifyToken, idValidation,tryCatch(cancelOneOrder)); // cancelling an order by id
+  .patch("/orders/cancel/:id", verifyToken, idValidation,tryCatch(cancelOneOrder)); // cancelling an order by id
 
 export default router;

@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     isBlocked: { type: Boolean, default: false },
     role: { type: String, default: "User" },
     refreshToken: { type: String },
-    profile:{type:String,default:"",required:false},
+    profile:{type:String,required:false},
   },
   { timestamps: true }
 );
