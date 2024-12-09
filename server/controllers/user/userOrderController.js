@@ -27,9 +27,9 @@ const orderCashOnDel = async (req, res, next) => {
   newOrder.paymentStatus = "COD";
   newOrder.shippingStatus = "Pending";
 
-
+console.log("reached here")
   if(orderType === "cart"){
-     await Cart.findOne({ userId: req.user.id },{$set:{products:[]}},{new:true});
+     await Cart.findOneAndUpdate({ userId: req.user.id },{$set:{products:[]}},{new:true});
   }
 
   await newOrder.save();
@@ -120,7 +120,7 @@ const stripeSuccess = async (req, res) => {
   }
   
   if(order?.orderType === "cart"){
-    await Cart.findOne({ userId: req.user.id },{$set:{products:[]}},{new:true});
+    await Cart.findOneAndUpdate({ userId: req.user.id },{$set:{products:[]}},{new:true});
   }
   
   order.shippingStatus = "Pending";
@@ -150,7 +150,7 @@ const getAllOrders = async (req, res) => {
 const getOneOrder = async (req, res, next) => {
   // getting the order id by params and check and find
   const newOrder = await Order.findOne({
-    _id: req.params.orderId,
+    _id: req.params.id,
     userId: req.user.id,
   }).populate("products.productId", "name price image");
   if (!newOrder) {
@@ -167,7 +167,7 @@ const getOneOrder = async (req, res, next) => {
 const cancelOneOrder = async (req, res, next) => {
   //  getting the order id by params and updating the delivery status to cancelled
   const newOrder = await Order.findOne({
-    _id: req.params.orderId,
+    _id: req.params.id,
     userId: req.user.id,
   });
   if (!newOrder) {

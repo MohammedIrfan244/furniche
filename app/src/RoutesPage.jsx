@@ -23,6 +23,7 @@ import CheckoutSingle from "./Pages/CheckoutSingle";
 import CheckoutCart from "./Pages/CheckoutCart";
 import StripeSuccess from "./Pages/StripeSuccess";
 import StripeCancel from "./Pages/StripeCancel";
+import Order from "./Pages/Order";
 function RoutesPage() {
   const {  isAdmin } = useContext(UserContext);
   const {currentUser}=useSelector((state)=>state.user)
@@ -42,11 +43,15 @@ function RoutesPage() {
             <Route path="/collection" element={<Collection />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/wishlist" element={currentUser?<Wishlist />:<NotFound/>} />
             <Route path="/product/:Id" element={<Product />} />
             <Route
               path="/cart"
               element={currentUser != null ? <Cart /> : <NotFound />}
+            />
+            <Route
+            path="/orders/:id"
+            element={currentUser?<Order/>:<NotFound/>}
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signin" element={<SignIn />} />
@@ -55,7 +60,7 @@ function RoutesPage() {
               element={currentUser?<CheckoutSingle/>:<NotFound/>}
             />
             <Route
-            path="/checkout/cart/:id"
+            path="/checkout/products/cart"
             element={currentUser?<CheckoutCart/>:<NotFound/>}
             />
             <Route 

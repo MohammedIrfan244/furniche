@@ -5,9 +5,10 @@ import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
 import ScrollTop from "../shared/ScrollTop";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../Redux/userSlice";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
-
+const navigate=useNavigate()
   const dispatch=useDispatch()
 const {userCart,loading}=useSelector((state)=>state.user)
 useEffect(()=>{
@@ -63,6 +64,7 @@ dispatch(getCart())
             }
           >
           </div>
+          <button onClick={()=>navigate(`/checkout/products/cart`)}>checkout</button>
         </div>
       )}
       <ScrollTop />

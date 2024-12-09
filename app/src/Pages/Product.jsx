@@ -22,6 +22,7 @@ function Product() {
   const [loading, setLoading] = useState(true);
   const [interestedProduct, setInterestedProduct] = useState([]);
 
+  
   const addToCartDispatch = async () => {
     if(!currentUser){
       navigate('/login')
@@ -128,7 +129,7 @@ axios.get(`http://localhost:3001/api/public/products/category/${product?.categor
                   Buy Now
                 </button>
                   <button
-                    onClick={userCart.some(item=>item.productId?._id===Id)?()=>navigate("/cart"):addToCartDispatch}
+                    onClick={userCart?.some(item=>item.productId?._id===Id)?()=>navigate("/cart"):addToCartDispatch}
                     className="active:scale-95 bg-[#544A3E] hover:scale-[1.01] shadow-md shadow-[#544A3E] text-xs text-[#F5F2E9] px-5 py-2 rounded-xl sm:py-3"
                   >{`${userCart.some(item=>item.productId?._id===Id) ? "Go to cart" : "Add to Cart"}`}</button>
                 
