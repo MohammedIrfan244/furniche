@@ -5,7 +5,6 @@ import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
-import PlaceOrder from "./Pages/PlaceOrder";
 import NavBar from "./Components/NavBar";
 import Search from "./Pages/Search";
 import Login from "./Pages/Login";
@@ -20,6 +19,10 @@ import ProductManipulation from "./Admin/ProductManipulation";
 import Layout from "./Layout/Layout";
 import { useSelector } from "react-redux";
 import Wishlist from "./Pages/Wishlist";
+import CheckoutSingle from "./Pages/CheckoutSingle";
+import CheckoutCart from "./Pages/CheckoutCart";
+import StripeSuccess from "./Pages/StripeSuccess";
+import StripeCancel from "./Pages/StripeCancel";
 function RoutesPage() {
   const {  isAdmin } = useContext(UserContext);
   const {currentUser}=useSelector((state)=>state.user)
@@ -48,8 +51,20 @@ function RoutesPage() {
             <Route path="/login" element={<Login />} />
             <Route path="/signin" element={<SignIn />} />
             <Route
-              path="/placeorder"
-              element={currentUser&& <PlaceOrder />}
+              path="/checkout/product/:id"
+              element={currentUser?<CheckoutSingle/>:<NotFound/>}
+            />
+            <Route
+            path="/checkout/cart/:id"
+            element={currentUser?<CheckoutCart/>:<NotFound/>}
+            />
+            <Route 
+            path="/success/:sessionId"
+            element={currentUser? <StripeSuccess/> : <NotFound />}
+            />
+            <Route
+            path=""
+            element={currentUser?<StripeCancel/> : <NotFound />}
             />
             <Route
               path="/user"

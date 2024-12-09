@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCertificate, faStar } from "@fortawesome/free-solid-svg-icons";
 import ProductItems from "../shared/ProductItems";
-import { Link } from "react-router-dom";
 import ScrollTop from "../shared/ScrollTop";
 import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
@@ -124,13 +123,15 @@ axios.get(`http://localhost:3001/api/public/products/category/${product?.categor
                 <p className="text-sm">Review :</p>
                 <p className="text-xs">{product?.review}</p>
               </div>
-              <div className="flex justify-end">
-                <Link to={currentUser == null ? "/login" : "#"}>
+              <div className="flex justify-between">
+                <button onClick={() => navigate(`/checkout/product/${Id}`)} className="active:scale-95 bg-[#544A3E] hover:scale-[1.01] shadow-md shadow-[#544A3E] text-xs text-[#F5F2E9] px-5 py-2 rounded-xl sm:py-3">
+                  Buy Now
+                </button>
                   <button
                     onClick={userCart.some(item=>item.productId?._id===Id)?()=>navigate("/cart"):addToCartDispatch}
                     className="active:scale-95 bg-[#544A3E] hover:scale-[1.01] shadow-md shadow-[#544A3E] text-xs text-[#F5F2E9] px-5 py-2 rounded-xl sm:py-3"
-                  >{`${userCart.some(item=>item.productId?._id===Id) ? "Added" : "Add to Cart"}`}</button>
-                </Link>
+                  >{`${userCart.some(item=>item.productId?._id===Id) ? "Go to cart" : "Add to Cart"}`}</button>
+                
               </div>
             </div>
           </div>

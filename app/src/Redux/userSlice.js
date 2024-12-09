@@ -135,6 +135,7 @@ const userSlice = createSlice({
     });
     builder.addCase(getCart.rejected, (state, action) => {
       state.loading = false;
+      console.log(action.payload);
       state.error = action.payload;
     });
     builder.addCase(getWishlist.fulfilled,(state,action)=>{
@@ -147,6 +148,7 @@ const userSlice = createSlice({
     })
     builder.addCase(getWishlist.rejected,(state,action)=>{
         state.loading=false
+        console.log(action.payload);
         state.error=action.payload
     })
     builder.addCase(addToWishList.fulfilled,(state,action)=>{
@@ -161,6 +163,7 @@ const userSlice = createSlice({
     })
     builder.addCase(addToWishList.rejected,(state,action)=>{
         state.loading=false
+        console.log(action.payload);
         state.error=action.payload
     })
     builder.addCase(removeFromWishList.fulfilled,(state,action)=>{
@@ -173,6 +176,7 @@ const userSlice = createSlice({
     })
     builder.addCase(removeFromWishList.rejected,(state,action)=>{
         state.loading=false
+        console.log(action.payload);
         state.error=action.payload
     })
     builder.addCase(getCartCount.fulfilled,(state,action)=>{
