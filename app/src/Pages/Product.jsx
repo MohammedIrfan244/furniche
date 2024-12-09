@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+import {  useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCertificate, faStar } from "@fortawesome/free-solid-svg-icons";
@@ -17,7 +16,7 @@ function Product() {
   const {currentUser,userCart}=useSelector(state=>state.user)
   const dispatch=useDispatch()
   const navigate=useNavigate()
-  const {  currency } = useContext(ShopContext);
+  const  {currency}  = useSelector((state)=>state.user)
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [interestedProduct, setInterestedProduct] = useState([]);

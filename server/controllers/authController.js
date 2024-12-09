@@ -142,13 +142,13 @@ const adminLogin = async (req, res, next) => {
     sameSite: "none",
   });
 
-  res.cookie("user", JSON.stringify(userDetails), {
+  res.cookie("admin", JSON.stringify(userDetails), {
     httpOnly: false,
     secure: true,
     sameSite: "none",
   });
 
-  res.json({ status: "success", message: "Logged in successfully"});
+  res.json({ status: "success", isAdmin:true,message: "Logged in successfully"});
 };
 
 // Controller to handle token refresh
@@ -200,4 +200,26 @@ const logout = async (req, res, next) => {
     .json({ status: "success", message: "Logged out successfully" });
 };
 
-export { loginUser, registerUser, adminLogin, refreshingToken, logout };
+const adminLogout = async (req, res, next) => {
+  // Clearing the refresh token cookie
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+  res.clearCookie("token", {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  })
+  res.clearCookie("admin", {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  })
+  res
+    .status(200)
+    .json({ status: "success", message: "Logged out successfully" });
+};
+
+export { loginUser, registerUser, adminLogin, refreshingToken, adminLogout, logout };

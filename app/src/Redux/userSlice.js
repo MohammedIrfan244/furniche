@@ -12,6 +12,7 @@ const INITIAL_STATE = {
   loading: false,
   error: null,
   currentUser: currentUser,
+  isAdmin:false,
   userCart: [],
   userCartCount: 0,
   userWishlist: [],
@@ -105,6 +106,9 @@ const userSlice = createSlice({
     setCurrentUser: (state, action) => {
       state.currentUser = action.payload;
     },
+    setIsAdmin: (state, action) => {
+      state.isAdmin = action.payload;
+    },
     addToCart: (state, action) => {
       if(!state.userCart.find(item=>item.productId?._id===action.payload)){
         state.userCart.push({productId:{_id:action.payload},quantity:1});
@@ -196,5 +200,5 @@ const userSlice = createSlice({
 });
 
 export { getCart,getWishlist , addToWishList, removeFromWishList, getCartCount };
-export const { setCurrentUser,addToCart ,removeFromCart,updateCartQuantity} = userSlice.actions;
+export const { setCurrentUser,addToCart,setIsAdmin ,removeFromCart,updateCartQuantity} = userSlice.actions;
 export default userSlice.reducer;

@@ -11,8 +11,6 @@ import Login from "./Pages/Login";
 import SignIn from "./Pages/SignIn";
 import User from "./Pages/User";
 import NotFound from "./Pages/NotFound";
-import { useContext } from "react";
-import { UserContext } from "./Contexts/UserContext";
 import AdminPanel from "./Admin/AdminPanel";
 import UserManipulate from "./Admin/UserManipulate";
 import ProductManipulation from "./Admin/ProductManipulation";
@@ -24,9 +22,9 @@ import CheckoutCart from "./Pages/CheckoutCart";
 import StripeSuccess from "./Pages/StripeSuccess";
 import StripeCancel from "./Pages/StripeCancel";
 import Order from "./Pages/Order";
+import AdminLogin from "./Admin/AdminLogin";
 function RoutesPage() {
-  const {  isAdmin } = useContext(UserContext);
-  const {currentUser}=useSelector((state)=>state.user)
+  const {  isAdmin ,currentUser} = useSelector((state) => state.user);
   return (
     <div>
       <Layout>
@@ -53,8 +51,8 @@ function RoutesPage() {
             path="/orders/:id"
             element={currentUser?<Order/>:<NotFound/>}
             />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signin" element={<SignIn />} />
+            <Route path="/login" element={currentUser?<NotFound/>:<Login/>} />
+            <Route path="/signin" element={currentUser?<NotFound/>:<SignIn/>} />
             <Route
               path="/checkout/product/:id"
               element={currentUser?<CheckoutSingle/>:<NotFound/>}
@@ -77,8 +75,12 @@ function RoutesPage() {
             />
             <Route path="/search" element={<Search />} />
           </Route>
+          <Route 
+          path="/admin/login"
+          element={currentUser?<NotFound/>:<AdminLogin/>}
+          />
           <Route
-            path="/adminpanel"
+            path="/admin/adminpanel"
             element={isAdmin ? <AdminPanel /> : <NotFound />}
           />
           <Route

@@ -8,7 +8,7 @@ import {
   getUserById,
   totalNumberOfUsers,
 } from "../controllers/admin/adminUserController.js";
-import { adminLogin } from "../controllers/authController.js";
+import { adminLogin, logout } from "../controllers/authController.js";
 import {
   addNewProduct,
   deleteProduct,
@@ -34,6 +34,7 @@ const router = express.Router();
 
 router
   .post("/login", tryCatch(adminLogin)) // login route for admin
+  .post("/logout",tryCatch(logout))
 
   // routes for accessing users
   .get("/users", verifyTokenAdmin, tryCatch(getAllUsers)) // route to get the list for all users

@@ -14,12 +14,18 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import AdminProfile from "../assets/Me.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../Redux/userSlice";
+import { toast } from "react-toastify";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 
 
 
 function AdminPanel() {
-  const { currentUser, setCurrentUser, setCartItems, setUserOrders } =
+  const {currentUser}=useSelector((state)=>state.user)
+  const dispatch=useDispatch()
+  const {   setCartItems, setUserOrders } =
     useContext(UserContext);
   const [users, setUsers] = useState([]);
   const { loading, setLoading, products, setCartCount } =
@@ -27,19 +33,14 @@ function AdminPanel() {
   const [component, setComponent] = useState();
   const navigate = useNavigate();
 
-  const handleLogOut = () => {
-    const checkLogout = confirm("Are you sure you want to logout");
-    if (checkLogout) {
-      setCurrentUser(null);
-      setCartItems({});
-      setCartCount(0);
-      setUserOrders([]);
-      localStorage.removeItem("cartItems");
-      localStorage.removeItem("currentUser");
-      localStorage.removeItem("cartCount");
-      localStorage.removeItem("userOrders");
-      navigate("/");
-    }
+  const handleLogOut = async() => {
+   await axios.post("http://localhost:3000/api/admin/logout",{},{withCredentials:true})
+   .then((res)=>{
+     dispatch(setCurrentUser(null));
+     toast.success(res.data.message);
+     navigate('/login')
+   })
+   .catch((err)=>console.log(axiosErrorManager(err)))
   };
   useEffect(() => {
     setLoading(true);
