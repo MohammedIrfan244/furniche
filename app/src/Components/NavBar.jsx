@@ -13,7 +13,7 @@ import { getCartCount } from "../Redux/userSlice";
 function NavBar() {
   const dispatch=useDispatch()
   const [visible, setVisible] = useState(false);
-  const {currentUser,userCartCount,userCart,isAdmin}=useSelector((state)=>state.user)
+  const {currentUser,userCartCount,isAdmin,userCart}=useSelector((state)=>state.user)
   useEffect(()=>{
     if(currentUser){
   dispatch(getCartCount())

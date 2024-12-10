@@ -7,6 +7,7 @@ import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import axiosInstance from "../utilities/axiosInstance";
 
 function User() {
   const { currentUser } = useSelector((state) => state.user);
@@ -25,24 +26,35 @@ function User() {
   const dispatch = useDispatch();
 
   const fetchUser=async()=>{
-    setLoading(true);
-    const token = Cookies.get("token");
-    axios
-      .get("http://localhost:3001/api/users/orders", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setOrders(res.data.data);
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      })
-      .finally(() => {
-        setLoading(false); 
-      });
-  }
+    // setLoading(true);
+    // const token = Cookies.get("token");
+    // axios
+    //   .get("http://localhost:3001/api/users/orders", {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //   })
+    //   .then((res) => {
+    //     setOrders(res.data.data);
+    //   })
+    //   .catch((err) => {
+    //     toast.error(axiosErrorManager(err));
+    //   })
+    //   .finally(() => {
+    //     setLoading(false); 
+    //   });
+    try{
+      const response=await axiosInstance.get('/users/orders')
+      setLoading(true)
+      setOrders(response.data.data)
+    }catch(err){
+      toast.error(axiosErrorManager(err))
+      setLoading(false)
+    }finally{
+      setLoading(false)
+    }
+    }
+  
 
   useEffect(() => {
     fetchUser()

@@ -8,6 +8,7 @@ import userRoute from "./routes/userRoutes.js";
 import adminRout from "./routes/adminRoutes.js";
 import manageError from "./middlewares/manageError.js";
 import cors from 'cors'
+import cookieParser from "cookie-parser";
 // Config of app
 dotenv.config();
 const app = express();
@@ -24,6 +25,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }))
 app.use(express.json());
+app.use(cookieParser());
 
 // API routes
 app.use("/api/public", publicRoute);

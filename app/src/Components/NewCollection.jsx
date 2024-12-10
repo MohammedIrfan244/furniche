@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
 import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import { toast } from "react-toastify";
 
 
 function NewCollection() {
@@ -9,13 +10,15 @@ function NewCollection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/api/public/products/collection/latest")
-      .then((res) => {
-        setNewCollection(res.data?.data);
-        setLoading(false);
-      })
-      .catch((err) => console.log(axiosErrorManager(err)));
+    try {
+      setLoading(true);
+     const response= axios.get("http://localhost:3001/api/public/products/collection/latest")
+      setNewCollection(response.data?.data);
+      setLoading(false);
+    } catch (error) {
+      toast.error(axiosErrorManager(error));
+      setLoading(false);
+    }
   }, []);
   return (
     <div

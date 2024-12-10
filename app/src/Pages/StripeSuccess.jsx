@@ -1,7 +1,6 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import Cookies from "js-cookie"
+import axiosInstance from "../utilities/axiosInstance"
 
 function StripeSuccess() {
     const {sessionId}=useParams()
@@ -9,21 +8,33 @@ function StripeSuccess() {
     const [message,setMessage]=useState("")
     const [loading,setLoading]=useState(true)
     useEffect(()=>{
+    //     setLoading(true)
+    //     const token=Cookies.get('token')
+    // axios.put(`http://localhost:3001/api/users/orders/stripe/success/${sessionId}`,{},{
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // })
+    // .then((res)=>{
+    //     setLoading(false)
+    //     setMessage(res.data.message)
+    // })
+    // .catch((err)=>{
+    //     setLoading(false)
+    //     setMessage(err.response.data.message)
+    // })
+    const stripeSuccess=async()=>{
         setLoading(true)
-        const token=Cookies.get('token')
-    axios.put(`http://localhost:3001/api/users/orders/stripe/success/${sessionId}`,{},{
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .then((res)=>{
-        setLoading(false)
-        setMessage(res.data.message)
-    })
-    .catch((err)=>{
-        setLoading(false)
-        setMessage(err.response.data.message)
-    })
+        try{
+          const response=await axiosInstance.put(`/users/orders/stripe/success/${sessionId}`)
+          setLoading(false)
+          setMessage(response.data.message)
+        }catch(err){
+            setLoading(false)
+            setMessage(err.response.data.message)
+        }
+    }
+    stripeSuccess()
     },[sessionId])
   return (
     <div className="flex h-[100vh] justify-center items-center">

@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function AdminOrderItemCards({ image, name, price, count, id }) {
-  const { currency } = useContext(ShopContext);
+  const { currency } = useSelector((state)=>state.public)
   
   return (
     <div className="flex justify-between bg-white p-1 w-full items-center">

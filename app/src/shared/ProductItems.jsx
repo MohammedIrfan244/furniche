@@ -1,5 +1,4 @@
-import { useContext,  useEffect,  useState } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+import {  useEffect,  useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCertificate, faStar } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +7,7 @@ import { addToWishList,removeFromWishList, getWishlist } from "../Redux/userSlic
 
 // eslint-disable-next-line react/prop-types
 function ProductItems({ id, name, price, image,rating ,original}) {
-  const { currency } = useContext(ShopContext);
+  const { currency } = useSelector((state)=>state.public)
   const {userWishlist,currentUser,loading}=useSelector(state=>state.user)
   const [isInWishlist, setIsInWishlist] = useState(false);
   const dispatch=useDispatch()

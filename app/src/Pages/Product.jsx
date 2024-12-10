@@ -8,8 +8,8 @@ import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, getCart } from "../Redux/userSlice";
-import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import axiosInstance from "../utilities/axiosInstance";
 
 function Product() {
   const { Id } = useParams();
@@ -28,28 +28,36 @@ function Product() {
       return
     }
     if (!userCart.find(item => item.productId._id === Id)) {
-      const token = Cookies.get('token');
-      try {
-        await axios.post(
-          `http://localhost:3001/api/users/cart`,
-          { productId: Id, quantity: 1 },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        dispatch(addToCart(Id));
-        dispatch(getCart());
-        toast.success("Product added to cart successfully");
-      } catch (err) {
-        console.error(err);
-        toast.error(axiosErrorManager(err));
-      }
-    } else {
-      navigate("/cart");
-      toast.error("Product already in cart");
-    }
+    //   const token = Cookies.get('token');
+    //   try {
+    //     await axios.post(
+    //       `http://localhost:3001/api/users/cart`,
+    //       { productId: Id, quantity: 1 },
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       }
+    //     );
+    //     dispatch(addToCart(Id));
+    //     dispatch(getCart());
+    //     toast.success("Product added to cart successfully");
+    //   } catch (err) {
+    //     console.error(err);
+    //     toast.error(axiosErrorManager(err));
+    //   }
+    // } else {
+    //   navigate("/cart");
+    //   toast.error("Product already in cart");
+    // }
+    try{
+      const response=await axiosInstance.post('/users/cart',{productId:Id,quantity:1})
+      dispatch(addToCart(Id));
+      dispatch(getCart());
+      toast.success(response.data.message)
+    }catch(err){
+      toast.error(axiosErrorManager(err))
+    }}
   };
   
 

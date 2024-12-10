@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+import axiosInstance from "../utilities/axiosInstance";
 
 const userCookie = Cookies.get("user");
 const currentUser = userCookie ? JSON.parse(userCookie) : null;
@@ -18,16 +18,12 @@ const INITIAL_STATE = {
   userWishlist: [],
 };
 
+// Fetch Cart
 const getCart = createAsyncThunk(
   "user/getCart",
   async (_, { rejectWithValue }) => {
     try {
-        const token=Cookies.get('token')
-      const response = await axios.get("http://localhost:3001/api/users/cart", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axiosInstance.get("/users/cart");
       return response.data.data?.products || [];
     } catch (err) {
       const errMessage = axiosErrorManager(err);
@@ -36,17 +32,13 @@ const getCart = createAsyncThunk(
   }
 );
 
+// Fetch Cart Count
 const getCartCount = createAsyncThunk(
   "user/getCartCount",
   async (_, { rejectWithValue }) => {
     try {
-        const token=Cookies.get('token')
-      const response = await axios.get("http://localhost:3001/api/users/cart/stats", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data.count||0
+      const response = await axiosInstance.get("/users/cart/stats");
+      return response.data.count || 0;
     } catch (err) {
       const errMessage = axiosErrorManager(err);
       return rejectWithValue(errMessage);
@@ -54,50 +46,49 @@ const getCartCount = createAsyncThunk(
   }
 );
 
-const getWishlist=createAsyncThunk('user/getWishlist',async(_, {rejectWithValue})=>{
-    try{
-        const token=Cookies.get('token')
-        const response=await axios.get('http://localhost:3001/api/users/wishList',{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        return response.data?.products || []
-    }catch(err){
-        const errMessage=axiosErrorManager(err)
-        return rejectWithValue(errMessage)
+// Fetch Wishlist
+const getWishlist = createAsyncThunk(
+  "user/getWishlist",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get("/users/wishList");
+      return response.data?.products || [];
+    } catch (err) {
+      const errMessage = axiosErrorManager(err);
+      return rejectWithValue(errMessage);
     }
-})
+  }
+);
 
-const addToWishList=createAsyncThunk('user/addToWishList',async(productId, {rejectWithValue})=>{
-    try{
-        const token=Cookies.get('token')
-        const response=await axios.post('http://localhost:3001/api/users/wishList',{productId:productId},{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        return response.data.data
-    }catch(err){
-        const errMessage=axiosErrorManager(err)
-        return rejectWithValue(errMessage)
+// Add to Wishlist
+const addToWishList = createAsyncThunk(
+  "user/addToWishList",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.post("/users/wishList", {
+        productId,
+      });
+      return response.data.data;
+    } catch (err) {
+      const errMessage = axiosErrorManager(err);
+      return rejectWithValue(errMessage);
     }
-})
+  }
+);
 
-const removeFromWishList=createAsyncThunk('user/removeFromWishList',async(productId, {rejectWithValue})=>{
-    try{
-        const token=Cookies.get('token')
-        const response=await axios.delete(`http://localhost:3001/api/users/wishList/${productId}`,{
-            headers:{
-                Authorization:`Bearer ${token}`
-            }
-        })
-        return response.data.data
-    }catch(err){
-        const errMessage=axiosErrorManager(err)
-        return rejectWithValue(errMessage)
+// Remove from Wishlist
+const removeFromWishList = createAsyncThunk(
+  "user/removeFromWishList",
+  async (productId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.delete(`/users/wishList/${productId}`);
+      return response.data.data;
+    } catch (err) {
+      const errMessage = axiosErrorManager(err);
+      return rejectWithValue(errMessage);
     }
-})
+  }
+);
 
 const userSlice = createSlice({
   name: "user",

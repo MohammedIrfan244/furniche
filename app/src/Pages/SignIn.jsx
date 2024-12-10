@@ -29,7 +29,7 @@ function SignIn() {
     setInputData((prev) => ({ ...prev, profile: e.target.files[0] }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (inputData.password !== conformPassword) {
       toast.error("Passwords do not match");
@@ -46,22 +46,37 @@ function SignIn() {
     }
 
     setLoading(true);
-    axios
-      .post("http://localhost:3001/api/users/register", formData, {
+   try{
+    const response = await axios.post(
+      "http://localhost:3001/api/users/register",
+      formData,
+      {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      })
-      .then((response) => {
-        toast.success(response.data.message);
-        navigate("/login");
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+      }
+    );
+    toast.success(response.data.message);
+    navigate("/login");
+   }catch(err){
+    toast.error(axiosErrorManager(err));
+   }
+    // axios
+    //   .post("http://localhost:3001/api/users/register", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     toast.success(response.data.message);
+    //     navigate("/login");
+    //   })
+    //   .catch((err) => {
+    //     toast.error(axiosErrorManager(err));
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
 
   return (

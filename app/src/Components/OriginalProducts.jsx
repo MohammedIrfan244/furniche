@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
 import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import { toast } from "react-toastify";
 
 function OriginalProducts() {
   
@@ -11,13 +12,15 @@ function OriginalProducts() {
   const [originalProduct, setOriginalProduct] = useState([]);
 
   useEffect(()=>{
-    setLoading(true)
-    axios.get("http://localhost:3001/api/public/products/collection/original")
-    .then((response)=>{
-      setOriginalProduct(response.data.data)
-    })
-    .catch((err)=>console.log(axiosErrorManager(err)))
-    .finally(()=>setLoading(false))
+   try {
+    setLoading(true);
+    const response= axios.get("http://localhost:3001/api/public/products/collection/original")
+    setOriginalProduct(response.data?.data);
+    setLoading(false);
+   }catch (error) {
+    toast.error(axiosErrorManager(error));
+    setLoading(false);
+   }
   },[])
   
 

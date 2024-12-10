@@ -38,6 +38,7 @@ const addToWishList = async (req, res, next) => {
     });
     await newWishList.save();
   }
+  
   res
     .status(200)
     .json({

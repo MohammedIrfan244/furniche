@@ -1,16 +1,17 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axiosErrorManager from "../utilities/axiosErrorManager";
-import Cookies from "js-cookie";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import axiosInstance from "../utilities/axiosInstance";
 
 function CheckoutSingle() {
   const [loading, setLoading] = useState(true);
   const [payment, setPayment] = useState("cod");
   const [product, setProduct] = useState({});
   const { id } = useParams();
+  const navigate=useNavigate()
   const [quantity, setQuantity] = useState(1);
   const [address, setAddress] = useState({
     name: "",
@@ -23,61 +24,100 @@ function CheckoutSingle() {
 
   const placeOrder = async (e) => {
     e.preventDefault();
-    const token = Cookies.get("token");
-    await axios
-      .post(
-        `http://localhost:3001/api/users/orders/checkout/${payment}`,
-        {
-          products: [
-            {
-              productId: product._id,
-              quantity,
-            },
-          ],
-          address: address,
-          orderType: "single",
-          totalAmount: totalAmount,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+    try{
+      const response=await axiosInstance.post(`/users/orders/checkout/${payment}`,{
+        products: [
+          {
+            productId: product._id,
+            quantity,
           },
-        }
-      )
-      .then((res) => {
-        setAddress({
-          name: "",
-          street: "",
-          city: "",
-          pincode: "",
-          phone: "",
-        });
-        if(payment==="stripe"){
-          window.open(res.data.stripeUrl,"_blank")
-        }else{
-          toast.success(res.data.message);
-        }
+        ],
+        address: address,
+        orderType: "single",
+        totalAmount: totalAmount,
       })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-        setAddress({
-          name: "",
-          street: "",
-          city: "",
-          pincode: "",
-          phone: "",
-        });
+      if(payment==="stripe"){
+        window.open(response.data.stripeUrl,"_blank")
+      }else{
+        toast.success(response.data.message);
+        navigate('/cart')
+      }
+    }
+    catch(err){
+      console.log(axiosErrorManager(err));
+      setAddress({
+        name: "",
+        street: "",
+        city: "",
+        pincode: "",
+        phone: "",
       });
+    }
+    // const token = Cookies.get("token");
+    // await axios
+    //   .post(
+    //     `http://localhost:3001/api/users/orders/checkout/${payment}`,
+    //     {
+    //       products: [
+    //         {
+    //           productId: product._id,
+    //           quantity,
+    //         },
+    //       ],
+    //       address: address,
+    //       orderType: "single",
+    //       totalAmount: totalAmount,
+    //     },
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     setAddress({
+    //       name: "",
+    //       street: "",
+    //       city: "",
+    //       pincode: "",
+    //       phone: "",
+    //     });
+    //     if(payment==="stripe"){
+    //       window.open(res.data.stripeUrl,"_blank")
+    //     }else{
+    //       toast.success(res.data.message);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     toast.error(axiosErrorManager(err));
+    //     setAddress({
+    //       name: "",
+    //       street: "",
+    //       city: "",
+    //       pincode: "",
+    //       phone: "",
+    //     });
+    //   });
   };
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:3001/api/public/products/${id}`)
-      .then((res) => {
-        setProduct(res.data?.data);
-        setLoading(false);
-      })
-      .catch((err) => console.log(axiosErrorManager(err)));
+    try{
+      setLoading(true);
+      const response=axios.get(`http://localhost:3001/api/public/products/${id}`)
+      setProduct(response.data?.data);
+      setLoading(false);
+    }
+    catch(err){
+      console.log(axiosErrorManager(err));
+      setLoading(false);  
+    }
+    // setLoading(true);
+    // axios
+    //   .get(`http://localhost:3001/api/public/products/${id}`)
+    //   .then((res) => {
+    //     setProduct(res.data?.data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => console.log(axiosErrorManager(err)));
   }, [id]);
   return (
     <div className="h-[100vh] flex flex-col justify-center items-center">

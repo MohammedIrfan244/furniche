@@ -24,26 +24,39 @@ function Login() {
     setLoginData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     dispatch(setCurrentUser(null));
     setLoading(true);
-    axios
-      .post("http://localhost:3001/api/users/login", loginData,{withCredentials:true})
-      .then((response) => {
-        const userCookie=Cookies.get('user')
-        const currentUser=userCookie?JSON.parse(userCookie):null
-        dispatch(setCurrentUser(currentUser));
-        toast.success(response.data.message);
-        navigate('/')
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-        dispatch(setCurrentUser(null))
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      const response= await axios.post("http://localhost:3001/api/users/login", loginData,{withCredentials:true})
+      const userCookie=Cookies.get('user')
+      const currentUser=userCookie?JSON.parse(userCookie):null
+      dispatch(setCurrentUser(currentUser));
+      toast.success(response.data.message);
+      setLoading(false);
+      navigate('/')
+    } catch (err) {
+      toast.error(axiosErrorManager(err));
+      dispatch(setCurrentUser(null))
+      setLoading(false);
+    }
+    // axios
+    //   .post("http://localhost:3001/api/users/login", loginData,{withCredentials:true})
+    //   .then((response) => {
+    //     const userCookie=Cookies.get('user')
+    //     const currentUser=userCookie?JSON.parse(userCookie):null
+    //     dispatch(setCurrentUser(currentUser));
+    //     toast.success(response.data.message);
+    //     navigate('/')
+    //   })
+    //   .catch((err) => {
+    //     toast.error(axiosErrorManager(err));
+    //     dispatch(setCurrentUser(null))
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   };
   return (
     <div className="w-[100%] flex flex-col items-center pt-[26%] sm:pt-[8%] h-[100vh]">

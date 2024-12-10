@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getCart } from "../Redux/userSlice"
-import axios from "axios"
-import Cookies from "js-cookie"
 import { toast } from "react-toastify"
 import axiosErrorManager from "../utilities/axiosErrorManager"
 import { useNavigate } from "react-router-dom"
+import axiosInstance from "../utilities/axiosInstance"
 
 
 function CheckoutCart() {
@@ -31,47 +30,76 @@ function CheckoutCart() {
     })
     const placeOrder = async (e) => {
       e.preventDefault();
-      const token = Cookies.get("token");
-      await axios
-        .post(
-          `http://localhost:3001/api/users/orders/checkout/${payment}`,
-          {
-            products: products,
-            address: address,
-            orderType: "cart",
-            totalAmount: totalAmount,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          setAddress({
-            name: "",
-            street: "",
-            city: "",
-            pincode: "",
-            phone: "",
-          });
-          if(payment==="stripe"){
-            window.open(res.data.stripeUrl,"_blank")
-          }else{
-            toast.success(res.data.message);
-            navigate('/cart')
-          }
-        })
-        .catch((err) => {
-          console.log(axiosErrorManager(err));
-          setAddress({
-            name: "",
-            street: "",
-            city: "",
-            pincode: "",
-            phone: "",
-          });
-        });
+      try {
+      const response=await axiosInstance.post(`/users/orders/checkout/${payment}`,{
+        products: products,
+        address: address,
+        orderType: "cart",
+        totalAmount: totalAmount,
+      })
+      setAddress({
+        name: "",
+        street: "",
+        city: "",
+        pincode: "",
+        phone: "",
+      });
+      if(payment==="stripe"){
+        window.open(response.data.stripeUrl,"_blank")
+      }else{
+        toast.success(response.data.message);
+        navigate('/cart')
+      }
+    } catch (err) {
+      console.log(axiosErrorManager(err));
+      setAddress({
+        name: "",
+        street: "",
+        city: "",
+        pincode: "",
+        phone: "",
+      });
+    }
+      // await axios
+      //   .post(
+      //     `http://localhost:3001/api/users/orders/checkout/${payment}`,
+      //     {
+      //       products: products,
+      //       address: address,
+      //       orderType: "cart",
+      //       totalAmount: totalAmount,
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${token}`,
+      //       },
+      //     }
+      //   )
+      //   .then((res) => {
+      //     setAddress({
+      //       name: "",
+      //       street: "",
+      //       city: "",
+      //       pincode: "",
+      //       phone: "",
+      //     });
+      //     if(payment==="stripe"){
+      //       window.open(res.data.stripeUrl,"_blank")
+      //     }else{
+      //       toast.success(res.data.message);
+      //       navigate('/cart')
+      //     }
+      //   })
+      //   .catch((err) => {
+      //     console.log(axiosErrorManager(err));
+      //     setAddress({
+      //       name: "",
+      //       street: "",
+      //       city: "",
+      //       pincode: "",
+      //       phone: "",
+      //     });
+      //   });
     };
     useEffect(()=>{
 dispatch(getCart())

@@ -37,9 +37,6 @@ const registerUser = async (req, res, next) => {
   }
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
-  // const profile = req.file!==""
-  //   ? req.file.path
-  //   : "https://i.pinimg.com/736x/c4/34/d8/c434d8c366517ca20425bdc9ad8a32de.jpg";
   const newUser = new User({
     name,
     email,
@@ -68,7 +65,7 @@ const loginUser = async (req, res, next) => {
     return next(new CustomError("Invalid credentials", 401));
   }
 
-  const accessToken = createAccessToken(user._id, user.role, "1h");
+  const accessToken = createAccessToken(user._id, user.role, "30s");
   const refreshToken = createRefreshToken(user._id, user.role, "1d");
 
   user.refreshToken = refreshToken;
@@ -118,7 +115,7 @@ const adminLogin = async (req, res, next) => {
   if (!isMatch) {
     return next(new CustomError("Invalid credentials", 401));
   }
-  const token = createAdminAccessToken(user._id, user.role, "1h");
+  const token = createAdminAccessToken(user._id, user.role, "30s");
   const refreshToken = createRefreshToken(user._id, user.role, "1d");
 
   user.refreshToken = refreshToken;
@@ -150,7 +147,7 @@ const adminLogin = async (req, res, next) => {
 
   res.json({ status: "success", isAdmin:true,message: "Logged in successfully"});
 };
-
+401
 // Controller to handle token refresh
 const refreshingToken = async (req, res, next) => {
   if(!req.cookies){
@@ -168,10 +165,13 @@ const refreshingToken = async (req, res, next) => {
     if (!user || user.refreshToken !== refreshToken) {
       return next(new CustomError("Invalid refresh token", 403));
     }
-
-    // Create a new access token
-    const accessToken = createAccessToken(user._id, user.role, "1h");
-
+let accessToken;;
+   if(user.role === "Admin"){
+     accessToken = createAdminAccessToken(user._id, user.role, "30s");
+   }else{
+     accessToken = createAccessToken(user._id, user.role, "30s");
+   }
+   
     res.status(200).json({ message: "Token refreshed", token: accessToken });
   
 };
