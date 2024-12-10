@@ -18,7 +18,6 @@ import {
   getAllOrders,
   getOneOrder,
   orderCashOnDel,
-  publicKeySend,
   stripePayment,
   stripeSuccess,
 } from "../controllers/user/userOrderController.js";
@@ -52,7 +51,6 @@ router
     verifyToken,
     tryCatch(stripeSuccess)
   ) // success route for stripe
-  .get("/orders/publicKey", verifyToken, tryCatch(publicKeySend)) // getting stripe public key on the client
   .patch("/orders/cancel/:id", verifyToken, idValidation,tryCatch(cancelOneOrder)); // cancelling an order by id
 
 export default router;

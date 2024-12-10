@@ -40,8 +40,11 @@ const addNewProduct = async (req, res, next) => {
   if (error) {
     return next(new CustomError(error.details[0].message, 400));
   }
-  const existingProduct=await Products.findOne({name:value.name,category:value.category});
-  if(existingProduct){
+  const existingProduct = await Products.findOne({
+    name: value.name,
+    category: value.category,
+  });
+  if (existingProduct) {
     return next(new CustomError("Product already exist", 400));
   }
   if (!req.file || !req.file.path) {
@@ -99,4 +102,32 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-export { totalNumberOfProducts, addNewProduct, editProduct, deleteProduct };
+const adminProducts = async (req, res) => {
+  if (req.params.category == "all")
+    return res.json({
+      status: "success",
+      data: await Products.find({}),
+      message: "Products fetched successfully",
+      data: await Products.find({}),
+    });
+  const products = await Products.find({ category: req.params.category });
+  if (!products) {
+    return res
+      .status(204)
+      .json({ status: "success", data: [], message: "No item in products" });
+  }
+  res.json({
+    status: "success",
+    data: products,
+    message: "Products fetched successfully",
+    data: products,
+  });
+};
+
+export {
+  totalNumberOfProducts,
+  addNewProduct,
+  adminProducts,
+  editProduct,
+  deleteProduct,
+};

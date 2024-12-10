@@ -11,6 +11,7 @@ import {
 import { adminLogin, logout } from "../controllers/authController.js";
 import {
   addNewProduct,
+  adminProducts,
   deleteProduct,
   editProduct,
   totalNumberOfProducts,
@@ -25,8 +26,6 @@ import {
 } from "../controllers/admin/adminOrderController.js";
 import upload from "../middlewares/multer.js";
 import {
-  allProducts,
-  productByCategory,
   productById,
 } from "../controllers/publicController.js";
 
@@ -43,13 +42,8 @@ router
   .patch("/users/block/:id", verifyTokenAdmin, idValidation,tryCatch(blockUser)) // route for block a single user
 
   // routes for accessing products
-  .get("/products", verifyTokenAdmin, tryCatch(allProducts)) // getting all the products
+  .get("/products/category/:category", verifyTokenAdmin, tryCatch(adminProducts)) // getting all the products
   .get("/products/:id", verifyTokenAdmin, idValidation,tryCatch(productById)) // getting a product by id
-  .get(
-    "/products/category/:category",
-    verifyTokenAdmin,
-    tryCatch(productByCategory)
-  )
   .get(
     "/products/details/stats",
     verifyTokenAdmin,

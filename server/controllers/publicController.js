@@ -20,7 +20,7 @@ const allProducts = async (req, res) => {
 
 const getOriginalProducts = async (req, res) => {
   const products = await Products.find(
-    { original: true },
+    { original: true, isDeleted: false },
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 ,description:1 ,review:1}
   );
   if (!products) {
@@ -37,7 +37,7 @@ const getOriginalProducts = async (req, res) => {
 
 const lastAddedTenProducts = async (req, res) => {
   const products = await Products.find(
-    {},
+    {isDeleted:false},
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1,description:1 ,review:1 }
   )
     .sort({ createdAt: -1 })
@@ -73,7 +73,7 @@ const productById = async (req, res) => {
 // to get the products by category
 const productByCategory = async (req, res) => {
   const products = await Products.find(
-    { category: req.params.category },
+    { category: req.params.category, isDeleted: false },
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 ,description:1 ,review:1}
   );
   if (!products) {

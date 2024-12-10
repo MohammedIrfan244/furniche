@@ -45,7 +45,6 @@ function CheckoutSingle() {
         }
       )
       .then((res) => {
-        console.log(res.data);
         setAddress({
           name: "",
           street: "",
@@ -60,7 +59,7 @@ function CheckoutSingle() {
         }
       })
       .catch((err) => {
-        console.log(axiosErrorManager(err));
+        toast.error(axiosErrorManager(err));
         setAddress({
           name: "",
           street: "",
