@@ -1,55 +1,81 @@
 import axios from "axios";
-import { useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ScrollTop from "../shared/ScrollTop";
 import AdminOrderCards from "./AdminOrderCards";
+import Cookies from "js-cookie";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 function UserManipulate() {
   const { userId } = useParams();
-  const { state } = useLocation();
-  const [user, setUser] = useState(state?.user);
-  // const navigate = useNavigate();
+  const [user, setUser] = useState({});
+  const [useOrders, setUseOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [blocked, setBlocked]=useState(false)
 
-  // const removeUser = (userId) => {
-  //   const checkDelete=confirm("Are you sure you want to delete ?")
-  //   if(checkDelete){
-  //       axios
-  //     .delete(`http://localhost:3000/users/${userId}`)
-  //     .then(() => {
-  //       navigate("/adminpanel");
-  //       toast.success("User has been removed");
-  //     })
-  //     .catch((err) => console.log(err));    
-  //   }
-  // };
-
-  const blockUser = (userId, blockToggle) => {
-    axios
-      .patch(`http://localhost:3000/users/${userId}`, {
-        isBlocked: blockToggle,
+  const blockUser = async () => {
+    setLoading(true)
+    const token = Cookies.get("token");
+    await axios
+      .patch(
+        `http://localhost:3001/api/admin/users/block/${userId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        toast.success(res.data.message);
+        setBlocked(res.data.data)
+        setLoading(true)
       })
-      .then(() => {
-        setUser((prevUser) => ({ ...prevUser, isBlocked: blockToggle }));
-        toast.success(
-          blockToggle ? "User has been blocked" : "User has been unblocked"
-        );
+      .catch((err) => {
+        toast.error(axiosErrorManager(err));
       })
-      .catch((err) => console.log(err));
+      .finally(() => {
+        setLoading(false)
+      });
   };
 
+
+  useEffect(()=>{
+    setLoading(true)
+    axios
+    .get(`http://localhost:3001/api/admin/users/${userId}`, {
+      headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+    })
+    .then((res) => {
+      setUser(res.data.data);
+    })
+    .catch((err) => {
+      console.log(axiosErrorManager(err));
+    })
+    .finally(()=>setLoading(false))
+  },[userId])
+
+  useEffect(()=>{
+    setLoading(true)
+axios
+    .get(`http://localhost:3001/api/admin/orders/user/${userId}`, {
+      headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+    })
+    .then((res) => {
+      setUseOrders(res.data.data);
+    })
+    .catch((err) => {
+      console.log(axiosErrorManager(err));
+})
+.finally(()=>setLoading(false))
+  },[userId])
   return (
     <div className="flex flex-row justify-between w-full bg-gray-100">
+      {loading&&<div className="loader h-[100vh] w-[100%] flex justify-center items-center"></div>}
       <div className="w-1/4 bg-white border-r-2 border-gray-300 p-5 space-y-5 pt-10">
         <div className="h-36 flex justify-center items-center rounded-full mb-5 overflow-hidden w-36 border-2 border-gray-300">
           <img
-            src={user.avatar}
-            alt="User avatar"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src =
-                "https://static.vecteezy.com/system/resources/thumbnails/005/129/844/small_2x/profile-user-icon-isolated-on-white-background-eps10-free-vector.jpg";
-            }}
+            src={user.profile}
+            alt="User Profile"
           />
         </div>
         <div className="flex justify-start gap-14">
@@ -65,21 +91,15 @@ function UserManipulate() {
           <p className="w-2/3">{user.mobile}</p>
         </div>
         <div className="flex justify-between">
-          {/* <button
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-xs rounded-md"
-            onClick={() => removeUser(user.id)}
-          >
-            Delete
-          </button> */}
           <button
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-xs rounded-md"
-            onClick={() => blockUser(userId, !user?.isBlocked)}
+            onClick={() => blockUser()}
           >
-            {user?.isBlocked ? "Unblock" : "Block"}
+            {blocked? "Unblock" : "Block"}
           </button>
           <Link
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-xs rounded-md"
-            to={"/adminpanel"}
+            to="/admin/adminpanel"
           >
             Go back
           </Link>
@@ -88,9 +108,9 @@ function UserManipulate() {
       <div className="w-3/4 p-5">
         <h1 className="mt-5 text-3xl mb-5 font-semibold">ORDERS</h1>
         <div className="flex flex-col gap-5 w-full overflow-y-auto scrollbar-thin h-[90vh]">
-          {user.orders.length === 0
+          {useOrders === 0
             ? "Order is empty"
-            : user.orders?.map((items, index) => (
+            : useOrders?.map((items, index) => (
                 <AdminOrderCards key={index} user={user} orderItems={items} />
               ))}
         </div>

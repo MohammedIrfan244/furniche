@@ -1,66 +1,94 @@
-import { useContext } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
-import axios from "axios";
-import { toast } from "react-toastify";
+import {  useState } from "react";
 import AdminOrderItemCards from "./AdminOrderItemsCard";
+import { toast } from "react-toastify";
+import axiosErrorManager from "../utilities/axiosErrorManager";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 // eslint-disable-next-line react/prop-types
 function AdminOrderCards({ orderItems = {}, user = {} }) {
-  // orderItem ll recieve from parent as a objects
-  const { products } = useContext(ShopContext);
-  const orderProducts = products.filter(
-    (items) => orderItems?.products[items.id]
-  );
-  const orderAddress = orderItems?.address;
 
-  const handleStatusPatch = (key, value) => {
-    const updatedOrder = user?.orders?.map((items) =>
-      items.id === orderItems.id ? { ...items, [key]: value } : items
-    );
-    axios
-      .patch(`http://localhost:3000/users/${user.id}`, { orders: updatedOrder })
-      .then(() => toast.success("Status updated successfully"))
-      .catch((err) => console.log(err.message));
+  const [paymentStatus, setPaymentStatus] = useState(orderItems?.paymentStatus);
+  const [shippingStatus, setShippingStatus] = useState(orderItems?.shippingStatus);
+
+  const updatePaymentStatus = async () => {
+    const token = Cookies.get("token");
+    await axios
+      .patch(
+        `http://localhost:3001/api/admin/orders/payment/${orderItems._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setPaymentStatus("Done");
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(axiosErrorManager(err));
+      });
   };
-
+  const updateShippingStatus = async () => {
+    const token = Cookies.get("token");
+    await axios
+      .patch(
+        `http://localhost:3001/api/admin/orders/shipping/${orderItems._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        setShippingStatus("Delivered");
+        toast.success(res.data.message);
+      })
+      .catch((err) => {
+        toast.error(axiosErrorManager(err));
+      });
+  };
   return (
     <div className=" bg-white w-full flex flex-col gap-3 p-3">
       <div className="flex flex-col gap-3">
-        {orderProducts?.map((items, index) => (
+        {orderItems.products?.map((items, index) => (
           <AdminOrderItemCards
             key={index}
-            id={items.id}
-            count={orderItems.products[items.id]}
-            name={items.name}
-            image={items.image}
-            price={items.price}
+            id={items?.productId._id}
+            count={items?.quantity}
+            name={items?.productId?.name}
+            image={items?.productId?.image}
+            price={items?.productId?.price}
           />
         ))}
       </div>
       <div className="text-xs flex flex-col gap-1">
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Order Id</p>
-          <p>{orderItems.id}</p>
+          <p>{orderItems?._id}</p>
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Name</p>
-          <p>{orderAddress.firstName + " " + orderAddress.lastName}</p>
+          <p>{orderItems?.address?.name}</p>
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Email</p>
-          <p>{orderAddress.email}</p>
+          <p>{user.email}</p>
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Mobile</p>
-          <p>{orderAddress.mobile}</p>
+          <p>{orderItems?.address?.phone}</p>
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Place</p>
-          <p>{orderAddress.place}</p>
+          <p>{orderItems?.address?.street + " " + orderItems?.address?.city}</p>
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Pin Code</p>
-          <p>{orderAddress.pin}</p>
+          <p>{orderItems?.address?.pincode}</p>
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Total</p>
@@ -68,11 +96,11 @@ function AdminOrderCards({ orderItems = {}, user = {} }) {
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Delivery</p>
-          <p className="w-[20%]">{orderItems?.delivaryStatus}</p>
+          <p className="w-[20%]">{shippingStatus}</p>
 
           <button
             className="bg-blue-500 rounded-md py-2 px-3"
-            onClick={() => handleStatusPatch("delivaryStatus", "done")}
+           onClick={updateShippingStatus}
           >
             Delivery done
           </button>
@@ -80,10 +108,10 @@ function AdminOrderCards({ orderItems = {}, user = {} }) {
 
         <div className="flex justify-start gap-10 mt-2">
           <p className="w-[20%]">Payment</p>
-          <p className="w-[20%]">{orderItems.paymentStatus}</p>
+          <p className="w-[20%]">{paymentStatus}</p>
           <button
             className="bg-blue-500 rounded-md py-2 px-3"
-            onClick={() => handleStatusPatch("paymentStatus", "paid")}
+            onClick={updatePaymentStatus}
           >
             Payment done
           </button>

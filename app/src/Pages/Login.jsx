@@ -6,7 +6,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../Redux/userSlice";
+import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
 import Cookies  from 'js-cookie'
 
 function Login() {
@@ -33,6 +33,7 @@ function Login() {
         const userCookie=Cookies.get('user')
         const currentUser=userCookie?JSON.parse(userCookie):null
         dispatch(setCurrentUser(currentUser));
+        dispatch(setIsAdmin(false))
         toast.success(response.data.message);
         navigate('/')
       })
@@ -88,7 +89,7 @@ function Login() {
             type="submit"
             className="bg-[#D7D2C9] text-[#000000] font-bold rounded-lg shadow-sm shadow-black hover:scale-[1.01] hover:shadow-md hover:shadow-black transition-all duration-200 text-xs active:scale-95 py-1 px-5 sm:py-2"
           >
-            {loading ? "Loading..." : "Login"}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </div>
       </form>

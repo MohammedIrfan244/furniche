@@ -27,7 +27,7 @@ const getUserById = async (req, res, next) => {
     mobile: 1,
     isBlocked: 1,
     role: 1,
-    image: 1,
+    profile: 1,
   });
   if (!user) {
     return next(new CustomError("User not found", 404));
@@ -53,6 +53,7 @@ const blockUser = async (req, res, next) => {
     .status(200)
     .json({
       status: "success",
+      data: user?.isBlocked,
       message: user.isBlocked ? "User blocked" : "User unblocked",
     });
 };

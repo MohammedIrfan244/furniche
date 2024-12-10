@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -39,7 +40,7 @@ function AdminDashboard() {
         setOrderStats(orderRes.data);
         setRevenueStats(revenueRes.data);
       } catch (err) {
-        console.log(axiosErrorManager(err));
+        toast.error(axiosErrorManager(err));
       } finally {
         setLoading(false);
       }

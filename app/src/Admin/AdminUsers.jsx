@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import { toast } from "react-toastify";
 
 
 function AdminUsers() {
@@ -18,7 +19,7 @@ axios.get('http://localhost:3001/api/admin/users',{headers:{Authorization:`Beare
   setUsers(res.data.data)
 })
 .catch((err)=>{
-  console.log(axiosErrorManager(err))
+  toast.error(axiosErrorManager(err))
   setLoading(false)
 })
   },[])

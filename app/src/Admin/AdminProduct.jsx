@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../Contexts/ShopContext";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
@@ -14,7 +13,7 @@ function AdminProduct({ products = [] }) {
     category: "",
     review: "",
   });
-  const { addProduct } = useContext(ShopContext);
+
   const [filteredProduct, setFilteredProducts] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -46,7 +45,6 @@ function AdminProduct({ products = [] }) {
   };
   const formSubmit = (e) => {
     e.preventDefault();
-    addProduct(productData);
     setProductData({
       name: "",
       rating: "",

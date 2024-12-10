@@ -40,7 +40,7 @@ router
   .get("/users", verifyTokenAdmin, tryCatch(getAllUsers)) // route to get the list for all users
   .get("/users/:id", verifyTokenAdmin, idValidation,tryCatch(getUserById)) // route for getting a single user
   .get("/users/details/stats", verifyTokenAdmin, tryCatch(totalNumberOfUsers)) // route for getting the total number of uses
-  .patch("/users/:id", verifyTokenAdmin, idValidation,tryCatch(blockUser)) // route for block a single user
+  .patch("/users/block/:id", verifyTokenAdmin, idValidation,tryCatch(blockUser)) // route for block a single user
 
   // routes for accessing products
   .get("/products", verifyTokenAdmin, tryCatch(allProducts)) // getting all the products
