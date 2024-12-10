@@ -3,7 +3,7 @@ import ScrollTop from "../shared/ScrollTop";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser } from "../Redux/userSlice";
+import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
@@ -56,6 +56,7 @@ function User() {
         .post("http://localhost:3001/api/users/logout", {}, { withCredentials: true })
         .then((response) => {
           toast.success(response.data.message);
+          dispatch(setIsAdmin(false))
           dispatch(setCurrentUser(null));
           navigate("/");
         })

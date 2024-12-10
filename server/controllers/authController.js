@@ -104,7 +104,7 @@ res.cookie("user", JSON.stringify(userDetails), {
   });
 };
 
-// Controller to handle admin login
+
 const adminLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
@@ -142,7 +142,7 @@ const adminLogin = async (req, res, next) => {
     sameSite: "none",
   });
 
-  res.cookie("admin", JSON.stringify(userDetails), {
+  res.cookie("user", JSON.stringify(userDetails), {
     httpOnly: false,
     secure: true,
     sameSite: "none",
@@ -195,14 +195,14 @@ const logout = async (req, res, next) => {
     secure: true,
     sameSite: "none",
   })
-  
+
   res
     .status(200)
     .json({ status: "success", message: "Logged out successfully" });
 };
 
 const adminLogout = async (req, res, next) => {
-  // Clearing the refresh token cookie
+  
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: true,
@@ -213,14 +213,14 @@ const adminLogout = async (req, res, next) => {
     secure: true,
     sameSite: "none",
   })
-  res.clearCookie("admin", {
+  res.clearCookie("user", {
     httpOnly: false,
     secure: true,
     sameSite: "none",
   })
   res
     .status(200)
-    .json({ status: "success", message: "Logged out successfully" });
+    .json({ status: "success", message: "Admin logged out successfully" });
 };
 
 export { loginUser, registerUser, adminLogin, refreshingToken, adminLogout, logout };

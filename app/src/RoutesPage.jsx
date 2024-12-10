@@ -23,12 +23,9 @@ import StripeSuccess from "./Pages/StripeSuccess";
 import StripeCancel from "./Pages/StripeCancel";
 import Order from "./Pages/Order";
 import AdminLogin from "./Admin/AdminLogin";
-import { useEffect } from "react";
 function RoutesPage() {
   const {  isAdmin ,currentUser} = useSelector((state) => state.user);
-  useEffect(()=>{
-console.log(isAdmin)
-  },[isAdmin])
+
   return (
     <div>
       <Layout>
@@ -59,11 +56,11 @@ console.log(isAdmin)
             <Route path="/signin" element={<SignIn/>} />
             <Route
               path="/checkout/product/:id"
-              element={currentUser?<CheckoutSingle/>:<NotFound/>}
+              element={currentUser?<CheckoutSingle/>:<Login/>}
             />
             <Route
             path="/checkout/products/cart"
-            element={currentUser?<CheckoutCart/>:<NotFound/>}
+            element={currentUser?<CheckoutCart/>:<Login/>}
             />
             <Route 
             path="/success/:sessionId"

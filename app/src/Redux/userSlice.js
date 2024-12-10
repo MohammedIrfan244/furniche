@@ -5,16 +5,14 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
 const userCookie = Cookies.get("user");
-const adminCookie=Cookies.get("admin")
+const currentUser = userCookie ? JSON.parse(userCookie) : null;
 
-
-const currentUser = userCookie ? JSON.parse(userCookie) :adminCookie?JSON.parse(adminCookie):null
 
 const INITIAL_STATE = {
   loading: false,
   error: null,
   currentUser: currentUser,
-  isAdmin:adminCookie?true:false,
+  isAdmin:false,
   userCart: [],
   userCartCount: 0,
   userWishlist: [],

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../Redux/userSlice";
+import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
 
 function AdminLogin() {
   const [loginData, setLoginData] = useState({
@@ -29,21 +29,23 @@ function AdminLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setCurrentUser(null));
+    dispatch(setIsAdmin(false))
     setLoading(true);
 
     axios
       .post("http://localhost:3001/api/admin/login", loginData, { withCredentials: true })
       .then((response) => {
-       const adminCookie=Cookies.get('admin')
+       const adminCookie=Cookies.get('user')
        const admin=adminCookie?JSON.parse(adminCookie):null
        dispatch(setCurrentUser(admin));
+       dispatch(setIsAdmin(true))
         toast.success(response.data.message);
         navigate("/admin/adminpanel");
       })
       .catch((err) => {
         toast.error(axiosErrorManager(err));
         dispatch(setCurrentUser(null));
-        dispatch((false))
+        dispatch(setIsAdmin(false))
       })
       .finally(() => {
         setLoading(false);
