@@ -1,58 +1,124 @@
-import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { ShopContext } from "../Contexts/ShopContext";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import axiosErrorManager from "../utilities/axiosErrorManager";
+import { useSelector } from "react-redux";
 
 function ProductManipulation() {
-  const { state } = useLocation();
-  const product = state?.product;
+  const { productId } = useParams();
+  const { currency } = useSelector((state) => state.public);
+  const [product, setProduct] = useState({});
   const navigate = useNavigate();
-  const { editProduct, removeProduct } = useContext(ShopContext);
-
-  const [productData, setProductData] = useState({
+  const [loading, setLoading] = useState(false);
+  const [isDeleted,setIsDeleted]=useState(product?.isDeleted)
+  const [formValues, setFormValues] = useState({
     name: "",
     rating: "",
     price: "",
-    image: "",
+    image: null,
     description: "",
     original: "",
     category: "",
     review: "",
   });
 
-  useEffect(()=>{
-    setProductData({
-      name: product?.name,
-    rating: product?.rating,
-    price: product?.price,
-    image: product?.image,
-    description: product?.description,
-    original: product?.original,
-    category: product?.category,
-    review: product?.review
-    })
-  },[product])
+  const fetchProduct=async(productId)=>{
+    setLoading(true);
+    axios
+      .get(`http://localhost:3001/api/public/products/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("token")}`,
+        },
+      })
+      .then((response) => {
+        setProduct(response.data?.data);
+        setFormValues({
+          name: response.data?.data.name || "",
+          rating: response.data?.data.rating || "",
+          price: response.data?.data.price || "",
+          image: null,
+          description: response.data?.data.description || "",
+          original: response.data?.data.original ? "true" : "false",
+          category: response.data?.data.category || "",
+          review: response.data?.data.review || "",
+        });
+      })
+      .catch((err) => {
+        toast.error(axiosErrorManager(err));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  useEffect(() => {
+fetchProduct(productId)
+  }, [productId]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    const newValue =
-      name === "rating" || name === "price" ? Number(value) : value;
-    setProductData((prevData) => ({ ...prevData, [name]: newValue }));
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      [name]: value,
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    setFormValues((prevValues) => ({
+      ...prevValues,
+      image: e.target.files[0],
+    }));
+  };
+
+  const removeProduct = async () => {
+    setLoading(true);
+    await axios
+      .delete(`http://localhost:3001/api/admin/products/${productId}`, {
+        headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+      })
+      .then((res) => {
+        toast.success(res.data.message);
+        setIsDeleted(!isDeleted)
+      })
+      .catch((err) => {
+        toast.error(axiosErrorManager(err));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const updateProduct = async (e) => {
     e.preventDefault();
-    editProduct(product?.id, productData);
-    setProductData({
-      name: "",
-      rating: "",
-      price: "",
-      image: "",
-      description: "",
-      original: "",
-      category: "",
-      review: "",
+    setLoading(true);
+    const formData = new FormData();
+    Object.keys(formValues).forEach((key) => {
+      formData.append(key, formValues[key]);
     });
-    navigate("/adminpanel");
+
+    await axios
+      .put(
+        `http://localhost:3001/api/admin/products/${productId}`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        toast.success(res.data.message);
+        fetchProduct(productId)
+      })
+      .catch((err) => {
+        toast.error(axiosErrorManager(err));
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -67,7 +133,7 @@ function ProductManipulation() {
           <img src={product?.image} alt="Product" className="w-32 h-auto" />
         </p>
         <p>
-          <strong>Price:</strong> ${product?.price}
+          <strong>Price:</strong> {currency} {product?.price}
         </p>
         <p>
           <strong>Rating:</strong> {product?.rating}
@@ -83,13 +149,13 @@ function ProductManipulation() {
         </p>
         <div className="flex justify-between">
           <button
-            onClick={() => removeProduct(product.id)}
+            onClick={removeProduct}
             className="mt-4 px-4 py-2 rounded-md bg-red-500 text-white"
           >
-            Remove
+            {isDeleted?"Restore":"Remove"}
           </button>
           <button
-            onClick={() => navigate("/adminpanel")}
+            onClick={() => navigate("/admin/adminpanel")}
             className="mt-4 px-4 py-2 rounded-md bg-blue-500 text-white"
           >
             Go back
@@ -97,17 +163,16 @@ function ProductManipulation() {
         </div>
       </div>
 
-    {/* edit sec */}
       <div className="w-full sm:w-1/2 bg-[#F9FCFA] p-5 space-y-7 mt-5 sm:mt-0">
         <h2 className="text-xl font-semibold mb-4">Edit Product</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+        <form onSubmit={updateProduct} className="flex flex-col gap-6">
           <input
             placeholder="Name"
             required
             name="name"
-            value={productData.name}
             type="text"
             className="border border-gray-300 p-2 text-xs"
+            value={formValues.name}
             onChange={handleInputChange}
           />
           <input
@@ -116,43 +181,42 @@ function ProductManipulation() {
             name="rating"
             min={1}
             max={5}
-            value={productData.rating}
             type="text"
             className="border border-gray-300 p-2 text-xs"
+            value={formValues.rating}
             onChange={handleInputChange}
           />
           <input
             placeholder="Price"
             required
             name="price"
-            value={productData.price}
             type="text"
             className="border border-gray-300 p-2 text-xs"
+            value={formValues.price}
             onChange={handleInputChange}
           />
           <input
-            placeholder="Image URL"
-            required
+            placeholder="Image"
             name="image"
-            value={productData.image}
-            type="text"
+            type="file"
+            accept="image/*"
             className="border border-gray-300 p-2 text-xs"
-            onChange={handleInputChange}
+            onChange={handleFileChange}
           />
           <textarea
             placeholder="Description"
             required
             name="description"
-            value={productData.description}
             className="border border-gray-300 p-2 text-xs"
+            value={formValues.description}
             onChange={handleInputChange}
           />
           <select
             name="original"
-            value={productData.original}
-            onChange={handleInputChange}
             required
             className="border border-gray-300 p-2 text-xs"
+            value={formValues.original}
+            onChange={handleInputChange}
           >
             <option value="">Select Original</option>
             <option value="true">True</option>
@@ -161,10 +225,10 @@ function ProductManipulation() {
 
           <select
             name="category"
-            value={productData.category}
-            onChange={handleInputChange}
             required
             className="border border-gray-300 p-2 text-xs"
+            value={formValues.category}
+            onChange={handleInputChange}
           >
             <option value="">Select Category</option>
             <option value="sofas">Sofas</option>
@@ -178,8 +242,8 @@ function ProductManipulation() {
             placeholder="Review"
             required
             name="review"
-            value={productData.review}
             className="border border-gray-300 p-2 text-xs"
+            value={formValues.review}
             onChange={handleInputChange}
           />
           <button

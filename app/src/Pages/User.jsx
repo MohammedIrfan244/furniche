@@ -16,7 +16,7 @@ function User() {
     email: currentUser?.email || "",
     mobile: currentUser?.mobile || "",
     profile: currentUser?.profile || null,
-    password: "", // Password is initially empty
+    password: "",
   });
   const [isUpdating, setIsUpdating] = useState(false);
   const [loading, setLoading] = useState(false); 
@@ -24,7 +24,7 @@ function User() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const fetchUser=async()=>{
     setLoading(true);
     const token = Cookies.get("token");
     axios
@@ -42,6 +42,10 @@ function User() {
       .finally(() => {
         setLoading(false); 
       });
+  }
+
+  useEffect(() => {
+    fetchUser()
   }, []);
 
   const handleLogOut = () => {
@@ -84,8 +88,8 @@ function User() {
         },
       })
       .then((res) => {
+        dispatch(setCurrentUser(res.data.data))
         toast.success(res.data.message);
-        dispatch(setCurrentUser(res.data.data));
       })
       .catch((err) => {
         toast.error(axiosErrorManager(err));

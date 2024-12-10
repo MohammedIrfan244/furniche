@@ -21,6 +21,10 @@ function NavBar() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[currentUser,userCart])
 
+  useEffect(()=>{
+    console.log(isAdmin)
+  },[isAdmin])
+
   return (
     <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-[#D7D2C9] z-20">
       <div className="flex items-center justify-between">

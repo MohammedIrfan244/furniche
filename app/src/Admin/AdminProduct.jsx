@@ -3,8 +3,11 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 
 function AdminProduct() {
+  const navigate=useNavigate()
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState("all");
@@ -110,7 +113,9 @@ function AdminProduct() {
                       {product.price}
                     </td>
                     <td className="border border-gray-300 p-2">
-                      <button className="bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                      <button className="bg-blue-500 text-white text-xs px-2 py-1 rounded"
+                      onClick={()=>{navigate(`/admin/adminpanel/productaction/${product._id}`)}}
+                      >
                         View
                       </button>
                     </td>

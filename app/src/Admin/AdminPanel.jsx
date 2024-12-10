@@ -12,7 +12,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
+import { setCurrentUser } from "../Redux/userSlice";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 
@@ -34,19 +34,12 @@ setLoading2(true)
    .then((res)=>{
      toast.success(res.data.message);
      dispatch(setCurrentUser(null));
-     dispatch(setIsAdmin(false))
    })
    .catch((err)=>toast.error(axiosErrorManager(err)))
    .finally(()=>{
      setLoading2(false)
      navigate('/')
    })
-   await axios.post("http://localhost:3001/api/users/logout",{},{withCredentials:true})
-   .then(()=>{
-     dispatch(setCurrentUser(null));
-     dispatch(setIsAdmin(false))
-   })
-   .catch((err)=>toast.error(axiosErrorManager(err)))
   };
   
   

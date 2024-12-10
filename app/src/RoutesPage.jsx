@@ -23,8 +23,12 @@ import StripeSuccess from "./Pages/StripeSuccess";
 import StripeCancel from "./Pages/StripeCancel";
 import Order from "./Pages/Order";
 import AdminLogin from "./Admin/AdminLogin";
+import { useEffect } from "react";
 function RoutesPage() {
   const {  isAdmin ,currentUser} = useSelector((state) => state.user);
+  useEffect(()=>{
+console.log(isAdmin)
+  },[isAdmin])
   return (
     <div>
       <Layout>
@@ -81,15 +85,15 @@ function RoutesPage() {
           />
           <Route
             path="/admin/adminpanel"
-            element={<AdminPanel /> }
+            element={isAdmin&&<AdminPanel />||<NotFound />}
           />
           <Route
             path="admin/adminpanel/useraction/:userId"
-            element={<UserManipulate />}
+            element={isAdmin&&<UserManipulate />||<NotFound />}
           />
           <Route
-            path="/adminpanel/productaction/:productId"
-            element={isAdmin ? <ProductManipulation /> : <NotFound />}
+            path="/admin/adminpanel/productaction/:productId"
+            element={isAdmin&&<ProductManipulation />||<NotFound />}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
