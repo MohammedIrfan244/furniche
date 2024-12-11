@@ -24,7 +24,7 @@ import StripeCancel from "./Pages/StripeCancel";
 import Order from "./Pages/Order";
 import AdminLogin from "./Admin/AdminLogin";
 function RoutesPage() {
-  const {  isAdmin ,currentUser} = useSelector((state) => state.user);
+  const { isAdmin, currentUser } = useSelector((state) => state.user);
 
   return (
     <div>
@@ -42,33 +42,36 @@ function RoutesPage() {
             <Route path="/collection" element={<Collection />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/wishlist" element={currentUser?<Wishlist />:<NotFound/>} />
+            <Route
+              path="/wishlist"
+              element={currentUser ? <Wishlist /> : <NotFound />}
+            />
             <Route path="/product/:Id" element={<Product />} />
             <Route
               path="/cart"
               element={currentUser != null ? <Cart /> : <NotFound />}
             />
             <Route
-            path="/orders/:id"
-            element={currentUser?<Order/>:<NotFound/>}
+              path="/orders/:id"
+              element={currentUser ? <Order /> : <NotFound />}
             />
-            <Route path="/login" element={<Login/>} />
-            <Route path="/signin" element={<SignIn/>} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route
               path="/checkout/product/:id"
-              element={currentUser?<CheckoutSingle/>:<Login/>}
+              element={currentUser ? <CheckoutSingle /> : <Login />}
             />
             <Route
-            path="/checkout/products/cart"
-            element={currentUser?<CheckoutCart/>:<Login/>}
-            />
-            <Route 
-            path="/success/:sessionId"
-            element={currentUser? <StripeSuccess/> : <NotFound />}
+              path="/checkout/products/cart"
+              element={currentUser ? <CheckoutCart /> : <Login />}
             />
             <Route
-            path=""
-            element={currentUser?<StripeCancel/> : <NotFound />}
+              path="/success/:sessionId"
+              element={currentUser ? <StripeSuccess /> : <NotFound />}
+            />
+            <Route
+              path=""
+              element={currentUser ? <StripeCancel /> : <NotFound />}
             />
             <Route
               path="/user"
@@ -76,21 +79,18 @@ function RoutesPage() {
             />
             <Route path="/search" element={<Search />} />
           </Route>
-          <Route 
-          path="/admin/login"
-          element={<AdminLogin/>}
-          />
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route
             path="/admin/adminpanel"
-            element={isAdmin&&<AdminPanel />||<NotFound />}
+            element={(isAdmin && <AdminPanel />) || <NotFound />}
           />
           <Route
             path="admin/adminpanel/useraction/:userId"
-            element={isAdmin&&<UserManipulate />||<NotFound />}
+            element={(isAdmin && <UserManipulate />) || <NotFound />}
           />
           <Route
             path="/admin/adminpanel/productaction/:productId"
-            element={isAdmin&&<ProductManipulation />||<NotFound />}
+            element={(isAdmin && <ProductManipulation />) || <NotFound />}
           />
           <Route path="*" element={<NotFound />} />
         </Routes>

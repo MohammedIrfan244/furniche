@@ -4,19 +4,17 @@ import CustomError from "../../utils/CustomError.js";
 // Controller to get all users
 const getAllUsers = async (req, res) => {
   const users = await User.find(
-    {role:{$ne:"Admin"}},
-    { name: 1, email: 1, mobile: 1, isBlocked: 1, role: 1,profile:1 }
+    { role: { $ne: "Admin" } },
+    { name: 1, email: 1, mobile: 1, isBlocked: 1, role: 1, profile: 1 }
   );
   if (!users) {
     return res.status(200).json({ Users: [], message: "No users found" });
   }
-  res
-    .status(200)
-    .json({
-      status: "success",
-      message: "Users fetched successfully",
-      data: users,
-    });
+  res.status(200).json({
+    status: "success",
+    message: "Users fetched successfully",
+    data: users,
+  });
 };
 
 // Controller to get user by id
@@ -32,13 +30,11 @@ const getUserById = async (req, res, next) => {
   if (!user) {
     return next(new CustomError("User not found", 404));
   }
-  res
-    .status(200)
-    .json({
-      status: "success",
-      message: "User fetched successfully",
-      data: user,
-    });
+  res.status(200).json({
+    status: "success",
+    message: "User fetched successfully",
+    data: user,
+  });
 };
 
 // Controller to block or unblock a user
@@ -49,13 +45,11 @@ const blockUser = async (req, res, next) => {
   }
   user.isBlocked = !user.isBlocked;
   await user.save();
-  res
-    .status(200)
-    .json({
-      status: "success",
-      data: user?.isBlocked,
-      message: user.isBlocked ? "User blocked" : "User unblocked",
-    });
+  res.status(200).json({
+    status: "success",
+    data: user?.isBlocked,
+    message: user.isBlocked ? "User blocked" : "User unblocked",
+  });
 };
 
 // Controller to get total number of users

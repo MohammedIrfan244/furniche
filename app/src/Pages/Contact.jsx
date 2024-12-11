@@ -1,5 +1,5 @@
 import ContactImage from "../assets/ContactPage.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -39,31 +39,34 @@ function Contact() {
     });
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="pt-[26%] sm:pt-[8%] flex flex-col items-center px-5">
-      <h1
-        className="text-xl sm:text-2xl font-serif tracking-wide underline mb-8 sm:mb-14"
-        style={{ textShadow: "0 0 1px #000000" }}
-      >
+      <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-8 sm:mb-14 text-[#544A3E]">
         CONTACT US
       </h1>
       <div className="shadow-md shadow-[#000000] gap-5 sm:gap-0 flex flex-col sm:flex-row w-[100%] sm:w-[80%] md:w-[65%] overflow-hidden bg-[#544A3E] p-2 rounded-3xl">
         <div className="w-[100%] sm:w-[45%]">
-          <div className="rounded-2xl flex items-end overflow-hidden h-[400px]">
+          <div className="rounded-2xl flex items-end overflow-hidden h-[400px] sm:h-[500px]">
             <img
               className="hover:scale-[1.01] object-cover transition duration-500 ease-in-out Logo h-[600px] w-full sm:w-auto"
               src={ContactImage}
-              alt="image"
+              alt="contact-image"
             />
           </div>
         </div>
         <div className="w-[100%] sm:w-[55%] flex flex-col items-center justify-between">
           <div className="mt-10 mb-5 p-5 rounded-lg text-[#544A3E] bg-[#D7D2C9]">
-            <p className="">
-              <FontAwesomeIcon icon={faPhone} /> +91 8987675643
+            <p className="text-sm">
+              <FontAwesomeIcon icon={faPhone} className="mr-2" />
+              +91 8987675643
             </p>
-            <p className="">
-              <FontAwesomeIcon icon={faEnvelope} /> furniche@gmail.com
+            <p className="text-sm">
+              <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+              furniche@gmail.com
             </p>
           </div>
           <form
@@ -78,7 +81,7 @@ function Contact() {
                 onChange={(e) =>
                   setFormData({ ...formData, ["name"]: e.target.value })
                 }
-                className="text-xs w-full rounded-md sm:rounded-lg px-3 py-1 focus:outline-none"
+                className="text-xs w-full rounded-md sm:rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#544A3E] transition duration-300 ease-in-out"
                 type="text"
                 placeholder="Username"
               />
@@ -91,7 +94,7 @@ function Contact() {
                 onChange={(e) =>
                   setFormData({ ...formData, ["email"]: e.target.value })
                 }
-                className="text-xs px-3 py-1 w-full rounded-md sm:rounded-lg focus:outline-none"
+                className="text-xs px-3 py-2 w-full rounded-md sm:rounded-lg focus:outline-none focus:ring-2 focus:ring-[#544A3E] transition duration-300 ease-in-out"
                 type="email"
                 placeholder="Email"
               />
@@ -105,12 +108,12 @@ function Contact() {
                 onChange={(e) =>
                   setFormData({ ...formData, ["message"]: e.target.value })
                 }
-                className="text-xs w-full rounded-md sm:rounded-lg px-3 py-1 focus:outline-none"
+                className="text-xs w-full rounded-md sm:rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#544A3E] transition duration-300 ease-in-out"
               />
             </div>
             <button
               type="submit"
-              className="bg-[#544A3E] hover:scale-[1.02] text-[#F9FCFA] rounded-md sm:rounded-lg border-none text-xs active:scale-95 px-5 py-1 sm:py-2"
+              className="bg-[#544A3E] hover:scale-[1.02] text-[#F9FCFA] rounded-md sm:rounded-lg border-none text-xs active:scale-95 px-5 py-2 focus:outline-none focus:ring-2 focus:ring-[#F9FCFA] transition duration-300 ease-in-out"
             >
               Send
             </button>

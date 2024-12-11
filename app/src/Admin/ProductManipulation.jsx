@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { useSelector } from "react-redux";
+import axiosInstance from "../utilities/axiosInstance";
 
 function ProductManipulation() {
   const { productId } = useParams();
@@ -12,7 +12,7 @@ function ProductManipulation() {
   const [product, setProduct] = useState({});
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [isDeleted,setIsDeleted]=useState(product?.isDeleted)
+  const [isDeleted, setIsDeleted] = useState(product?.isDeleted);
   const [formValues, setFormValues] = useState({
     name: "",
     rating: "",
@@ -24,37 +24,30 @@ function ProductManipulation() {
     review: "",
   });
 
-  const fetchProduct=async(productId)=>{
-    setLoading(true);
-    axios
-      .get(`http://localhost:3001/api/public/products/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${Cookies.get("token")}`,
-        },
-      })
-      .then((response) => {
-        setProduct(response.data?.data);
-        setFormValues({
-          name: response.data?.data.name || "",
-          rating: response.data?.data.rating || "",
-          price: response.data?.data.price || "",
-          image: null,
-          description: response.data?.data.description || "",
-          original: response.data?.data.original ? "true" : "false",
-          category: response.data?.data.category || "",
-          review: response.data?.data.review || "",
-        });
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      })
-      .finally(() => {
-        setLoading(false);
+  const fetchProduct = async (productId) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(`http://localhost:3001/api/public/products/${productId}`);
+      setProduct(response.data?.data);
+      setFormValues({
+        name: response.data?.data.name || "",
+        rating: response.data?.data.rating || "",
+        price: response.data?.data.price || "",
+        image: null,
+        description: response.data?.data.description || "",
+        original: response.data?.data.original ? "true" : "false",
+        category: response.data?.data.category || "",
+        review: response.data?.data.review || "",
       });
-  }
+    } catch (err) {
+      toast.error(axiosErrorManager(err));
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-fetchProduct(productId)
+    fetchProduct(productId);
   }, [productId]);
 
   const handleInputChange = (e) => {
@@ -73,56 +66,41 @@ fetchProduct(productId)
   };
 
   const removeProduct = async () => {
-    setLoading(true);
-    await axios
-      .delete(`http://localhost:3001/api/admin/products/${productId}`, {
-        headers: { Authorization: `Bearer ${Cookies.get("token")}` },
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        setIsDeleted(!isDeleted)
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      setLoading(true);
+      const response = await axiosInstance.delete('/admin/products/' + productId);
+      toast.success(response.data.message);
+      setIsDeleted(!isDeleted);
+    } catch (err) {
+      toast.error(axiosErrorManager(err));
+    } finally {
+      setLoading(false);
+    }
   };
 
   const updateProduct = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    const formData = new FormData();
-    Object.keys(formValues).forEach((key) => {
-      formData.append(key, formValues[key]);
-    });
-
-    await axios
-      .put(
-        `http://localhost:3001/api/admin/products/${productId}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("token")}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      .then((res) => {
-        toast.success(res.data.message);
-        fetchProduct(productId)
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    try {
+      setLoading(true);
+      const response = await axiosInstance.put('/admin/products/' + productId, formValues);
+      toast.success(response.data.message);
+      fetchProduct(productId);
+    } catch (err) {
+      toast.error(axiosErrorManager(err));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className="flex flex-col sm:flex-row justify-around min-h-screen">
+      {/* Loader */}
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <span className="loader"></span>
+        </div>
+      )}
+
       <div className="w-full sm:w-1/2 bg-[#F9FCFA] p-5 space-y-3">
         <h2 className="text-xl font-semibold space-y-5">Product Details</h2>
         <p>
@@ -152,7 +130,7 @@ fetchProduct(productId)
             onClick={removeProduct}
             className="mt-4 px-4 py-2 rounded-md bg-red-500 text-white"
           >
-            {isDeleted?"Restore":"Remove"}
+            {isDeleted ? "Restore" : "Remove"}
           </button>
           <button
             onClick={() => navigate("/admin/adminpanel")}
@@ -257,5 +235,6 @@ fetchProduct(productId)
     </div>
   );
 }
+
 
 export default ProductManipulation;

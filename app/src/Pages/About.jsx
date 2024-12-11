@@ -1,14 +1,22 @@
+import { useEffect } from "react";
 import AboutBackGround from "../assets/AboutPage.png";
 
 function About() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div
       className="w-[100%] h-[100vh] pt-[26%] sm:pt-[8%] bg-center bg-cover flex flex-col items-center shadow-md shadow-[#000000]"
       style={{ backgroundImage: `url(${AboutBackGround})` }}
     >
-      <div className="flex flex-col w-full sm:w-[70%] md:[60%] items-start px-5">
+      {/* Background overlay for better readability */}
+      <div className="absolute inset-0 bg-black opacity-50"></div>
+
+      <div className="flex flex-col w-full sm:w-[70%] md:w-[60%] items-start px-5 relative z-10">
         <h1
-          className="text-xl sm:text-2xl font-serif tracking-wide underline ps-5"
+          className="text-xl sm:text-2xl md:text-3xl font-serif tracking-wide underline ps-5"
           style={{ textShadow: "0 0 1px #000000" }}
         >
           ABOUT US
@@ -34,9 +42,8 @@ function About() {
             and sustainability with Furniche.
           </p>
           <p className="mt-4">
-            Thank you for choosing Furniche to furnish your homes. Your
-            support means the world to us and helps promote a more sustainable
-            future.
+            Thank you for choosing Furniche to furnish your homes. Your support
+            means the world to us and helps promote a more sustainable future.
           </p>
         </div>
       </div>

@@ -12,7 +12,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser } from "../Redux/userSlice";
+import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 
@@ -29,17 +29,30 @@ function AdminPanel() {
   const navigate = useNavigate();
 
   const handleLogOut = async() => {
-setLoading2(true)
-   await axios.post("http://localhost:3001/api/admin/logout",{},{withCredentials:true})
-   .then((res)=>{
-     toast.success(res.data.message);
-     dispatch(setCurrentUser(null));
-   })
-   .catch((err)=>toast.error(axiosErrorManager(err)))
-   .finally(()=>{
-     setLoading2(false)
-     navigate('/')
-   })
+    try{
+      setLoading2(true)
+      const response= await axios.post("http://localhost:3001/api/admin/logout",{},{withCredentials:true})
+      toast.success(response.data.message);
+      dispatch(setCurrentUser(null));
+      dispatch(setIsAdmin(false));
+      navigate('/')
+      setLoading2(false)
+    } catch (err) {
+      toast.error(axiosErrorManager(err));
+      setLoading2(false)
+    }
+// setLoading2(true)
+//    await axios.post("http://localhost:3001/api/admin/logout",{},{withCredentials:true})
+//    .then((res)=>{
+//      toast.success(res.data.message);
+//      dispatch(setCurrentUser(null));
+//      dispatch(setIsAdmin)
+//    })
+//    .catch((err)=>toast.error(axiosErrorManager(err)))
+//    .finally(()=>{
+//      setLoading2(false)
+//      navigate('/')
+//    })
   };
   
   
@@ -62,7 +75,7 @@ setLoading2(true)
             </h2>
             <div>
               <button
-                className="py-2 px-3 me-5 rounded-md bg-blue-500 text-[#F9FCFA] text-xs"
+                className="py-2 px-3 me-5 rounded-md bg-red-500 text-[#F9FCFA] text-xs"
                 onClick={handleLogOut}
               >
                 {loading2 ? "Logging out..." : "Log out"}

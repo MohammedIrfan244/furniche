@@ -27,9 +27,13 @@ const orderCashOnDel = async (req, res, next) => {
   newOrder.paymentStatus = "COD";
   newOrder.shippingStatus = "Pending";
 
-console.log("reached here")
-  if(orderType === "cart"){
-     await Cart.findOneAndUpdate({ userId: req.user.id },{$set:{products:[]}},{new:true});
+  console.log("reached here");
+  if (orderType === "cart") {
+    await Cart.findOneAndUpdate(
+      { userId: req.user.id },
+      { $set: { products: [] } },
+      { new: true }
+    );
   }
 
   await newOrder.save();
@@ -42,7 +46,7 @@ console.log("reached here")
 // to make an order with stripe
 const stripePayment = async (req, res, next) => {
   const { products, address, totalAmount, orderType } = req.body;
-  if(!orderType) return next(new CustomError("Order type is required", 400));
+  if (!orderType) return next(new CustomError("Order type is required", 400));
 
   if (!products || products.length === 0) {
     return next(new CustomError("No products found", 400));
@@ -62,9 +66,10 @@ const stripePayment = async (req, res, next) => {
 
   if (!productDetails) return next(new CustomError("No products found", 400));
 
-  const newTotal = Math.round(totalAmount * 100); 
+  const newTotal = Math.round(totalAmount * 100);
 
-  if (newTotal < 5000) { // Check for minimum amount
+  if (newTotal < 5000) {
+    // Check for minimum amount
     return next(new CustomError("Total amount must be at least ₹50", 400));
   }
 
@@ -78,7 +83,7 @@ const stripePayment = async (req, res, next) => {
         },
         unit_amount: Math.round(p.price * 100),
       },
-      quantity: p.quantity
+      quantity: p.quantity,
     };
   });
 
@@ -98,7 +103,7 @@ const stripePayment = async (req, res, next) => {
     orderType,
     paymentStatus: "Pending",
     shippingStatus: "Pending",
-    totalAmount: newTotal / 100, // Store in rupees for consistency
+    totalAmount: newTotal / 100,
     sessionId: session.id,
   });
 
@@ -111,18 +116,21 @@ const stripePayment = async (req, res, next) => {
   });
 };
 
-
 const stripeSuccess = async (req, res) => {
   const sessionId = req.params.sessionId;
   const order = await Order.findOne({ sessionId: sessionId });
   if (!order) {
     return next(new CustomError("Order not found", 404));
   }
-  
-  if(order?.orderType === "cart"){
-    await Cart.findOneAndUpdate({ userId: req.user.id },{$set:{products:[]}},{new:true});
+
+  if (order?.orderType === "cart") {
+    await Cart.findOneAndUpdate(
+      { userId: req.user.id },
+      { $set: { products: [] } },
+      { new: true }
+    );
   }
-  
+
   order.shippingStatus = "Pending";
   order.paymentStatus = "Paid";
   await order.save();

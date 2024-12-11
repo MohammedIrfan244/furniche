@@ -1,10 +1,9 @@
-
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
 function OrderItemCards({ image, name, price, count, id }) {
-  const { currency } = useSelector((state)=>state.public)
+  const { currency } = useSelector((state) => state.public);
   return (
     <div className="flex justify-between bg-[#F9FCFA] p-1 w-[100%] rounded-lg shadow-sm shadow-black items-center">
       <div className="flex gap-4">

@@ -65,7 +65,7 @@ const loginUser = async (req, res, next) => {
     return next(new CustomError("Invalid credentials", 401));
   }
 
-  const accessToken = createAccessToken(user._id, user.role, "30s");
+  const accessToken = createAccessToken(user._id, user.role, "1h");
   const refreshToken = createRefreshToken(user._id, user.role, "1d");
 
   user.refreshToken = refreshToken;
@@ -115,7 +115,7 @@ const adminLogin = async (req, res, next) => {
   if (!isMatch) {
     return next(new CustomError("Invalid credentials", 401));
   }
-  const token = createAdminAccessToken(user._id, user.role, "30s");
+  const token = createAdminAccessToken(user._id, user.role, "1h");
   const refreshToken = createRefreshToken(user._id, user.role, "1d");
 
   user.refreshToken = refreshToken;
@@ -167,9 +167,9 @@ const refreshingToken = async (req, res, next) => {
     }
 let accessToken;;
    if(user.role === "Admin"){
-     accessToken = createAdminAccessToken(user._id, user.role, "30s");
+     accessToken = createAdminAccessToken(user._id, user.role, "1h");
    }else{
-     accessToken = createAccessToken(user._id, user.role, "30s");
+     accessToken = createAccessToken(user._id, user.role, "1h");
    }
    
     res.status(200).json({ message: "Token refreshed", token: accessToken });

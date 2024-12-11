@@ -1,46 +1,31 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import NewCollection from "../Components/NewCollection";
 import OriginalProducts from "../Components/OriginalProducts";
 import OurPolicy from "../Components/OurPolicy";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShop } from "@fortawesome/free-solid-svg-icons";
-import Hero from "../assets/Hero.jpg";
 import ScrollTop from "../shared/ScrollTop";
-import { useSelector } from "react-redux";
 
 function Home() {
-  const { currentUser } = useSelector((state) => state.user);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
-      <div
-        className="w-[100%] h-[110vh] pt-32 sm:pt-36 lg:pt-20 bg-center bg-cover "
-        style={{ backgroundImage: `url(${Hero})` }}
-      >
-        <div className="text-center flex flex-col items-center">
-          <h1
-            className="font-serif text-5xl sm:text-6xl md:text-7xl tracking-wide"
-            style={{ textShadow: "0 0 15px rgba(255, 255, 255,0.5)" }}
-          >
+      <div className="w-[100%] h-[100vh] flex flex-col sm:flex-row bg-cover bg-center relative">
+        <div className="w-full h-full sm:w-1/2 flex justify-center items-center overflow-hidden">
+          <img
+            className="max-w-[500px] h-auto object-cover transition duration-500 ease-in-out hover:scale-105"
+            src="https://i.pinimg.com/736x/4e/f8/4a/4ef84a7dfd2eb7ac62339fdd0f9668f3.jpg"
+            alt="hero"
+          />
+        </div>
+        <div className="w-full h-full sm:w-1/2 flex flex-col justify-center px-5 sm:px-10 ">
+          <p className="text-xl md:text-2xl lg:text-3xl font-serif tracking-wide mb-3">
+            Welcome to
+          </p>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-goldenWood drop-shadow-md">
             Furniche
           </h1>
-          <div className="text-xs sm:text-[10px] font-bold mt-3 md:mt-2 lg:mt-1">
-            <p>A place where craft meets comforts, blending timeless</p>
-            <p> with modern elegance for your perfect home.</p>
-          </div>
-          <div className="text-xs text-center gap-16 flex mt-6">
-            <Link
-              to={currentUser ? "/collection" : "/login"}
-              className="bg-[#F9FCFA] shadow-sm shadow-[#544A3E] text-[#000000] w-24 md:w-36 border-none rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1 font-bold"
-            >
-              Dive in <FontAwesomeIcon className="text-[10px]" icon={faShop} />
-            </Link>
-            <Link
-              to={"/signin"}
-              className="bg-[#000000] text-[#F9FCFA] shadow-md shadow-[#544A3E] border-none w-24 md:w-36 rounded-[50px] hover:scale-[1.02] transition duration-100 ease-in-out py-1"
-            >
-              Sign up now
-            </Link>
-          </div>
         </div>
       </div>
       <ScrollTop />

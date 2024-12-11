@@ -8,7 +8,7 @@ background:#D7D2C9
 dark bg:#544A3E 
 gold:#FFD700 */
 body {
-  background-color: #d7d2c9;
+  background-color: #ffffff;
   color: #000000;
   font-weight: 500;
 }
@@ -22,9 +22,6 @@ a.active hr {
   display: block;
   border-radius: 100%;
   background-color: #000000;
-}
-img:not(.Logo, .ProductPage, .cartCard, .payments) {
-  height: 150px;
 }
 img.avatar {
   height: 50px;

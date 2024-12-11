@@ -11,10 +11,10 @@ function Footer() {
             Furniche
           </h1>
           <p className="text-[3%] sm:text-[5%] md:text-xs">
-            At Furniche, we believe in delivering quality furniture that
-            brings style and comfort to your home. With a commitment to
-            exceptional craftsmanship and customer satisfaction, we make it easy
-            to find pieces you’ll love for years to come.
+            At Furniche, we believe in delivering quality furniture that brings
+            style and comfort to your home. With a commitment to exceptional
+            craftsmanship and customer satisfaction, we make it easy to find
+            pieces you’ll love for years to come.
           </p>
         </div>
         <div>

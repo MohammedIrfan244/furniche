@@ -9,10 +9,9 @@ import {
   Legend,
 } from "chart.js";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
-import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import axiosInstance from "../utilities/axiosInstance";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -29,10 +28,10 @@ function AdminDashboard() {
         setLoading(true);
 
         const [productRes, userRes, orderRes, revenueRes] = await Promise.all([
-          axios.get("http://localhost:3001/api/admin/products/details/stats",{headers:{Authorization:`Bearer ${Cookies.get('token')}`}}),
-          axios.get("http://localhost:3001/api/admin/users/details/stats",{headers:{Authorization:`Bearer ${Cookies.get('token')}`}}),
-          axios.get("http://localhost:3001/api/admin/orders/details/stats",{headers:{Authorization:`Bearer ${Cookies.get('token')}`}}),
-          axios.get("http://localhost:3001/api/admin/orders/details/revenue",{headers:{Authorization:`Bearer ${Cookies.get('token')}`}}),
+          axiosInstance.get("/admin/products/details/stats"),
+          axiosInstance.get("/admin/users/details/stats"),
+          axiosInstance.get("/admin/orders/details/stats"),
+          axiosInstance.get("/admin/orders/details/revenue"),
         ]);
 
         setProductStats(productRes.data.data);
@@ -59,7 +58,7 @@ function AdminDashboard() {
           productStats?.availableProducts,
           userStats?.totalUsers,
           orderStats?.totalOrders,
-          null, // Aligning with Revenue dataset
+          null, 
         ],
         backgroundColor: ["#DC143C", "#4169E1", "#32CD32", "#FFD700"],
         borderColor: ["#38B2AC", "#2B6CB0", "#228B22", "#DAA520"],

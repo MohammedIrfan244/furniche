@@ -5,17 +5,19 @@ import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 import ScrollTop from "../shared/ScrollTop";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../Redux/PublicSlice";
+import { toast } from "react-toastify";
+import axiosErrorManager from "../utilities/axiosErrorManager";
 
 function Search() {
-  const {products,loading,error}=useSelector((state)=>state.public)
+  const { products, loading, error } = useSelector((state) => state.public);
   const [search, setSearch] = useState("");
   const [searchedProduct, setSearchedProduct] = useState([]);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
 
-  useEffect(()=>{
-dispatch(fetchAllProducts())
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setSearchedProduct(
@@ -26,8 +28,12 @@ dispatch(fetchAllProducts())
           items.category.toLowerCase().includes(search.toLowerCase())
       )
     );
-    if(error)console.log(error)
+    if (error) toast.error(axiosErrorManager(error));
   }, [error, products, search]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div
@@ -44,7 +50,7 @@ dispatch(fetchAllProducts())
             value={search}
             placeholder="Search here..."
             onChange={(e) => setSearch(e.target.value)}
-            className="w-[90%] sm:w-[60%] text-xs sm:rounded-md bg-[#F9FCFA] shadow-md shadow-[#544A3E] px-3 py-2 rounded-xl sm:py-1 focus:outline-none "
+            className="w-[90%] sm:w-[60%] text-xs sm:rounded-md bg-[#F9FCFA] shadow-md px-3 py-2 rounded-xl sm:py-1 focus:outline-none"
           />
           <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-20">
             {searchedProduct.map((item, index) => (
@@ -61,7 +67,7 @@ dispatch(fetchAllProducts())
           </div>
           <div
             className={`${
-              searchedProduct.length != 0 ? "hidden" : null
+              searchedProduct.length !== 0 ? "hidden" : null
             } text-gray-600 text-[250%] my-[5%]`}
           >
             <FontAwesomeIcon icon={faBoxOpen} />

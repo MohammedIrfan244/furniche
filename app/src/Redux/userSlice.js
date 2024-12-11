@@ -7,12 +7,11 @@ import axiosInstance from "../utilities/axiosInstance";
 const userCookie = Cookies.get("user");
 const currentUser = userCookie ? JSON.parse(userCookie) : null;
 
-
 const INITIAL_STATE = {
   loading: false,
   error: null,
   currentUser: currentUser,
-  isAdmin:false,
+  isAdmin: false,
   userCart: [],
   userCartCount: 0,
   userWishlist: [],
@@ -81,7 +80,9 @@ const removeFromWishList = createAsyncThunk(
   "user/removeFromWishList",
   async (productId, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.delete(`/users/wishList/${productId}`);
+      const response = await axiosInstance.delete(
+        `/users/wishList/${productId}`
+      );
       return response.data.data;
     } catch (err) {
       const errMessage = axiosErrorManager(err);
@@ -101,10 +102,15 @@ const userSlice = createSlice({
       state.isAdmin = action.payload;
     },
     addToCart: (state, action) => {
-      if(!state.userCart.find(item=>item.productId?._id===action.payload)){
-        state.userCart.push({productId:{_id:action.payload},quantity:1});
+      if (
+        !state.userCart.find((item) => item.productId?._id === action.payload)
+      ) {
+        state.userCart.push({
+          productId: { _id: action.payload },
+          quantity: 1,
+        });
       }
-  },  
+    },
     removeFromCart: (state, action) => {
       state.userCart = state.userCart.filter(
         (item) => item.productId._id !== action.payload
@@ -117,7 +123,7 @@ const userSlice = createSlice({
         }
         return item;
       });
-      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getCart.fulfilled, (state, action) => {
@@ -133,63 +139,77 @@ const userSlice = createSlice({
       console.log(action.payload);
       state.error = action.payload;
     });
-    builder.addCase(getWishlist.fulfilled,(state,action)=>{
-        state.userWishlist=action.payload
-        state.loading=false
-    })
-    builder.addCase(getWishlist.pending,(state)=>{
-        state.loading=true
-        state.error=null
-    })
-    builder.addCase(getWishlist.rejected,(state,action)=>{
-        state.loading=false
-        console.log(action.payload);
-        state.error=action.payload
-    })
-    builder.addCase(addToWishList.fulfilled,(state,action)=>{
-       if(!state.userWishlist.find(item=>item._id===action.payload._id)){
-        state.userWishlist.push(action.payload)
-       }
-        state.loading=false
-    })
-    builder.addCase(addToWishList.pending,(state)=>{
-        state.loading=true
-        state.error=null
-    })
-    builder.addCase(addToWishList.rejected,(state,action)=>{
-        state.loading=false
-        console.log(action.payload);
-        state.error=action.payload
-    })
-    builder.addCase(removeFromWishList.fulfilled,(state,action)=>{
-        state.userWishlist=state.userWishlist.filter(item=>item._id!==action.payload._id)
-        state.loading=false
-    })
-    builder.addCase(removeFromWishList.pending,(state)=>{
-        state.loading=true
-        state.error=null
-    })
-    builder.addCase(removeFromWishList.rejected,(state,action)=>{
-        state.loading=false
-        console.log(action.payload);
-        state.error=action.payload
-    })
-    builder.addCase(getCartCount.fulfilled,(state,action)=>{
-        state.userCartCount=action.payload
-        state.loading=false
-    })
-    builder.addCase(getCartCount.pending,(state)=>{
-        state.loading=true
-        state.error=null
-    })
-    builder.addCase(getCartCount.rejected,(state,action)=>{
-      console.log(action.payload)
-        state.loading=false
-        state.error=action.payload
-    })
+    builder.addCase(getWishlist.fulfilled, (state, action) => {
+      state.userWishlist = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getWishlist.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getWishlist.rejected, (state, action) => {
+      state.loading = false;
+      console.log(action.payload);
+      state.error = action.payload;
+    });
+    builder.addCase(addToWishList.fulfilled, (state, action) => {
+      if (!state.userWishlist.find((item) => item._id === action.payload._id)) {
+        state.userWishlist.push(action.payload);
+      }
+      state.loading = false;
+    });
+    builder.addCase(addToWishList.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(addToWishList.rejected, (state, action) => {
+      state.loading = false;
+      console.log(action.payload);
+      state.error = action.payload;
+    });
+    builder.addCase(removeFromWishList.fulfilled, (state, action) => {
+      state.userWishlist = state.userWishlist.filter(
+        (item) => item._id !== action.payload._id
+      );
+      state.loading = false;
+    });
+    builder.addCase(removeFromWishList.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(removeFromWishList.rejected, (state, action) => {
+      state.loading = false;
+      console.log(action.payload);
+      state.error = action.payload;
+    });
+    builder.addCase(getCartCount.fulfilled, (state, action) => {
+      state.userCartCount = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getCartCount.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getCartCount.rejected, (state, action) => {
+      console.log(action.payload);
+      state.loading = false;
+      state.error = action.payload;
+    });
   },
 });
 
-export { getCart,getWishlist , addToWishList, removeFromWishList, getCartCount };
-export const { setCurrentUser,addToCart,setIsAdmin ,removeFromCart,updateCartQuantity} = userSlice.actions;
+export {
+  getCart,
+  getWishlist,
+  addToWishList,
+  removeFromWishList,
+  getCartCount,
+};
+export const {
+  setCurrentUser,
+  addToCart,
+  setIsAdmin,
+  removeFromCart,
+  updateCartQuantity,
+} = userSlice.actions;
 export default userSlice.reducer;

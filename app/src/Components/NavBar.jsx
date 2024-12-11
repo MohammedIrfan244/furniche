@@ -6,31 +6,29 @@ import {
   faBars,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartCount } from "../Redux/userSlice";
 
 function NavBar() {
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
-  const {currentUser,userCartCount,isAdmin,userCart}=useSelector((state)=>state.user)
-  useEffect(()=>{
-    if(currentUser){
-  dispatch(getCartCount())
+  const { currentUser, userCartCount, isAdmin, userCart } = useSelector(
+    (state) => state.user
+  );
+  useEffect(() => {
+    if (currentUser) {
+      dispatch(getCartCount());
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[currentUser,userCart])
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser, userCart]);
 
   return (
-    <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-[#D7D2C9] z-20">
+    <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-gray-100 z-20">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <h2
-              className="font-serif text-2xl sm:text-3xl font-medium"
-              style={{ textShadow: "0 0 1px #000000" }}
-            >
+            <h2 className="font-serif text-2xl sm:text-3xl font-medium text-goldenWood">
               Furniche
             </h2>
           </Link>
@@ -58,10 +56,15 @@ function NavBar() {
             <p>ABOUT</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
-         {isAdmin && <NavLink to={"/admin/adminPanel"} className="flex flex-col items-center gap-1">
-            <p>ADMIN</p>
-            <hr className="w-[4px] h-[4px] border-none  hidden " />
-          </NavLink>}
+          {isAdmin && (
+            <NavLink
+              to={"/admin/adminPanel"}
+              className="flex flex-col items-center gap-1"
+            >
+              <p>ADMIN</p>
+              <hr className="w-[4px] h-[4px] border-none  hidden " />
+            </NavLink>
+          )}
         </ul>
         <div className="flex items-center gap-5 sm:gap-6 md:gap-7">
           <Link to={"/search"}>
@@ -92,22 +95,22 @@ function NavBar() {
             />
           </Link>
           <Link
-            to={currentUser?"/user":"/login"}
+            to={currentUser ? "/user" : "/login"}
             className=" group relative"
           >
             {currentUser == null ? (
-              <p className="bg-[#000000] text-[#F9FCFA] text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2 shadow-md">
+              <p className="bg-goldenWood text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
                 Login
               </p>
             ) : (
               <div>
                 <div className="h-6 flex justify-center items-center rounded-full overflow-hidden w-6">
-              <img
-              className="Logo"
-                src={currentUser?.profile}
-                alt="User Profile"
-              />
-            </div>
+                  <img
+                    className="h-full w-full object-cover"
+                    src={currentUser?.profile}
+                    alt="User Profile"
+                  />
+                </div>
               </div>
             )}
           </Link>
@@ -137,7 +140,7 @@ function NavBar() {
               <NavLink
                 onClick={() => setVisible(false)}
                 to={"/adminpanel"}
-                className={`${!isAdmin?"hidden":null} whitespace-nowrap`}
+                className={`${!isAdmin ? "hidden" : null} whitespace-nowrap`}
               >
                 ADMIN PANEL
               </NavLink>

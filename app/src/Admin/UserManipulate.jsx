@@ -1,72 +1,95 @@
-import axios from "axios";
+
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ScrollTop from "../shared/ScrollTop";
 import AdminOrderCards from "./AdminOrderCards";
-import Cookies from "js-cookie";
 import axiosErrorManager from "../utilities/axiosErrorManager";
+import axiosInstance from "../utilities/axiosInstance";
 
 function UserManipulate() {
   const { userId } = useParams();
   const [user, setUser] = useState({});
   const [useOrders, setUseOrders] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [blocked, setBlocked]=useState(false)
 
   const blockUser = async () => {
-    setLoading(true)
-    const token = Cookies.get("token");
-    await axios
-      .patch(
-        `http://localhost:3001/api/admin/users/block/${userId}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      )
-      .then((res) => {
-        toast.success(res.data.message);
-        setBlocked(res.data.data)
-        setLoading(true)
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      })
-      .finally(() => {
-        setLoading(false)
-      });
+    // setLoading(true)
+    // const token = Cookies.get("token");
+    // await axios
+    //   .patch(
+    //     `http://localhost:3001/api/admin/users/block/${userId}`,
+    //     {},
+    //     {
+    //       headers: { Authorization: `Bearer ${token}` },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     toast.success(res.data.message);
+    //     setBlocked(res.data.data)
+    //     setLoading(true)
+    //   })
+    //   .catch((err) => {
+    //     toast.error(axiosErrorManager(err));
+    //   })
+    //   .finally(() => {
+    //     setLoading(false)
+    //   });
+    try{
+      setLoading(true)
+      const response=await axiosInstance.patch(`/admin/users/block/${userId}`)
+      toast.success(response.data.message)
+      fetchUser(userId)
+      setLoading(false)
+    }catch(err){
+      toast.error(axiosErrorManager(err))
+      setLoading(false)
+    }
   };
 
+const fetchUser=async()=>{
+  try{
+    setLoading(true)
+    const response=await axiosInstance.get(`/admin/users/${userId}`)
+    setUser(response.data.data)
+    setLoading(false)
+  }catch(err){
+    toast.error(axiosErrorManager(err))
+    setLoading(false)
+  }
+}
+const fetchUserOrders=async()=>{
+  try{
+    setLoading(true)
+    const response=await axiosInstance.get(`/admin/orders/user/${userId}`)
+    setUseOrders(response.data.data)
+    setLoading(false)
+  }catch(err){
+    toast.error(axiosErrorManager(err))
+    setLoading(false)
+    if(err.response.status===404){
+      setUseOrders([])
+  }
+  }
+}
+
 
   useEffect(()=>{
-    setLoading(true)
-    axios
-    .get(`http://localhost:3001/api/admin/users/${userId}`, {
-      headers: { Authorization: `Bearer ${Cookies.get("token")}` },
-    })
-    .then((res) => {
-      setUser(res.data.data);
-    })
-    .catch((err) => {
-      console.log(axiosErrorManager(err));
-    })
-    .finally(()=>setLoading(false))
-  },[userId])
-
-  useEffect(()=>{
-    setLoading(true)
-axios
-    .get(`http://localhost:3001/api/admin/orders/user/${userId}`, {
-      headers: { Authorization: `Bearer ${Cookies.get("token")}` },
-    })
-    .then((res) => {
-      setUseOrders(res.data.data);
-    })
-    .catch((err) => {
-      console.log(axiosErrorManager(err));
-})
-.finally(()=>setLoading(false))
+//     setLoading(true)
+// axios
+//     .get(`http://localhost:3001/api/admin/orders/user/${userId}`, {
+//       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
+//     })
+//     .then((res) => {
+//       setUseOrders(res.data.data);
+//     })
+//     .catch((err) => {
+//       console.log(axiosErrorManager(err));
+// })
+// .finally(()=>setLoading(false))
+    fetchUser(userId)
+    fetchUserOrders(userId)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[userId])
   return (
     <div className="flex flex-row justify-between w-full bg-gray-100">
@@ -95,7 +118,7 @@ axios
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-xs rounded-md"
             onClick={() => blockUser()}
           >
-            {blocked? "Unblock" : "Block"}
+            {user?.isBlocked? "Unblock" : "Block"}
           </button>
           <Link
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 text-xs rounded-md"
@@ -111,7 +134,7 @@ axios
           {useOrders === 0
             ? "Order is empty"
             : useOrders?.map((items, index) => (
-                <AdminOrderCards key={index} user={user} orderItems={items} />
+                <AdminOrderCards key={index} userId={userId} fetchingOrder={fetchUserOrders} user={user} orderItems={items} />
               ))}
         </div>
       </div>

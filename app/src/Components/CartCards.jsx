@@ -1,4 +1,5 @@
-import {  useState } from "react";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
@@ -13,100 +14,88 @@ import axiosErrorManager from "../utilities/axiosErrorManager";
 import { toast } from "react-toastify";
 import axiosInstance from "../utilities/axiosInstance";
 
-// eslint-disable-next-line react/prop-types
-function CartCards({image,name,price,quantity,id}) {
-  const dispatch=useDispatch()
-  const[newQuantity,setNewQuantity]=useState(quantity)
+function CartCards({ image, name, price, quantity, id }) {
+  const dispatch = useDispatch();
+  const [newQuantity, setNewQuantity] = useState(quantity);
 
-  const removeFromCartDispatch=async()=>{
-    // const token=Cookies.get('token')
-    // await axios.delete(`http://localhost:3001/api/users/cart/${id}`,{
-    //   headers:{
-    //     Authorization: `Bearer ${token}`
-    //   }
-    // })
-    // .then(()=>{
-    //   toast.success("Product removed from cart successfully")
-    //   dispatch(removeFromCart(id))
-    // })
-    // .catch((err)=>{
-    //   console.log(axiosErrorManager(err))
-    // })
-    try{
-      const response=await axiosInstance.get(`/users/cart/${id}`)
-      dispatch(removeFromCart(id))
-      toast.success(response.data.message)
-    }catch(err){
-        dispatch(removeFromCart(id))
-        toast.success(axiosErrorManager(err.data.message))
+  const removeFromCartDispatch = async () => {
+    try {
+      const response = await axiosInstance.get(`/users/cart/${id}`);
+      dispatch(removeFromCart(id));
+      toast.success(response.data.message);
+    } catch (err) {
+      dispatch(removeFromCart(id));
+      toast.error(axiosErrorManager(err.data.message));
     }
-  }
-  const updateCartQuantityDispatch=async(newQuantity)=>{
-    // const token=Cookies.get('token')
-    // await axios.post('http://localhost:3001/api/users/cart',{productId:id,quantity:newQuantity},{
-    //   headers:{
-    //     Authorization: `Bearer ${token}`
-    //   }
-    // })
-    // .then(()=>{
-    //   dispatch(updateCartQuantity({productId:id,quantity:newQuantity}))
-    //   toast.success("Product quantity updated successfully")
-    // })
-    // .catch((err)=>{
-    //   console.log(axiosErrorManager(err))
-    // })
-    try{
-      const response=await axiosInstance.post('/users/cart',{productId:id,quantity:newQuantity})
-      dispatch(updateCartQuantity({productId:id,quantity:newQuantity}))
-      toast.success(response.data.message)
-    }catch(err){
-        dispatch(updateCartQuantity({productId:id,quantity:newQuantity}))
-        toast.success(axiosErrorManager(err.data.message))
-    }
-  }
+  };
 
-  const { currency } = useSelector((state)=>state.public)
+  const updateCartQuantityDispatch = async (newQuantity) => {
+    try {
+      const response = await axiosInstance.post("/users/cart", {
+        productId: id,
+        quantity: newQuantity,
+      });
+      dispatch(updateCartQuantity({ productId: id, quantity: newQuantity }));
+      toast.success(response.data.message);
+    } catch (err) {
+      dispatch(updateCartQuantity({ productId: id, quantity: newQuantity }));
+      toast.error(axiosErrorManager(err.data.message));
+    }
+  };
+
+  const { currency } = useSelector((state) => state.public);
+
   return (
-    <div className="flex justify-between bg-[#F9FCFA] p-1 rounded-lg shadow-sm shadow-[#544A3E]">
-      <div className="flex gap-4">
+    <div className="flex items-center justify-between bg-white p-4 shadow rounded-lg border border-gray-200">
+      <div className="flex items-center gap-4">
         <Link to={`/product/${id}`}>
           <img
-            className="h-[60px] w-[100px] rounded-lg object-cover cartCard"
-            src={image}
-            alt="image"
+            className="w-16 h-16 object-cover rounded"
+            src={image || "/default-product.png"}
+            alt={name}
           />
         </Link>
-        <div className="flex flex-col justify-between pb-[5%] text-xs sm:text-sm md:text-[16px]">
-          <p className="whitespace-nowrap">{name}</p>
-          <p className="font-bold">
+        <div className="flex flex-col">
+          <p className="text-gray-700 font-medium">{name}</p>
+          <p className="font-bold text-gray-800">
             {currency}
             {price}
           </p>
         </div>
       </div>
-      <div className="flex justify-between sm:gap-5 md:gap-7 lg:gap-10 items-center">
-        <div className="flex flex-col justify-between items-center text-xs sm:text-sm">
-          <button >
-            <FontAwesomeIcon className="text-xs" onClick={()=>setNewQuantity(newQuantity+1)} icon={faChevronUp} />
+      <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center">
+          <button
+            onClick={() => setNewQuantity(newQuantity + 1)}
+            className="text-gray-600 hover:text-gray-800"
+          >
+            <FontAwesomeIcon icon={faChevronUp} />
           </button>
           <input
-            className="min-w-1 bg-[#F9FCFA] w-[40px] text-center lg:ps-3 focus:outline-none "
+            className="w-10 text-center border border-gray-300 rounded bg-gray-50"
             value={newQuantity}
             type="number"
             min={1}
             readOnly
           />
-          <button >
-            <FontAwesomeIcon className="text-xs" onClick={()=>setNewQuantity(Math.max(1,newQuantity-1))} icon={faChevronDown} />
+          <button
+            onClick={() => setNewQuantity(Math.max(1, newQuantity - 1))}
+            className="text-gray-600 hover:text-gray-800"
+          >
+            <FontAwesomeIcon icon={faChevronDown} />
           </button>
         </div>
-        <FontAwesomeIcon onClick={()=>updateCartQuantityDispatch(newQuantity)} className="text-xs sm:text-sm md:text-[16px] pe-2" icon={faCheckCircle}/>
         <button
-        onClick={removeFromCartDispatch}
-          className=" text-xs sm:text-sm md:text-[16px]"
-          
+          onClick={() => updateCartQuantityDispatch(newQuantity)}
+          className="text-green-600 hover:text-green-800"
         >
-          <FontAwesomeIcon className="p-[6px]" icon={faTrash} />
+          <FontAwesomeIcon icon={faCheckCircle} />
+        </button>
+        <button
+          onClick={removeFromCartDispatch}
+          className="text-red-600 hover:text-red-800"
+        >
+          <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
     </div>

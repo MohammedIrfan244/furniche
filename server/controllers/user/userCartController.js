@@ -5,15 +5,18 @@ import mongoose from "mongoose";
 // controller to show cart for a specific user
 const getUserCart = async (req, res) => {
   // finding the user based  on the login info and token verification and populating it
-  const data = await Cart.findOne({ userId: req.user.id },{_id:0,userId:0,createdAt:0,updatedAt:0}).sort({ createdAt: -1 }).populate("products.productId", "name price image");
+  const data = await Cart.findOne(
+    { userId: req.user.id },
+    { _id: 0, userId: 0, createdAt: 0, updatedAt: 0 }
+  )
+    .sort({ createdAt: -1 })
+    .populate("products.productId", "name price image");
   if (data) {
-    res
-      .status(200)
-      .json({
-        status: "success",
-        message: "Cart fetched successfully",
-        data: data,
-      });
+    res.status(200).json({
+      status: "success",
+      message: "Cart fetched successfully",
+      data: data,
+    });
   } else {
     res
       .status(200)
@@ -22,15 +25,21 @@ const getUserCart = async (req, res) => {
 };
 
 const totalNumberOfCartItems = async (req, res) => {
-   const data = await Cart.findOne({ userId: req.user.id })
-   if(!data){
-     return res.status(200).json({status:"success",message:"Cart is empty",count:0});
-   }else{
-     res.status(200).json({status:"success",message:"Cart fetched successfully",count:data.products.length});
-   }
+  const data = await Cart.findOne({ userId: req.user.id });
+  if (!data) {
+    return res
+      .status(200)
+      .json({ status: "success", message: "Cart is empty", count: 0 });
+  } else {
+    res
+      .status(200)
+      .json({
+        status: "success",
+        message: "Cart fetched successfully",
+        count: data.products.length,
+      });
+  }
 };
-
-
 
 //controller to update cart
 const updateCart = async (req, res, next) => {
@@ -68,7 +77,7 @@ const updateCart = async (req, res, next) => {
 
 // Controller for removing item from cart
 const removeFromCart = async (req, res, next) => {
-  const productId=req.params.productId
+  const productId = req.params.productId;
   const cart = await Cart.findOneAndUpdate(
     { userId: req.user.id, "products.productId": productId },
     {
@@ -77,15 +86,13 @@ const removeFromCart = async (req, res, next) => {
     { new: true }
   );
   if (cart) {
-    res
-      .status(200)
-      .json({
-        status: "success",
-        message: "Product removed from cart successfully",
-      });
+    res.status(200).json({
+      status: "success",
+      message: "Product removed from cart successfully",
+    });
   } else {
     next(new CustomError("Product not found in the cart", 404));
   }
 };
 
-export { getUserCart, updateCart, removeFromCart ,totalNumberOfCartItems};
+export { getUserCart, updateCart, removeFromCart, totalNumberOfCartItems };

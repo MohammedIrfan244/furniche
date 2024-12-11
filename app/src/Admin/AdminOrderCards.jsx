@@ -1,55 +1,76 @@
-import {  useState } from "react";
+// import {  useState } from "react";
 import AdminOrderItemCards from "./AdminOrderItemsCard";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
-import axios from "axios";
-import Cookies from "js-cookie";
+import axiosInstance from "../utilities/axiosInstance";
 
 // eslint-disable-next-line react/prop-types
-function AdminOrderCards({ orderItems = {}, user = {} }) {
+function AdminOrderCards({ orderItems = {}, user = {},userId ,fetchingOrder}) {
 
-  const [paymentStatus, setPaymentStatus] = useState(orderItems?.paymentStatus);
-  const [shippingStatus, setShippingStatus] = useState(orderItems?.shippingStatus);
+  // const [paymentStatus, setPaymentStatus] = useState(orderItems?.paymentStatus);
+  // const [shippingStatus, setShippingStatus] = useState(orderItems?.shippingStatus);
 
+
+
+  
   const updatePaymentStatus = async () => {
-    const token = Cookies.get("token");
-    await axios
-      .patch(
-        `http://localhost:3001/api/admin/orders/payment/${orderItems._id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        setPaymentStatus("Done");
-        toast.success(res.data.message);
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      });
+    try{
+      const response=await axiosInstance.patch(
+        `/admin/orders/payment/${orderItems._id}`
+      );
+      // setPaymentStatus("Done");
+      fetchingOrder(userId)
+      toast.success(response.data.message);
+    } catch (err) {
+      toast.error(axiosErrorManager(err));
+    }
+    // await axios
+    //   .patch(
+    //     `http://localhost:3001/api/admin/orders/payment/${orderItems._id}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     setPaymentStatus("Done");
+    //     toast.success(res.data.message);
+    //   })
+    //   .catch((err) => {
+    //     toast.error(axiosErrorManager(err));
+    //   });
   };
   const updateShippingStatus = async () => {
-    const token = Cookies.get("token");
-    await axios
-      .patch(
-        `http://localhost:3001/api/admin/orders/shipping/${orderItems._id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        setShippingStatus("Delivered");
-        toast.success(res.data.message);
-      })
-      .catch((err) => {
-        toast.error(axiosErrorManager(err));
-      });
+    // const token = Cookies.get("token");
+    // await axios
+    //   .patch(
+    //     `http://localhost:3001/api/admin/orders/shipping/${orderItems._id}`,
+    //     {},
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     setShippingStatus("Delivered");
+    //     toast.success(res.data.message);
+    //   })
+    //   .catch((err) => {
+    //     toast.error(axiosErrorManager(err));
+    //   });
+    try{
+      const response=await axiosInstance.patch(
+        `/admin/orders/shipping/${orderItems._id}`
+      );
+      // setShippingStatus("Delivered");
+      fetchingOrder(userId)
+      toast.success(response.data.message);
+    } catch (err) {
+      toast.error(axiosErrorManager(err));
+    }
   };
   return (
     <div className=" bg-white w-full flex flex-col gap-3 p-3">
@@ -96,7 +117,7 @@ function AdminOrderCards({ orderItems = {}, user = {} }) {
         </div>
         <div className="flex justify-start gap-10">
           <p className="w-[20%]">Delivery</p>
-          <p className="w-[20%]">{shippingStatus}</p>
+          <p className="w-[20%]">{orderItems?.shippingStatus}</p>
 
           <button
             className="bg-blue-500 rounded-md py-2 px-3"
@@ -108,7 +129,7 @@ function AdminOrderCards({ orderItems = {}, user = {} }) {
 
         <div className="flex justify-start gap-10 mt-2">
           <p className="w-[20%]">Payment</p>
-          <p className="w-[20%]">{paymentStatus}</p>
+          <p className="w-[20%]">{orderItems?.paymentStatus}</p>
           <button
             className="bg-blue-500 rounded-md py-2 px-3"
             onClick={updatePaymentStatus}

@@ -6,7 +6,7 @@ import axiosErrorManager from "../utilities/axiosErrorManager";
 const INITIAL_STATE = {
   products: [],
   productsByCategory: [],
-  currency:"₹",
+  currency: "₹",
   loading: false,
   error: null,
 };

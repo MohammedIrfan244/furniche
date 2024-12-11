@@ -22,7 +22,7 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const verifyTokenAdmin = (req, res, next) => {
-  try{
+  try {
     const authHeader = req.headers.authorization;
     if (authHeader) {
       const token = authHeader.split(" ")[1];
@@ -39,7 +39,7 @@ export const verifyTokenAdmin = (req, res, next) => {
     } else {
       next(new CustomError("You are not authenticated", 401));
     }
-  }catch(err){
+  } catch (err) {
     next(err);
   }
-  }
+};

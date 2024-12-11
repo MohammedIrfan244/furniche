@@ -11,13 +11,11 @@ const getTotalOrders = async (req, res) => {
     return res.status(200).json({ message: "No orders found" });
   }
   // sending the orders
-  res
-    .status(200)
-    .json({
-      status: "success",
-      message: "Orders fetched successfully",
-      data: totalOrders,
-    });
+  res.status(200).json({
+    status: "success",
+    message: "Orders fetched successfully",
+    data: totalOrders,
+  });
 };
 
 // getting all the orders by a user
@@ -28,13 +26,11 @@ const getOrderByUser = async (req, res) => {
   if (!orders) {
     return res.status(200).json({ message: "No orders found" });
   }
-  res
-    .status(200)
-    .json({
-      status: "success",
-      message: "Orders fetched successfully",
-      data: orders,
-    });
+  res.status(200).json({
+    status: "success",
+    message: "Orders fetched successfully",
+    data: orders,
+  });
 };
 
 // getting the total number of orders
@@ -43,8 +39,10 @@ const totalNumberOfOrders = async (req, res) => {
   if (!totalOrders) {
     return res.status(200).json({ message: "No orders found" });
   }
-  const cancelled=await Orders.find({shippingStatus:"Cancelled"});
-  const nonCancelled = await Orders.find({shippingStatus:{$ne:"Cancelled"}});
+  const cancelled = await Orders.find({ shippingStatus: "Cancelled" });
+  const nonCancelled = await Orders.find({
+    shippingStatus: { $ne: "Cancelled" },
+  });
   res.status(200).json({
     status: "success",
     message: "Orders stats fetched successfully",
@@ -56,16 +54,18 @@ const totalNumberOfOrders = async (req, res) => {
 
 // updating the shipping status
 const updateShippingStatus = async (req, res, next) => {
-  const order = await Orders.findOneAndUpdate(
-    { _id: req.params.id },
-    { $set: { shippingStatus: req.body.status } },
-    { new: true }
+  const order = await Orders.findOne(
+    { _id: req.params.id }
   );
   if (!order) {
     return next(new CustomError("Order not found", 404));
   }
-  if(order.shippingStatus === "Cancelled") return next(new CustomError("You can't update this order", 400));
-  if(order.shippingStatus === "Delivered") return next(new CustomError("You can't update this order", 400));
+  if (order.shippingStatus === "Cancelled")
+    return next(new CustomError("You can't update this order", 400));
+  if (order.shippingStatus === "Delivered")
+    return next(new CustomError("You can't update this order", 400));
+  order.shippingStatus = "Delivered";
+  await order.save();
   res
     .status(200)
     .json({ status: "success", message: "Order status updated successfully" });
@@ -90,9 +90,9 @@ const updatePaymentStatus = async (req, res, next) => {
 // getting the total revenue
 const getTotalRevenue = async (req, res) => {
   const orderRevenue = await Orders.aggregate([
-    {$match: {paymentStatus:"Paid"}},
-    {$group: {_id: null, totalRevenue: {$sum: "$totalAmount"}}}
-  ])
+    { $match: { paymentStatus: "Paid" } },
+    { $group: { _id: null, totalRevenue: { $sum: "$totalAmount" } } },
+  ]);
   res.status(200).json({
     status: "success",
     message: "Orders stats fetched successfully",

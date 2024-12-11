@@ -17,9 +17,7 @@ function AdminLogin() {
   const [passToggle, setPassToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch=useDispatch()
-
-  
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,23 +27,23 @@ function AdminLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setCurrentUser(null));
-    dispatch(setIsAdmin(false))
+    dispatch(setIsAdmin(false));
     setLoading(true);
 
     axios
       .post("http://localhost:3001/api/admin/login", loginData, { withCredentials: true })
       .then((response) => {
-       const adminCookie=Cookies.get('user')
-       const admin=adminCookie?JSON.parse(adminCookie):null
-       dispatch(setCurrentUser(admin));
-       dispatch(setIsAdmin(true))
+        const adminCookie = Cookies.get('user');
+        const admin = adminCookie ? JSON.parse(adminCookie) : null;
+        dispatch(setCurrentUser(admin));
+        dispatch(setIsAdmin(true));
         toast.success(response.data.message);
         navigate("/admin/adminpanel");
       })
       .catch((err) => {
         toast.error(axiosErrorManager(err));
         dispatch(setCurrentUser(null));
-        dispatch(setIsAdmin(false))
+        dispatch(setIsAdmin(false));
       })
       .finally(() => {
         setLoading(false);
@@ -53,52 +51,56 @@ function AdminLogin() {
   };
 
   return (
-    <div className="w-[100%] flex flex-col items-center pt-[26%] sm:pt-[8%] h-[100vh]">
-      <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10" style={{ textShadow: "0 0 1px #000000" }}>
-        Admin LOGIN
-      </h1>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-2 w-[90%] sm:w-[70%] md:w-[50%] lg:w-[30%] mt-10 bg-[#544A3E] shadow-lg shadow-[#000000] p-5 rounded-2xl"
-      >
-        <input
-          required
-          value={loginData.email}
-          name="email"
-          onChange={handleInputChange}
-          type="email"
-          placeholder="Email"
-          className="focus:outline-none rounded-lg px-[3%] py-[1%] text-xs"
-        />
-        <div className="min-w-1 relative">
+    <div className="w-full h-screen flex justify-center items-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-[90%] sm:w-[70%] md:w-[50%] lg:w-[35%]">
+        <h1 className="text-2xl font-semibold text-center text-gray-700 mb-6">
+          Admin Login
+        </h1>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-6"
+        >
           <input
             required
-            value={loginData.password}
-            name="password"
-            type={`${passToggle ? "text" : "password"}`}
+            value={loginData.email}
+            name="email"
             onChange={handleInputChange}
-            placeholder="Password"
-            className="w-[100%] focus:outline-none rounded-lg px-[3%] py-[1%] text-xs mt-[3%]"
+            type="email"
+            placeholder="Email Address"
+            className="px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
           />
-          <FontAwesomeIcon
-            className="text-xs absolute bottom-2 right-2"
-            onClick={() => setPassToggle(!passToggle)}
-            icon={passToggle ? faEyeSlash : faEye}
-          />
-        </div>
-        <div className="text-center mt-[2%]">
-          <button
-            type="submit"
-            className="bg-[#D7D2C9] text-[#000000] font-bold rounded-lg shadow-sm shadow-black hover:scale-[1.01] hover:shadow-md hover:shadow-black transition-all duration-200 text-xs active:scale-95 py-1 px-5 sm:py-2"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </div>
-      </form>
+          <div className="relative">
+            <input
+              required
+              value={loginData.password}
+              name="password"
+              type={`${passToggle ? "text" : "password"}`}
+              onChange={handleInputChange}
+              placeholder="Password"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+            />
+            <FontAwesomeIcon
+              className="text-gray-600 absolute top-3 right-3 cursor-pointer"
+              onClick={() => setPassToggle(!passToggle)}
+              icon={passToggle ? faEyeSlash : faEye}
+            />
+          </div>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition-all duration-200"
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
 
 export default AdminLogin;
+
+
 
   
