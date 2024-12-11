@@ -24,36 +24,36 @@ function NavBar() {
   }, [currentUser, userCart]);
 
   return (
-    <div className="fixed w-[100%] py-5 px-1 sm:px-5 bg-gray-100 z-20">
+    <div className="fixed w-[100%] py-5 px-1 bg-white sm:px-5 z-20">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <h2 className="font-serif text-2xl sm:text-3xl font-medium text-goldenWood">
+            <h2 className="text-xl sm:text-2xl font-poppins font-semibold text-sofaBlue">
               Furniche
             </h2>
           </Link>
         </div>
-        <ul className="hidden sm:flex gap-4 text-sm font-bold">
+        <ul className="hidden sm:flex gap-10 text-sm font-semibold font-poppins">
           <NavLink to={"/"} className=" flex flex-col items-center gap-1">
-            <p>HOME</p>
+            <p>Home</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           <NavLink
             to={"/collection"}
             className="flex flex-col items-center gap-1 "
           >
-            <p>COLLECTION</p>
+            <p>Collection</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           <NavLink
             to={"/contact"}
             className="flex flex-col items-center gap-1 "
           >
-            <p>CONTACT</p>
+            <p>Contact</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           <NavLink to={"/about"} className="flex flex-col items-center gap-1 ">
-            <p>ABOUT</p>
+            <p>About</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           {isAdmin && (
@@ -61,7 +61,7 @@ function NavBar() {
               to={"/admin/adminPanel"}
               className="flex flex-col items-center gap-1"
             >
-              <p>ADMIN</p>
+              <p>Admin</p>
               <hr className="w-[4px] h-[4px] border-none  hidden " />
             </NavLink>
           )}
@@ -69,7 +69,7 @@ function NavBar() {
         <div className="flex items-center gap-5 sm:gap-6 md:gap-7">
           <Link to={"/search"}>
             <FontAwesomeIcon
-              className="cursor-pointer hover:scale-110 transition duration-300"
+              className="cursor-pointer hover:scale-110 hover:text-sofaBlue transition duration-300"
               icon={faSearch}
             />
           </Link>
@@ -78,7 +78,7 @@ function NavBar() {
             className={`${currentUser ? "relative" : "hidden"}`}
           >
             <FontAwesomeIcon
-              className="hover:scale-110 transition duration-300"
+              className="hover:scale-110 hover:text-sofaBlue transition duration-300"
               icon={faCartShopping}
             />
             <p className="absolute right-[-5px] bottom-[-2px]  bg-[#544A3E] text-[10px] text-center w-[15px] rounded-[100%] text-[#FAFAFA]">
@@ -90,7 +90,7 @@ function NavBar() {
             className={`${currentUser ? "relative" : "hidden"}`}
           >
             <FontAwesomeIcon
-              className="hover:scale-110 transition duration-300"
+              className="hover:scale-110 hover:text-sofaBlue transition duration-300"
               icon={faHeart}
             />
           </Link>
@@ -99,7 +99,7 @@ function NavBar() {
             className=" group relative"
           >
             {currentUser == null ? (
-              <p className="bg-goldenWood text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
+              <p className="bg-sofaBlue text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
                 Login
               </p>
             ) : (

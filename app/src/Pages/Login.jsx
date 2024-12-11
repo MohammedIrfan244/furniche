@@ -52,8 +52,8 @@ function Login() {
   }, []);
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full sm:w-1/3 md:w-1/4 lg:w-1/4 bg-white p-8 rounded-lg shadow-md">
+    <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full sm:w-1/3 md:w-1/4 lg:w-1/4 bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
         <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
           Login
         </h1>
@@ -87,7 +87,7 @@ function Login() {
           </div>
           <div className="text-center mb-4">
             <Link
-              className="text-xs text-blue-500 hover:underline"
+              className="text-xs text-sofaBlue hover:underline"
               to="/signin"
             >
               Don&apos;t have an account? Register now
@@ -96,7 +96,7 @@ function Login() {
           <div className="text-center">
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white font-bold py-2 rounded-md hover:bg-blue-600 transition-all duration-200"
+              className="w-full bg-sofaBlue text-white font-bold py-2 rounded-md hover:bg-blue-600 transition-all duration-200"
             >
               {loading ? "Logging in..." : "Login"}
             </button>

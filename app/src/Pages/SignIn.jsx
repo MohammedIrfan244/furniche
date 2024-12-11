@@ -68,98 +68,104 @@ function SignIn() {
   }, []);
 
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center bg-gray-100">
-      <h1 className="text-2xl font-serif mb-6 text-gray-800">REGISTER</h1>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white shadow-lg p-8 rounded-lg w-96"
-      >
-        <div className="flex space-x-4 mb-4">
+    <div className="w-full h-screen flex items-center justify-center">
+      <div className="w-full sm:w-1/3 md:w-1/4 lg:w-1/4 bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
+        <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
+          Register
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <div className="flex space-x-4 mb-4">
+            <input
+              required
+              value={inputData.name}
+              name="name"
+              onChange={handleInputChange}
+              type="text"
+              placeholder="Username"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <input
+              value={inputData.mobile}
+              name="mobile"
+              type="number"
+              onChange={handleInputChange}
+              placeholder="Mobile (Optional)"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
           <input
             required
-            value={inputData.name}
-            name="name"
+            value={inputData.email}
+            name="email"
+            type="email"
             onChange={handleInputChange}
-            type="text"
-            placeholder="Username"
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+            placeholder="Email"
+            className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+
           <input
-            value={inputData.mobile}
-            name="mobile"
-            type="text"
-            onChange={handleInputChange}
-            placeholder="Mobile (Optional)"
-            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+            name="profile"
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-        </div>
 
-        <input
-          required
-          value={inputData.email}
-          name="email"
-          type="email"
-          onChange={handleInputChange}
-          placeholder="Email"
-          className="w-full p-2 border border-gray-300 rounded-md mb-4 focus:outline-none"
-        />
+          <div className="flex space-x-4 mb-4">
+            <div className="relative w-full">
+              <input
+                required
+                value={inputData.password}
+                name="password"
+                type={passToggle ? "text" : "password"}
+                onChange={handleInputChange}
+                placeholder="Password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <FontAwesomeIcon
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                onClick={() => setPassToggle(!passToggle)}
+                icon={passToggle ? faEyeSlash : faEye}
+              />
+            </div>
 
-        <input
-          name="profile"
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4 focus:outline-none"
-        />
-
-        <div className="flex space-x-4 mb-4">
-          <div className="relative w-full">
-            <input
-              required
-              value={inputData.password}
-              name="password"
-              type={passToggle ? "text" : "password"}
-              onChange={handleInputChange}
-              placeholder="Password"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
-            />
-            <FontAwesomeIcon
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-              onClick={() => setPassToggle(!passToggle)}
-              icon={passToggle ? faEyeSlash : faEye}
-            />
+            <div className="relative w-full">
+              <input
+                required
+                value={conformPassword}
+                type={passToggle ? "text" : "password"}
+                onChange={(e) => setConformPassword(e.target.value)}
+                placeholder="Confirm Password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <FontAwesomeIcon
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                onClick={() => setPassToggle(!passToggle)}
+                icon={passToggle ? faEyeSlash : faEye}
+              />
+            </div>
           </div>
 
-          <div className="relative w-full">
-            <input
-              required
-              value={conformPassword}
-              type={passToggle ? "text" : "password"}
-              onChange={(e) => setConformPassword(e.target.value)}
-              placeholder="Confirm Password"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
-            />
-            <FontAwesomeIcon
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer"
-              onClick={() => setPassToggle(!passToggle)}
-              icon={passToggle ? faEyeSlash : faEye}
-            />
+          <div className="text-center mb-4">
+            <Link
+              className="text-xs text-sofaBlue hover:underline"
+              to="/login"
+            >
+              Already have an account? Login now
+            </Link>
           </div>
-        </div>
 
-        <Link className="text-xs text-blue-500 hover:underline" to="/login">
-          Already have an account?
-        </Link>
-
-        <div className="mt-4 text-center">
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded-md shadow-md hover:bg-blue-600 transition-all duration-300"
-          >
-            {loading ? "Registering..." : "Register"}
-          </button>
-        </div>
-      </form>
+          <div className="text-center">
+            <button
+              type="submit"
+              className="w-full bg-sofaBlue text-white font-bold py-2 rounded-md hover:bg-blue-600 transition-all duration-200"
+            >
+              {loading ? "Registering..." : "Register"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

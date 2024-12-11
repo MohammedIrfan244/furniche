@@ -10,17 +10,17 @@ export default {
     extend: {
       fontFamily: {
         oswald: ['Oswald', 'sans-serif'],
+        poppins: ['Poppins', 'sans-serif'],
       },
       colors: {
         black: '#000000',
         white: '#FFFFFF',
-        gold: '#FFD700', // Standard gold
-        goldenWood: '#D4A017', // Warm wood-like golden color
+        gold: '#FFD700',
+        sofaBlue: '#112558',
       },
     },
   },
   plugins: [
-    scrollbarPlugin, // Use the imported plugin here
+    scrollbarPlugin,
   ],
 };
-

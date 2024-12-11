@@ -131,7 +131,7 @@ function User() {
 
   return (
     <div className="w-full flex flex-col sm:flex-row justify-between pt-[26%] sm:pt-[8%] px-5 gap-5 sm:gap-10">
-      {/* User Details Section */}
+     
       <div className="w-full sm:w-[40%] bg-white rounded-lg shadow-md p-6">
         <h1 className="text-2xl font-serif tracking-wide underline mb-6 text-gray-700">
           User Details
@@ -175,7 +175,7 @@ function User() {
         </div>
       </div>
 
-      {/* Update Form */}
+     
       {isUpdating && (
         <div className="w-full sm:w-[40%] bg-gray-50 rounded-lg shadow-md p-6">
           <h2 className="text-lg font-bold text-gray-700 mb-4">
@@ -201,7 +201,7 @@ function User() {
             <input
               name="profile"
               type="file"
-              accept="image/*"
+              accept="image/jpeg, image/png, image/jpeg"
               onChange={handleFileChange}
               className="border p-3 rounded w-full"
             />
@@ -231,7 +231,7 @@ function User() {
         </div>
       )}
 
-      {/* Orders Section */}
+     
       <div className="w-full sm:w-[60%]">
         <h1 className="text-2xl font-serif tracking-wide underline mb-6 text-gray-700">
           Orders

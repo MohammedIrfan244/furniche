@@ -95,25 +95,29 @@ function Product() {
     if (currentUser) {
       dispatch(getCart());
     }
+   const fetching=async()=>{
     axios
-      .get(`http://localhost:3001/api/public/products/${Id}`)
-      .then((response) => {
-        setProduct(response.data.data);
-      })
-      .catch((err) =>
-        console.log("Error from id in params", axiosErrorManager(err))
-      );
-    axios
-      .get(
-        `http://localhost:3001/api/public/products/category/${product?.category}`
-      )
-      .then((response) => {
-        setInterestedProduct(response.data.data);
-      })
-      .catch((err) =>
-        console.log("Error from interested product", axiosErrorManager(err))
-      )
-      .finally(() => setLoading(false));
+    .get(`http://localhost:3001/api/public/products/${Id}`)
+    .then((response) => {
+      setProduct(response.data.data);
+    })
+    .catch((err) =>
+      console.log("Error from id in params", axiosErrorManager(err))
+    );
+  axios
+    .get(
+      `http://localhost:3001/api/public/products/category/${product?.category}`
+    )
+    .then((response) => {
+      setInterestedProduct(response.data.data);
+    })
+    .catch((err) =>
+      console.log("Error from interested product", axiosErrorManager(err))
+    )
+    .finally(() => setLoading(false));
+   }
+
+    fetching();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Id, product?.category, currentUser]);
   useEffect(() => {
@@ -129,8 +133,8 @@ function Product() {
         <span className="loader"></span>
       ) : (
         <div className="pt-[26%] sm:pt-[10%] flex flex-col items-center">
-          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-[#F9FCFA] rounded-lg shadow-md">
-            <div className="w-[100%] sm:w-[50%] flex justify-center rounded-lg overflow-hidden items-center">
+          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-white border-2 border-gray-300 shadow-md">
+            <div className="w-[100%] sm:w-[50%] flex justify-center overflow-hidden items-center">
               <img
                 className="hover:scale-[1.01] transition duration-500 ease-in-out ProductPage w-[400px] h-[200px] sm:w-[610px] sm:h-[410px] object-cover"
                 src={product?.image}
@@ -163,8 +167,8 @@ function Product() {
                   <FontAwesomeIcon
                     onClick={() => addToWishListHandler(Id)}
                     className={`${
-                      isInWishlist ? "text-red-500" : "text-black"
-                    } cursor-pointer`}
+                      isInWishlist ? "text-red-500" : "text-gray-500"
+                    } cursor-pointer hover:text-red-500`}
                     icon={faHeart}
                   />
                 </div>
@@ -185,7 +189,7 @@ function Product() {
               <div className="flex justify-between">
                 <button
                   onClick={() => navigate(`/checkout/product/${Id}`)}
-                  className="active:scale-95 bg-black hover:scale-[1.01] shadow-md text-xs text-white px-5 py-2 rounded-md sm:py-3"
+                  className="bg-sofaBlue text-white text-xs py-2 mt-5 w-20"
                 >
                   Buy Now
                 </button>
@@ -195,7 +199,7 @@ function Product() {
                       ? () => navigate("/cart")
                       : addToCartDispatch
                   }
-                  className="active:scale-95 bg-black hover:scale-[1.01] shadow-md text-xs text-white px-5 py-2 rounded-md sm:py-3"
+                  className="bg-sofaBlue text-white text-xs py-2 mt-5 w-20"
                 >{`${
                   userCart.some((item) => item.productId?._id === Id)
                     ? "Go to cart"
@@ -205,9 +209,9 @@ function Product() {
             </div>
           </div>
           <div className="flex flex-col items-center w-[100%] mt-20 px-3 lg:p-2">
-            <h1 className="text-xl sm:text-2xl font-serif tracking-wide underline">
-              YOU MAY ALSO INTERESTED IN
-            </h1>
+          <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
+            YOU MAY ALSO LIKE
+          </h1>
             <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-20">
               {interestedProduct.map((item, index) => (
                 <ProductItems

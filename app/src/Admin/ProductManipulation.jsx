@@ -80,9 +80,27 @@ function ProductManipulation() {
 
   const updateProduct = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", formValues.name);
+    formData.append("rating", formValues.rating);
+    formData.append("price", formValues.price);
+    formData.append("description", formValues.description);
+    formData.append("original", formValues.original);
+    formData.append("category", formValues.category);
+    formData.append("review", formValues.review);
+
+    if (formValues.image) {
+      formData.append("image", formValues.image);
+    }
+
     try {
       setLoading(true);
-      const response = await axiosInstance.put('/admin/products/' + productId, formValues);
+      const response = await axiosInstance.put('/admin/products/' + productId, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       toast.success(response.data.message);
       fetchProduct(productId);
     } catch (err) {
@@ -235,6 +253,5 @@ function ProductManipulation() {
     </div>
   );
 }
-
 
 export default ProductManipulation;

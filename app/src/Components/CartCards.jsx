@@ -46,33 +46,33 @@ function CartCards({ image, name, price, quantity, id }) {
   const { currency } = useSelector((state) => state.public);
 
   return (
-    <div className="flex items-center justify-between bg-white p-4 shadow rounded-lg border border-gray-200">
-      <div className="flex items-center gap-4">
+    <div className="flex items-center justify-between bg-white p-5 shadow-lg rounded-lg border border-gray-200 transition-transform transform hover:scale-105 hover:shadow-xl">
+      <div className="flex items-center gap-5">
         <Link to={`/product/${id}`}>
           <img
-            className="w-16 h-16 object-cover rounded"
+            className="w-20 h-20 object-cover rounded-lg transition-transform transform hover:scale-105"
             src={image || "/default-product.png"}
             alt={name}
           />
         </Link>
         <div className="flex flex-col">
-          <p className="text-gray-700 font-medium">{name}</p>
-          <p className="font-bold text-gray-800">
+          <p className="text-gray-700 font-poppins text-lg">{name}</p>
+          <p className="font-poppins text-xl font-bold text-gray-800">
             {currency}
             {price}
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-5">
         <div className="flex flex-col items-center">
           <button
             onClick={() => setNewQuantity(newQuantity + 1)}
-            className="text-gray-600 hover:text-gray-800"
+            className="text-gray-600 hover:text-gray-800 transition-all"
           >
             <FontAwesomeIcon icon={faChevronUp} />
           </button>
           <input
-            className="w-10 text-center border border-gray-300 rounded bg-gray-50"
+            className="w-12 text-center border-2 border-gray-300 rounded-md bg-gray-50 font-semibold text-gray-700"
             value={newQuantity}
             type="number"
             min={1}
@@ -80,20 +80,20 @@ function CartCards({ image, name, price, quantity, id }) {
           />
           <button
             onClick={() => setNewQuantity(Math.max(1, newQuantity - 1))}
-            className="text-gray-600 hover:text-gray-800"
+            className="text-gray-600 hover:text-gray-800 transition-all"
           >
             <FontAwesomeIcon icon={faChevronDown} />
           </button>
         </div>
         <button
           onClick={() => updateCartQuantityDispatch(newQuantity)}
-          className="text-green-600 hover:text-green-800"
+          className="text-sofaBlue hover:text-sofaBlue-dark transition-all"
         >
           <FontAwesomeIcon icon={faCheckCircle} />
         </button>
         <button
           onClick={removeFromCartDispatch}
-          className="text-red-600 hover:text-red-800"
+          className="text-red-600 hover:text-red-800 transition-all"
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>

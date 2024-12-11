@@ -1,27 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap");
-/* white:#F9FCFA
-black:#000000
-background:#D7D2C9
-dark bg:#544A3E 
-gold:#FFD700 */
+
+
+
+
+
 body {
   background-color: #ffffff;
   color: #000000;
   font-weight: 500;
+  font-family: 'Poppins', sans-serif;
 }
 a {
   transition-duration: 150ms;
 }
 a.active {
   scale: 1.05;
+  color:#112558;
 }
 a.active hr {
   display: block;
   border-radius: 100%;
-  background-color: #000000;
+  background-color: #112558;
 }
 img.avatar {
   height: 50px;
@@ -37,24 +42,28 @@ img.avatar {
   animation-fill-mode: both;
   animation: bblFadInOut 1.8s infinite ease-in-out;
 }
+
 .loader {
-  color: #544a3e;
+  color: #112558; 
   font-size: 7px;
   position: relative;
   text-indent: -9999em;
   transform: translateZ(0);
   animation-delay: -0.16s;
 }
+
 .loader:before,
 .loader:after {
   content: "";
   position: absolute;
   top: 0;
 }
+
 .loader:before {
   left: -3.5em;
   animation-delay: -0.32s;
 }
+
 .loader:after {
   left: 3.5em;
 }
@@ -76,4 +85,20 @@ body {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.hero {
+animation: bouncing 2s infinite ease-in-out;
+}
+
+@keyframes bouncing {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
