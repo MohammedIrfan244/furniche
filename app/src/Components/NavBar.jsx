@@ -1,14 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faCartShopping,
-  faBars,
-  faHeart,
-} from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartCount } from "../Redux/userSlice";
+import { LuSearch,LuShoppingCart,LuHeart,LuChartBarStacked } from "react-icons/lu";
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -24,36 +18,36 @@ function NavBar() {
   }, [currentUser, userCart]);
 
   return (
-    <div className="fixed w-[100%] py-5 px-1 bg-white sm:px-5 z-20">
+    <div className="fixed w-[100%] pt-8 px-1 bg-white sm:px-5 z-20">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
-            <h2 className="text-xl sm:text-2xl font-poppins font-semibold text-sofaBlue">
+            <h2 className="text-xl sm:text-2xl font-poppins font-bold text-sofaBlue">
               Furniche
             </h2>
           </Link>
         </div>
-        <ul className="hidden sm:flex gap-10 text-sm font-semibold font-poppins">
+        <ul className="hidden sm:flex gap-10 text-xs font-bold font-poppins">
           <NavLink to={"/"} className=" flex flex-col items-center gap-1">
-            <p>Home</p>
+            <p>HOME</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           <NavLink
             to={"/collection"}
             className="flex flex-col items-center gap-1 "
           >
-            <p>Collection</p>
+            <p>COLLECTION</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           <NavLink
             to={"/contact"}
             className="flex flex-col items-center gap-1 "
           >
-            <p>Contact</p>
+            <p>CONTACT</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           <NavLink to={"/about"} className="flex flex-col items-center gap-1 ">
-            <p>About</p>
+            <p>ABOUT</p>
             <hr className="w-[4px] h-[4px] border-none  hidden " />
           </NavLink>
           {isAdmin && (
@@ -61,41 +55,39 @@ function NavBar() {
               to={"/admin/adminPanel"}
               className="flex flex-col items-center gap-1"
             >
-              <p>Admin</p>
+              <p>ADMIN</p>
               <hr className="w-[4px] h-[4px] border-none  hidden " />
             </NavLink>
           )}
         </ul>
         <div className="flex items-center gap-5 sm:gap-6 md:gap-7">
           <Link className="flex items-center gap-2" to={"/search"}>
-          <p className="text-sm">Search</p>
-            <FontAwesomeIcon
-              className="cursor-pointer hover:scale-110 hover:text-sofaBlue transition duration-300"
-              icon={faSearch}
+            <LuSearch
+              className="hover:scale-110 text-lg hover:text-sofaBlue transition duration-300"
             />
+          <p className="hidden sm:block text-xs font-bold">SEARCH</p>
           </Link>
           <Link
             to={"/cart"}
             className={`${currentUser ? "relative flex items-center gap-2" : "hidden"}`}
           >
-            <p className="text-sm">Cart</p>
-            <FontAwesomeIcon
-              className="hover:scale-110 hover:text-sofaBlue transition duration-300"
-              icon={faCartShopping}
+            <LuShoppingCart
+              className="hover:scale-110 text-lg hover:text-sofaBlue transition duration-300"
+              
             />
-            <p className="absolute right-[-5px] bottom-[-2px]  bg-[#544A3E] text-[10px] text-center w-[15px] rounded-[100%] text-[#FAFAFA]">
+          <p className="hidden sm:block text-xs font-bold">CART</p>
+            <p className="absolute bottom-3 right-8 text-sofaBlue h-[15px] text-[10px] font-bold text-center w-[15px] rounded-[100%] bg-gray-300">
               {userCartCount}
             </p>
           </Link>
           <Link
             to={"/wishlist"}
-            className={`${currentUser ? "relative flex items-center gap-2" : "hidden"}`}
+            className={`${currentUser ? "   flex items-center gap-2" : "hidden"}`}
           >
-            <p className="text-sm">Wishlist</p>
-            <FontAwesomeIcon
-              className="hover:scale-110 hover:text-sofaBlue transition duration-300"
-              icon={faHeart}
+            <LuHeart
+              className="hover:scale-110 text-lg hover:text-sofaBlue transition duration-300"
             />
+            <p className="hidden sm:block text-xs font-bold">WISHLIST</p> 
           </Link>
           <Link
             to={currentUser ? "/user" : "/login"}
@@ -117,10 +109,10 @@ function NavBar() {
               </div>
             )}
           </Link>
-          <FontAwesomeIcon
+          <LuChartBarStacked
             onClick={() => setVisible(true)}
             className="sm:hidden cursor-pointer me-3"
-            icon={faBars}
+            
           />
           <div
             className={`absolute top-0  right-0 bottom-0 ${

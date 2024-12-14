@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductItems from "../shared/ProductItems";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
-import ScrollTop from "../shared/ScrollTop";
+import ScrollTop from "../utilities/ScrollTop";
+import { LuSearchX } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../Redux/PublicSlice";
 import { toast } from "react-toastify";
@@ -70,7 +69,7 @@ function Search() {
               searchedProduct.length !== 0 ? "hidden" : null
             } text-gray-600 text-[250%] my-[5%]`}
           >
-            <FontAwesomeIcon icon={faBoxOpen} />
+            < LuSearchX />
           </div>
         </div>
       )}

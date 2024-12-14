@@ -1,5 +1,4 @@
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IoChevronUpCircleOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 
 function ScrollTop() {
@@ -30,7 +29,7 @@ function ScrollTop() {
           onClick={scrollToTop}
           className="fixed bottom-5 hover:scale-[1.1] transition duration-200 ease-in-out right-[48.5%] opacity-80 text-[#000000] bg-[#F9FCFA] text-xs font-bold px-3 py-1 rounded-[50px] cursor-pointer z-20"
         >
-          <FontAwesomeIcon icon={faChevronUp} />
+         <IoChevronUpCircleOutline />
         </button>
       )}
     </div>

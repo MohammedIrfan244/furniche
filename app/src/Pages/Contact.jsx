@@ -2,8 +2,7 @@ import ContactImage from "../assets/ContactPage.jpg";
 import { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
 import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { LuPhone ,LuMessageSquare} from "react-icons/lu";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -61,11 +60,11 @@ function Contact() {
         <div className="w-[100%] sm:w-[55%] flex flex-col items-center justify-between">
           <div className="mt-10 mb-5 p-5 rounded-lg text-[#544A3E] bg-[#D7D2C9]">
             <p className="text-sm">
-              <FontAwesomeIcon icon={faPhone} className="mr-2" />
+              <LuPhone className="mr-2" />
               +91 8987675643
             </p>
             <p className="text-sm">
-              <FontAwesomeIcon icon={faEnvelope} className="mr-2" />
+              <LuMessageSquare className="mr-2" />
               furniche@gmail.com
             </p>
           </div>

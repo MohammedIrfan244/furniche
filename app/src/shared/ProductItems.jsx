@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faStar } from "@fortawesome/free-solid-svg-icons";
+import { IoMdStar } from "react-icons/io";
+import { FaHeart } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToWishList,
@@ -66,7 +66,7 @@ function ProductItems({ id, name, price, image, rating }) {
           </p>
           <p className="text-xs flex text-[#D4AF37]">
             {Array.from({ length: rating }).map((_, index) => (
-              <FontAwesomeIcon key={index} icon={faStar} />
+              <IoMdStar key={index} />
             ))}
           </p>
         </div>
@@ -77,7 +77,7 @@ function ProductItems({ id, name, price, image, rating }) {
           isInWishlist ? "text-red-500" : "text-gray-400"
         } hover:text-red-500`}
       >
-        <FontAwesomeIcon icon={faHeart} />
+       <FaHeart />
       </button>
     </motion.div>
   );

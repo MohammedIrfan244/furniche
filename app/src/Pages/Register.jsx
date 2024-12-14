@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { LuEye ,LuEyeClosed} from "react-icons/lu";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { useEffect, useState } from "react";
@@ -69,7 +68,7 @@ function SignIn() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-full sm:w-2/3 md:w-2/5  bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
+      <div className="w-[90%] sm:w-2/3 md:w-2/5  bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
         <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
           Register
         </h1>
@@ -123,11 +122,19 @@ function SignIn() {
                 placeholder="Password"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <FontAwesomeIcon
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-                onClick={() => setPassToggle(!passToggle)}
-                icon={passToggle ? faEyeSlash : faEye}
-              />
+            {
+              passToggle ? (
+                <LuEyeClosed
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => setPassToggle(!passToggle)}
+                />
+              ) : (
+                <LuEye
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => setPassToggle(!passToggle)}
+                />
+              )
+            }
             </div>
 
             <div className="relative w-full">
@@ -139,11 +146,19 @@ function SignIn() {
                 placeholder="Confirm Password"
                 className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <FontAwesomeIcon
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-                onClick={() => setPassToggle(!passToggle)}
-                icon={passToggle ? faEyeSlash : faEye}
-              />
+              {
+              passToggle ? (
+                <LuEyeClosed
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => setPassToggle(!passToggle)}
+                />
+              ) : (
+                <LuEye
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                  onClick={() => setPassToggle(!passToggle)}
+                />
+              )
+            }
             </div>
           </div>
 

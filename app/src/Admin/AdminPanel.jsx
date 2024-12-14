@@ -4,13 +4,8 @@ import AdminUsers from "./AdminUsers";
 import AdminDashboard from "./AdminDashboard";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronRight,
-  faDashboard,
-  faTag,
-  faUser,
-} from "@fortawesome/free-solid-svg-icons";
+import { MdOutlineSpaceDashboard } from "react-icons/md";
+import { LuUserRound,LuTag,LuCircleChevronRight  } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
 import { toast } from "react-toastify";
@@ -106,37 +101,34 @@ function AdminPanel() {
                 className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]"
                 onClick={() => setComponent("dashboard")}
               >
-                <FontAwesomeIcon icon={faDashboard} />
+               <MdOutlineSpaceDashboard />
                 Dashboard{" "}
-                <FontAwesomeIcon
+                <LuCircleChevronRight
                   className={`${
                     component === "dashboard" ? "text-xs" : "hidden"
                   }`}
-                  icon={faChevronRight}
                 />
               </p>
               <p
                 className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]"
                 onClick={() => setComponent("users")}
               >
-                <FontAwesomeIcon icon={faUser} />
+                <LuUserRound />
                 Users{" "}
-                <FontAwesomeIcon
+                <LuCircleChevronRight
                   className={`${component === "users" ? "text-xs" : "hidden"}`}
-                  icon={faChevronRight}
                 />
               </p>
               <p
                 className="cursor-pointer flex justify-between items-center bg-[#D7D2C9] py-1 px-2 hover:bg-[#544A3E] hover:text-[#FFFFFF]"
                 onClick={() => setComponent("products")}
               >
-                <FontAwesomeIcon icon={faTag} />
+                <LuTag />
                 Products{" "}
-                <FontAwesomeIcon
+                <LuCircleChevronRight
                   className={`${
                     component === "products" ? "text-xs" : "hidden"
                   }`}
-                  icon={faChevronRight}
                 />
               </p>
             </div>

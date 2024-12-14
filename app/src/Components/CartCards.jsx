@@ -1,12 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheckCircle,
-  faChevronDown,
-  faChevronUp,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { LuCircleChevronUp,LuCircleChevronDown,LuCircleCheck,LuTrash } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, updateCartQuantity } from "../Redux/userSlice";
@@ -69,7 +63,7 @@ function CartCards({ image, name, price, quantity, id }) {
             onClick={() => setNewQuantity(newQuantity + 1)}
             className="text-gray-600 hover:text-gray-800 transition-all"
           >
-            <FontAwesomeIcon icon={faChevronUp} />
+            <LuCircleChevronUp  />
           </button>
           <input
             className="w-12 text-center border-2 border-gray-300 rounded-md bg-gray-50 font-semibold text-gray-700"
@@ -82,20 +76,20 @@ function CartCards({ image, name, price, quantity, id }) {
             onClick={() => setNewQuantity(Math.max(1, newQuantity - 1))}
             className="text-gray-600 hover:text-gray-800 transition-all"
           >
-            <FontAwesomeIcon icon={faChevronDown} />
+            <LuCircleChevronDown />
           </button>
         </div>
         <button
           onClick={() => updateCartQuantityDispatch(newQuantity)}
           className="text-sofaBlue hover:text-sofaBlue-dark transition-all"
         >
-          <FontAwesomeIcon icon={faCheckCircle} />
+          <LuCircleCheck />
         </button>
         <button
           onClick={removeFromCartDispatch}
           className="text-red-600 hover:text-red-800 transition-all"
         >
-          <FontAwesomeIcon icon={faTrash} />
+          <LuTrash />
         </button>
       </div>
     </div>

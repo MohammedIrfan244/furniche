@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import NewCollection from "../Components/NewCollection";
 import OriginalProducts from "../Components/OriginalProducts";
-import OurPolicy from "../Components/OurPolicy";
-import ScrollTop from "../shared/ScrollTop";
+import ScrollTop from "../utilities/ScrollTop";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react"
 
@@ -61,7 +60,6 @@ function Home() {
       <ScrollTop />
       <NewCollection />
       <OriginalProducts />
-      <OurPolicy />
     </div>
   );
 }

@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import ScrollTop from "../shared/ScrollTop";
+import ScrollTop from "../utilities/ScrollTop";
 import AdminOrderCards from "./AdminOrderCards";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import axiosInstance from "../utilities/axiosInstance";

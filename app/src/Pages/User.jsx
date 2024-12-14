@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ScrollTop from "../shared/ScrollTop";
+import ScrollTop from "../utilities/ScrollTop";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";

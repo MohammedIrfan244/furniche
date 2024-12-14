@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCertificate,
-  faHeart,
-  faStar,
-} from "@fortawesome/free-solid-svg-icons";
+import { LuBadgeCheck,LuHeart } from "react-icons/lu";
+import { IoMdStar } from "react-icons/io";
 import ProductItems from "../shared/ProductItems";
-import ScrollTop from "../shared/ScrollTop";
+import ScrollTop from "../utilities/ScrollTop";
 import axios from "axios";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { useDispatch, useSelector } from "react-redux";
@@ -150,10 +146,9 @@ function Product() {
                       <span>
                         {" "}
                         {product?.original === "false" ? null : (
-                          <FontAwesomeIcon
+                          <LuBadgeCheck
                             onClick={() => addToWishListHandler(Id)}
                             className="text-gold"
-                            icon={faCertificate}
                           />
                         )}
                       </span>
@@ -164,17 +159,16 @@ function Product() {
                         : "(In house design)"}
                     </p>
                   </div>
-                  <FontAwesomeIcon
+                  <LuHeart
                     onClick={() => addToWishListHandler(Id)}
                     className={`${
                       isInWishlist ? "text-red-500" : "text-gray-500"
                     } cursor-pointer hover:text-red-500`}
-                    icon={faHeart}
                   />
                 </div>
                 <p className="text-xs flex text-[#FFD700]">
                   {Array.from({ length: product?.rating }).map((_, index) => (
-                    <FontAwesomeIcon key={index} icon={faStar} />
+                    <IoMdStar key={index}  />
                   ))}
                 </p>
                 <p className="text-xl font-bold">

@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { LuEye ,LuEyeClosed} from "react-icons/lu";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { useDispatch } from "react-redux";
@@ -53,7 +52,7 @@ function Login() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-full sm:w-1/3 md:w-1/4 lg:w-1/4 bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
+      <div className="w-[90%] sm:w-1/3 md:w-1/4 lg:w-1/4 bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
         <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
           Login
         </h1>
@@ -79,11 +78,19 @@ function Login() {
               placeholder="Password"
               className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <FontAwesomeIcon
-              className="absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500 cursor-pointer"
-              onClick={() => setPassToggle(!passToggle)}
-              icon={passToggle ? faEyeSlash : faEye}
-            />
+            {
+              passToggle ? (
+                <LuEyeClosed
+                  className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() => setPassToggle(!passToggle)}
+                />
+              ) : (
+                <LuEye
+                  className="absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"
+                  onClick={() => setPassToggle(!passToggle)}
+                />
+              )
+            }
           </div>
           <div className="text-center mb-4">
             <Link

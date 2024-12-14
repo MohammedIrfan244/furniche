@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import CartCards from "../Components/CartCards";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartArrowDown } from "@fortawesome/free-solid-svg-icons";
-import ScrollTop from "../shared/ScrollTop";
+import { LuShoppingCart } from "react-icons/lu";
+import ScrollTop from "../utilities/ScrollTop";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../Redux/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -30,9 +29,8 @@ function Cart() {
         <div className="w-full flex flex-col sm:flex-row gap-9 px-5 pt-[26%] sm:pt-[8%]">
           {userCart.length === 0 && !loading ? (
             <div className="text-gray-500 h-[60vh] w-full flex justify-center items-center flex-col">
-              <FontAwesomeIcon
+              <LuShoppingCart
                 className="text-6xl sm:text-8xl md:text-9xl text-[#B8A78C]"
-                icon={faCartArrowDown}
               />
               <p className="text-lg sm:text-xl text-gray-500 mt-5">Your cart is empty!</p>
             </div>

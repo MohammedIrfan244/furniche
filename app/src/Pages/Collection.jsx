@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import ProductItems from "../shared/ProductItems";
-import ScrollTop from "../shared/ScrollTop";
+import ScrollTop from "../utilities/ScrollTop";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../Redux/PublicSlice";
 import { motion } from "motion/react"; 

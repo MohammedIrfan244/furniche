@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { LuEye,LuEyeClosed } from "react-icons/lu";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import Cookies from "js-cookie";
@@ -79,11 +78,19 @@ function AdminLogin() {
               placeholder="Password"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
             />
-            <FontAwesomeIcon
-              className="text-gray-600 absolute top-3 right-3 cursor-pointer"
-              onClick={() => setPassToggle(!passToggle)}
-              icon={passToggle ? faEyeSlash : faEye}
-            />
+            {passToggle? (
+              <LuEyeClosed
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setPassToggle(!passToggle)}
+              />
+            ) : (
+              
+              <LuEye
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+                onClick={() => setPassToggle(!passToggle)}
+              />
+            )
+            }
           </div>
           <div className="text-center">
             <button
