@@ -18,7 +18,7 @@ function NavBar() {
   }, [currentUser, userCart]);
 
   return (
-    <div className="fixed w-[100%] pt-8 px-1 bg-white sm:px-5 z-20">
+    <div className="fixed w-[100%] pt-8 px-1 bg-white sm:px-5 py-5 z-20">
       <div className="flex items-center justify-between">
         <div>
           <Link to={"/"}>
@@ -60,7 +60,7 @@ function NavBar() {
             </NavLink>
           )}
         </ul>
-        <div className="flex items-center gap-5 sm:gap-6 md:gap-7">
+        <div className="flex items-center gap-5 sm:gap-6 md:gap-8 lg:gap-10">
           <Link className="flex items-center gap-2" to={"/search"}>
             <LuSearch
               className="hover:scale-110 text-lg hover:text-sofaBlue transition duration-300"
