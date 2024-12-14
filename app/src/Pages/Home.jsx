@@ -13,11 +13,11 @@ function Home() {
   }, []);
 
   return (
-    <div>
-      <div className="w-[100%] h-[100vh] flex flex-col sm:flex-row bg-cover bg-center relative">
-        <div className="w-full hero h-full sm:w-1/2 flex justify-center items-center overflow-hidden">
+        <div>
+    <div className="w-full h-[100vh] flex flex-col-reverse sm:flex-row bg-cover bg-center relative">
+        <div className="w-full h-full sm:w-1/2 flex justify-center items-center overflow-hidden">
           <img
-            className="max-w-[500px] h-auto object-cover transition duration-500 ease-in-out hover:scale-105"
+            className="max-w-[400px] sm:maxw-[500px] h-auto object-cover transition duration-500 ease-in-out hover:scale-105"
             // src="https://i.pinimg.com/736x/b9/06/18/b90618d95f1bb9646327efef3843611e.jpg"
             src="https://i.pinimg.com/736x/4e/f8/4a/4ef84a7dfd2eb7ac62339fdd0f9668f3.jpg"
             alt="hero"
@@ -53,7 +53,7 @@ function Home() {
            transition={{ duration: 0.5, delay: 0.8 }}
            > Designed to Transform Your Space.</motion.p>
           </div>
-          <button onClick={() => navigate("/collection")} className="bg-sofaBlue text-white text-xs py-2 mt-5 w-20 hover:px-20 hover:w-72 transition-all duration-300">
+          <button onClick={() => navigate("/collection")} className="bg-sofaBlue rounded-md text-white text-xs py-2 mt-5 w-20 hover:px-20 hover:w-72 transition-all duration-300">
             Shop Now
           </button>
         </div>

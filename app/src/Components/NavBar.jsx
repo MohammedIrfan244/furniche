@@ -67,7 +67,8 @@ function NavBar() {
           )}
         </ul>
         <div className="flex items-center gap-5 sm:gap-6 md:gap-7">
-          <Link to={"/search"}>
+          <Link className="flex items-center gap-2" to={"/search"}>
+          <p className="text-sm">Search</p>
             <FontAwesomeIcon
               className="cursor-pointer hover:scale-110 hover:text-sofaBlue transition duration-300"
               icon={faSearch}
@@ -75,8 +76,9 @@ function NavBar() {
           </Link>
           <Link
             to={"/cart"}
-            className={`${currentUser ? "relative" : "hidden"}`}
+            className={`${currentUser ? "relative flex items-center gap-2" : "hidden"}`}
           >
+            <p className="text-sm">Cart</p>
             <FontAwesomeIcon
               className="hover:scale-110 hover:text-sofaBlue transition duration-300"
               icon={faCartShopping}
@@ -87,8 +89,9 @@ function NavBar() {
           </Link>
           <Link
             to={"/wishlist"}
-            className={`${currentUser ? "relative" : "hidden"}`}
+            className={`${currentUser ? "relative flex items-center gap-2" : "hidden"}`}
           >
+            <p className="text-sm">Wishlist</p>
             <FontAwesomeIcon
               className="hover:scale-110 hover:text-sofaBlue transition duration-300"
               icon={faHeart}

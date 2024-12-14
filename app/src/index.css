@@ -1,27 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-
-
-
 body {
   background-color: #ffffff;
   color: #000000;
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 a {
   transition-duration: 150ms;
 }
 a.active {
   scale: 1.05;
-  color:#112558;
+  color: #112558;
 }
 a.active hr {
   display: block;
@@ -44,7 +39,7 @@ img.avatar {
 }
 
 .loader {
-  color: #112558; 
+  color: #112558;
   font-size: 7px;
   position: relative;
   text-indent: -9999em;
@@ -85,20 +80,4 @@ body {
 
 ::-webkit-scrollbar {
   display: none;
-}
-
-.hero {
-animation: bouncing 2s infinite ease-in-out;
-}
-
-@keyframes bouncing {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-  100% {
-    transform: translateY(0);
-  }
 }

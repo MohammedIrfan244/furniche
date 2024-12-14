@@ -8,7 +8,7 @@ import Cart from "./Pages/Cart";
 import NavBar from "./Components/NavBar";
 import Search from "./Pages/Search";
 import Login from "./Pages/Login";
-import SignIn from "./Pages/SignIn";
+import SignIn from "./Pages/Register";
 import User from "./Pages/User";
 import NotFound from "./Pages/NotFound";
 import AdminPanel from "./Admin/AdminPanel";
@@ -56,7 +56,7 @@ function RoutesPage() {
               element={currentUser ? <Order /> : <NotFound />}
             />
             <Route path="/login" element={<Login />} />
-            <Route path="/signin" element={<SignIn />} />
+            <Route path="/register" element={<SignIn />} />
             <Route
               path="/checkout/product/:id"
               element={currentUser ? <CheckoutSingle /> : <Login />}

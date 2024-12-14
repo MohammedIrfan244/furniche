@@ -88,7 +88,7 @@ function Login() {
           <div className="text-center mb-4">
             <Link
               className="text-xs text-sofaBlue hover:underline"
-              to="/signin"
+              to="/register"
             >
               Don&apos;t have an account? Register now
             </Link>

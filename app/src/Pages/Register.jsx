@@ -69,7 +69,7 @@ function SignIn() {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-full sm:w-1/3 md:w-1/4 lg:w-1/4 bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
+      <div className="w-full sm:w-2/3 md:w-2/5  bg-white border-2 border-sofaBlue p-8 rounded-lg shadow-md">
         <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
           Register
         </h1>

@@ -28,7 +28,7 @@ function NewCollection() {
   }, []);
 
   return (
-    <div className="w-full mt-20 px-5 lg:px-10">
+    <div className="w-full mt-20 flex flex-col items-center">
       {loading ? (
         <div className="h-[20vh] flex justify-center items-center">
           <span className="loader"></span>
@@ -38,7 +38,7 @@ function NewCollection() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="flex flex-col items-center"
+          className="flex flex-col w-full justify-around items-center"
         >
           <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
             NEW COLLECTIONS
@@ -46,7 +46,7 @@ function NewCollection() {
           <p className="text-sm sm:text-base text-gray-500 mt-5 font-poppins">
             Discover our latest range of premium furniture, crafted to elevate your space.
           </p>
-          <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-10">
             {newCollection?.map((item, index) => (
               <ProductItems
                 key={index}
