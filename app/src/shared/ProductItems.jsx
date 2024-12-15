@@ -42,21 +42,20 @@ function ProductItems({ id, name, price, image, rating }) {
 
   return (
     <motion.div
-      initial={{ y: 30, opacity: 0 }}
+      initial={{ y: 50, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3 }}
-      className="transition w-48 sm:w-56 md:w-64 hover:shadow-2xl shadow-gray-600 overflow-hidden relative bg-white ease-in-out"
+      transition={{ duration: 0.5 }}
+      className="transition w-44 sm:w-48 md:w-56 lg:w-60 hover:shadow-2xl shadow-gray-600 overflow-hidden relative bg-white"
     >
       <Link to={`/product/${id}`}>
         <img
-          className="hover:scale-105 transition duration-500 w-full h-52 object-cover ease-in-out"
+          className="hover:scale-105 transition-all w-full h-52 object-cover"
           src={image}
           alt="image"
           onClick={() => window.scrollTo(0, 0)}
           />
       </Link>
-      <div className="px-3 h-32 py-5 gap-6 justify-end flex flex-col">
+      <div className="px-3 h-36 py-5 gap-6 justify-end flex flex-col">
         <p className="text-sm font-poppins font-semibold text-gray-800 truncate">
           {name}
         </p>

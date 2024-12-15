@@ -41,7 +41,7 @@ const lastAddedTenProducts = async (req, res) => {
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1,description:1 ,review:1 }
   )
     .sort({ createdAt: -1 })
-    .limit(10);
+    .limit(8);
   if (!products) {
     return res
       .status(204)
@@ -72,6 +72,9 @@ const productById = async (req, res) => {
 
 // to get the products by category
 const productByCategory = async (req, res) => {
+  if(!req.params.category){
+    return res.status(400).json({ message: "Category is required" , data: []});
+  }
   const products = await Products.find(
     { category: req.params.category, isDeleted: false },
     { name: 1, price: 1, image: 1, rating: 1, original: 1, category: 1 ,description:1 ,review:1}

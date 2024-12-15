@@ -14,16 +14,15 @@ function Home() {
 
   return (
         <div>
-    <div className="w-full h-[100vh] flex flex-col sm:flex-row bg-cover bg-center relative">
-        <div className="w-full h-full sm:w-1/2 flex justify-center items-center overflow-hidden">
+    <div className="w-full flex flex-col-reverse sm:flex-row bg-cover bg-center relative">
+        <div className="w-full h-auto sm:h-[100vh] sm:w-1/2 flex justify-center items-center overflow-hidden">
           <img
             className="max-w-[400px] sm:maxw-[500px] h-auto object-cover transition duration-500 ease-in-out hover:scale-105"
-            // src="https://i.pinimg.com/736x/b9/06/18/b90618d95f1bb9646327efef3843611e.jpg"
             src="https://i.pinimg.com/736x/4e/f8/4a/4ef84a7dfd2eb7ac62339fdd0f9668f3.jpg"
             alt="hero"
           />
         </div>
-        <div className="w-full h-full sm:w-1/2 flex flex-col justify-end px-5 sm:px-10 font-semibold ">
+        <div className="w-full h-[100vh] sm:h-[100vh] sm:w-1/2 flex flex-col justify-center sm:justify-end px-5 sm:px-10 font-semibold ">
           <motion.p
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}

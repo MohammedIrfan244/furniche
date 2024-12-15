@@ -57,6 +57,7 @@ const publicSlice = createSlice({
         state.error = action.payload;
       }),
       builder.addCase(fetchProductsByCategory.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.productsByCategory = action.payload;
         state.loading = false;
       });

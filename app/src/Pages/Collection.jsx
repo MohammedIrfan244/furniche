@@ -1,100 +1,86 @@
-import { useEffect, useState, useMemo } from "react";
-import ProductItems from "../shared/ProductItems";
-import ScrollTop from "../utilities/ScrollTop";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllProducts } from "../Redux/PublicSlice";
-import { motion } from "motion/react"; 
+import {
+  fetchAllProducts,
+  fetchProductsByCategory,
+} from "../Redux/PublicSlice";
+import ProductItems from "../shared/ProductItems";
+import { toast } from "react-toastify";
+import axiosErrorManager from "../utilities/axiosErrorManager";
+import { motion } from "framer-motion";
 
 function Collection() {
+  const { products, productsByCategory, loading } = useSelector(
+    (state) => state.public
+  );
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state) => state.public);
-  const [filteredProducts, setFilteredProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
 
-  const checkCategory = (e) => {
-    const value = e.target.value;
-    setCategories((prev) =>
-      prev.includes(value)
-        ? prev.filter((item) => item !== value)
-        : [...prev, value]
-    );
-  };
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   useEffect(() => {
-    dispatch(fetchAllProducts());
-    window.scrollTo(0, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-
-  const memoizedFilteredProducts = useMemo(() => {
-    if (categories.length === 0) {
-      return products;
+    try {
+      if (selectedCategory === "all") {
+        dispatch(fetchAllProducts());
+      } else {
+        dispatch(fetchProductsByCategory(selectedCategory));
+      }
+    } catch (error) {
+      toast.error(axiosErrorManager(error));
     }
-    return products.filter((item) => categories.includes(item.category));
-  }, [categories, products]);
+  }, [selectedCategory, dispatch]);
 
-  useEffect(() => {
-    setFilteredProducts(memoizedFilteredProducts);
-    if (error) console.log(error);
-  }, [memoizedFilteredProducts, error]);
+  const selectedProducts =
+    selectedCategory === "all" ? products : productsByCategory;
 
   return (
-    <div
-      className={`${
-        loading ? "h-[100vh] flex justify-center items-center" : ""
-      }`}
-    >
+    <div className="w-full pt-28 flex flex-col items-center">
       {loading ? (
-        <span className="loader"></span>
+        <div className="h-[20vh] flex justify-center items-center">
+          <span className="loader"></span>
+        </div>
       ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="pt-[26%] sm:pt-[8%] flex flex-col items-center"
-        >
-          <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4 mb-10 sm:mb-16">
-            SHOP COLLECTIONS
-          </h1>
-          <div className="w-full px-2">
-            
-            <div className="bg-white flex items-center justify-between h-10 mb-5 p-3 rounded-md">
-              {["bed", "lamps", "tables", "chairs", "sofas"].map(
-                (category) => (
-                  <label
-                    key={category}
-                    className="text-nowrap text-xs sm:text-[100%]"
-                  >
-                    <input
-                      type="checkbox"
-                      onChange={checkCategory}
-                      value={category}
-                      checked={categories.includes(category)}
-                    />{" "}
-                    {category.toUpperCase()}
-                  </label>
-                )
-              )}
+        <>
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full flex justify-between items-center px-4 sm:px-10 mb-6"
+          >
+            <div className="flex flex-grow justify-center">
+              <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
+                COLLECTIONS
+              </h1>
             </div>
 
-            
-            <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 w-full">
-              {filteredProducts.map((item, index) => (
-                <ProductItems
-                  key={index}
-                  id={item._id}
-                  image={item.image}
-                  name={item.name}
-                  price={item.price}
-                  rating={item.rating}
-                  original={item.original}
-                />
-              ))}
+            <div className="flex justify-end">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sofaBlue"
+              >
+                <option value="all">All</option>
+                <option value="sofas">Sofas</option>
+                <option value="chairs">Chairs</option>
+                <option value="tables">Tables</option>
+                <option value="bed">Beds</option>
+                <option value="lamps">Lamps</option>
+              </select>
             </div>
+          </motion.div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 place-items-center gap-3 sm:gap-4 mt-10 md:gap-6">
+            {selectedProducts.map((product, index) => (
+              <ProductItems
+                key={index}
+                id={product._id}
+                image={product.image}
+                name={product.name}
+                price={product.price}
+                rating={product.averageRating || 0}
+              />
+            ))}
           </div>
-          <ScrollTop />
-        </motion.div>
+        </>
       )}
     </div>
   );

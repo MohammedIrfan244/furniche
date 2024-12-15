@@ -4,8 +4,6 @@ import ScrollTop from "../utilities/ScrollTop";
 import { LuSearchX } from "react-icons/lu";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllProducts } from "../Redux/PublicSlice";
-import { toast } from "react-toastify";
-import axiosErrorManager from "../utilities/axiosErrorManager";
 
 function Search() {
   const { products, loading, error } = useSelector((state) => state.public);
@@ -27,7 +25,7 @@ function Search() {
           items.category.toLowerCase().includes(search.toLowerCase())
       )
     );
-    if (error) toast.error(axiosErrorManager(error));
+    
   }, [error, products, search]);
 
   useEffect(() => {
@@ -49,9 +47,9 @@ function Search() {
             value={search}
             placeholder="Search here..."
             onChange={(e) => setSearch(e.target.value)}
-            className="w-[90%] sm:w-[60%] text-xs sm:rounded-md bg-[#F9FCFA] shadow-md px-3 py-2 rounded-xl sm:py-1 focus:outline-none"
+            className="w-[90%] sm:w-[60%] text-xs  border-b-2 border-sofaBlue px-3 py-2 sm:py-1 focus:outline-none"
           />
-          <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-20">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 place-items-center gap-3 sm:gap-4 mt-10 md:gap-6">
             {searchedProduct.map((item, index) => (
               <ProductItems
                 key={index}

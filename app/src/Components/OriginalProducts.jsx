@@ -34,18 +34,23 @@ function OriginalProducts() {
           <span className="loader"></span>
         </div>
       ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
+        <div
           className="flex flex-col items-center w-full justify-around"
         >
-          <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
+          <motion.h1
+           initial={{ opacity: 0, y: -50 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           transition={{ duration: 0.5 }}
+           className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
             IN HOUSE DESIGNS
-          </h1>
-          <p className="text-sm sm:text-base text-gray-500 mt-5 font-poppins">
+          </motion.h1>
+          <motion.p
+          initial={{ opacity: 0, y: -30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+           className="text-xs sm:text-sm md:text-base text-gray-500 mt-5 font-poppins">
             Explore our exclusive designs, showcasing elegance and craftsmanship.
-          </p>
+          </motion.p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-10">
             {originalProduct.map((item, index) => (
               <ProductItems
@@ -59,7 +64,7 @@ function OriginalProducts() {
               />
             ))}
           </div>
-        </motion.div>
+        </div>
       )}
     </div>
   );
