@@ -183,7 +183,7 @@ function Product() {
               <div className="flex justify-between">
                 <button
                   onClick={() => navigate(`/checkout/product/${Id}`)}
-                  className="bg-sofaBlue text-white text-xs py-2 mt-5 w-20"
+                  className="bg-sofaBlue text-white rounded-md text-xs py-2 mt-5 w-20"
                 >
                   Buy Now
                 </button>
@@ -193,7 +193,7 @@ function Product() {
                       ? () => navigate("/cart")
                       : addToCartDispatch
                   }
-                  className="bg-sofaBlue text-white text-xs py-2 mt-5 w-20"
+                  className="bg-sofaBlue text-white text-xs rounded-md py-2 mt-5 w-auto px-2"
                 >{`${
                   userCart.some((item) => item.productId?._id === Id)
                     ? "Go to cart"
@@ -206,7 +206,7 @@ function Product() {
           <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
             YOU MAY ALSO LIKE
           </h1>
-            <div className="grid grid-cols-2 ms:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-12 mt-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-10">
               {interestedProduct.map((item, index) => (
                 <ProductItems
                   key={index}
