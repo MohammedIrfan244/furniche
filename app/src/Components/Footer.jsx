@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <>
-      <div className="my-20 flex justify-between pt-5 border-t-2 border-[#112558] px-3">
+    <div className="bg-blue-100 h-52">
+      <div className="my-20 flex justify-between pt-5 px-3">
         <div className="w-[40%] text-left">
           <h1 className="font-poppins text-sm sm:text-md md:text-lg text-[#112558]">
             Furniche
@@ -51,7 +51,7 @@ function Footer() {
       <p className="text-center text-xs mb-2 font-poppins font-semibold text-[#112558]">
         &copy; 2024 Furniche . All Rights Reserved
       </p>
-    </>
+    </div>
   );
 }
 
