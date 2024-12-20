@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true; // mark request to avoid infinite loops
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_API_URL}/users/refresh`,
+          `${import.meta.env.VITE_API_URL}/users/refreshToken`,
           {},
           {
             withCredentials: true,

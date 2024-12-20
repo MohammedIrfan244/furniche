@@ -13,7 +13,7 @@ function OriginalProducts() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/public/products/original`
+        `${import.meta.env.VITE_API_URL}/public/products/collection/original`
       );
       setOriginalProduct(response.data?.data);
       setLoading(false);

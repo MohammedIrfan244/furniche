@@ -63,7 +63,7 @@ function CheckoutSingle() {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/api/public/products/${id}`
+        `${import.meta.env.VITE_API_URL}/public/products/${id}`
       );
       setProduct(response.data?.data);
       setLoading(false);

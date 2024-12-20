@@ -14,7 +14,7 @@ function CartCards({ image, name, price, quantity, id }) {
 
   const removeFromCartDispatch = async () => {
     try {
-      const response = await axiosInstance.get(`/users/cart/${id}`);
+      const response = await axiosInstance.delete(`/users/cart/${id}`);
       dispatch(removeFromCart(id));
       toast.success(response.data.message);
     } catch (err) {

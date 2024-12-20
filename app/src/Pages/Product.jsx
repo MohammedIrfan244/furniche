@@ -79,7 +79,7 @@ function Product() {
         );
         setInterestedProduct(interestedResponse.data.data);
       } catch (err) {
-        console.error("Error:", axiosErrorManager(err));
+        console.log("Error:", axiosErrorManager(err));
       } finally {
         setLoading(false);
       }
