@@ -10,4 +10,4 @@ const tryCatch = (func) => async (req, res, next) => {
   }
 };
 
-export default tryCatch;
+export default tryCatch; 
