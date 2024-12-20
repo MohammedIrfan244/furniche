@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { LuCircleChevronUp,LuCircleChevronDown,LuCircleCheck,LuTrash } from "react-icons/lu";
+import { LuCircleChevronUp, LuCircleChevronDown, LuCircleCheck, LuTrash } from "react-icons/lu";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCart, updateCartQuantity } from "../Redux/userSlice";
@@ -40,7 +40,7 @@ function CartCards({ image, name, price, quantity, id }) {
   const { currency } = useSelector((state) => state.public);
 
   return (
-    <div className="flex items-center justify-between bg-white p-5 shadow-lg rounded-lg border border-gray-200 transition-transform transform hover:scale-105 hover:shadow-xl">
+    <div className="flex flex-col sm:flex-row items-center justify-between bg-white p-5 shadow-lg rounded-lg border border-gray-200">
       <div className="flex items-center gap-5">
         <Link to={`/product/${id}`}>
           <img
@@ -57,16 +57,16 @@ function CartCards({ image, name, price, quantity, id }) {
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-5">
-        <div className="flex flex-col items-center">
+      <div className="flex items-center gap-5 mt-5 sm:mt-0">
+        <div className="flex flex-col justify-between items-center">
           <button
             onClick={() => setNewQuantity(newQuantity + 1)}
-            className="text-gray-600 hover:text-gray-800 transition-all"
+            className="text-sofaBlue text-lg transition-all"
           >
-            <LuCircleChevronUp  />
+            <LuCircleChevronUp />
           </button>
           <input
-            className="w-12 text-center border-2 border-gray-300 rounded-md bg-gray-50 font-semibold text-gray-700"
+            className="w-12 text-center pl-3 font-semibold text-gray-700"
             value={newQuantity}
             type="number"
             min={1}
@@ -74,20 +74,20 @@ function CartCards({ image, name, price, quantity, id }) {
           />
           <button
             onClick={() => setNewQuantity(Math.max(1, newQuantity - 1))}
-            className="text-gray-600 hover:text-gray-800 transition-all"
+            className="text-sofaBlue text-lg transition-all"
           >
             <LuCircleChevronDown />
           </button>
         </div>
         <button
           onClick={() => updateCartQuantityDispatch(newQuantity)}
-          className="text-sofaBlue hover:text-sofaBlue-dark transition-all"
+          className="bg-sofaBlue text-white px-3 py-2 rounded-md hover:px-5 transition-all duration-300"
         >
           <LuCircleCheck />
         </button>
         <button
           onClick={removeFromCartDispatch}
-          className="text-red-600 hover:text-red-800 transition-all"
+          className="bg-red-600 text-white px-3 py-2 rounded-md hover:bg-red-800 transition-all duration-300"
         >
           <LuTrash />
         </button>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LuBadgeCheck,LuHeart } from "react-icons/lu";
+import { LuBadgeCheck, LuHeart } from "react-icons/lu";
 import { IoMdStar } from "react-icons/io";
 import ProductItems from "../shared/ProductItems";
 import ScrollTop from "../utilities/ScrollTop";
@@ -35,36 +35,13 @@ function Product() {
       return;
     }
     if (!userCart.find((item) => item.productId._id === Id)) {
-      //   const token = Cookies.get('token');
-      //   try {
-      //     await axios.post(
-      //       `http://localhost:3001/api/users/cart`,
-      //       { productId: Id, quantity: 1 },
-      //       {
-      //         headers: {
-      //           Authorization: `Bearer ${token}`,
-      //         },
-      //       }
-      //     );
-      //     dispatch(addToCart(Id));
-      //     dispatch(getCart());
-      //     toast.success("Product added to cart successfully");
-      //   } catch (err) {
-      //     console.error(err);
-      //     toast.error(axiosErrorManager(err));
-      //   }
-      // } else {
-      //   navigate("/cart");
-      //   toast.error("Product already in cart");
-      // }
       try {
-        const response = await axiosInstance.post("/users/cart", {
+        await axiosInstance.post("/users/cart", {
           productId: Id,
           quantity: 1,
         });
         dispatch(addToCart(Id));
         dispatch(getCart());
-        toast.success(response.data.message);
       } catch (err) {
         toast.error(axiosErrorManager(err));
       }
@@ -91,34 +68,29 @@ function Product() {
     if (currentUser) {
       dispatch(getCart());
     }
-   const fetching=async()=>{
-    axios
-    .get(`http://localhost:3001/api/public/products/${Id}`)
-    .then((response) => {
-      setProduct(response.data.data);
-    })
-    .catch((err) =>
-      console.log("Error from id in params", axiosErrorManager(err))
-    );
-  axios
-    .get(
-      `http://localhost:3001/api/public/products/category/${product?.category}`
-    )
-    .then((response) => {
-      setInterestedProduct(response.data.data);
-    })
-    .catch((err) =>
-      console.log("Error from interested product", axiosErrorManager(err))
-    )
-    .finally(() => setLoading(false));
-   }
-
+    const fetching = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/api/public/products/${Id}`
+        );
+        setProduct(response.data.data);
+        const interestedResponse = await axios.get(
+          `http://localhost:3001/api/public/products/category/${response.data.data.category}`
+        );
+        setInterestedProduct(interestedResponse.data.data);
+      } catch (err) {
+        console.error("Error:", axiosErrorManager(err));
+      } finally {
+        setLoading(false);
+      }
+    };
     fetching();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [Id, product?.category, currentUser]);
+  }, [Id, currentUser, dispatch]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
   return (
     <div
       className={`${
@@ -129,35 +101,27 @@ function Product() {
         <span className="loader"></span>
       ) : (
         <div className="pt-[26%] sm:pt-[10%] flex flex-col items-center">
-          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-white border-2 border-gray-300 shadow-md">
+          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-white border border-gray-300 shadow-md">
             <div className="w-[100%] sm:w-[50%] flex justify-center overflow-hidden items-center">
               <img
-                className="hover:scale-[1.01] transition duration-500 ease-in-out ProductPage w-[400px] h-[200px] sm:w-[610px] sm:h-[410px] object-cover"
+                className="hover:scale-[1.01] transition duration-500 ease-in-out w-[400px] h-[200px] sm:w-[610px] sm:h-[410px] object-cover"
                 src={product?.image}
                 alt="image"
               />
             </div>
             <div className="mt-[3%] sm:mt-0 w-[100%] sm:w-[50%] flex flex-col justify-between min-h-[50vh] sm:px-[3%] sm:gap-0">
-              <div className="flex flex-col justify-beteween gap-[20px]">
+              <div className="flex flex-col gap-[20px]">
                 <div className="flex justify-between">
                   <div>
                     <h1 className="font-bold text-xl">
                       {product?.name}
-                      <span>
-                        {" "}
-                        {product?.original === "false" ? null : (
-                          <LuBadgeCheck
-                            onClick={() => addToWishListHandler(Id)}
-                            className="text-gold"
-                          />
-                        )}
-                      </span>
+                      {product?.original !== "false" && (
+                        <LuBadgeCheck className="text-gold" />
+                      )}
                     </h1>
-                    <p className="text-xs">
-                      {product?.original === "false"
-                        ? null
-                        : "(In house design)"}
-                    </p>
+                    {product?.original !== "false" && (
+                      <p className="text-xs">(In house design)</p>
+                    )}
                   </div>
                   <LuHeart
                     onClick={() => addToWishListHandler(Id)}
@@ -168,7 +132,7 @@ function Product() {
                 </div>
                 <p className="text-xs flex text-[#FFD700]">
                   {Array.from({ length: product?.rating }).map((_, index) => (
-                    <IoMdStar key={index}  />
+                    <IoMdStar key={index} />
                   ))}
                 </p>
                 <p className="text-xl font-bold">
@@ -183,7 +147,7 @@ function Product() {
               <div className="flex justify-between">
                 <button
                   onClick={() => navigate(`/checkout/product/${Id}`)}
-                  className="bg-sofaBlue text-white rounded-md text-xs py-2 mt-5 w-20"
+                  className="bg-sofaBlue text-white text-xs py-2 rounded-md mt-5 w-20"
                 >
                   Buy Now
                 </button>
@@ -193,20 +157,20 @@ function Product() {
                       ? () => navigate("/cart")
                       : addToCartDispatch
                   }
-                  className="bg-sofaBlue text-white text-xs rounded-md py-2 mt-5 w-auto px-2"
-                >{`${
-                  userCart.some((item) => item.productId?._id === Id)
-                    ? "Go to cart"
-                    : "Add to Cart"
-                }`}</button>
+                  className="bg-sofaBlue text-white rounded-md text-xs py-2 mt-5 px-4"
+                >
+                  {userCart.some((item) => item.productId?._id === Id)
+                    ? "Go to Cart"
+                    : "Add to Cart"}
+                </button>
               </div>
             </div>
           </div>
           <div className="flex flex-col items-center w-[100%] mt-20 px-3 lg:p-2">
-          <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
-            YOU MAY ALSO LIKE
-          </h1>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-10">
+            <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
+              YOU MAY ALSO LIKE
+            </h1>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
               {interestedProduct.map((item, index) => (
                 <ProductItems
                   key={index}

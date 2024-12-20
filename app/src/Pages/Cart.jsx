@@ -10,6 +10,7 @@ function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userCart, loading } = useSelector((state) => state.user);
+  const {currency}=useSelector((state)=>state.public)
 
   useEffect(() => {
     dispatch(getCart());
@@ -37,11 +38,7 @@ function Cart() {
           ) : null}
 
           <div className={userCart.length === 0 ? "hidden" : "w-full sm:w-[65%]"}>
-            <h1
-              className="text-xl sm:text-2xl font-serif tracking-wide underline mb-10 text-black"
-            >
-              CART ITEMS
-            </h1>
+            <h1 className="text-lg sm:text-xl font-semibold">Cart Items</h1>
             <div className="flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin scrollbar-thumb-[#B8A78C] scrollbar-track-transparent sm:h-[70vh]">
               {userCart.map((item, index) => (
                 <CartCards
@@ -64,12 +61,12 @@ function Cart() {
               </p>
               <p className="text-sm text-gray-700 mb-3">
                 <strong>Total Price:</strong>{" "}
+                {currency}
                 {userCart.reduce((total, item) => total + item.productId.price * item.quantity, 0)}{" "}
-                USD
               </p>
               <button
                 onClick={() => navigate(`/checkout/products/cart`)}
-                className="w-full bg-[#D7D2C9] text-[#000000] rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-sm py-2 mt-5 active:scale-95"
+                className="w-full bg-sofaBlue text-white hover:scale-105 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 text-sm py-2 mt-5 active:scale-95"
               >
                 Proceed to Checkout
               </button>

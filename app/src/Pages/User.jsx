@@ -26,23 +26,6 @@ function User() {
   const dispatch = useDispatch();
 
   const fetchUser = async () => {
-    // setLoading(true);
-    // const token = Cookies.get("token");
-    // axios
-    //   .get("http://localhost:3001/api/users/orders", {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   })
-    //   .then((res) => {
-    //     setOrders(res.data.data);
-    //   })
-    //   .catch((err) => {
-    //     toast.error(axiosErrorManager(err));
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
     try {
       const response = await axiosInstance.get("/users/orders");
       setLoading(true);
@@ -133,7 +116,7 @@ function User() {
     <div className="w-full flex flex-col sm:flex-row justify-between pt-[26%] sm:pt-[8%] px-5 gap-5 sm:gap-10">
      
       <div className="w-full sm:w-[40%] bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-2xl font-serif tracking-wide underline mb-6 text-gray-700">
+        <h1 className="text-lg sm:text-xl font-semibold">
           User Details
         </h1>
         <div className="flex flex-col items-center gap-6">
@@ -160,13 +143,13 @@ function User() {
           </div>
           <div className="flex gap-4 w-full mt-4">
             <button
-              className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded shadow"
+              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition duration-300"
               onClick={() => setIsUpdating(true)}
             >
               Edit
             </button>
             <button
-              className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded shadow"
+              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition duration-300"
               onClick={handleLogOut}
             >
               Logout
@@ -175,10 +158,9 @@ function User() {
         </div>
       </div>
 
-     
       {isUpdating && (
         <div className="w-full sm:w-[40%] bg-gray-50 rounded-lg shadow-md p-6">
-          <h2 className="text-lg font-bold text-gray-700 mb-4">
+          <h2  className="text-lg sm:text-xl font-semibold">
             Update Your Details
           </h2>
           <div className="flex flex-col gap-4">
@@ -216,13 +198,13 @@ function User() {
           </div>
           <div className="flex gap-4 mt-4">
             <button
-              className="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 rounded shadow"
+              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition duration-300"
               onClick={updateUser}
             >
               Update
             </button>
             <button
-              className="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded shadow"
+              className="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded-lg transition duration-300"
               onClick={() => setIsUpdating(false)}
             >
               Cancel
@@ -231,9 +213,8 @@ function User() {
         </div>
       )}
 
-     
       <div className="w-full sm:w-[60%]">
-        <h1 className="text-2xl font-serif tracking-wide underline mb-6 text-gray-700">
+        <h1  className="text-lg sm:text-xl font-semibold">
           Orders
         </h1>
         {loading ? (
@@ -243,7 +224,7 @@ function User() {
             {orders.map((order) => (
               <div
                 key={order._id}
-                className="border rounded-lg p-4 shadow hover:shadow-md cursor-pointer transition-all"
+                className="border rounded-lg p-4 shadow-md hover:shadow-lg cursor-pointer transition duration-300"
                 onClick={() => navigate(`/orders/${order._id}`)}
               >
                 <h3 className="text-lg font-bold text-gray-800">
@@ -281,3 +262,4 @@ function User() {
 }
 
 export default User;
+

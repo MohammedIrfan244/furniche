@@ -71,6 +71,7 @@ function AdminProduct() {
     handleCategory({ target: { value: "all" } });
   }, []);
 
+
   return (
     <div className={`w-[100%] min-h-[100vh] ${loading && "flex justify-center items-center"}`}>
       {loading && <div className="loader h-[100vh] w-[100%]"></div>}
@@ -292,7 +293,7 @@ function AdminProduct() {
                     <td className="border border-gray-300 p-2">{product.rating}</td>
                     <td className="border border-gray-300 p-2">{product.price}</td>
                     <td className="border border-gray-300 p-2"> 
-                      <button className="bg-blue-500 text-white text-xs px-4 py-2 rounded-md" onClick={() => navigate(`/admin/adminpanel/productaction/${product?._id}`)}>View</button>
+                      <button className={`${product.isDeleted?"bg-red-500":"bg-blue-500"} text-white text-xs px-4 py-2 rounded-md`} onClick={() => navigate(`/admin/adminpanel/productaction/${product?._id}`)}>View</button>
                     </td>
                   </tr>
                 ))}
