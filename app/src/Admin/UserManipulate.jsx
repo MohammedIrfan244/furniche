@@ -14,27 +14,6 @@ function UserManipulate() {
   const [loading, setLoading] = useState(false);
 
   const blockUser = async () => {
-    // setLoading(true)
-    // const token = Cookies.get("token");
-    // await axios
-    //   .patch(
-    //     `http://localhost:3001/api/admin/users/block/${userId}`,
-    //     {},
-    //     {
-    //       headers: { Authorization: `Bearer ${token}` },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     toast.success(res.data.message);
-    //     setBlocked(res.data.data)
-    //     setLoading(true)
-    //   })
-    //   .catch((err) => {
-    //     toast.error(axiosErrorManager(err));
-    //   })
-    //   .finally(() => {
-    //     setLoading(false)
-    //   });
     try{
       setLoading(true)
       const response=await axiosInstance.patch(`/admin/users/block/${userId}`)
