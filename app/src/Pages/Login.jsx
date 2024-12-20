@@ -35,7 +35,6 @@ function Login() {
       );
       const userCookie = Cookies.get("user");
       const currentUser = userCookie ? JSON.parse(userCookie) : null;
-      console.log(currentUser,JSON.parse(userCookie));
       dispatch(setCurrentUser(currentUser));
       toast.success(response.data.message);
       setLoading(false);

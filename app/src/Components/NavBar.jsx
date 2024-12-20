@@ -15,7 +15,6 @@ function NavBar() {
     if (currentUser) {
       dispatch(getCartCount());
     }
-    console.log(currentUser)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, userCart]);
 
