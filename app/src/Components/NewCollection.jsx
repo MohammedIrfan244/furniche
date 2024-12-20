@@ -13,7 +13,7 @@ function NewCollection() {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:3001/api/public/products/collection/latest"
+        `${import.meta.env.VITE_API_URL}/api/public/products/collection/new`
       );
       setNewCollection(response.data?.data);
       setLoading(false);

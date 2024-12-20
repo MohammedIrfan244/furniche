@@ -27,7 +27,7 @@ function ProductManipulation() {
   const fetchProduct = async (productId) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:3001/api/public/products/${productId}`);
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/public/products/${productId}`);
       setProduct(response.data?.data);
       setFormValues({
         name: response.data?.data.name || "",

@@ -16,7 +16,7 @@ const fetchAllProducts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/api/public/products"
+        `${import.meta.env.VITE_API_URL}/public/products`
       );
       return response.data.data;
     } catch (err) {
@@ -31,7 +31,7 @@ const fetchProductsByCategory = createAsyncThunk(
   async (category, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/public/products/category/${category}`
+        `${import.meta.env.VITE_API_URL}/public/products/category/${category}`
       );
       return response.data.data;
     } catch (err) {

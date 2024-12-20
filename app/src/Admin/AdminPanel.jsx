@@ -26,7 +26,7 @@ function AdminPanel() {
   const handleLogOut = async() => {
     try{
       setLoading2(true)
-      const response= await axios.post("http://localhost:3001/api/admin/logout",{},{withCredentials:true})
+      const response= await axios.post(`${import.meta.env.VITE_API_URL}/admin/logout`,{},{withCredentials:true})
       toast.success(response.data.message);
       dispatch(setCurrentUser(null));
       dispatch(setIsAdmin(false));
@@ -36,18 +36,6 @@ function AdminPanel() {
       toast.error(axiosErrorManager(err));
       setLoading2(false)
     }
-// setLoading2(true)
-//    await axios.post("http://localhost:3001/api/admin/logout",{},{withCredentials:true})
-//    .then((res)=>{
-//      toast.success(res.data.message);
-//      dispatch(setCurrentUser(null));
-//      dispatch(setIsAdmin)
-//    })
-//    .catch((err)=>toast.error(axiosErrorManager(err)))
-//    .finally(()=>{
-//      setLoading2(false)
-//      navigate('/')
-//    })
   };
   
   

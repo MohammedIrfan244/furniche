@@ -54,18 +54,6 @@ const fetchUserOrders=async()=>{
 
 
   useEffect(()=>{
-//     setLoading(true)
-// axios
-//     .get(`http://localhost:3001/api/admin/orders/user/${userId}`, {
-//       headers: { Authorization: `Bearer ${Cookies.get("token")}` },
-//     })
-//     .then((res) => {
-//       setUseOrders(res.data.data);
-//     })
-//     .catch((err) => {
-//       console.log(axiosErrorManager(err));
-// })
-// .finally(()=>setLoading(false))
     fetchUser(userId)
     fetchUserOrders(userId)
   // eslint-disable-next-line react-hooks/exhaustive-deps

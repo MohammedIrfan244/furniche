@@ -29,7 +29,7 @@ function Login() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/users/login",
+        `${import.meta.env.VITE_API_URL}/users/login`,
         loginData,
         { withCredentials: true }
       );

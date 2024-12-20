@@ -24,43 +24,8 @@ function AdminOrderCards({ orderItems = {}, user = {},userId ,fetchingOrder}) {
     } catch (err) {
       toast.error(axiosErrorManager(err));
     }
-    // await axios
-    //   .patch(
-    //     `http://localhost:3001/api/admin/orders/payment/${orderItems._id}`,
-    //     {},
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     setPaymentStatus("Done");
-    //     toast.success(res.data.message);
-    //   })
-    //   .catch((err) => {
-    //     toast.error(axiosErrorManager(err));
-    //   });
   };
   const updateShippingStatus = async () => {
-    // const token = Cookies.get("token");
-    // await axios
-    //   .patch(
-    //     `http://localhost:3001/api/admin/orders/shipping/${orderItems._id}`,
-    //     {},
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     setShippingStatus("Delivered");
-    //     toast.success(res.data.message);
-    //   })
-    //   .catch((err) => {
-    //     toast.error(axiosErrorManager(err));
-    //   });
     try{
       const response=await axiosInstance.patch(
         `/admin/orders/shipping/${orderItems._id}`

@@ -30,7 +30,7 @@ function AdminLogin() {
     setLoading(true);
 
     axios
-      .post("http://localhost:3001/api/admin/login", loginData, { withCredentials: true })
+      .post(`${import.meta.env.VITE_API_URL}/admin/login`,{}, loginData, { withCredentials: true })
       .then((response) => {
         const adminCookie = Cookies.get('user');
         const admin = adminCookie ? JSON.parse(adminCookie) : null;

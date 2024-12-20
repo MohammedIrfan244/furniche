@@ -47,7 +47,7 @@ function SignIn() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/users/register",
+        `${import.meta.env.VITE_API_URL}/api/users/register`,
         formData,
         {
           headers: {

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true, // Ensures cookies are sent
 });
 
@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true; // mark request to avoid infinite loops
       try {
         const response = await axios.post(
-          "http://localhost:3001/api/users/refreshToken",
+          `${import.meta.env.VITE_API_URL}/users/refresh`,
           {},
           {
             withCredentials: true,

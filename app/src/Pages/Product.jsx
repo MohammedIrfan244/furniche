@@ -71,11 +71,11 @@ function Product() {
     const fetching = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/api/public/products/${Id}`
+          `${import.meta.env.VITE_API_URL}/public/products/${Id}`
         );
         setProduct(response.data.data);
         const interestedResponse = await axios.get(
-          `http://localhost:3001/api/public/products/category/${response.data.data.category}`
+          `${import.meta.env.VITE_API_URL}/public/products/category/${response.data.data.category}`
         );
         setInterestedProduct(interestedResponse.data.data);
       } catch (err) {

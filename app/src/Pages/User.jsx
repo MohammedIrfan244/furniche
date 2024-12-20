@@ -49,7 +49,7 @@ function User() {
       setLoading(true);
       axios
         .post(
-          "http://localhost:3001/api/users/logout",
+          `${import.meta.env.VITE_API_URL}/users/logout`,
           {},
           { withCredentials: true }
         )
@@ -82,7 +82,7 @@ function User() {
     }
     const token = Cookies.get("token");
     await axios
-      .put("http://localhost:3001/api/users/update", formData, {
+      .put(`${import.meta.env.VITE_API_URL}/users/update`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
