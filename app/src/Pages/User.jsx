@@ -143,13 +143,13 @@ function User() {
           </div>
           <div className="flex gap-4 w-full mt-4">
             <button
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition duration-300"
+              className="flex-1 bg-sofaBlue text-white py-2 rounded-lg transition duration-300"
               onClick={() => setIsUpdating(true)}
             >
               Edit
             </button>
             <button
-              className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition duration-300"
+              className="flex-1 bg-sofaBlue text-white py-2 rounded-lg transition duration-300"
               onClick={handleLogOut}
             >
               Logout

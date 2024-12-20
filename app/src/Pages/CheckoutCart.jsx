@@ -72,7 +72,7 @@ function CheckoutCart() {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-8">
       {loading && <p className="text-xl text-gray-700">Loading...</p>}
       <form
         onSubmit={placeOrder}
@@ -153,7 +153,7 @@ function CheckoutCart() {
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            className="w-full py-2 bg-sofaBlue text-white rounded-lg"
           >
             Submit
           </button>

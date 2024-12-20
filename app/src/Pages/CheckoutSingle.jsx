@@ -85,7 +85,7 @@ function CheckoutSingle() {
       {loading ? (
         <span className="loader"></span>
       ) : (
-        <div className="max-w-lg bg-white p-8 mt-5 rounded-lg shadow-lg w-full">
+        <div className="max-w-lg bg-white p-8 mt-5 rounded-lg shadow-lg w-full pt-20">
           <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
             Checkout
           </h2>
@@ -100,14 +100,14 @@ function CheckoutSingle() {
           <div className="flex justify-center items-center mb-6">
             <button
               onClick={() => setQuantity(Math.min(10, quantity + 1))}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg mr-4 hover:bg-blue-600"
+              className="bg-sofaBlue text-white px-4 py-2 rounded-lg mr-4"
             >
               +
             </button>
             <p className="text-xl">{quantity}</p>
             <button
               onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg ml-4 hover:bg-blue-600"
+              className="bg-sofaBlue text-white px-4 py-2 rounded-lg ml-4"
             >
               -
             </button>
@@ -192,7 +192,7 @@ function CheckoutSingle() {
 
             <button
               type="submit"
-              className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+              className="w-full py-3 bg-sofaBlue text-white rounded-lg hover:bg-sofaBlueDark transition duration-300"
             >
               Submit
             </button>
