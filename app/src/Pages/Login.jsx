@@ -33,10 +33,12 @@ function Login() {
         loginData,
         { withCredentials: true }
       );
-      // const userCookie = Cookies.get("user");
-      // const currentUser = userCookie ? JSON.parse(userCookie) : null;
-      // dispatch(setCurrentUser(currentUser));
-      // console.log("current user", currentUser);
+      const userCookie = Cookies.get("user");
+      Cookies.set("test", "test", { secure: true, sameSite: "None" });
+      console.log(Cookies.get("test"));
+      const currentUser = userCookie ? JSON.parse(userCookie) : null;
+      dispatch(setCurrentUser(currentUser));
+      console.log("current user", currentUser);
       toast.success(response.data.message);
       setLoading(false);
       navigate("/");
