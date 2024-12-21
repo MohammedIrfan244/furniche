@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartCount } from "../Redux/userSlice";
 import { LuSearch,LuShoppingCart,LuHeart,LuChartBarStacked } from "react-icons/lu";
+import axios from "axios";
+import Cookies from 'js-cookie'
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -17,6 +19,9 @@ function NavBar() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, userCart]);
+useEffect(() => {
+  axios.get("https://furniche.onrender.com/api/public/products/collection/cookie").then(()=>console.log(Cookies.get("pub"))).catch((err)=>console.log(err));
+},[])
   return (
     <div className="fixed w-[100%] pt-8 px-1 bg-white sm:px-5 py-5 z-20">
       <div className="flex items-center justify-between">
@@ -94,7 +99,13 @@ function NavBar() {
             className=" group relative"
           >
             {currentUser == null ? (
-              <p className="bg-sofaBlue text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
+              <p onClick={()=>{
+                Cookies.set("test","test")
+                console.log("user",Cookies.get("user")) 
+                console.log("pub",Cookies.get("pub")) 
+                console.log("test",Cookies.get("test"))
+
+              }} className="bg-sofaBlue text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
                 Login
               </p>
             ) : (
