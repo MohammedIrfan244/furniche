@@ -94,7 +94,8 @@ const loginUser = async (req, res, next) => {
     httpOnly: false,
     secure: true,
     sameSite: "none",
-    domain:"/"
+    path:'/',
+    domain:"furniche-zeta.vercel.app"
   });
 
   res.json({
