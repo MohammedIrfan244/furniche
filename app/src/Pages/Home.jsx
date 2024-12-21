@@ -22,12 +22,12 @@ function Home() {
             alt="hero"
           />
         </div>
-        <div className="w-full h-[100vh] sm:h-[100vh] sm:w-1/2 flex flex-col justify-center sm:justify-end px-5 sm:px-10 font-semibold ">
+        <div className="w-full h-auto pt-32 sm:pt-0 sm:h-[100vh] sm:w-1/2 flex flex-col justify-end sm:justify-end px-5 sm:px-10 font-semibold ">
           <motion.p
           initial={{ opacity: 0, y: -50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-2xl md:text-3xl lg:text-4xl font-poppins mb-3">
+          className="text-6xl md:text-3xl lg:text-4xl font-poppins mb-3">
             Welcome to <span className="text-sofaBlue">Furniche</span>
           </motion.p>
           <motion.p

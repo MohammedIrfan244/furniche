@@ -48,7 +48,7 @@ function CheckoutCart() {
         phone: "",
       });
       if (payment === "stripe") {
-        window.open(response.data.stripeUrl, "_blank");
+        window.open(response.data.stripeUrl, "_self");
       } else {
         toast.success(response.data.message);
         navigate("/cart");

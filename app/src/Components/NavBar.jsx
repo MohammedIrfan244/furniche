@@ -76,7 +76,7 @@ function NavBar() {
               
             />
           <p className="hidden sm:block text-xs font-bold">CART</p>
-            <p className="absolute bottom-3 right-8 text-sofaBlue h-[15px] text-[10px] font-bold text-center w-[15px] rounded-[100%] bg-gray-300">
+            <p className="absolute bottom-3 -right-2 sm:right-2 md:right-5 lg:right-8 text-sofaBlue h-[15px] text-[10px] font-bold text-center w-[15px] rounded-[100%] bg-gray-300">
               {userCartCount}
             </p>
           </Link>
