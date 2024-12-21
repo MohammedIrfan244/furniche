@@ -145,6 +145,7 @@ const adminLogin = async (req, res, next) => {
     httpOnly: false,
     secure: true,
     sameSite: "none",
+    domain:"furniche-zeta.vercel.app"
   });
 
   res.json({
