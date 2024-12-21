@@ -21,7 +21,7 @@ const allProducts = async (req, res) => {
 const publicCookieSet=async(req,res)=>{
   res.cookie("pub", "Public", {
     httpOnly: false,
-    secure: true,
+    secure: false,
     sameSite: "none",
   });
   res.status(200).json({ status: "success", message: "Public cookie set successfully" });
