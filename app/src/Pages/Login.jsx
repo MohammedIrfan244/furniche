@@ -33,15 +33,13 @@ function Login() {
         loginData,
         { withCredentials: true }
       );
-      setTimeout(() => {
-        const userCookie = Cookies.get("user");
-        const user = userCookie ? JSON.parse(userCookie) : null;
-        dispatch(setCurrentUser(user));
-        console.log(user);
-        toast.success(response.data.message);
-        setLoading(false);
-        navigate("/");
-      },1000)
+      // const userCookie = Cookies.get("user");
+      // const currentUser = userCookie ? JSON.parse(userCookie) : null;
+      // dispatch(setCurrentUser(currentUser));
+      // console.log("current user", currentUser);
+      toast.success(response.data.message);
+      setLoading(false);
+      navigate("/");
     } catch (err) {
       toast.error(axiosErrorManager(err));
       dispatch(setCurrentUser(null));
