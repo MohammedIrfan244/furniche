@@ -20,7 +20,7 @@ connectCloudinary();
 
 // Middlewares
 app.use(cors({
-  origin:process.env.CLIENT_URL,
+  origin:"*",
   credentials:true,
   allowedHeaders: ["Content-Type", "Authorization"]
 }))
