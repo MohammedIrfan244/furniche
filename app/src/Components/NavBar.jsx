@@ -20,7 +20,7 @@ function NavBar() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, userCart]);
 useEffect(() => {
-  axios.get("https://furniche.onrender.com/public/products/collection/cookie").then(()=>console.log(Cookies.get("pub"))).catch((err)=>console.log(err));
+  axios.get("https://furniche.onrender.com/api/public/products/collection/cookie").then(()=>console.log(Cookies.get("pub"))).catch((err)=>console.log(err));
 },[])
   return (
     <div className="fixed w-[100%] pt-8 px-1 bg-white sm:px-5 py-5 z-20">
