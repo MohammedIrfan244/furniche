@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ScrollTop from "../utilities/ScrollTop";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser, setIsAdmin } from "../Redux/userSlice";
 import { useEffect, useState } from "react";
@@ -80,13 +79,8 @@ function User() {
     if (updateForm.profile) {
       formData.append("profile", updateForm.profile);
     }
-    const token = Cookies.get("token");
-    await axios
-      .put(`${import.meta.env.VITE_API_URL}/users/update`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    
+    axiosInstance.put("/users/update", formData)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
         toast.success(res.data.message);
@@ -143,13 +137,13 @@ function User() {
           </div>
           <div className="flex gap-4 w-full mt-4">
             <button
-              className="flex-1 bg-sofaBlue text-white py-2 rounded-lg transition duration-300"
+              className="flex-1 bg-sofaBlue hover:scale-105 text-white py-2 rounded-lg transition duration-300"
               onClick={() => setIsUpdating(true)}
             >
               Edit
             </button>
             <button
-              className="flex-1 bg-sofaBlue text-white py-2 rounded-lg transition duration-300"
+              className="flex-1 bg-sofaBlue hover:scale-105 text-white py-2 rounded-lg transition duration-300"
               onClick={handleLogOut}
             >
               Logout
