@@ -93,7 +93,7 @@ const loginUser = async (req, res, next) => {
   res.cookie("user", JSON.stringify(userDetails), {
     httpOnly: false,
     secure: true,
-    sameSite: "none",
+    sameSite: "Lax",
     path:'/',
     domain:"furniche-zeta.vercel.app"
   });
