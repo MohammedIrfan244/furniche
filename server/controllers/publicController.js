@@ -18,6 +18,15 @@ const allProducts = async (req, res) => {
   });
 };
 
+const publicCookieSet=async(req,res)=>{
+  res.cookie("pub", "Public", {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  });
+  res.status(200).json({ status: "success", message: "Public cookie set successfully" });
+}
+
 const getOriginalProducts = async (req, res) => {
   const products = await Products.find(
     { original: true, isDeleted: false },
@@ -91,4 +100,4 @@ const productByCategory = async (req, res) => {
   });
 };
 
-export { allProducts, productByCategory, productById , getOriginalProducts, lastAddedTenProducts};
+export { allProducts, productByCategory, productById , getOriginalProducts, publicCookieSet,lastAddedTenProducts};
