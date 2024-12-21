@@ -7,7 +7,6 @@ import {
   lastAddedTenProducts,
   productByCategory,
   productById,
-  publicCookieSet,
 } from "../controllers/publicController.js";
 
 const router = express.Router();
@@ -19,6 +18,5 @@ router
   .get("/products/category/:category", tryCatch(productByCategory))// getting products by category
   .get("/products/collection/original",tryCatch(getOriginalProducts))
   .get("/products/collection/latest",tryCatch(lastAddedTenProducts))
-  .get("/products/collection/cookie",tryCatch(publicCookieSet));
 
 export default router;
