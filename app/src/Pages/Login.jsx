@@ -33,9 +33,6 @@ function Login() {
         loginData,
         { withCredentials: true }
       );
-      const userCookie = Cookies.get("user");
-      const currentUser = userCookie ? JSON.parse(userCookie) : null;
-      dispatch(setCurrentUser(currentUser));
       toast.success(response.data.message);
       setLoading(false);
       navigate("/");
@@ -43,6 +40,12 @@ function Login() {
       toast.error(axiosErrorManager(err));
       dispatch(setCurrentUser(null));
       setLoading(false);
+    }finally {
+      setLoading(false);
+      const userCookie = Cookies.get("user");
+      const currentUser = userCookie ? JSON.parse(userCookie) : null;
+      dispatch(setCurrentUser(currentUser));
+      console.log("current user", currentUser);
     }
   };
 
