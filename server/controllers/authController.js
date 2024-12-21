@@ -18,12 +18,13 @@ const createRefreshToken = (id, role, expiresIn) => {
 
 // Controller to handle register
 const registerUser = async (req, res, next) => {
-  console.log(req.file)
-  let profile=""
-  if(!req.file){
-    profile="https://i.pinimg.com/736x/c4/34/d8/c434d8c366517ca20425bdc9ad8a32de.jpg"
-  }else{
-    profile=req.file.path
+  console.log(req.file);
+  let profile = "";
+  if (!req.file) {
+    profile =
+      "https://i.pinimg.com/736x/c4/34/d8/c434d8c366517ca20425bdc9ad8a32de.jpg";
+  } else {
+    profile = req.file.path;
   }
   const { value, error } = joiUserSchema.validate(req.body);
   const { name, email, password, mobile } = value;
@@ -70,7 +71,7 @@ const loginUser = async (req, res, next) => {
 
   user.refreshToken = refreshToken;
   await user.save();
-  
+
   const userDetails = {
     name: user.name,
     email: user.email,
@@ -80,27 +81,26 @@ const loginUser = async (req, res, next) => {
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
-    sameSite: "none", 
+    sameSite: "none",
   });
 
-res.cookie("token", accessToken, {
-  httpOnly: false,
-  secure: true,
-  sameSite: "none",
-});
+  res.cookie("token", accessToken, {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  });
 
-res.cookie("user", JSON.stringify(userDetails), {
-  httpOnly: false,
-  secure: true,
-  sameSite: "none",
-});
+  res.cookie("user", JSON.stringify(userDetails), {
+    httpOnly: false,
+    secure: true,
+    sameSite: "none",
+  });
 
   res.json({
     status: "success",
     message: "Logged in successfully",
   });
 };
-
 
 const adminLogin = async (req, res, next) => {
   const { email, password } = req.body;
@@ -125,8 +125,8 @@ const adminLogin = async (req, res, next) => {
     name: user.name,
     email: user.email,
     mobile: user.mobile,
-    profile:user.profile
-  }
+    profile: user.profile,
+  };
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
     secure: true,
@@ -145,37 +145,39 @@ const adminLogin = async (req, res, next) => {
     sameSite: "none",
   });
 
-  res.json({ status: "success", isAdmin:true,message: "Logged in successfully"});
+  res.json({
+    status: "success",
+    isAdmin: true,
+    message: "Logged in successfully",
+  });
 };
-401
+401;
 // Controller to handle token refresh
 const refreshingToken = async (req, res, next) => {
-  if(!req.cookies){
-    return next(new CustomError("No cookies found",401))
+  if (!req.cookies) {
+    return next(new CustomError("No cookies found", 401));
   }
   const refreshToken = req.cookies.refreshToken;
-    if (!refreshToken) {
-      return next(new CustomError("No refresh token found", 401));
-    }
+  if (!refreshToken) {
+    return next(new CustomError("No refresh token found", 401));
+  }
 
-    // Verifying the refresh token
-    const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
+  // Verifying the refresh token
+  const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN);
 
-    const user = await User.findById(decoded.id);
-    if (!user || user.refreshToken !== refreshToken) {
-      return next(new CustomError("Invalid refresh token", 403));
-    }
-let accessToken;;
-   if(user.role === "Admin"){
-     accessToken = createAdminAccessToken(user._id, user.role, "1h");
-   }else{
-     accessToken = createAccessToken(user._id, user.role, "1h");
-   }
-   
-    res.status(200).json({ message: "Token refreshed", token: accessToken });
-  
+  const user = await User.findById(decoded.id);
+  if (!user || user.refreshToken !== refreshToken) {
+    return next(new CustomError("Invalid refresh token", 403));
+  }
+  let accessToken;
+  if (user.role === "Admin") {
+    accessToken = createAdminAccessToken(user._id, user.role, "1h");
+  } else {
+    accessToken = createAccessToken(user._id, user.role, "1h");
+  }
+
+  res.status(200).json({ message: "Token refreshed", token: accessToken });
 };
-
 
 // Controller to handle logout
 const logout = async (req, res, next) => {
@@ -189,12 +191,12 @@ const logout = async (req, res, next) => {
     httpOnly: false,
     secure: true,
     sameSite: "none",
-  })
+  });
   res.clearCookie("user", {
     httpOnly: false,
     secure: true,
     sameSite: "none",
-  })
+  });
 
   res
     .status(200)
@@ -202,7 +204,6 @@ const logout = async (req, res, next) => {
 };
 
 const adminLogout = async (req, res, next) => {
-  
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: true,
@@ -212,15 +213,22 @@ const adminLogout = async (req, res, next) => {
     httpOnly: false,
     secure: true,
     sameSite: "none",
-  })
+  });
   res.clearCookie("user", {
     httpOnly: false,
     secure: true,
     sameSite: "none",
-  })
+  });
   res
     .status(200)
     .json({ status: "success", message: "Admin logged out successfully" });
 };
 
-export { loginUser, registerUser, adminLogin, refreshingToken, adminLogout, logout };
+export {
+  loginUser,
+  registerUser,
+  adminLogin,
+  refreshingToken,
+  adminLogout,
+  logout,
+};
