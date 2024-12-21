@@ -99,7 +99,10 @@ useEffect(() => {
             className=" group relative"
           >
             {currentUser == null ? (
-              <p className="bg-sofaBlue text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
+              <p onClick={()=>{
+                console.log("user",Cookies.get("user")) 
+                console.log("pub",Cookies.get("pub")) 
+              }} className="bg-sofaBlue text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
                 Login
               </p>
             ) : (
