@@ -95,7 +95,7 @@ const loginUser = async (req, res, next) => {
     secure: true,
     sameSite: "Lax",
     path:'/',
-    domain:"furniche-zeta.vercel.app"
+    domain:".vercel.app"
   });
 
   res.json({
