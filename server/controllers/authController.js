@@ -84,23 +84,11 @@ const loginUser = async (req, res, next) => {
     sameSite: "none",
   });
 
-  res.cookie("token", accessToken, {
-    httpOnly: false,
-    secure: true,
-    sameSite: "none",
-  });
-
-  res.cookie("user", JSON.stringify(userDetails), {
-    httpOnly: false,
-    secure: true,
-    sameSite: "none",
-    path:'/',
-    domain:"furniche-zeta.vercel.app"
-  });
-
   res.json({
     status: "success",
     message: "Logged in successfully",
+    token: accessToken,
+    user: userDetails,
   });
 };
 

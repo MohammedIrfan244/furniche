@@ -6,12 +6,12 @@ import { useNavigate } from "react-router-dom";
 
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true, // Ensures cookies are sent
+  withCredentials: true, 
 });
 
 axiosInstance.interceptors.request.use(
   (config) => {
-    const accessToken = Cookies.get("token");
+    const accessToken = localStorage.getItem("token");
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
     }
@@ -41,10 +41,7 @@ axiosInstance.interceptors.response.use(
         );
         const newAccessToken = response.data.token;
 
-        Cookies.set("token", newAccessToken, {
-          secure: true,
-          sameSite: "None",
-        });
+       localStorage.setItem("token", newAccessToken);
         axiosInstance.defaults.headers.common[
           "Authorization"
         ] = `Bearer ${newAccessToken}`;
@@ -54,9 +51,9 @@ axiosInstance.interceptors.response.use(
       } catch (err) {
         console.error("Error refreshing token:", err);
         toast.error("Session expired. Please log in again.");
-        Cookies.remove("token");
+        localStorage.removeItem("token");
         Cookies.remove("refreshToken");
-        Cookies.remove("user");
+        localStorage.removeItem("user");
 
         const navigate = useNavigate();
         navigate("/login");

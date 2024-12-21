@@ -1,11 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
 import axiosInstance from "../utilities/axiosInstance";
 
-const userCookie = Cookies.get("user");
-const currentUser = userCookie ? JSON.parse(userCookie) : null;
+const user=localStorage.getItem("user");
+const currentUser = user ? JSON.parse(user) : null;
 
 const INITIAL_STATE = {
   loading: false,

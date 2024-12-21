@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../Redux/userSlice";
-import Cookies from "js-cookie";
 
 function Login() {
   const dispatch = useDispatch();
@@ -33,10 +32,11 @@ function Login() {
         loginData,
         { withCredentials: true }
       );
-      const userCookie = Cookies.get("user");
-      const currentUser = userCookie ? JSON.parse(userCookie) : null;
+      const currentUser = response.data.user;
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(currentUser));
       dispatch(setCurrentUser(currentUser));
-      console.log("current user", currentUser);
       toast.success(response.data.message);
       setLoading(false);
       navigate("/");
