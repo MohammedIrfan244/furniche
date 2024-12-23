@@ -180,16 +180,6 @@ const logout = async (req, res, next) => {
     secure: true,
     sameSite: "none",
   });
-  res.clearCookie("token", {
-    httpOnly: false,
-    secure: true,
-    sameSite: "none",
-  });
-  res.clearCookie("user", {
-    httpOnly: false,
-    secure: true,
-    sameSite: "none",
-  });
 
   res
     .status(200)
