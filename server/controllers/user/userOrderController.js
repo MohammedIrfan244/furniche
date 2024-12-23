@@ -92,8 +92,8 @@ const stripePayment = async (req, res, next) => {
     payment_method_types: ["card"],
     line_items: lineItems,
     mode: "payment",
-    success_url: `http://localhost:5173/success/{CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:5173/cancel`,
+    success_url: `${process.env.CLIENT_URL}/success/{CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.CLIENT_URL}/cancel`,
   });
 
   const newOrder = await new Order({
