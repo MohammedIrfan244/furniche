@@ -46,6 +46,7 @@ const registerUser = async (req, res, next) => {
     profile,
   });
   await newUser.save();
+  console.log("User registered successfully", newUser);
   res
     .status(201)
     .json({ status: "success", message: "Registered successfully" });
@@ -72,6 +73,7 @@ const loginUser = async (req, res, next) => {
   user.refreshToken = refreshToken;
   await user.save();
 
+  console.log("User logged in successfully", user);
   const userDetails = {
     name: user.name,
     email: user.email,
