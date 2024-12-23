@@ -30,7 +30,11 @@ function ProductItems({ id, name, price, image, rating }) {
   };
 
   useEffect(() => {
-    setIsInWishlist(userWishlist.some((item) => item._id === id));
+    if(!currentUser){
+      setIsInWishlist(false);
+    }else{
+      setIsInWishlist(userWishlist.find((item) => item._id === id));
+    }
   }, [id, userWishlist, currentUser]);
 
   useEffect(() => {

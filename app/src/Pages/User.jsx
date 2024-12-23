@@ -54,6 +54,8 @@ function User() {
         )
         .then((response) => {
           toast.success(response.data.message);
+          localStorage.removeItem("token");
+          localStorage.removeItem("user");
           dispatch(setIsAdmin(false));
           dispatch(setCurrentUser(null));
           navigate("/");
