@@ -3,6 +3,7 @@ import axiosErrorManager from "../utilities/axiosErrorManager";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utilities/axiosInstance";
+import { LuPlus, LuEye, LuX } from "react-icons/lu";
 
 function AdminProduct() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function AdminProduct() {
     category: "",
   });
   const [image, setImage] = useState(null);
-  const [showAddProduct, setShowAddProduct] = useState(false); 
+  const [showAddProduct, setShowAddProduct] = useState(false);
 
   const addNewProduct = async () => {
     try {
@@ -30,11 +31,13 @@ function AdminProduct() {
       formData.append("description", newProduct.description);
       formData.append("review", newProduct.review);
       formData.append("category", newProduct.category);
-      formData.append("image", image);
+      if (image) {
+        formData.append("image", image);
+      }
 
       const response = await axiosInstance.post(`/admin/products`, formData);
 
-      toast.success(response.data.message);
+      toast.success(response.data.message || "Product published successfully");
       setLoading(false);
       handleCategory({ target: { value: "all" } });
       setNewProduct({
@@ -45,6 +48,7 @@ function AdminProduct() {
         review: "",
         category: "",
       });
+      setImage(null);
       setShowAddProduct(false);
     } catch (error) {
       toast.error(axiosErrorManager(error));
@@ -58,8 +62,10 @@ function AdminProduct() {
 
     try {
       setLoading(true);
-      const response = await axiosInstance.get(`/admin/products/category/${selectedCategory}`);
-      setProducts(response.data.data);
+      const response = await axiosInstance.get(
+        `/admin/products/category/${selectedCategory}`
+      );
+      setProducts(response.data?.data || []);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -71,229 +77,266 @@ function AdminProduct() {
     handleCategory({ target: { value: "all" } });
   }, []);
 
+  const categories = [
+    { label: "All Items", value: "all" },
+    { label: "Sofas", value: "sofas" },
+    { label: "Chairs", value: "chairs" },
+    { label: "Tables", value: "tables" },
+    { label: "Beds", value: "bed" },
+    { label: "Lamps", value: "lamps" },
+  ];
 
   return (
-    <div className={`w-[100%] min-h-[100vh] ${loading && "flex justify-center items-center"}`}>
-      {loading && <div className="loader h-[100vh] w-[100%]"></div>}
-      {!loading && (
-        <div className="flex flex-col space-y-4 p-4">
-          <div className="flex justify-between items-center bg-[#F9FCFA] shadow-sm p-4 rounded-md">
-            <h1 className="text-xl font-semibold">Categories</h1>
-            <div className="flex space-x-4">
-              <label className="text-xs">
-                <input
-                  type="radio"
-                  name="category"
-                  value="all"
-                  checked={category === "all"}
-                  onChange={handleCategory}
-                />
-                ALL
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-1">
+            Studio Portfolio
+          </span>
+          <h2 className="font-serif text-3xl text-obsidian font-normal">
+            Catalog Management ({products?.length || 0})
+          </h2>
+        </div>
+
+        <button
+          onClick={() => setShowAddProduct(!showAddProduct)}
+          className="inline-flex items-center gap-2 bg-obsidian text-canvas px-4 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition"
+        >
+          {showAddProduct ? (
+            <>
+              <LuX className="w-3.5 h-3.5 text-champagne" />
+              <span>Close Entry Form</span>
+            </>
+          ) : (
+            <>
+              <LuPlus className="w-3.5 h-3.5 text-champagne" />
+              <span>Add New Creation</span>
+            </>
+          )}
+        </button>
+      </div>
+
+      {/* Category Filter Chips */}
+      <div className="flex flex-wrap items-center gap-2 bg-white p-3 border border-stone-200/80 shadow-sm">
+        {categories.map((cat) => (
+          <button
+            key={cat.value}
+            onClick={() => handleCategory({ target: { value: cat.value } })}
+            className={`text-[11px] uppercase tracking-wider px-3.5 py-1.5 transition font-medium ${
+              category === cat.value
+                ? "bg-obsidian text-canvas"
+                : "text-stone-600 hover:text-obsidian hover:bg-stone-100"
+            }`}
+          >
+            {cat.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Product Creation Drawer / Form */}
+      {showAddProduct && (
+        <div className="bg-white border border-stone-200 p-6 sm:p-8 shadow-atelier space-y-4">
+          <h3 className="font-serif text-xl text-obsidian font-normal border-b border-stone-100 pb-3">
+            Register New Creation
+          </h3>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                Product Title
               </label>
-              <label className="text-xs">
-                <input
-                  type="radio"
-                  name="category"
-                  value="bed"
-                  checked={category === "bed"}
-                  onChange={handleCategory}
-                />
-                BEDS
+              <input
+                type="text"
+                placeholder="Title"
+                value={newProduct.name}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, name: e.target.value })
+                }
+                className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                Rating (1 &mdash; 5)
               </label>
-              <label className="text-xs">
-                <input
-                  type="radio"
-                  name="category"
-                  value="lamps"
-                  checked={category === "lamps"}
-                  onChange={handleCategory}
-                />
-                LAMPS
-              </label>
-              <label className="text-xs">
-                <input
-                  type="radio"
-                  name="category"
-                  value="tables"
-                  checked={category === "tables"}
-                  onChange={handleCategory}
-                />
-                TABLES
-              </label>
-              <label className="text-xs">
-                <input
-                  type="radio"
-                  name="category"
-                  value="chairs"
-                  checked={category === "chairs"}
-                  onChange={handleCategory}
-                />
-                CHAIRS
-              </label>
-              <label className="text-xs">
-                <input
-                  type="radio"
-                  name="category"
-                  value="sofas"
-                  checked={category === "sofas"}
-                  onChange={handleCategory}
-                />
-                SOFAS
-              </label>
+              <input
+                type="number"
+                placeholder="5"
+                min={1}
+                max={5}
+                value={newProduct.rating}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, rating: e.target.value })
+                }
+                className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian"
+              />
             </div>
           </div>
 
-          <div className="flex justify-between items-center bg-[#F9FCFA] shadow-sm p-4 rounded-md">
-            <h1 className="text-xl font-semibold">Add Product</h1>
-            <button
-              onClick={() => setShowAddProduct(!showAddProduct)} // Toggle the Add Product form
-              className="bg-blue-500 text-white text-xs px-4 py-2 rounded-md"
-            >
-              {showAddProduct ? "Hide Form" : "Show Form"}
-            </button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                Price (INR/USD)
+              </label>
+              <input
+                type="number"
+                placeholder="Price"
+                value={newProduct.price}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, price: e.target.value })
+                }
+                className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                Category
+              </label>
+              <select
+                value={newProduct.category}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, category: e.target.value })
+                }
+                className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian"
+              >
+                <option value="">Select Category</option>
+                <option value="sofas">Sofas</option>
+                <option value="chairs">Chairs</option>
+                <option value="tables">Tables</option>
+                <option value="bed">Beds</option>
+                <option value="lamps">Lamps</option>
+              </select>
+            </div>
           </div>
 
-          {showAddProduct && (
-    <div className="bg-[#F9FCFA] shadow-md p-4 rounded-lg max-w-4xl mx-auto space-y-3">
-  
-  
-  <div className="grid grid-cols-2 gap-4">
-    <div>
-      <input
-        type="text"
-        placeholder="Name"
-        value={newProduct.name}
-        onChange={(e) =>
-          setNewProduct({ ...newProduct, name: e.target.value })
-        }
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-10"
-      />
-    </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                Specification Notes
+              </label>
+              <textarea
+                rows="3"
+                placeholder="Architectural dimensions and materials..."
+                value={newProduct.description}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, description: e.target.value })
+                }
+                className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian resize-none"
+              />
+            </div>
 
-    <div>
-      <input
-        type="number"
-        placeholder="Rating (1-5)"
-        value={newProduct.rating}
-        min={1}
-        max={5}
-        onChange={(e) =>
-          setNewProduct({ ...newProduct, rating: e.target.value })
-        }
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-10"
-      />
-    </div>
-  </div>
+            <div>
+              <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                Client Review Snippet
+              </label>
+              <textarea
+                rows="3"
+                placeholder="Testimonial..."
+                value={newProduct.review}
+                onChange={(e) =>
+                  setNewProduct({ ...newProduct, review: e.target.value })
+                }
+                className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian resize-none"
+              />
+            </div>
+          </div>
 
-  
-  <div className="grid grid-cols-2 gap-4">
-    <div>
-      <input
-        type="number"
-        placeholder="Price"
-        value={newProduct.price}
-        onChange={(e) =>
-          setNewProduct({ ...newProduct, price: e.target.value })
-        }
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-10"
-      />
-    </div>
+          <div>
+            <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+              Studio Image Asset
+            </label>
+            <input
+              type="file"
+              onChange={(e) => setImage(e.target.files[0])}
+              className="w-full bg-canvas-subtle p-2 text-xs border border-stone-200"
+            />
+          </div>
 
-    <div>
-      <select
-        value={newProduct.category}
-        onChange={(e) =>
-          setNewProduct({ ...newProduct, category: e.target.value })
-        }
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-10"
-      >
-        <option value="">Select Category</option>
-        <option value="bed">Beds</option>
-        <option value="lamps">Lamps</option>
-        <option value="tables">Tables</option>
-        <option value="chairs">Chairs</option>
-        <option value="sofas">Sofas</option>
-      </select>
-    </div>
-  </div>
+          <div className="pt-2">
+            <button
+              onClick={addNewProduct}
+              disabled={loading}
+              className="bg-obsidian text-canvas px-6 py-2.5 text-xs uppercase tracking-widest font-medium hover:bg-stone-800 transition"
+            >
+              {loading ? "Publishing..." : "Publish Creation to Catalog"}
+            </button>
+          </div>
+        </div>
+      )}
 
-  
-  <div className="grid grid-cols-2 gap-4">
-    <div>
-      <textarea
-        placeholder="Description"
-        value={newProduct.description}
-        onChange={(e) =>
-          setNewProduct({ ...newProduct, description: e.target.value })
-        }
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-10"
-      ></textarea>
-    </div>
-
-    <div>
-      <textarea
-        placeholder="Review"
-        value={newProduct.review}
-        onChange={(e) =>
-          setNewProduct({ ...newProduct, review: e.target.value })
-        }
-        className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-10"
-      ></textarea>
-    </div>
-  </div>
-
-  
-  <div>
-    <input
-      type="file"
-      onChange={(e) => setImage(e.target.files[0])}
-      className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 h-10"
-    />
-  </div>
-
-  
-  <div>
-    <button
-      onClick={addNewProduct}
-      className="w-full bg-blue-500 text-white text-lg font-semibold py-3 rounded-md hover:bg-blue-600 transition"
-    >
-      {loading ? "Adding..." : "Add Product"}
-    </button>
-  </div>
-</div>
-
-    )}
-
-          <div className="overflow-x-auto max-h-screen scrollbar-thin w-full text-sm">
-            <table className="table-auto border-collapse border bg-[#F9FCFA] border-gray-300 w-full">
-              <thead>
-                <tr className="bg-gray-100">
-                  <th className="border border-gray-300 p-2">Id</th>
-                  <th className="border border-gray-300 p-2">Image</th>
-                  <th className="border border-gray-300 p-2">Name</th>
-                  <th className="border border-gray-300 p-2">Category</th>
-                  <th className="border border-gray-300 p-2">Rating</th>
-                  <th className="border border-gray-300 p-2">Price</th>
-                  <th className="border border-gray-300 p-2">Action</th>
+      {/* Catalog Table */}
+      {loading ? (
+        <div className="h-64 flex justify-center items-center">
+          <span className="loader" />
+        </div>
+      ) : (
+        <div className="bg-white border border-stone-200/80 shadow-sm overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-xs">
+              <thead className="bg-stone-50 border-b border-stone-200 text-stone-500 uppercase tracking-widest font-medium text-[10px]">
+                <tr>
+                  <th className="py-3.5 px-5">Piece</th>
+                  <th className="py-3.5 px-5">Category</th>
+                  <th className="py-3.5 px-5">Rating</th>
+                  <th className="py-3.5 px-5">Price</th>
+                  <th className="py-3.5 px-5">Status</th>
+                  <th className="py-3.5 px-5 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-stone-100">
                 {products?.map((product, index) => (
-                  <tr key={index}>
-                    <td className="border border-gray-300 p-2">{product._id}</td>
-                    <td className="border border-gray-300 p-2">
-                      <img
-                        src={product.image}
-                        alt={product.name}
-                        className="w-[70px] h-[50px] object-cover"
-                      />
+                  <tr key={product._id || index} className="hover:bg-canvas-subtle transition-colors">
+                    <td className="py-3 px-5">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-14 bg-stone-100 overflow-hidden border border-stone-200 shrink-0">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-medium text-obsidian text-sm line-clamp-1">
+                            {product.name}
+                          </p>
+                          <span className="font-mono text-[10px] text-stone-400">
+                            #{product._id?.slice(-6)}
+                          </span>
+                        </div>
+                      </div>
                     </td>
-                    <td className="border border-gray-300 p-2">{product.name}</td>
-                    <td className="border border-gray-300 p-2">{product.category}</td>
-                    <td className="border border-gray-300 p-2">{product.rating}</td>
-                    <td className="border border-gray-300 p-2">{product.price}</td>
-                    <td className="border border-gray-300 p-2"> 
-                      <button className={`${product.isDeleted?"bg-red-500":"bg-blue-500"} text-white text-xs px-4 py-2 rounded-md`} onClick={() => navigate(`/admin/adminpanel/productaction/${product?._id}`)}>View</button>
+                    <td className="py-3 px-5 text-stone-600 uppercase tracking-wider text-[11px]">
+                      {product.category}
+                    </td>
+                    <td className="py-3 px-5 text-champagne font-semibold">
+                      {product.rating}.0
+                    </td>
+                    <td className="py-3 px-5 font-semibold text-obsidian">
+                      ${product.price}
+                    </td>
+                    <td className="py-3 px-5">
+                      <span
+                        className={`text-[10px] uppercase tracking-widest px-2 py-0.5 font-medium border ${
+                          product.isDeleted
+                            ? "bg-red-50 text-red-600 border-red-200"
+                            : "bg-stone-100 text-stone-700 border-stone-200"
+                        }`}
+                      >
+                        {product.isDeleted ? "Archived" : "Live"}
+                      </span>
+                    </td>
+                    <td className="py-3 px-5 text-right">
+                      <button
+                        onClick={() =>
+                          navigate(`/admin/adminpanel/productaction/${product?._id}`)
+                        }
+                        className="inline-flex items-center gap-1.5 border border-stone-300 text-obsidian hover:border-obsidian px-3 py-1.5 text-[11px] uppercase tracking-wider transition"
+                      >
+                        <LuEye className="w-3 h-3 text-champagne" />
+                        <span>Manage</span>
+                      </button>
                     </td>
                   </tr>
                 ))}

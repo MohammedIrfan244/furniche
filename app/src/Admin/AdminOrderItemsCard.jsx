@@ -3,28 +3,27 @@ import { Link } from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 function AdminOrderItemCards({ image, name, price, count, id }) {
-  const { currency } = useSelector((state)=>state.public)
-  
+  const { currency } = useSelector((state) => state.public);
+
   return (
-    <div className="flex justify-between bg-white p-1 w-full items-center">
-      <div className="flex gap-4">
-        <Link to={`/product/${id}`}>
+    <div className="flex justify-between items-center bg-canvas-subtle p-3 border border-stone-200">
+      <div className="flex items-center gap-3">
+        <Link to={`/product/${id}`} className="shrink-0">
           <img
-            className="h-[60px] w-[100px] object-cover cartCard"
-            src={image}
-            alt="image"
+            className="h-12 w-14 object-cover border border-stone-200"
+            src={image || "/default-product.png"}
+            alt={name}
           />
         </Link>
-        <div className="flex flex-col justify-between pb-[5%] text-xs">
-          <p className="whitespace-nowrap">{name}</p>
-          <p className="font-bold">
-            {currency}
-            {price}
+        <div className="space-y-0.5 text-xs">
+          <p className="font-serif text-obsidian line-clamp-1">{name}</p>
+          <p className="font-sans font-semibold text-obsidian">
+            {currency || "$"} {price}
           </p>
         </div>
       </div>
-      <div className="flex justify-between">
-        <p className="text-xs">{count}</p>
+      <div className="text-xs text-stone-500 font-medium">
+        Qty: {count}
       </div>
     </div>
   );

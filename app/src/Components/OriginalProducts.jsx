@@ -15,7 +15,7 @@ function OriginalProducts() {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}/public/products/collection/original`
       );
-      setOriginalProduct(response.data?.data);
+      setOriginalProduct(response.data?.data || []);
       setLoading(false);
     } catch (error) {
       toast.error(axiosErrorManager(error));
@@ -28,45 +28,61 @@ function OriginalProducts() {
   }, []);
 
   return (
-    <div className="w-full mt-20">
+    <section className="w-full max-w-7xl mx-auto px-4 sm:px-8 py-12 sm:py-16">
       {loading ? (
-        <div className="h-[20vh] flex justify-center items-center">
-          <span className="loader"></span>
+        <div className="h-48 flex justify-center items-center">
+          <span className="loader" />
         </div>
       ) : (
-        <div
-          className="flex flex-col items-center w-full justify-around"
-        >
-          <motion.h1
-           initial={{ opacity: 0, y: -50 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.5 }}
-           className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
-            IN HOUSE DESIGNS
-          </motion.h1>
-          <motion.p
-          initial={{ opacity: 0, y: -30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-           className="text-xs sm:text-sm md:text-base text-gray-500 mt-5 font-poppins">
-            Explore our exclusive designs, showcasing elegance and craftsmanship.
-          </motion.p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 md:gap-6 mt-10">
+        <div className="flex flex-col items-center">
+          {/* Section Header */}
+          <div className="text-center max-w-xl space-y-2 mb-10 sm:mb-12">
+            <motion.span
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block"
+            >
+              Exclusive Craftsmanship
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="font-serif text-2xl sm:text-3xl md:text-4xl text-obsidian font-normal tracking-tight"
+            >
+              Atelier In-House Editions
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-xs sm:text-sm text-stone-500 font-light"
+            >
+              Signature pieces conceptualized in our studio and crafted in limited series with natural ash, solid walnut, and textural linen.
+            </motion.p>
+          </div>
+
+          {/* Product Grid */}
+          <div className="w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
             {originalProduct.map((item, index) => (
               <ProductItems
-                key={index}
+                key={item._id || index}
                 id={item._id}
                 image={item.image}
                 name={item.name}
                 price={item.price}
-                rating={item.rating}
+                rating={item.rating || item.averageRating || 0}
                 original={item.original}
               />
             ))}
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

@@ -11,29 +11,29 @@ import {
 import { motion } from "framer-motion";
 
 // eslint-disable-next-line react/prop-types
-function ProductItems({ id, name, price, image, rating }) {
+function ProductItems({ id, name, price, image, rating, original }) {
   const { currency } = useSelector((state) => state.public);
   const { userWishlist, currentUser } = useSelector((state) => state.user);
   const [isInWishlist, setIsInWishlist] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const addToWishListHandler = (id) => {
+  const addToWishListHandler = (productId) => {
     if (!currentUser) {
       return navigate("/login");
     }
     if (isInWishlist) {
-      dispatch(removeFromWishList(id));
+      dispatch(removeFromWishList(productId));
     } else {
-      dispatch(addToWishList(id));
+      dispatch(addToWishList(productId));
     }
   };
 
   useEffect(() => {
-    if(!currentUser){
+    if (!currentUser) {
       setIsInWishlist(false);
-    }else{
-      setIsInWishlist(userWishlist.find((item) => item._id === id));
+    } else {
+      setIsInWishlist(userWishlist?.some((item) => item._id === id));
     }
   }, [id, userWishlist, currentUser]);
 
@@ -46,42 +46,71 @@ function ProductItems({ id, name, price, image, rating }) {
 
   return (
     <motion.div
-      initial={{ y: 50, opacity: 0 }}
+      initial={{ y: 30, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="transition w-44 sm:w-48 md:w-56 lg:w-60 hover:shadow-2xl shadow-gray-600 overflow-hidden relative bg-white"
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="group relative flex flex-col bg-white border border-stone-200/70 overflow-hidden transition-all duration-500 hover:border-stone-400 hover:shadow-atelier-hover"
     >
-      <Link to={`/product/${id}`}>
+      {/* Image Showcase Container */}
+      <Link
+        to={`/product/${id}`}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="aspect-[4/5] w-full overflow-hidden bg-stone-100 relative block"
+      >
         <img
-          className="hover:scale-105 transition-all w-full h-52 object-cover"
+          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           src={image}
-          alt="image"
-          onClick={() => window.scrollTo(0, 0)}
-          />
+          alt={name}
+          loading="lazy"
+        />
+
+        {/* In-House / Atelier Badge */}
+        {original && original !== "false" && (
+          <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm border border-stone-200 text-obsidian text-[9px] uppercase tracking-[0.2em] font-medium px-2 py-0.5">
+            Atelier Edition
+          </span>
+        )}
       </Link>
-      <div className="px-3 h-36 py-5 gap-6 justify-end flex flex-col">
-        <p className="text-sm font-poppins font-semibold text-gray-800 truncate">
-          {name}
-        </p>
-        <div className="flex justify-between items-center">
-          <p className="text-sm font-semibold text-sofaBlue">
-            {currency} {price}
-          </p>
-          <p className="text-xs flex text-[#D4AF37]">
-            {Array.from({ length: rating }).map((_, index) => (
-              <IoMdStar key={index} />
-            ))}
-          </p>
-        </div>
-      </div>
+
+      {/* Wishlist Action Button */}
       <button
         onClick={() => addToWishListHandler(id)}
-        className={`absolute top-2 right-2 p-1 rounded-full transition-colors duration-200 ${
-          isInWishlist ? "text-red-500" : "text-gray-400"
-        } hover:text-red-500`}
-        >
-       <FaHeart />
+        aria-label="Save to Wishlist"
+        className={`absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 backdrop-blur-sm ${
+          isInWishlist
+            ? "bg-white text-red-500 shadow-sm"
+            : "bg-white/80 text-stone-400 hover:text-red-500 hover:bg-white"
+        }`}
+      >
+        <FaHeart className="w-3.5 h-3.5" />
       </button>
+
+      {/* Card Content & Details */}
+      <div className="p-4 flex flex-col justify-between flex-grow gap-3 bg-white">
+        <Link
+          to={`/product/${id}`}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <h3 className="font-sans text-xs sm:text-sm font-medium text-obsidian tracking-normal line-clamp-1 group-hover:text-champagne transition-colors duration-200">
+            {name}
+          </h3>
+        </Link>
+
+        <div className="flex items-center justify-between pt-1 border-t border-stone-100">
+          <p className="font-sans text-xs sm:text-sm font-semibold text-obsidian tracking-tight">
+            {currency || "$"} {price}
+          </p>
+
+          {rating > 0 && (
+            <div className="flex items-center gap-0.5 text-champagne text-[11px]">
+              {Array.from({ length: Math.min(rating, 5) }).map((_, index) => (
+                <IoMdStar key={index} />
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
     </motion.div>
   );
 }

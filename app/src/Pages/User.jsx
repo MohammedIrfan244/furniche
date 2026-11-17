@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import axiosInstance from "../utilities/axiosInstance";
+import { LuPackage, LuLogOut, LuPen, LuChevronRight } from "react-icons/lu";
 
 function User() {
   const { currentUser } = useSelector((state) => state.user);
@@ -26,12 +27,11 @@ function User() {
 
   const fetchUser = async () => {
     try {
-      const response = await axiosInstance.get("/users/orders");
       setLoading(true);
-      setOrders(response.data.data);
+      const response = await axiosInstance.get("/users/orders");
+      setOrders(response.data.data || []);
     } catch (err) {
       toast.error(axiosErrorManager(err));
-      setLoading(false);
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,7 @@ function User() {
   }, []);
 
   const handleLogOut = () => {
-    const checkLogout = confirm("Are you sure you want to logout");
+    const checkLogout = confirm("Are you sure you wish to sign out?");
     if (checkLogout) {
       setLoading(true);
       axios
@@ -53,7 +53,7 @@ function User() {
           { withCredentials: true }
         )
         .then((response) => {
-          toast.success(response.data.message);
+          toast.success(response.data.message || "Signed out");
           localStorage.removeItem("token");
           localStorage.removeItem("user");
           dispatch(setIsAdmin(false));
@@ -81,17 +81,18 @@ function User() {
     if (updateForm.profile) {
       formData.append("profile", updateForm.profile);
     }
-    
-    axiosInstance.put("/users/update", formData)
+
+    axiosInstance
+      .put("/users/update", formData)
       .then((res) => {
         dispatch(setCurrentUser(res.data.data));
-        toast.success(res.data.message);
+        toast.success(res.data.message || "Profile updated");
+        setIsUpdating(false);
       })
       .catch((err) => {
         toast.error(axiosErrorManager(err));
       })
       .finally(() => {
-        setIsUpdating(false);
         setLoading(false);
       });
   };
@@ -109,153 +110,216 @@ function User() {
   };
 
   return (
-    <div className="w-full flex flex-col sm:flex-row justify-between pt-[26%] sm:pt-[8%] px-5 gap-5 sm:gap-10">
-     
-      <div className="w-full sm:w-[40%] bg-white rounded-lg shadow-md p-6">
-        <h1 className="text-lg sm:text-xl font-semibold">
-          User Details
-        </h1>
-        <div className="flex flex-col items-center gap-6">
-          <div className="w-36 h-36 rounded-full overflow-hidden border-2 border-gray-300">
-            <img
-              src={currentUser?.profile || "/default-profile.png"}
-              alt="User Profile"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="w-full">
-            <div className="flex justify-between items-center text-gray-600 mb-4">
-              <span className="font-semibold">Name:</span>
-              <span>{currentUser?.name}</span>
-            </div>
-            <div className="flex justify-between items-center text-gray-600 mb-4">
-              <span className="font-semibold">Email:</span>
-              <span>{currentUser?.email}</span>
-            </div>
-            <div className="flex justify-between items-center text-gray-600">
-              <span className="font-semibold">Mobile:</span>
-              <span>{currentUser?.mobile}</span>
-            </div>
-          </div>
-          <div className="flex gap-4 w-full mt-4">
-            <button
-              className="flex-1 bg-sofaBlue hover:scale-105 text-white py-2 rounded-lg transition duration-300"
-              onClick={() => setIsUpdating(true)}
-            >
-              Edit
-            </button>
-            <button
-              className="flex-1 bg-sofaBlue hover:scale-105 text-white py-2 rounded-lg transition duration-300"
-              onClick={handleLogOut}
-            >
-              Logout
-            </button>
-          </div>
+    <div className="w-full min-h-screen bg-canvas text-obsidian">
+      <div className="pt-28 sm:pt-36 pb-20 max-w-7xl mx-auto px-4 sm:px-8">
+        {/* Header */}
+        <div className="border-b border-stone-200/80 pb-6 mb-10">
+          <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-2">
+            Client Dossier
+          </span>
+          <h1 className="font-serif text-3xl sm:text-4xl text-obsidian font-normal tracking-tight">
+            Account & Acquisitions
+          </h1>
         </div>
-      </div>
 
-      {isUpdating && (
-        <div className="w-full sm:w-[40%] bg-gray-50 rounded-lg shadow-md p-6">
-          <h2  className="text-lg sm:text-xl font-semibold">
-            Update Your Details
-          </h2>
-          <div className="flex flex-col gap-4">
-            <input
-              type="text"
-              name="name"
-              value={updateForm.name}
-              placeholder="Name"
-              onChange={handleInputChange}
-              className="border p-3 rounded w-full"
-            />
-            <input
-              type="number"
-              name="mobile"
-              value={updateForm.mobile}
-              placeholder="Mobile"
-              onChange={handleInputChange}
-              className="border p-3 rounded w-full"
-            />
-            <input
-              name="profile"
-              type="file"
-              accept="image/jpeg, image/png, image/jpeg"
-              onChange={handleFileChange}
-              className="border p-3 rounded w-full"
-            />
-            <input
-              type="password"
-              name="password"
-              value={updateForm.password}
-              placeholder="New Password (optional)"
-              onChange={handleInputChange}
-              className="border p-3 rounded w-full"
-            />
-          </div>
-          <div className="flex gap-4 mt-4">
-            <button
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition duration-300"
-              onClick={updateUser}
-            >
-              Update
-            </button>
-            <button
-              className="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded-lg transition duration-300"
-              onClick={() => setIsUpdating(false)}
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          {/* Profile Overview Card (4 cols) */}
+          <div className="lg:col-span-4 bg-white border border-stone-200/80 p-6 sm:p-8 shadow-atelier space-y-6">
+            <div className="flex flex-col items-center text-center space-y-4">
+              <div className="w-24 h-24 rounded-full overflow-hidden border border-stone-200 p-1">
+                <img
+                  src={currentUser?.profile || "/default-profile.png"}
+                  alt="Profile"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
 
-      <div className="w-full sm:w-[60%]">
-        <h1  className="text-lg sm:text-xl font-semibold">
-          Orders
-        </h1>
-        {loading ? (
-          <p className="text-center text-gray-500">Loading...</p>
-        ) : orders.length > 0 ? (
-          <div className="space-y-4">
-            {orders.map((order) => (
-              <div
-                key={order._id}
-                className="border rounded-lg p-4 shadow-md hover:shadow-lg cursor-pointer transition duration-300"
-                onClick={() => navigate(`/orders/${order._id}`)}
-              >
-                <h3 className="text-lg font-bold text-gray-800">
-                  Order ID: {order._id}
+              <div>
+                <h3 className="font-serif text-xl text-obsidian font-normal">
+                  {currentUser?.name}
                 </h3>
-                <div className="mt-2 space-y-2">
-                  {order?.products?.map((product) => (
-                    <div
-                      key={product.productId?._id}
-                      className="flex justify-between items-center text-gray-600"
+                <p className="text-xs text-stone-500 font-light">
+                  {currentUser?.email}
+                </p>
+                {currentUser?.mobile && (
+                  <p className="text-xs text-stone-400 mt-0.5">
+                    {currentUser.mobile}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="border-t border-stone-100 pt-4 flex flex-col gap-2.5">
+              <button
+                onClick={() => setIsUpdating(!isUpdating)}
+                className="w-full inline-flex items-center justify-center gap-2 border border-stone-300 text-obsidian py-2.5 text-xs uppercase tracking-[0.16em] font-medium hover:border-obsidian transition"
+              >
+                <LuPen className="w-3.5 h-3.5 text-champagne" />
+                <span>{isUpdating ? "Close Editor" : "Edit Profile"}</span>
+              </button>
+
+              <button
+                onClick={handleLogOut}
+                className="w-full inline-flex items-center justify-center gap-2 text-stone-500 hover:text-red-600 py-2 text-xs uppercase tracking-[0.16em] font-medium transition"
+              >
+                <LuLogOut className="w-3.5 h-3.5" />
+                <span>Sign Out</span>
+              </button>
+            </div>
+
+            {/* Profile Update Form Drawer */}
+            {isUpdating && (
+              <div className="border-t border-stone-200 pt-6 space-y-4">
+                <h4 className="font-serif text-base text-obsidian font-normal">
+                  Update Account Details
+                </h4>
+
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={updateForm.name}
+                      onChange={handleInputChange}
+                      className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                      Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      name="mobile"
+                      value={updateForm.mobile}
+                      onChange={handleInputChange}
+                      className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                      Avatar Image
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="w-full bg-canvas-subtle p-2 text-xs text-stone-500 border border-stone-200"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] uppercase tracking-widest text-stone-500 mb-1">
+                      New Password (Optional)
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      placeholder="Leave blank to retain"
+                      value={updateForm.password}
+                      onChange={handleInputChange}
+                      className="w-full bg-canvas-subtle p-2.5 border border-stone-200 text-xs focus:outline-none focus:border-obsidian"
+                    />
+                  </div>
+
+                  <div className="pt-2 flex gap-2">
+                    <button
+                      onClick={updateUser}
+                      disabled={loading}
+                      className="flex-1 bg-obsidian text-canvas py-2.5 text-[11px] uppercase tracking-[0.16em] font-medium hover:bg-stone-800 transition"
                     >
-                      <span>{product?.productId?.name}</span>
-                      <span>x{product?.quantity}</span>
-                      <span>${product?.productId?.price}</span>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 text-gray-500">
-                  <p>Purchased Date: {order?.purchasedDate}</p>
-                  <p>Shipping Status: {order?.shippingStatus}</p>
-                  <p>Payment Status: {order?.paymentStatus}</p>
-                  <p>Total Amount: ${order?.totalAmount}</p>
+                      Save Changes
+                    </button>
+                    <button
+                      onClick={() => setIsUpdating(false)}
+                      className="px-4 border border-stone-200 text-stone-600 text-[11px] uppercase tracking-wider hover:bg-stone-50"
+                    >
+                      Cancel
+                    </button>
+                  </div>
                 </div>
               </div>
-            ))}
+            )}
           </div>
-        ) : (
-          <p className="text-center text-gray-500">No orders found.</p>
-        )}
-      </div>
 
+          {/* Orders History Column (8 cols) */}
+          <div className="lg:col-span-8 space-y-6">
+            <h3 className="font-serif text-2xl text-obsidian font-normal">
+              Order History
+            </h3>
+
+            {loading ? (
+              <div className="h-48 flex justify-center items-center">
+                <span className="loader" />
+              </div>
+            ) : orders.length > 0 ? (
+              <div className="space-y-4">
+                {orders.map((order) => (
+                  <div
+                    key={order._id}
+                    onClick={() => navigate(`/orders/${order._id}`)}
+                    className="group bg-white border border-stone-200/80 p-5 sm:p-6 shadow-sm hover:border-stone-400 hover:shadow-atelier transition-all cursor-pointer flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3">
+                        <LuPackage className="w-4 h-4 text-champagne" />
+                        <span className="font-mono text-xs text-stone-500">
+                          #{order._id?.slice(-8)}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-widest px-2 py-0.5 bg-stone-100 text-stone-700 border border-stone-200">
+                          {order?.shippingStatus || "Ordered"}
+                        </span>
+                      </div>
+
+                      <div className="text-xs text-stone-600 space-y-0.5">
+                        {order?.products?.map((item) => (
+                          <div key={item?.productId?._id || Math.random()} className="line-clamp-1">
+                            {item?.productId?.name} &times; {item?.quantity}
+                          </div>
+                        ))}
+                      </div>
+
+                      <p className="text-[11px] text-stone-400">
+                        Date: {order?.purchasedDate}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 pt-3 sm:pt-0 border-stone-100">
+                      <div className="text-right">
+                        <span className="text-[10px] uppercase tracking-wider text-stone-400 block">
+                          Total
+                        </span>
+                        <span className="font-sans text-base font-semibold text-obsidian">
+                          ${order?.totalAmount}
+                        </span>
+                      </div>
+                      <LuChevronRight className="w-4 h-4 text-stone-400 group-hover:text-obsidian group-hover:translate-x-1 transition-all" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="py-16 text-center bg-white border border-stone-200/80 p-8">
+                <LuPackage className="w-10 h-10 text-stone-300 mx-auto mb-3" />
+                <p className="font-serif text-lg text-stone-600">
+                  No previous acquisitions recorded.
+                </p>
+                <p className="text-xs text-stone-400 font-light mt-1">
+                  When you acquire pieces from our atelier, your order history will appear here.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
       <ScrollTop />
     </div>
   );
 }
 
 export default User;
-

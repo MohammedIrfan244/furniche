@@ -1,38 +1,41 @@
-import { IoChevronUpCircleOutline } from "react-icons/io5";
+import { LuArrowUp } from "react-icons/lu";
 import { useEffect, useState } from "react";
 
 function ScrollTop() {
   const [isVisible, setIsVisible] = useState(false);
+
   const toggleVisible = () => {
-    if (window.scrollY > innerHeight * 0.5) {
+    if (window.scrollY > window.innerHeight * 0.4) {
       setIsVisible(true);
     } else {
       setIsVisible(false);
     }
   };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+
   useEffect(() => {
     window.addEventListener("scroll", toggleVisible);
     return () => {
       window.removeEventListener("scroll", toggleVisible);
     };
   }, []);
+
+  if (!isVisible) return null;
+
   return (
-    <div>
-      {isVisible && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-5 hover:scale-[1.1] transition duration-200 ease-in-out right-[48.5%] opacity-80 text-[#000000] bg-[#F9FCFA] text-xs font-bold px-3 py-1 rounded-[50px] cursor-pointer z-20"
-        >
-         <IoChevronUpCircleOutline />
-        </button>
-      )}
-    </div>
+    <button
+      onClick={scrollToTop}
+      aria-label="Scroll to top"
+      className="fixed bottom-8 right-6 sm:right-8 z-30 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md border border-stone-200 text-obsidian flex items-center justify-center shadow-atelier hover:border-obsidian hover:shadow-atelier-hover hover:scale-105 transition-all duration-300"
+    >
+      <LuArrowUp className="w-4 h-4 text-obsidian" strokeWidth={1.5} />
+    </button>
   );
 }
 

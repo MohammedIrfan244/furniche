@@ -3,72 +3,87 @@ import NewCollection from "../Components/NewCollection";
 import OriginalProducts from "../Components/OriginalProducts";
 import ScrollTop from "../utilities/ScrollTop";
 import { useNavigate } from "react-router-dom";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 import { LuArrowRight } from "react-icons/lu";
 
 function Home() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-        <div>
-    <div className="w-full flex flex-col-reverse sm:flex-row bg-cover bg-center relative">
-        <div className="w-full h-auto sm:h-[100vh] sm:w-1/2 flex justify-center items-center overflow-hidden">
-          <img
-            className="max-w-[400px] sm:maxw-[500px] h-auto object-cover transition duration-500 ease-in-out hover:scale-105"
-            src="https://i.pinimg.com/736x/4e/f8/4a/4ef84a7dfd2eb7ac62339fdd0f9668f3.jpg"
-            alt="hero"
-          />
-        </div>
-        <div className="w-full h-auto pt-32 sm:pt-0 sm:h-[100vh] sm:w-1/2 flex flex-col justify-end sm:justify-end px-5 sm:px-10 font-semibold ">
-          <motion.p
-          initial={{ opacity: 0, y: -50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-6xl md:text-3xl lg:text-4xl font-poppins mb-3">
-            Welcome to <span className="text-sofaBlue">Furniche</span>
-          </motion.p>
-          <motion.p
-           initial={{ opacity: 0, y: -50 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.5, delay: 0.2 }}
-           className="text-2xl md:text-3xl lg:text-4xl font-poppins mb-3 font-semibold">Collections</motion.p>
-          <div className="text-sm mt-3 space-y-1 text-gray-600">
-          <motion.p 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          >Your One-Stop Solution for Elegant Furniture, </motion.p>
-          <motion.p 
-          initial={{ opacity: 0, y: -20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          > Timeless Style, and Everyday Comfort — </motion.p>
-          <motion.p
-           initial={{ opacity: 0, y: -20 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           transition={{ duration: 0.5, delay: 0.8 }}
-           > Designed to Transform Your Space.</motion.p>
-          </div>
-          <button onClick={() => navigate("/collection")} className="bg-sofaBlue rounded-md text-white text-xs py-2 mt-5 w-20 hover:px-20 hover:w-72 transition-all duration-300">
-            Shop Now
-          </button>
-          <div className="flex items-center mt-28 mb-20 gap-0">
+    <div className="w-full bg-canvas overflow-hidden">
+      {/* Editorial Atelier Hero Section */}
+      <section className="relative pt-24 sm:pt-28 pb-12 sm:pb-20 max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Hero Imagery */}
           <motion.div
-          initial={{ opacity: 0, width: 0 }}
-          whileInView={{ opacity: 1, width: "100%" }}
-          transition={{ duration: 0.5 , delay: 0.2,ease:"easeOut"}}
-          className="w-full h-[2px] bg-sofaBlue"
-          />
-          <LuArrowRight className="text-sofaBlue text-xl"/>
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="lg:col-span-6 relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/4] overflow-hidden bg-stone-200"
+          >
+            <img
+              className="w-full h-full object-cover transition duration-1000 ease-out hover:scale-105"
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80"
+              alt="Furniche Living Space"
+            />
+            <div className="absolute inset-0 bg-black/5" />
+          </motion.div>
+
+          {/* Hero Typography & CTA */}
+          <div className="lg:col-span-6 flex flex-col justify-center space-y-6 lg:pl-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-3">
+                Architectural Furniture & Living
+              </span>
+              <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-obsidian font-normal tracking-tight leading-[1.12]">
+                Quiet Luxury, <br />
+                <span className="italic font-light">Honest Materials.</span>
+              </h1>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="text-xs sm:text-sm text-stone-600 font-light leading-relaxed max-w-lg"
+            >
+              Curated furniture designed to bring enduring poise and understated balance to contemporary spaces. Handcrafted silhouettes, tactile textures, and architectural clarity.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              className="pt-2"
+            >
+              <button
+                onClick={() => navigate("/collection")}
+                className="group inline-flex items-center gap-3 bg-obsidian text-canvas px-7 py-3.5 text-xs uppercase tracking-[0.18em] font-medium transition-all duration-300 hover:bg-stone-800"
+              >
+                <span>Explore Collection</span>
+                <LuArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1 text-champagne" />
+              </button>
+            </motion.div>
           </div>
         </div>
-      </div>
-      <ScrollTop />
+
+        {/* Minimalist Hairline Horizon */}
+        <div className="w-full h-px bg-stone-200/80 mt-16 sm:mt-24" />
+      </section>
+
+      {/* Product Showcase Sections */}
       <NewCollection />
       <OriginalProducts />
+
+      <ScrollTop />
     </div>
   );
 }

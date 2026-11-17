@@ -1,83 +1,74 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #ffffff;
-  color: #000000;
-  font-weight: 500;
-  font-family: "Poppins", sans-serif;
-}
-a {
-  transition-duration: 150ms;
-}
-a.active {
-  scale: 1.05;
-  color: #112558;
-}
-a.active hr {
-  display: block;
-  border-radius: 100%;
-  background-color: #112558;
-}
-img.avatar {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-}
-.loader,
-.loader:before,
-.loader:after {
-  border-radius: 50%;
-  width: 2.5em;
-  height: 2.5em;
-  animation-fill-mode: both;
-  animation: bblFadInOut 1.8s infinite ease-in-out;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #FAF9F6;
+    color: #171615;
+  }
+
+  body {
+    background-color: #FAF9F6;
+    color: #171615;
+    font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: #E8DEC8;
+    color: #171615;
+  }
 }
 
+/* Minimal Luxury Spinner */
 .loader {
-  color: #112558;
-  font-size: 7px;
-  position: relative;
-  text-indent: -9999em;
-  transform: translateZ(0);
-  animation-delay: -0.16s;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #E7E4DE;
+  border-top-color: #C2A676;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: luxurySpin 0.9s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
 }
 
-.loader:before,
-.loader:after {
-  content: "";
-  position: absolute;
-  top: 0;
-}
-
-.loader:before {
-  left: -3.5em;
-  animation-delay: -0.32s;
-}
-
-.loader:after {
-  left: 3.5em;
-}
-
-@keyframes bblFadInOut {
-  0%,
-  80%,
+@keyframes luxurySpin {
+  0% {
+    transform: rotate(0deg);
+  }
   100% {
-    box-shadow: 0 2.5em 0 -1.3em;
-  }
-  40% {
-    box-shadow: 0 2.5em 0 0;
+    transform: rotate(360deg);
   }
 }
 
-body {
-  scrollbar-width: none;
-}
-
+/* Modern Minimalist Scrollbars */
 ::-webkit-scrollbar {
-  display: none;
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D8D4CC;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C2A676;
+}
+
+img.avatar {
+  height: 44px;
+  width: 44px;
+  border-radius: 50%;
+  object-fit: cover;
 }

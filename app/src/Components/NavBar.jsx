@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartCount } from "../Redux/userSlice";
-import { LuSearch,LuShoppingCart,LuHeart,LuChartBarStacked } from "react-icons/lu";
+import { LuSearch, LuShoppingCart, LuHeart, LuMenu, LuX } from "react-icons/lu";
 
 function NavBar() {
   const dispatch = useDispatch();
@@ -10,141 +10,229 @@ function NavBar() {
   const { currentUser, userCartCount, isAdmin, userCart } = useSelector(
     (state) => state.user
   );
-  
+
   useEffect(() => {
     if (currentUser) {
       dispatch(getCartCount());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser, userCart]);
+
   return (
-    <div className="fixed w-[100%] pt-8 px-1 bg-white sm:px-5 py-5 z-20">
-      <div className="flex items-center justify-between">
-        <div>
-          <Link to={"/"}>
-            <h2 className="text-xl sm:text-2xl font-poppins font-bold text-sofaBlue">
-              Furniche
-            </h2>
-          </Link>
-        </div>
-        <ul className="hidden sm:flex gap-10 text-xs font-bold font-poppins">
-          <NavLink to={"/"} className=" flex flex-col items-center gap-1">
-            <p>HOME</p>
-            <hr className="w-[4px] h-[4px] border-none  hidden " />
+    <nav className="fixed top-0 left-0 w-full z-40 bg-canvas/90 backdrop-blur-md border-b border-stone-200/70 transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+        {/* Brand / Logo */}
+        <Link to={"/"} className="group flex items-center gap-2">
+          <span className="font-serif text-2xl sm:text-3xl tracking-[0.16em] uppercase font-normal text-obsidian group-hover:text-champagne transition-colors duration-300">
+            Furniche
+          </span>
+        </Link>
+
+        {/* Desktop Navigation Links */}
+        <ul className="hidden md:flex items-center gap-8 lg:gap-10">
+          <NavLink
+            to={"/"}
+            className={({ isActive }) =>
+              `relative py-1 font-sans text-[11px] tracking-[0.22em] uppercase font-medium transition-colors duration-300 ${
+                isActive ? "text-obsidian font-semibold" : "text-obsidian-muted hover:text-obsidian"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <span>Home</span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-champagne animate-in fade-in duration-300" />
+                )}
+              </>
+            )}
           </NavLink>
+
           <NavLink
             to={"/collection"}
-            className="flex flex-col items-center gap-1 "
+            className={({ isActive }) =>
+              `relative py-1 font-sans text-[11px] tracking-[0.22em] uppercase font-medium transition-colors duration-300 ${
+                isActive ? "text-obsidian font-semibold" : "text-obsidian-muted hover:text-obsidian"
+              }`
+            }
           >
-            <p>COLLECTION</p>
-            <hr className="w-[4px] h-[4px] border-none  hidden " />
+            {({ isActive }) => (
+              <>
+                <span>Collection</span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-champagne animate-in fade-in duration-300" />
+                )}
+              </>
+            )}
           </NavLink>
+
+          <NavLink
+            to={"/about"}
+            className={({ isActive }) =>
+              `relative py-1 font-sans text-[11px] tracking-[0.22em] uppercase font-medium transition-colors duration-300 ${
+                isActive ? "text-obsidian font-semibold" : "text-obsidian-muted hover:text-obsidian"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <span>About</span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-champagne animate-in fade-in duration-300" />
+                )}
+              </>
+            )}
+          </NavLink>
+
           <NavLink
             to={"/contact"}
-            className="flex flex-col items-center gap-1 "
+            className={({ isActive }) =>
+              `relative py-1 font-sans text-[11px] tracking-[0.22em] uppercase font-medium transition-colors duration-300 ${
+                isActive ? "text-obsidian font-semibold" : "text-obsidian-muted hover:text-obsidian"
+              }`
+            }
           >
-            <p>CONTACT</p>
-            <hr className="w-[4px] h-[4px] border-none  hidden " />
+            {({ isActive }) => (
+              <>
+                <span>Contact</span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-champagne animate-in fade-in duration-300" />
+                )}
+              </>
+            )}
           </NavLink>
-          <NavLink to={"/about"} className="flex flex-col items-center gap-1 ">
-            <p>ABOUT</p>
-            <hr className="w-[4px] h-[4px] border-none  hidden " />
-          </NavLink>
+
           {isAdmin && (
             <NavLink
-              to={"/admin/adminPanel"}
-              className="flex flex-col items-center gap-1"
+              to={"/admin/adminpanel"}
+              className={({ isActive }) =>
+                `relative py-1 font-sans text-[11px] tracking-[0.22em] uppercase font-medium transition-colors duration-300 ${
+                  isActive ? "text-champagne font-semibold" : "text-obsidian-muted hover:text-champagne"
+                }`
+              }
             >
-              <p>ADMIN</p>
-              <hr className="w-[4px] h-[4px] border-none  hidden " />
+              {({ isActive }) => (
+                <>
+                  <span>Atelier Admin</span>
+                  {isActive && (
+                    <span className="absolute bottom-0 left-0 w-full h-[1.5px] bg-champagne animate-in fade-in duration-300" />
+                  )}
+                </>
+              )}
             </NavLink>
           )}
         </ul>
-        <div className="flex items-center gap-5 sm:gap-6 md:gap-8 lg:gap-10">
-          <Link className="flex items-center gap-2" to={"/search"}>
-            <LuSearch
-              className="hover:scale-110 text-lg hover:text-sofaBlue transition duration-300"
-            />
-          <p className="hidden sm:block text-xs font-bold">SEARCH</p>
-          </Link>
+
+        {/* Right Icon Actions */}
+        <div className="flex items-center gap-4 sm:gap-6">
           <Link
-            to={"/cart"}
-            className={`${currentUser ? "relative flex items-center gap-2" : "hidden"}`}
+            to={"/search"}
+            aria-label="Search"
+            className="text-obsidian-muted hover:text-obsidian transition-colors duration-200"
           >
-            <LuShoppingCart
-              className="hover:scale-110 text-lg hover:text-sofaBlue transition duration-300"
-              
-            />
-          <p className="hidden sm:block text-xs font-bold">CART</p>
-            <p className="absolute bottom-3 -right-2 sm:right-2 md:right-5 lg:right-8 text-sofaBlue h-[15px] text-[10px] font-bold text-center w-[15px] rounded-[100%] bg-gray-300">
-              {userCartCount}
-            </p>
+            <LuSearch className="w-[18px] h-[18px]" strokeWidth={1.5} />
           </Link>
-          <Link
-            to={"/wishlist"}
-            className={`${currentUser ? "   flex items-center gap-2" : "hidden"}`}
-          >
-            <LuHeart
-              className="hover:scale-110 text-lg hover:text-sofaBlue transition duration-300"
-            />
-            <p className="hidden sm:block text-xs font-bold">WISHLIST</p> 
-          </Link>
-          <Link
-            to={currentUser ? "/user" : "/login"}
-            className=" group relative"
-          >
-            {currentUser == null ? (
-              <p className="bg-sofaBlue text-white text-xs px-5 py-1 rounded-[50px] hover:scale-105 transition duration-200 ease-in-out mx-2">
-                Login
-              </p>
-            ) : (
-              <div>
-                <div className="h-6 flex justify-center items-center rounded-full overflow-hidden w-6">
-                  <img
-                    className="h-full w-full object-cover"
-                    src={currentUser?.profile}
-                    alt="User Profile"
-                  />
-                </div>
+
+          {currentUser && (
+            <Link
+              to={"/wishlist"}
+              aria-label="Wishlist"
+              className="text-obsidian-muted hover:text-obsidian transition-colors duration-200"
+            >
+              <LuHeart className="w-[18px] h-[18px]" strokeWidth={1.5} />
+            </Link>
+          )}
+
+          {currentUser && (
+            <Link
+              to={"/cart"}
+              aria-label="Cart"
+              className="relative text-obsidian-muted hover:text-obsidian transition-colors duration-200"
+            >
+              <LuShoppingCart className="w-[18px] h-[18px]" strokeWidth={1.5} />
+              {userCartCount > 0 && (
+                <span className="absolute -top-1.5 -right-2 bg-champagne text-white text-[10px] font-semibold w-4 h-4 rounded-full flex items-center justify-center leading-none">
+                  {userCartCount}
+                </span>
+              )}
+            </Link>
+          )}
+
+          {currentUser == null ? (
+            <Link
+              to={"/login"}
+              className="bg-obsidian text-canvas px-4 sm:px-5 py-2 text-[11px] uppercase tracking-[0.16em] font-medium hover:bg-obsidian-light transition duration-300"
+            >
+              Sign In
+            </Link>
+          ) : (
+            <Link to={"/user"} className="flex items-center">
+              <div className="h-8 w-8 rounded-full overflow-hidden border border-stone-300 hover:border-champagne transition-colors">
+                <img
+                  className="h-full w-full object-cover"
+                  src={currentUser?.profile}
+                  alt="Account Profile"
+                />
               </div>
-            )}
-          </Link>
-          <LuChartBarStacked
-            onClick={() => setVisible(true)}
-            className="sm:hidden cursor-pointer me-3"
-            
-          />
-          <div
-            className={`absolute top-0  right-0 bottom-0 ${
-              visible ? "w-min" : "hidden"
-            }`}
+            </Link>
+          )}
+
+          {/* Mobile Menu Toggle Button */}
+          <button
+            onClick={() => setVisible(!visible)}
+            className="md:hidden text-obsidian-muted hover:text-obsidian p-1"
+            aria-label="Toggle Menu"
           >
-            <ul className="flex flex-col py-10 px-5 gap-5 bg-[#F5F2E9] ">
-              <NavLink onClick={() => setVisible(false)} to={"/"}>
-                HOME
-              </NavLink>
-              <NavLink onClick={() => setVisible(false)} to={"/collection"}>
-                COLLECTION
-              </NavLink>
-              <NavLink onClick={() => setVisible(false)} to={"/about"}>
-                ABOUT
-              </NavLink>
-              <NavLink onClick={() => setVisible(false)} to={"/contact"}>
-                CONTACT
-              </NavLink>
-              <NavLink
-                onClick={() => setVisible(false)}
-                to={"/adminpanel"}
-                className={`${!isAdmin ? "hidden" : null} whitespace-nowrap`}
-              >
-                ADMIN PANEL
-              </NavLink>
-              <Link onClick={() => setVisible(false)}>CLOSE</Link>
-            </ul>
-          </div>
+            {visible ? <LuX className="w-5 h-5" strokeWidth={1.5} /> : <LuMenu className="w-5 h-5" strokeWidth={1.5} />}
+          </button>
         </div>
       </div>
-    </div>
+
+      {/* Mobile Drawer Menu */}
+      {visible && (
+        <div className="md:hidden fixed inset-x-0 top-20 bg-canvas/98 backdrop-blur-xl border-b border-stone-200 shadow-atelier-lg py-8 px-6 transition-all duration-300">
+          <ul className="flex flex-col gap-6 text-center">
+            <NavLink
+              onClick={() => setVisible(false)}
+              to={"/"}
+              className="font-serif text-lg tracking-[0.15em] uppercase text-obsidian hover:text-champagne transition"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              to={"/collection"}
+              className="font-serif text-lg tracking-[0.15em] uppercase text-obsidian hover:text-champagne transition"
+            >
+              Collection
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              to={"/about"}
+              className="font-serif text-lg tracking-[0.15em] uppercase text-obsidian hover:text-champagne transition"
+            >
+              About
+            </NavLink>
+            <NavLink
+              onClick={() => setVisible(false)}
+              to={"/contact"}
+              className="font-serif text-lg tracking-[0.15em] uppercase text-obsidian hover:text-champagne transition"
+            >
+              Contact
+            </NavLink>
+            {isAdmin && (
+              <NavLink
+                onClick={() => setVisible(false)}
+                to={"/admin/adminpanel"}
+                className="font-serif text-lg tracking-[0.15em] uppercase text-champagne"
+              >
+                Atelier Admin
+              </NavLink>
+            )}
+          </ul>
+        </div>
+      )}
+    </nav>
   );
 }
 

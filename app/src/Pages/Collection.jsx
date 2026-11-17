@@ -8,6 +8,16 @@ import ProductItems from "../shared/ProductItems";
 import { toast } from "react-toastify";
 import axiosErrorManager from "../utilities/axiosErrorManager";
 import { motion } from "framer-motion";
+import ScrollTop from "../utilities/ScrollTop";
+
+const CATEGORIES = [
+  { label: "All Works", value: "all" },
+  { label: "Sofas", value: "sofas" },
+  { label: "Chairs", value: "chairs" },
+  { label: "Tables", value: "tables" },
+  { label: "Beds", value: "bed" },
+  { label: "Lamps", value: "lamps" },
+];
 
 function Collection() {
   const { products, productsByCategory, loading } = useSelector(
@@ -33,55 +43,74 @@ function Collection() {
     selectedCategory === "all" ? products : productsByCategory;
 
   return (
-    <div className="w-full pt-28 flex flex-col items-center">
-      {loading ? (
-        <div className="h-[20vh] flex justify-center items-center">
-          <span className="loader"></span>
-        </div>
-      ) : (
-        <>
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="w-full flex justify-between items-center px-4 sm:px-10 mb-6"
-          >
-            <div className="flex flex-grow justify-center">
-              <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
-                COLLECTIONS
-              </h1>
-            </div>
+    <div className="w-full min-h-screen pt-28 sm:pt-32 pb-20 bg-canvas">
+      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        {/* Header & Category Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row md:items-end justify-between border-b border-stone-200/80 pb-8 mb-10 gap-6"
+        >
+          <div>
+            <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-2">
+              Curated Catalogue
+            </span>
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-obsidian font-normal tracking-tight">
+              All Collections
+            </h1>
+          </div>
 
-            <div className="flex justify-end">
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="border border-gray-300 rounded px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sofaBlue"
+          {/* Category Filter Chips / Select */}
+          <div className="flex flex-wrap items-center gap-2">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.value}
+                onClick={() => setSelectedCategory(cat.value)}
+                className={`text-[11px] uppercase tracking-[0.18em] px-4 py-2 transition-all duration-300 font-medium ${
+                  selectedCategory === cat.value
+                    ? "bg-obsidian text-canvas shadow-sm"
+                    : "bg-white border border-stone-200 text-stone-600 hover:border-stone-400 hover:text-obsidian"
+                }`}
               >
-                <option value="all">All</option>
-                <option value="sofas">Sofas</option>
-                <option value="chairs">Chairs</option>
-                <option value="tables">Tables</option>
-                <option value="bed">Beds</option>
-                <option value="lamps">Lamps</option>
-              </select>
-            </div>
-          </motion.div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 place-items-center gap-3 sm:gap-4 mt-10 md:gap-6">
-            {selectedProducts.map((product, index) => (
-              <ProductItems
-                key={index}
-                id={product._id}
-                image={product.image}
-                name={product.name}
-                price={product.price}
-                rating={product.averageRating || 0}
-              />
+                {cat.label}
+              </button>
             ))}
           </div>
-        </>
-      )}
+        </motion.div>
+
+        {/* Content Display */}
+        {loading ? (
+          <div className="h-64 flex justify-center items-center">
+            <span className="loader" />
+          </div>
+        ) : (
+          <div>
+            {selectedProducts?.length === 0 ? (
+              <div className="py-24 text-center">
+                <p className="font-serif text-xl text-stone-500">
+                  No products currently available in this collection.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                {selectedProducts.map((product, index) => (
+                  <ProductItems
+                    key={product._id || index}
+                    id={product._id}
+                    image={product.image}
+                    name={product.name}
+                    price={product.price}
+                    rating={product.averageRating || product.rating || 0}
+                    original={product.original}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <ScrollTop />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LuBadgeCheck, LuHeart } from "react-icons/lu";
+import { LuHeart, LuShieldCheck, LuTruck, LuSparkles } from "react-icons/lu";
 import { IoMdStar } from "react-icons/io";
 import ProductItems from "../shared/ProductItems";
 import ScrollTop from "../utilities/ScrollTop";
@@ -18,12 +18,11 @@ import axiosInstance from "../utilities/axiosInstance";
 
 function Product() {
   const { Id } = useParams();
-  const { currentUser, userCart, userWishlist } = useSelector(
+  const { currentUser, userCart, userWishlist, currency } = useSelector(
     (state) => state.user
   );
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { currency } = useSelector((state) => state.user);
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [interestedProduct, setInterestedProduct] = useState([]);
@@ -34,7 +33,7 @@ function Product() {
       navigate("/login");
       return;
     }
-    if (!userCart.find((item) => item.productId._id === Id)) {
+    if (!userCart?.find((item) => item.productId?._id === Id)) {
       try {
         await axiosInstance.post("/users/cart", {
           productId: Id,
@@ -42,25 +41,26 @@ function Product() {
         });
         dispatch(addToCart(Id));
         dispatch(getCart());
+        toast.success("Item added to cart");
       } catch (err) {
         toast.error(axiosErrorManager(err));
       }
     }
   };
 
-  const addToWishListHandler = (id) => {
+  const addToWishListHandler = (productId) => {
     if (!currentUser) {
       return navigate("/login");
     }
     if (isInWishlist) {
-      dispatch(removeFromWishList(id));
+      dispatch(removeFromWishList(productId));
     } else {
-      dispatch(addToWishList(id));
+      dispatch(addToWishList(productId));
     }
   };
 
   useEffect(() => {
-    setIsInWishlist(userWishlist.some((item) => item._id === Id));
+    setIsInWishlist(userWishlist?.some((item) => item._id === Id));
   }, [Id, userWishlist, currentUser]);
 
   useEffect(() => {
@@ -74,12 +74,14 @@ function Product() {
           `${import.meta.env.VITE_API_URL}/public/products/${Id}`
         );
         setProduct(response.data.data);
-        const interestedResponse = await axios.get(
-          `${import.meta.env.VITE_API_URL}/public/products/category/${response.data.data.category}`
-        );
-        setInterestedProduct(interestedResponse.data.data);
+        if (response.data.data?.category) {
+          const interestedResponse = await axios.get(
+            `${import.meta.env.VITE_API_URL}/public/products/category/${response.data.data.category}`
+          );
+          setInterestedProduct(interestedResponse.data.data || []);
+        }
       } catch (err) {
-        console.log("Error:", axiosErrorManager(err));
+        console.error("Error fetching product:", axiosErrorManager(err));
       } finally {
         setLoading(false);
       }
@@ -89,101 +91,185 @@ function Product() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  }, [Id]);
+
+  const isAlreadyInCart = userCart?.some((item) => item.productId?._id === Id);
 
   return (
-    <div
-      className={`${
-        loading ? "h-[100vh] flex justify-center items-center" : null
-      }`}
-    >
+    <div className="w-full min-h-screen bg-canvas text-obsidian">
       {loading ? (
-        <span className="loader"></span>
+        <div className="h-screen flex justify-center items-center">
+          <span className="loader" />
+        </div>
       ) : (
-        <div className="pt-[26%] sm:pt-[10%] flex flex-col items-center">
-          <div className="flex flex-col sm:flex-row w-[90%] sm:w-[87%] p-2 bg-white border border-gray-300 shadow-md">
-            <div className="w-[100%] sm:w-[50%] flex justify-center overflow-hidden items-center">
-              <img
-                className="hover:scale-[1.01] transition duration-500 ease-in-out w-[400px] h-[200px] sm:w-[610px] sm:h-[410px] object-cover"
-                src={product?.image}
-                alt="image"
-              />
+        <div className="pt-28 sm:pt-36 pb-20 max-w-7xl mx-auto px-4 sm:px-8">
+          {/* Main Product Showcase Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start pb-20 border-b border-stone-200">
+            {/* Gallery / Image Column */}
+            <div className="lg:col-span-7 sticky top-28">
+              <div className="aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] w-full bg-white border border-stone-200/80 overflow-hidden relative shadow-atelier">
+                <img
+                  className="w-full h-full object-cover transition duration-700 ease-out hover:scale-105"
+                  src={product?.image}
+                  alt={product?.name || "Product Showcase"}
+                />
+                {product?.original && product?.original !== "false" && (
+                  <span className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm border border-stone-200 text-obsidian text-[10px] uppercase tracking-[0.2em] font-medium px-3 py-1">
+                    Atelier Original
+                  </span>
+                )}
+              </div>
             </div>
-            <div className="mt-[3%] sm:mt-0 w-[100%] sm:w-[50%] flex flex-col justify-between min-h-[50vh] sm:px-[3%] sm:gap-0">
-              <div className="flex flex-col gap-[20px]">
-                <div className="flex justify-between">
+
+            {/* Product Meta & Purchase Actions Column */}
+            <div className="lg:col-span-5 flex flex-col space-y-8">
+              {/* Header & Wishlist */}
+              <div className="space-y-3">
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h1 className="font-bold text-xl">
+                    <span className="font-sans text-[11px] uppercase tracking-[0.22em] text-champagne font-semibold block mb-1">
+                      {product?.category || "Atelier Furniture"}
+                    </span>
+                    <h1 className="font-serif text-3xl sm:text-4xl text-obsidian font-normal tracking-tight">
                       {product?.name}
-                      {product?.original !== "false" && (
-                        <LuBadgeCheck className="text-gold" />
-                      )}
                     </h1>
-                    {product?.original !== "false" && (
-                      <p className="text-xs">(In house design)</p>
-                    )}
                   </div>
-                  <LuHeart
+
+                  <button
                     onClick={() => addToWishListHandler(Id)}
-                    className={`${
-                      isInWishlist ? "text-red-500" : "text-gray-500"
-                    } cursor-pointer hover:text-red-500`}
-                  />
+                    aria-label="Wishlist toggle"
+                    className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
+                      isInWishlist
+                        ? "border-red-200 bg-red-50 text-red-500"
+                        : "border-stone-200 text-stone-400 hover:text-red-500 hover:border-red-200"
+                    }`}
+                  >
+                    <LuHeart className="w-4 h-4" />
+                  </button>
                 </div>
-                <p className="text-xs flex text-[#FFD700]">
-                  {Array.from({ length: product?.rating }).map((_, index) => (
-                    <IoMdStar key={index} />
-                  ))}
-                </p>
-                <p className="text-xl font-bold">
-                  {currency} {product?.price}
-                </p>
-                <p className="text-xs">{product?.description}</p>
+
+                {/* Rating & In-House Badge */}
+                <div className="flex items-center gap-4 text-xs">
+                  {product?.rating > 0 && (
+                    <div className="flex items-center gap-1 text-champagne">
+                      {Array.from({ length: Math.min(product?.rating, 5) }).map((_, index) => (
+                        <IoMdStar key={index} className="w-3.5 h-3.5" />
+                      ))}
+                      <span className="text-stone-500 text-[11px] font-sans ml-1">
+                        ({product?.rating}.0)
+                      </span>
+                    </div>
+                  )}
+                  {product?.original && product?.original !== "false" && (
+                    <span className="text-stone-500 text-[11px] font-light">
+                      Hand-finished in Studio
+                    </span>
+                  )}
+                </div>
+
+                {/* Price Display */}
+                <div className="pt-2">
+                  <span className="font-sans text-2xl sm:text-3xl font-semibold text-obsidian tracking-tight">
+                    {currency || "$"} {product?.price}
+                  </span>
+                </div>
               </div>
-              <div>
-                <p className="text-sm">Review :</p>
-                <p className="text-xs">{product?.review}</p>
+
+              {/* Description */}
+              <div className="border-t border-stone-200/80 pt-6 space-y-4">
+                <h4 className="font-sans text-[11px] uppercase tracking-[0.2em] text-stone-500 font-semibold">
+                  Specification & Design Notes
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
+                  {product?.description ||
+                    "Expertly articulated proportions crafted with premium joinery and durable, tactile upholstery. Designed for longevity and refined ease."}
+                </p>
               </div>
-              <div className="flex justify-between">
-                <button
-                  onClick={() => navigate(`/checkout/product/${Id}`)}
-                  className="bg-sofaBlue text-white text-xs py-2 rounded-md mt-5 w-20"
-                >
-                  Buy Now
-                </button>
+
+              {/* Review Snippet if available */}
+              {product?.review && (
+                <div className="p-4 bg-white border border-stone-200/70 space-y-1.5">
+                  <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-champagne font-semibold block">
+                    Client Review
+                  </span>
+                  <p className="text-xs text-stone-600 italic font-serif">
+                    &quot;{product?.review}&quot;
+                  </p>
+                </div>
+              )}
+
+              {/* Purchase CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-4">
                 <button
                   onClick={
-                    userCart?.some((item) => item.productId?._id === Id)
+                    isAlreadyInCart
                       ? () => navigate("/cart")
                       : addToCartDispatch
                   }
-                  className="bg-sofaBlue text-white rounded-md text-xs py-2 mt-5 px-4"
+                  className="flex-1 bg-obsidian text-canvas py-3.5 px-6 text-xs uppercase tracking-[0.18em] font-medium hover:bg-stone-800 transition duration-300 text-center"
                 >
-                  {userCart.some((item) => item.productId?._id === Id)
-                    ? "Go to Cart"
-                    : "Add to Cart"}
+                  {isAlreadyInCart ? "View In Bag" : "Add to Bag"}
                 </button>
+
+                <button
+                  onClick={() => navigate(`/checkout/product/${Id}`)}
+                  className="flex-1 border border-obsidian text-obsidian py-3.5 px-6 text-xs uppercase tracking-[0.18em] font-medium hover:bg-obsidian hover:text-canvas transition duration-300 text-center"
+                >
+                  Acquire Now
+                </button>
+              </div>
+
+              {/* Atelier Assurance Badges (Zero Emojis) */}
+              <div className="border-t border-stone-200/80 pt-6 grid grid-cols-3 gap-4 text-center">
+                <div className="flex flex-col items-center space-y-1.5">
+                  <LuSparkles className="w-4 h-4 text-champagne" strokeWidth={1.5} />
+                  <span className="text-[10px] uppercase tracking-[0.15em] font-medium text-stone-700">
+                    Artisan Made
+                  </span>
+                </div>
+                <div className="flex flex-col items-center space-y-1.5">
+                  <LuTruck className="w-4 h-4 text-champagne" strokeWidth={1.5} />
+                  <span className="text-[10px] uppercase tracking-[0.15em] font-medium text-stone-700">
+                    White Glove Care
+                  </span>
+                </div>
+                <div className="flex flex-col items-center space-y-1.5">
+                  <LuShieldCheck className="w-4 h-4 text-champagne" strokeWidth={1.5} />
+                  <span className="text-[10px] uppercase tracking-[0.15em] font-medium text-stone-700">
+                    5-Year Guarantee
+                  </span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center w-[100%] mt-20 px-3 lg:p-2">
-            <h1 className="text-xl sm:text-2xl font-poppins tracking-wide underline decoration-sofaBlue underline-offset-4">
-              YOU MAY ALSO LIKE
-            </h1>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
-              {interestedProduct.map((item, index) => (
-                <ProductItems
-                  key={index}
-                  id={item._id}
-                  image={item.image}
-                  name={item.name}
-                  price={item.price}
-                  rating={item.rating}
-                  original={item.original}
-                />
-              ))}
+
+          {/* Complementary Collection Recommendations */}
+          {interestedProduct?.length > 0 && (
+            <div className="pt-20">
+              <div className="text-center max-w-xl mx-auto space-y-2 mb-12">
+                <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block">
+                  Harmonious Pairings
+                </span>
+                <h2 className="font-serif text-2xl sm:text-3xl text-obsidian font-normal tracking-tight">
+                  You May Also Admire
+                </h2>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+                {interestedProduct.slice(0, 4).map((item, index) => (
+                  <ProductItems
+                    key={item._id || index}
+                    id={item._id}
+                    image={item.image}
+                    name={item.name}
+                    price={item.price}
+                    rating={item.rating || item.averageRating || 0}
+                    original={item.original}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
       <ScrollTop />

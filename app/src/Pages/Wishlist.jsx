@@ -1,7 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getWishlist, removeFromWishList } from "../Redux/userSlice";
-import { LuShoppingCart } from "react-icons/lu"; // Optional, for icon use
+import { LuHeart, LuTrash2, LuArrowRight } from "react-icons/lu";
+import { Link } from "react-router-dom";
+import ScrollTop from "../utilities/ScrollTop";
 
 function Wishlist() {
   const dispatch = useDispatch();
@@ -22,56 +24,89 @@ function Wishlist() {
   }, []);
 
   return (
-    <div
-      className={`${
-        loading ? "h-[100vh] flex justify-center items-center bg-[#F9F9F9]" : "bg-[#F9F9F9] min-h-screen"
-      }`}
-    >
+    <div className="w-full min-h-screen bg-canvas text-obsidian">
       {loading ? (
-        <span className="loader"></span>
+        <div className="h-screen flex justify-center items-center">
+          <span className="loader" />
+        </div>
       ) : (
-        <div className="w-full flex flex-col sm:flex-row gap-9 px-5 pt-[26%] sm:pt-[8%]">
-          {userWishlist.length === 0 && !loading ? (
-            <div className="text-gray-500 h-[60vh] w-full flex justify-center items-center flex-col">
-              <LuShoppingCart className="text-6xl sm:text-8xl md:text-9xl text-[#B8A78C]" />
-              <p className="text-lg sm:text-xl text-gray-500 mt-5">Your wishlist is empty!</p>
+        <div className="pt-28 sm:pt-36 pb-20 max-w-7xl mx-auto px-4 sm:px-8">
+          {(!userWishlist || userWishlist.length === 0) && !loading ? (
+            <div className="py-24 max-w-md mx-auto text-center flex flex-col items-center space-y-6">
+              <div className="w-16 h-16 rounded-full border border-stone-200 flex items-center justify-center text-champagne bg-white">
+                <LuHeart className="w-7 h-7" strokeWidth={1.25} />
+              </div>
+              <div className="space-y-2">
+                <h2 className="font-serif text-2xl sm:text-3xl text-obsidian font-normal">
+                  Your Wishlist is Empty
+                </h2>
+                <p className="text-xs text-stone-500 font-light leading-relaxed">
+                  Keep track of pieces that resonate with your space and revisit them when you are ready to acquire.
+                </p>
+              </div>
+              <Link
+                to="/collection"
+                className="inline-flex items-center gap-2 bg-obsidian text-canvas px-7 py-3 text-xs uppercase tracking-[0.18em] font-medium hover:bg-stone-800 transition duration-300"
+              >
+                <span>Browse Catalogue</span>
+                <LuArrowRight className="w-3.5 h-3.5 text-champagne" />
+              </Link>
             </div>
-          ) : null}
+          ) : (
+            <div>
+              {/* Header */}
+              <div className="border-b border-stone-200/80 pb-6 mb-10">
+                <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-2">
+                  Saved Portfolio
+                </span>
+                <h1 className="font-serif text-3xl sm:text-4xl text-obsidian font-normal tracking-tight">
+                  Curated Wishlist ({userWishlist.length})
+                </h1>
+              </div>
 
-          <div className={userWishlist.length === 0 ? "hidden" : "w-full sm:w-[65%]"}>
-            <h1 className="text-lg sm:text-xl font-semibold">Wishlist Items</h1>
-            <div className="flex flex-col gap-5 sm:overflow-y-auto scrollbar-thin scrollbar-thumb-[#B8A78C] scrollbar-track-transparent sm:h-[70vh]">
-              {userWishlist.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between bg-white p-5 shadow-lg rounded-lg border border-gray-200 "
-                >
-                  <div className="flex items-center gap-5">
-                    <img
-                      src={item?.image || "/default-product.png"}
-                      alt={item?.name}
-                      className="w-20 h-20 object-cover rounded-lg transition-transform transform hover:scale-105"
-                    />
-                    <div className="flex flex-col">
-                      <p className="text-gray-700 font-poppins text-lg">{item?.name}</p>
-                      <p className="font-poppins text-xl font-bold text-gray-800">
-                        {currency}
-                        {item?.price}
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={() => removeFromWishlist(item?._id)}
-                    className="text-red-600 hover:text-red-800 transition-all"
+              {/* Items List */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {userWishlist.map((item, index) => (
+                  <div
+                    key={item?._id || index}
+                    className="flex items-center justify-between bg-white p-5 border border-stone-200/80 transition-all hover:border-stone-400 hover:shadow-atelier"
                   >
-                    Remove
-                  </button>
-                </div>
-              ))}
+                    <Link
+                      to={`/product/${item?._id}`}
+                      className="flex items-center gap-4 sm:gap-6 flex-grow"
+                    >
+                      <div className="aspect-[4/5] w-20 overflow-hidden bg-stone-100 shrink-0">
+                        <img
+                          src={item?.image || "/default-product.png"}
+                          alt={item?.name}
+                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <h4 className="font-serif text-base text-obsidian hover:text-champagne transition-colors line-clamp-1 font-normal">
+                          {item?.name}
+                        </h4>
+                        <p className="font-sans text-xs sm:text-sm font-semibold text-obsidian tracking-tight">
+                          {currency || "$"} {item?.price}
+                        </p>
+                      </div>
+                    </Link>
+
+                    <button
+                      onClick={() => removeFromWishlist(item?._id)}
+                      title="Remove from Wishlist"
+                      className="p-2 text-stone-400 hover:text-red-500 transition-colors ml-4"
+                    >
+                      <LuTrash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
+      <ScrollTop />
     </div>
   );
 }

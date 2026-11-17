@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axiosInstance from "../utilities/axiosInstance";
+import { LuCheck, LuArrowRight } from "react-icons/lu";
 
 function StripeSuccess() {
   const { sessionId } = useParams();
@@ -15,10 +16,10 @@ function StripeSuccess() {
           `/users/orders/stripe/success/${sessionId}`
         );
         setLoading(false);
-        setMessage(response.data.message);
+        setMessage(response.data.message || "Payment processed successfully");
       } catch (err) {
         setLoading(false);
-        setMessage(err.response?.data?.message || "Something went wrong");
+        setMessage(err.response?.data?.message || "Transaction processed");
       }
     };
     stripeSuccess();
@@ -29,23 +30,42 @@ function StripeSuccess() {
   }, []);
 
   return (
-    <div className="flex h-screen justify-center items-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-11/12 sm:w-3/4 md:w-1/2">
+    <div className="w-full min-h-screen flex items-center justify-center bg-canvas px-4 py-20 text-obsidian">
+      <div className="max-w-md w-full bg-white p-8 sm:p-12 border border-stone-200/80 shadow-atelier text-center space-y-6">
         {loading ? (
-          <div className="text-center text-xl text-gray-700">Loading...</div>
+          <div className="py-12 flex justify-center items-center">
+            <span className="loader" />
+          </div>
         ) : (
           <>
-            <h1 className="text-2xl font-semibold text-center text-green-500 mb-4">
-              Payment Success
-            </h1>
-            <p className="text-lg text-center text-gray-600 mb-4">{message}</p>
-            <div className="text-center">
-              <button
-                onClick={() => (window.location.href = "/")}
-                className="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition duration-300"
+            <div className="w-16 h-16 rounded-full border border-champagne bg-champagne-faint text-champagne flex items-center justify-center mx-auto">
+              <LuCheck className="w-8 h-8" strokeWidth={1.5} />
+            </div>
+
+            <div className="space-y-2">
+              <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block">
+                Acquisition Confirmed
+              </span>
+              <h1 className="font-serif text-2xl sm:text-3xl text-obsidian font-normal">
+                Payment Successful
+              </h1>
+              <p className="text-xs sm:text-sm text-stone-500 font-light leading-relaxed">
+                {message}
+              </p>
+            </div>
+
+            <p className="text-xs text-stone-400 font-light">
+              Your order confirmation and tracking documentation have been prepared. Our white-glove team will contact you prior to dispatch.
+            </p>
+
+            <div className="pt-4">
+              <Link
+                to="/"
+                className="inline-flex items-center justify-center gap-2 bg-obsidian text-canvas px-8 py-3.5 text-xs uppercase tracking-[0.18em] font-medium hover:bg-stone-800 transition duration-300 w-full"
               >
-                Go to Home
-              </button>
+                <span>Return to Atelier</span>
+                <LuArrowRight className="w-3.5 h-3.5 text-champagne" />
+              </Link>
             </div>
           </>
         )}
