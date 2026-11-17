@@ -62,12 +62,12 @@ function Collection() {
           </div>
 
           {/* Category Filter Chips / Select */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto scrollbar-none">
             {CATEGORIES.map((cat) => (
               <button
                 key={cat.value}
                 onClick={() => setSelectedCategory(cat.value)}
-                className={`text-[11px] uppercase tracking-[0.18em] px-4 py-2 transition-all duration-300 font-medium ${
+                className={`shrink-0 text-[11px] uppercase tracking-[0.18em] px-4 py-2 transition-all duration-300 font-medium ${
                   selectedCategory === cat.value
                     ? "bg-obsidian text-canvas shadow-sm"
                     : "bg-white border border-stone-200 text-stone-600 hover:border-stone-400 hover:text-obsidian"

@@ -116,7 +116,7 @@ function Contact() {
           </div>
 
           {/* Inquiry Form (7 cols) */}
-          <div className="lg:col-span-7 bg-white p-8 sm:p-10 border border-stone-200/80 shadow-atelier">
+          <div className="lg:col-span-7 bg-white p-8 sm:p-10 border border-stone-200">
             <h3 className="font-serif text-xl text-obsidian font-normal mb-6">
               Send an Inquiry
             </h3>

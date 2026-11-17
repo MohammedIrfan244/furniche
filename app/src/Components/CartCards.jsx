@@ -38,35 +38,39 @@ function CartCards({ image, name, price, quantity, id }) {
   };
 
   const { currency } = useSelector((state) => state.public);
+  const lineTotal = (price || 0) * (newQuantity || 1);
 
   return (
-    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-white p-5 border border-stone-200/80 transition-all duration-300 hover:border-stone-300">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between p-5 bg-white border border-stone-200 gap-4 transition-colors hover:border-stone-300">
       {/* Product Image & Title */}
-      <div className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto">
-        <Link to={`/product/${id}`} className="shrink-0 aspect-[4/5] w-20 sm:w-24 overflow-hidden bg-stone-100 border border-stone-100">
+      <div className="flex items-center gap-4 sm:gap-6 flex-1 min-w-0">
+        <Link
+          to={`/product/${id}`}
+          className="shrink-0 aspect-[4/5] w-20 sm:w-24 overflow-hidden bg-stone-100 border border-stone-200"
+        >
           <img
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-105"
             src={image || "/default-product.png"}
             alt={name}
           />
         </Link>
-        <div className="flex flex-col space-y-1">
+        <div className="space-y-1 min-w-0">
           <Link to={`/product/${id}`}>
             <h4 className="font-serif text-base sm:text-lg text-obsidian hover:text-champagne transition-colors line-clamp-1 font-normal">
               {name}
             </h4>
           </Link>
-          <span className="font-sans text-xs text-stone-500 uppercase tracking-widest">
-            Unit Price
+          <span className="font-sans text-[11px] text-stone-500 uppercase tracking-widest block">
+            Unit: {currency || "$"} {price}
           </span>
-          <p className="font-sans text-sm sm:text-base font-semibold text-obsidian tracking-tight">
-            {currency || "$"} {price}
-          </p>
+          <span className="font-sans text-xs sm:text-sm font-semibold text-obsidian block sm:hidden pt-1">
+            Total: {currency || "$"} {lineTotal}
+          </span>
         </div>
       </div>
 
-      {/* Stepper & Action Controls */}
-      <div className="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4 sm:gap-6 mt-4 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-t-0 border-stone-100">
+      {/* Stepper & Controls */}
+      <div className="flex items-center justify-between sm:justify-end gap-6 border-t sm:border-t-0 pt-3 sm:pt-0 border-stone-100">
         {/* Quantity Stepper */}
         <div className="flex items-center border border-stone-300 bg-canvas-subtle">
           <button
@@ -76,7 +80,7 @@ function CartCards({ image, name, price, quantity, id }) {
           >
             <LuMinus className="w-3.5 h-3.5" />
           </button>
-          <span className="w-10 text-center font-sans text-xs font-semibold text-obsidian">
+          <span className="w-9 text-center font-sans text-xs font-semibold text-obsidian">
             {newQuantity}
           </span>
           <button
@@ -88,7 +92,7 @@ function CartCards({ image, name, price, quantity, id }) {
           </button>
         </div>
 
-        {/* Update Quantity Confirmation if changed */}
+        {/* Update Confirmation Button if changed */}
         {newQuantity !== quantity && (
           <button
             onClick={() => updateCartQuantityDispatch(newQuantity)}
@@ -98,6 +102,13 @@ function CartCards({ image, name, price, quantity, id }) {
             <LuCheck className="w-4 h-4" />
           </button>
         )}
+
+        {/* Desktop Line Total */}
+        <div className="hidden sm:block text-right w-24">
+          <span className="font-sans text-sm font-semibold text-obsidian tracking-tight">
+            {currency || "$"} {lineTotal}
+          </span>
+        </div>
 
         {/* Remove Button */}
         <button

@@ -96,7 +96,7 @@ function CheckoutCart() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
             {/* Delivery Address Form Column */}
-            <div className="lg:col-span-7 bg-white p-6 sm:p-8 border border-stone-200/80 shadow-atelier">
+            <div className="lg:col-span-7 bg-white p-6 sm:p-8 border border-stone-200">
               <h3 className="font-serif text-xl text-obsidian font-normal mb-6">
                 Delivery Details
               </h3>
@@ -174,18 +174,61 @@ function CheckoutCart() {
                   />
                 </div>
 
-                <div className="pt-2">
-                  <label className="block text-[11px] uppercase tracking-[0.15em] text-stone-500 font-medium mb-1.5">
+                <div className="pt-2 space-y-3">
+                  <label className="block text-[11px] uppercase tracking-[0.15em] text-stone-500 font-medium">
                     Payment Preference
                   </label>
-                  <select
-                    value={payment}
-                    onChange={(e) => setPayment(e.target.value)}
-                    className="w-full bg-canvas-subtle p-3 border border-stone-200 text-xs sm:text-sm text-obsidian focus:outline-none focus:border-obsidian transition-colors"
+
+                  {/* Cash on Delivery - Active Option */}
+                  <div
+                    onClick={() => setPayment("cod")}
+                    className="p-3.5 border border-obsidian bg-canvas-subtle flex items-start justify-between cursor-pointer transition-all"
                   >
-                    <option value="cod">Cash on Delivery</option>
-                    <option value="stripe">Online Payment via Stripe</option>
-                  </select>
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          checked={payment === "cod"}
+                          onChange={() => setPayment("cod")}
+                          className="accent-obsidian"
+                        />
+                        <span className="font-serif text-sm font-medium text-obsidian">
+                          Cash on Delivery
+                        </span>
+                      </div>
+                      <p className="text-xs text-stone-500 font-light pl-5">
+                        Pay upon receipt after white-glove inspection at your address.
+                      </p>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-widest text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 font-medium shrink-0">
+                      Available
+                    </span>
+                  </div>
+
+                  {/* Online Payment - Paused / Under Development */}
+                  <div className="p-3.5 border border-dashed border-stone-300 bg-stone-50/70 flex items-start justify-between opacity-70 cursor-not-allowed">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="radio"
+                          name="paymentMethod"
+                          disabled
+                          checked={false}
+                          className="accent-obsidian cursor-not-allowed"
+                        />
+                        <span className="font-serif text-sm font-medium text-stone-600">
+                          Online Payment via Stripe
+                        </span>
+                      </div>
+                      <p className="text-xs text-stone-400 font-light pl-5">
+                        Credit / Debit Cards, UPI, and Net Banking.
+                      </p>
+                    </div>
+                    <span className="text-[10px] uppercase tracking-widest text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 font-medium shrink-0">
+                      Under development / bug fix
+                    </span>
+                  </div>
                 </div>
 
                 <div className="flex items-start gap-2.5 pt-2">
@@ -211,7 +254,7 @@ function CheckoutCart() {
             </div>
 
             {/* Right Summary Column */}
-            <div className="lg:col-span-5 bg-white p-6 sm:p-8 border border-stone-200/80 shadow-atelier space-y-6">
+            <div className="lg:col-span-5 bg-white p-6 sm:p-8 border border-stone-200 space-y-6">
               <h3 className="font-serif text-xl text-obsidian font-normal border-b border-stone-100 pb-4">
                 Selected Works ({userCart?.length || 0})
               </h3>

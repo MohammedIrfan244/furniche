@@ -69,7 +69,7 @@ function SignIn() {
 
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-canvas px-4 py-28 text-obsidian">
-      <div className="w-full max-w-lg bg-white border border-stone-200/80 p-8 sm:p-10 shadow-atelier">
+      <div className="w-full max-w-lg bg-white border border-stone-200 p-8 sm:p-10">
         <div className="text-center space-y-2 mb-8">
           <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block">
             Atelier Membership

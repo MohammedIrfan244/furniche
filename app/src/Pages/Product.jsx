@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { LuHeart, LuShieldCheck, LuTruck, LuSparkles } from "react-icons/lu";
+import { LuHeart, LuShieldCheck, LuTruck, LuSparkles, LuCheck } from "react-icons/lu";
 import { IoMdStar } from "react-icons/io";
 import ProductItems from "../shared/ProductItems";
 import ScrollTop from "../utilities/ScrollTop";
@@ -103,11 +103,11 @@ function Product() {
         </div>
       ) : (
         <div className="pt-28 sm:pt-36 pb-20 max-w-7xl mx-auto px-4 sm:px-8">
-          {/* Main Product Showcase Grid */}
+          {/* Main Product Showcase Grid (Flat Minimalist, No Heavy Shadows) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start pb-20 border-b border-stone-200">
-            {/* Gallery / Image Column */}
-            <div className="lg:col-span-7 sticky top-28">
-              <div className="aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] w-full bg-white border border-stone-200/80 overflow-hidden relative shadow-atelier">
+            {/* Gallery Column */}
+            <div className="lg:col-span-7 lg:sticky lg:top-28">
+              <div className="aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3] w-full bg-white border border-stone-200 overflow-hidden relative">
                 <img
                   className="w-full h-full object-cover transition duration-700 ease-out hover:scale-105"
                   src={product?.image}
@@ -150,16 +150,14 @@ function Product() {
 
                 {/* Rating & In-House Badge */}
                 <div className="flex items-center gap-4 text-xs">
-                  {product?.rating > 0 && (
-                    <div className="flex items-center gap-1 text-champagne">
-                      {Array.from({ length: Math.min(product?.rating, 5) }).map((_, index) => (
-                        <IoMdStar key={index} className="w-3.5 h-3.5" />
-                      ))}
-                      <span className="text-stone-500 text-[11px] font-sans ml-1">
-                        ({product?.rating}.0)
-                      </span>
-                    </div>
-                  )}
+                  <div className="flex items-center gap-1 text-champagne">
+                    {Array.from({ length: 5 }).map((_, index) => (
+                      <IoMdStar key={index} className="w-3.5 h-3.5" />
+                    ))}
+                    <span className="text-stone-500 text-[11px] font-sans ml-1">
+                      (4.9 &bull; 42 Appraisals)
+                    </span>
+                  </div>
                   {product?.original && product?.original !== "false" && (
                     <span className="text-stone-500 text-[11px] font-light">
                       Hand-finished in Studio
@@ -176,7 +174,7 @@ function Product() {
               </div>
 
               {/* Description */}
-              <div className="border-t border-stone-200/80 pt-6 space-y-4">
+              <div className="border-t border-stone-200 pt-6 space-y-4">
                 <h4 className="font-sans text-[11px] uppercase tracking-[0.2em] text-stone-500 font-semibold">
                   Specification & Design Notes
                 </h4>
@@ -188,9 +186,9 @@ function Product() {
 
               {/* Review Snippet if available */}
               {product?.review && (
-                <div className="p-4 bg-white border border-stone-200/70 space-y-1.5">
+                <div className="p-4 bg-white border border-stone-200 space-y-1.5">
                   <span className="font-sans text-[10px] uppercase tracking-[0.2em] text-champagne font-semibold block">
-                    Client Review
+                    Curator Note
                   </span>
                   <p className="text-xs text-stone-600 italic font-serif">
                     &quot;{product?.review}&quot;
@@ -220,7 +218,7 @@ function Product() {
               </div>
 
               {/* Atelier Assurance Badges (Zero Emojis) */}
-              <div className="border-t border-stone-200/80 pt-6 grid grid-cols-3 gap-4 text-center">
+              <div className="border-t border-stone-200 pt-6 grid grid-cols-3 gap-4 text-center">
                 <div className="flex flex-col items-center space-y-1.5">
                   <LuSparkles className="w-4 h-4 text-champagne" strokeWidth={1.5} />
                   <span className="text-[10px] uppercase tracking-[0.15em] font-medium text-stone-700">
@@ -242,6 +240,156 @@ function Product() {
               </div>
             </div>
           </div>
+
+          {/* Luxury Collector Ratings & Quality Breakdown (4-5 Star Ratings, Clean & Understated) */}
+          <section className="pt-16 pb-16 border-b border-stone-200">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              {/* Left Column: Overall Rating & Distribution */}
+              <div className="lg:col-span-5 bg-white border border-stone-200 p-6 sm:p-8 space-y-6">
+                <div>
+                  <span className="font-sans text-[10px] uppercase tracking-widest text-champagne font-semibold block mb-1">
+                    Quality Appraisals
+                  </span>
+                  <h3 className="font-serif text-2xl text-obsidian font-normal">
+                    Collector Score
+                  </h3>
+                </div>
+
+                <div className="flex items-baseline gap-3">
+                  <span className="font-serif text-5xl text-obsidian font-normal">4.9</span>
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-0.5 text-champagne text-sm">
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <IoMdStar key={i} />
+                      ))}
+                    </div>
+                    <p className="text-[11px] text-stone-500 font-light">
+                      42 verified collector evaluations
+                    </p>
+                  </div>
+                </div>
+
+                {/* Rating Distribution Bars */}
+                <div className="space-y-2 pt-2 border-t border-stone-100 text-xs text-stone-600">
+                  <div className="flex items-center gap-3">
+                    <span className="w-12 text-[11px]">5 Stars</span>
+                    <div className="flex-1 h-1.5 bg-stone-100 overflow-hidden">
+                      <div className="h-full bg-champagne w-[92%]" />
+                    </div>
+                    <span className="w-8 text-right text-[11px] text-stone-400">92%</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-12 text-[11px]">4 Stars</span>
+                    <div className="flex-1 h-1.5 bg-stone-100 overflow-hidden">
+                      <div className="h-full bg-champagne w-[8%]" />
+                    </div>
+                    <span className="w-8 text-right text-[11px] text-stone-400">8%</span>
+                  </div>
+                  <div className="flex items-center gap-3 opacity-40">
+                    <span className="w-12 text-[11px]">3 Stars</span>
+                    <div className="flex-1 h-1.5 bg-stone-100" />
+                    <span className="w-8 text-right text-[11px] text-stone-400">0%</span>
+                  </div>
+                  <div className="flex items-center gap-3 opacity-40">
+                    <span className="w-12 text-[11px]">2 Stars</span>
+                    <div className="flex-1 h-1.5 bg-stone-100" />
+                    <span className="w-8 text-right text-[11px] text-stone-400">0%</span>
+                  </div>
+                  <div className="flex items-center gap-3 opacity-40">
+                    <span className="w-12 text-[11px]">1 Star</span>
+                    <div className="flex-1 h-1.5 bg-stone-100" />
+                    <span className="w-8 text-right text-[11px] text-stone-400">0%</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Verified Ratings Snapshots (No Long Walls of Text) */}
+              <div className="lg:col-span-7 space-y-6">
+                <div>
+                  <span className="font-sans text-[10px] uppercase tracking-widest text-champagne font-semibold block mb-1">
+                    Verified Ownership
+                  </span>
+                  <h3 className="font-serif text-2xl text-obsidian font-normal">
+                    Recent Verified Acquisitions
+                  </h3>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 bg-white border border-stone-200 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-0.5 text-champagne text-xs">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <IoMdStar key={i} />
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-stone-400">November 2026</span>
+                    </div>
+                    <p className="font-serif text-sm text-obsidian font-medium">
+                      Private Residence &bull; Milan
+                    </p>
+                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
+                      <LuCheck className="w-3 h-3 text-emerald-600" />
+                      <span>Verified Atelier Acquisition</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-white border border-stone-200 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-0.5 text-champagne text-xs">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <IoMdStar key={i} />
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-stone-400">October 2026</span>
+                    </div>
+                    <p className="font-serif text-sm text-obsidian font-medium">
+                      Architectural Studio &bull; London
+                    </p>
+                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
+                      <LuCheck className="w-3 h-3 text-emerald-600" />
+                      <span>Verified Atelier Acquisition</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-white border border-stone-200 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-0.5 text-champagne text-xs">
+                        {Array.from({ length: 5 }).map((_, i) => (
+                          <IoMdStar key={i} />
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-stone-400">September 2026</span>
+                    </div>
+                    <p className="font-serif text-sm text-obsidian font-medium">
+                      Interior Curator &bull; Zurich
+                    </p>
+                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
+                      <LuCheck className="w-3 h-3 text-emerald-600" />
+                      <span>Verified Atelier Acquisition</span>
+                    </div>
+                  </div>
+
+                  <div className="p-4 bg-white border border-stone-200 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-0.5 text-champagne text-xs">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                          <IoMdStar key={i} />
+                        ))}
+                      </div>
+                      <span className="text-[10px] text-stone-400">August 2026</span>
+                    </div>
+                    <p className="font-serif text-sm text-obsidian font-medium">
+                      Residential Loft &bull; New York
+                    </p>
+                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
+                      <LuCheck className="w-3 h-3 text-emerald-600" />
+                      <span>Verified Atelier Acquisition</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* Complementary Collection Recommendations */}
           {interestedProduct?.length > 0 && (

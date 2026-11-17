@@ -124,7 +124,7 @@ function User() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Profile Overview Card (4 cols) */}
-          <div className="lg:col-span-4 bg-white border border-stone-200/80 p-6 sm:p-8 shadow-atelier space-y-6">
+          <div className="lg:col-span-4 bg-white border border-stone-200 p-6 sm:p-8 space-y-6">
             <div className="flex flex-col items-center text-center space-y-4">
               <div className="w-24 h-24 rounded-full overflow-hidden border border-stone-200 p-1">
                 <img
@@ -263,7 +263,7 @@ function User() {
                   <div
                     key={order._id}
                     onClick={() => navigate(`/orders/${order._id}`)}
-                    className="group bg-white border border-stone-200/80 p-5 sm:p-6 shadow-sm hover:border-stone-400 hover:shadow-atelier transition-all cursor-pointer flex flex-col sm:flex-row justify-between sm:items-center gap-4"
+                    className="group bg-white border border-stone-200 p-5 sm:p-6 hover:border-stone-400 transition-colors cursor-pointer flex flex-col sm:flex-row justify-between sm:items-center gap-4"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">

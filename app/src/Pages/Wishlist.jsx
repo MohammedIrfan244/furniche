@@ -41,7 +41,7 @@ function Wishlist() {
                   Your Wishlist is Empty
                 </h2>
                 <p className="text-xs text-stone-500 font-light leading-relaxed">
-                  Keep track of pieces that resonate with your space and revisit them when you are ready to acquire.
+                  Save pieces that resonate with your space and revisit them when you are ready to acquire.
                 </p>
               </div>
               <Link
@@ -55,50 +55,70 @@ function Wishlist() {
           ) : (
             <div>
               {/* Header */}
-              <div className="border-b border-stone-200/80 pb-6 mb-10">
-                <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-2">
-                  Saved Portfolio
-                </span>
-                <h1 className="font-serif text-3xl sm:text-4xl text-obsidian font-normal tracking-tight">
-                  Curated Wishlist ({userWishlist.length})
-                </h1>
+              <div className="border-b border-stone-200 pb-6 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                  <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-2">
+                    Personal Portfolio
+                  </span>
+                  <h1 className="font-serif text-3xl sm:text-4xl text-obsidian font-normal tracking-tight">
+                    Saved Works ({userWishlist.length})
+                  </h1>
+                </div>
+                <p className="text-xs text-stone-500 font-light">
+                  Pieces reserved for your architectural interior review.
+                </p>
               </div>
 
-              {/* Items List */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Gallery Grid (No Heavy Shadows, Flat Clean Luxury Framing) */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
                 {userWishlist.map((item, index) => (
                   <div
                     key={item?._id || index}
-                    className="flex items-center justify-between bg-white p-5 border border-stone-200/80 transition-all hover:border-stone-400 hover:shadow-atelier"
+                    className="group flex flex-col bg-white border border-stone-200 transition-colors hover:border-stone-400"
                   >
-                    <Link
-                      to={`/product/${item?._id}`}
-                      className="flex items-center gap-4 sm:gap-6 flex-grow"
-                    >
-                      <div className="aspect-[4/5] w-20 overflow-hidden bg-stone-100 shrink-0">
+                    {/* Portrait Image Container */}
+                    <div className="aspect-[4/5] w-full overflow-hidden bg-stone-100 relative">
+                      <Link to={`/product/${item?._id}`}>
                         <img
                           src={item?.image || "/default-product.png"}
                           alt={item?.name}
-                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                         />
-                      </div>
-                      <div className="space-y-1">
-                        <h4 className="font-serif text-base text-obsidian hover:text-champagne transition-colors line-clamp-1 font-normal">
-                          {item?.name}
-                        </h4>
-                        <p className="font-sans text-xs sm:text-sm font-semibold text-obsidian tracking-tight">
+                      </Link>
+
+                      {/* Remove Button */}
+                      <button
+                        onClick={() => removeFromWishlist(item?._id)}
+                        aria-label="Remove from Wishlist"
+                        className="absolute top-3 right-3 w-8 h-8 rounded-full border border-stone-200 bg-white/90 backdrop-blur-sm flex items-center justify-center text-stone-400 hover:text-red-500 hover:border-red-200 transition-colors"
+                      >
+                        <LuTrash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    {/* Metadata & Direct Link */}
+                    <div className="p-4 flex flex-col justify-between flex-grow gap-3">
+                      <div>
+                        <Link to={`/product/${item?._id}`}>
+                          <h4 className="font-serif text-sm sm:text-base text-obsidian line-clamp-1 group-hover:text-champagne transition-colors font-normal">
+                            {item?.name}
+                          </h4>
+                        </Link>
+                        <p className="font-sans text-xs sm:text-sm font-semibold text-obsidian tracking-tight mt-1">
                           {currency || "$"} {item?.price}
                         </p>
                       </div>
-                    </Link>
 
-                    <button
-                      onClick={() => removeFromWishlist(item?._id)}
-                      title="Remove from Wishlist"
-                      className="p-2 text-stone-400 hover:text-red-500 transition-colors ml-4"
-                    >
-                      <LuTrash2 className="w-4 h-4" />
-                    </button>
+                      <div className="pt-2 border-t border-stone-100 flex items-center justify-between">
+                        <Link
+                          to={`/product/${item?._id}`}
+                          className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest text-obsidian font-semibold hover:text-champagne transition-colors"
+                        >
+                          <span>Acquire Work</span>
+                          <LuArrowRight className="w-3 h-3 text-champagne" />
+                        </Link>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>

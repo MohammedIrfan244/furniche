@@ -50,7 +50,7 @@ function ProductItems({ id, name, price, image, rating, original }) {
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, ease: "easeOut" }}
-      className="group relative flex flex-col bg-white border border-stone-200/70 overflow-hidden transition-all duration-500 hover:border-stone-400 hover:shadow-atelier-hover"
+      className="group relative flex flex-col bg-white border border-stone-200 overflow-hidden transition-colors duration-300 hover:border-stone-500"
     >
       {/* Image Showcase Container */}
       <Link

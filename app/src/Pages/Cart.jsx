@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import CartCards from "../Components/CartCards";
-import { LuShoppingBag, LuArrowRight, LuShieldCheck } from "react-icons/lu";
+import { LuShoppingBag, LuArrowRight, LuShieldCheck, LuTruck } from "react-icons/lu";
 import ScrollTop from "../utilities/ScrollTop";
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../Redux/userSlice";
@@ -42,7 +42,7 @@ function Cart() {
                   Your Shopping Bag is Empty
                 </h2>
                 <p className="text-xs text-stone-500 font-light leading-relaxed">
-                  You have not yet selected any furniture pieces. Explore our curated collections to enrich your living space.
+                  Discover handcrafted silhouettes and timeless furniture to curate your living space.
                 </p>
               </div>
               <Link
@@ -56,17 +56,23 @@ function Cart() {
           ) : (
             <div>
               {/* Page Title */}
-              <div className="border-b border-stone-200/80 pb-6 mb-10">
-                <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-2">
-                  Review Selections
-                </span>
-                <h1 className="font-serif text-3xl sm:text-4xl text-obsidian font-normal tracking-tight">
-                  Shopping Bag ({userCart.length} {userCart.length === 1 ? "item" : "items"})
-                </h1>
+              <div className="border-b border-stone-200 pb-6 mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                  <span className="font-sans text-[11px] uppercase tracking-[0.25em] text-champagne font-semibold block mb-2">
+                    Review Selections
+                  </span>
+                  <h1 className="font-serif text-3xl sm:text-4xl text-obsidian font-normal tracking-tight">
+                    Shopping Bag ({userCart.length} {userCart.length === 1 ? "work" : "works"})
+                  </h1>
+                </div>
+                <div className="flex items-center gap-2 text-xs text-stone-500 font-light">
+                  <LuTruck className="w-4 h-4 text-champagne" />
+                  <span>Complimentary White-Glove Courier Included</span>
+                </div>
               </div>
 
-              {/* Two Column Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+              {/* Two Column Layout (Clean Flat Architectural Cards, No Heavy Shadows) */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 {/* Cart Items List */}
                 <div className="lg:col-span-8 space-y-4">
                   {userCart.map((item, index) => (
@@ -81,11 +87,11 @@ function Cart() {
                   ))}
                 </div>
 
-                {/* Sticky Order Summary */}
-                <div className="lg:col-span-4 sticky top-28">
-                  <div className="p-6 sm:p-8 bg-white border border-stone-200/80 shadow-atelier space-y-6">
+                {/* Flat Minimal Order Summary Panel */}
+                <div className="lg:col-span-4 lg:sticky lg:top-28">
+                  <div className="p-6 sm:p-8 bg-white border border-stone-200 space-y-6">
                     <h3 className="font-serif text-xl text-obsidian font-normal border-b border-stone-100 pb-4">
-                      Order Summary
+                      Acquisition Summary
                     </h3>
 
                     <div className="space-y-3 text-xs font-light">
@@ -94,17 +100,17 @@ function Cart() {
                         <span className="font-medium text-obsidian">{userCart.length}</span>
                       </div>
                       <div className="flex justify-between text-stone-600">
-                        <span>Standard Delivery</span>
+                        <span>Courier Transit</span>
                         <span className="text-champagne font-medium">Complimentary</span>
                       </div>
                       <div className="flex justify-between text-stone-600">
-                        <span>White Glove Service</span>
+                        <span>White Glove Setup</span>
                         <span className="text-stone-700">Included</span>
                       </div>
                     </div>
 
                     <div className="border-t border-stone-200 pt-4 flex justify-between items-baseline">
-                      <span className="font-serif text-lg text-obsidian">Total</span>
+                      <span className="font-serif text-lg text-obsidian">Total Investment</span>
                       <span className="font-sans text-xl font-semibold text-obsidian tracking-tight">
                         {currency || "$"} {subtotal}
                       </span>
@@ -118,9 +124,9 @@ function Cart() {
                       <LuArrowRight className="w-3.5 h-3.5 text-champagne" />
                     </button>
 
-                    <div className="pt-2 flex items-center justify-center gap-2 text-[10px] text-stone-500 uppercase tracking-widest font-medium">
+                    <div className="pt-2 flex items-center justify-center gap-2 text-[10px] text-stone-500 uppercase tracking-widest font-medium border-t border-stone-100">
                       <LuShieldCheck className="w-3.5 h-3.5 text-champagne" />
-                      <span>Encrypted SSL Atelier Payment</span>
+                      <span>Encrypted Atelier Protocol</span>
                     </div>
                   </div>
                 </div>

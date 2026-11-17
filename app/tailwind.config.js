@@ -46,9 +46,9 @@ export default {
         sofaBlue: '#171615',
       },
       boxShadow: {
-        'atelier': '0 10px 30px -5px rgba(23, 22, 21, 0.05)',
-        'atelier-hover': '0 20px 40px -10px rgba(23, 22, 21, 0.08)',
-        'atelier-lg': '0 25px 60px -15px rgba(23, 22, 21, 0.12)',
+        'atelier': 'none',
+        'atelier-hover': 'none',
+        'atelier-lg': '0 4px 20px -2px rgba(23, 22, 21, 0.04)',
       },
       letterSpacing: {
         'luxury': '0.2em',

@@ -220,6 +220,36 @@ function NavBar() {
             >
               Contact
             </NavLink>
+            <div className="pt-4 border-t border-stone-200/80 flex items-center justify-center gap-6">
+              <Link
+                onClick={() => setVisible(false)}
+                to={"/search"}
+                className="flex items-center gap-1.5 text-xs uppercase tracking-widest text-stone-600 hover:text-obsidian"
+              >
+                <LuSearch className="w-3.5 h-3.5 text-champagne" />
+                <span>Search</span>
+              </Link>
+              {currentUser && (
+                <Link
+                  onClick={() => setVisible(false)}
+                  to={"/wishlist"}
+                  className="flex items-center gap-1.5 text-xs uppercase tracking-widest text-stone-600 hover:text-obsidian"
+                >
+                  <LuHeart className="w-3.5 h-3.5 text-champagne" />
+                  <span>Wishlist</span>
+                </Link>
+              )}
+              {currentUser && (
+                <Link
+                  onClick={() => setVisible(false)}
+                  to={"/cart"}
+                  className="flex items-center gap-1.5 text-xs uppercase tracking-widest text-stone-600 hover:text-obsidian"
+                >
+                  <LuShoppingCart className="w-3.5 h-3.5 text-champagne" />
+                  <span>Bag ({userCartCount})</span>
+                </Link>
+              )}
+            </div>
             {isAdmin && (
               <NavLink
                 onClick={() => setVisible(false)}
