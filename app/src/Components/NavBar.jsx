@@ -2,11 +2,13 @@ import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartCount } from "../Redux/userSlice";
-import { LuSearch, LuShoppingCart, LuHeart, LuMenu, LuX } from "react-icons/lu";
+import { LuSearch, LuShoppingCart, LuHeart, LuMenu, LuX, LuSparkles } from "react-icons/lu";
+import ConciergeModal from "./ConciergeModal";
 
 function NavBar() {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [showConcierge, setShowConcierge] = useState(false);
   const { currentUser, userCartCount, isAdmin, userCart } = useSelector(
     (state) => state.user
   );
@@ -125,6 +127,15 @@ function NavBar() {
 
         {/* Right Icon Actions */}
         <div className="flex items-center gap-4 sm:gap-6">
+          <button
+            type="button"
+            onClick={() => setShowConcierge(true)}
+            className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-semibold text-obsidian border border-stone-300 hover:border-obsidian transition"
+          >
+            <LuSparkles className="w-3 h-3 text-champagne" />
+            <span>Concierge</span>
+          </button>
+
           <Link
             to={"/search"}
             aria-label="Search"
@@ -259,9 +270,27 @@ function NavBar() {
                 Atelier Admin
               </NavLink>
             )}
+
+            <button
+              type="button"
+              onClick={() => {
+                setVisible(false);
+                setShowConcierge(true);
+              }}
+              className="inline-flex items-center justify-center gap-2 text-xs uppercase tracking-widest text-champagne font-semibold border border-stone-200 py-2.5 mx-auto px-6 mt-2"
+            >
+              <LuSparkles className="w-3.5 h-3.5 text-champagne" />
+              <span>Bespoke Concierge</span>
+            </button>
           </ul>
         </div>
       )}
+
+      {/* Atelier Concierge Modal */}
+      <ConciergeModal
+        isOpen={showConcierge}
+        onClose={() => setShowConcierge(false)}
+      />
     </nav>
   );
 }

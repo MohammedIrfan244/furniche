@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import NewCollection from "../Components/NewCollection";
 import OriginalProducts from "../Components/OriginalProducts";
+import LookbookSection from "../Components/LookbookSection";
 import ScrollTop from "../utilities/ScrollTop";
 import { useNavigate } from "react-router-dom";
 import { motion } from "motion/react";
@@ -82,6 +83,9 @@ function Home() {
       {/* Product Showcase Sections */}
       <NewCollection />
       <OriginalProducts />
+
+      {/* Interactive Architectural Lookbook */}
+      <LookbookSection />
 
       <ScrollTop />
     </div>
