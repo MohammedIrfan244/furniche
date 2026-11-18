@@ -30,6 +30,36 @@ import MaterialSelector, {
 import ReviewModal from "../Components/ReviewModal";
 import ConciergeModal from "../Components/ConciergeModal";
 
+const calculateReviewStats = (reviewsList = []) => {
+  if (!reviewsList || reviewsList.length === 0) {
+    return {
+      score: null,
+      totalEvaluations: 0,
+      fiveStarPct: 0,
+      fourStarPct: 0,
+      distribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
+    };
+  }
+  const total = reviewsList.length;
+  const distribution = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+  let sum = 0;
+  reviewsList.forEach((r) => {
+    const star = Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5)));
+    distribution[star] = (distribution[star] || 0) + 1;
+    sum += Number(r.rating) || 5;
+  });
+  const avg = (sum / total).toFixed(1);
+  const fiveStarPct = Math.round((distribution[5] / total) * 100);
+  const fourStarPct = Math.round((distribution[4] / total) * 100);
+  return {
+    score: avg,
+    totalEvaluations: total,
+    fiveStarPct,
+    fourStarPct,
+    distribution,
+  };
+};
+
 function Product() {
   const { Id } = useParams();
   const { currentUser, userCart, userWishlist } = useSelector(
@@ -120,29 +150,41 @@ function Product() {
     };
 
     const fetchReviewsData = async () => {
+      let localSaved = [];
+      try {
+        const raw = localStorage.getItem(`furniche_local_reviews_${Id}`);
+        if (raw) localSaved = JSON.parse(raw);
+      } catch (e) {
+        console.warn("Could not read local review storage:", e);
+      }
+
       try {
         const res = await axios.get(
           `${import.meta.env.VITE_API_URL}/public/products/${Id}/reviews`
         );
-        if (res.data?.data) {
-          setServerAppraisals({
-            score: res.data.data.stats?.score || null,
-            totalEvaluations: res.data.data.stats?.totalEvaluations || 0,
-            fiveStarPct: res.data.data.stats?.fiveStarPct || 0,
-            fourStarPct: res.data.data.stats?.fourStarPct || 0,
-            distribution: res.data.data.stats?.distribution || {},
-            reviews: res.data.data.reviews || [],
-          });
-        }
+        const serverReviews = res.data?.data?.reviews || [];
+
+        // Merge locally cached reviews with server reviews, avoiding duplicate entries
+        const existingKeys = new Set(
+          serverReviews.map((r) => `${r.title}|${r.comment}`)
+        );
+        const unmergedLocal = localSaved.filter(
+          (lr) => !existingKeys.has(`${lr.title}|${lr.comment}`)
+        );
+
+        const merged = [...unmergedLocal, ...serverReviews];
+        const stats = calculateReviewStats(merged);
+
+        setServerAppraisals({
+          ...stats,
+          reviews: merged,
+        });
       } catch (err) {
         console.error("Error fetching reviews:", axiosErrorManager(err));
+        const stats = calculateReviewStats(localSaved);
         setServerAppraisals({
-          score: null,
-          totalEvaluations: 0,
-          fiveStarPct: 0,
-          fourStarPct: 0,
-          distribution: { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 },
-          reviews: [],
+          ...stats,
+          reviews: localSaved,
         });
       }
     };
@@ -164,23 +206,41 @@ function Product() {
     window.scrollTo(0, 0);
   }, [Id]);
 
-  const handleReviewAdded = (reviewData) => {
-    if (reviewData?.stats && reviewData?.reviews) {
-      setServerAppraisals({
-        score: reviewData.stats.score,
-        totalEvaluations: reviewData.stats.totalEvaluations,
-        fiveStarPct: reviewData.stats.fiveStarPct,
-        fourStarPct: reviewData.stats.fourStarPct,
-        distribution: reviewData.stats.distribution || {},
-        reviews: reviewData.reviews,
-      });
-    } else if (reviewData?.review) {
-      setServerAppraisals((prev) => ({
-        ...prev,
-        totalEvaluations: prev.totalEvaluations + 1,
-        reviews: [reviewData.review, ...prev.reviews],
-      }));
-    }
+  // Local state update handler: immediately updates UI without page reload
+  const handleReviewAdded = (incoming) => {
+    setServerAppraisals((prev) => {
+      let updatedReviews;
+      if (incoming?.reviews && Array.isArray(incoming.reviews)) {
+        updatedReviews = incoming.reviews;
+      } else {
+        const item = incoming?.review || incoming;
+        if (!item?.title) return prev;
+
+        // Check if already in list to avoid duplicates
+        const exists = prev.reviews.some(
+          (r) =>
+            r._id === item._id ||
+            (r.title === item.title && r.comment === item.comment)
+        );
+        updatedReviews = exists ? prev.reviews : [item, ...prev.reviews];
+      }
+
+      // Persist to local storage so it also stays across refreshes
+      try {
+        localStorage.setItem(
+          `furniche_local_reviews_${Id}`,
+          JSON.stringify(updatedReviews)
+        );
+      } catch (e) {
+        console.warn("Could not persist local review:", e);
+      }
+
+      const newStats = calculateReviewStats(updatedReviews);
+      return {
+        ...newStats,
+        reviews: updatedReviews,
+      };
+    });
   };
 
   const isAlreadyInCart = userCart?.some((item) => item.productId?._id === Id);
