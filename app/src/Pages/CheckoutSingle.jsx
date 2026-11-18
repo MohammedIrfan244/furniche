@@ -277,7 +277,7 @@ function CheckoutSingle() {
                     {product?.name}
                   </h4>
                   <p className="font-sans text-xs text-stone-500">
-                    Unit: {currency || "$"} {product?.price}
+                    Unit: {currency || "₹"} {product?.price}
                   </p>
                 </div>
               </div>
@@ -322,7 +322,7 @@ function CheckoutSingle() {
               <div className="border-t border-stone-200 pt-4 flex justify-between items-baseline">
                 <span className="font-serif text-lg text-obsidian">Total Investment</span>
                 <span className="font-sans text-xl font-semibold text-obsidian tracking-tight">
-                  {currency || "$"} {totalAmount}
+                  {currency || "₹"} {totalAmount}
                 </span>
               </div>
 

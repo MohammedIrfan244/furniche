@@ -139,7 +139,7 @@ function Order() {
                       </p>
                     </div>
                     <p className="font-sans text-sm font-semibold text-obsidian">
-                      {currency || "$"} {product?.productId?.price}
+                      {currency || "₹"} {product?.productId?.price}
                     </p>
                   </div>
                 ))}
@@ -162,7 +162,7 @@ function Order() {
               </div>
               <div className="flex items-center gap-2.5 text-stone-600">
                 <LuPackage className="w-4 h-4 text-champagne shrink-0" />
-                <span>Total: <strong className="text-obsidian font-semibold">{currency || "$"} {order?.totalAmount}</strong></span>
+                <span>Total: <strong className="text-obsidian font-semibold">{currency || "₹"} {order?.totalAmount}</strong></span>
               </div>
             </div>
 

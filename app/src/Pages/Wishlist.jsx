@@ -105,7 +105,7 @@ function Wishlist() {
                           </h4>
                         </Link>
                         <p className="font-sans text-xs sm:text-sm font-semibold text-obsidian tracking-tight mt-1">
-                          {currency || "$"} {item?.price}
+                          {currency || "₹"} {item?.price}
                         </p>
                       </div>
 

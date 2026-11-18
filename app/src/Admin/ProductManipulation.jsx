@@ -154,7 +154,7 @@ function ProductManipulation() {
               </div>
 
               <div className="space-y-2 text-xs border-t border-stone-100 pt-4 text-stone-600">
-                <p><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Price:</span> {currency || "$"} {product?.price}</p>
+                <p><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Price:</span> {currency || "₹"} {product?.price}</p>
                 <p><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Category:</span> {product?.category}</p>
                 <p><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Rating:</span> {product?.rating}.0</p>
                 <p><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Edition:</span> {product?.original ? "Atelier In-House Original" : "Curated Standard"}</p>

@@ -188,7 +188,7 @@ function AdminDashboard() {
                 <LuDollarSign className="w-4 h-4 text-champagne" />
               </div>
               <p className="font-serif text-2xl text-obsidian font-normal">
-                ${revenueStats?.totalRevenue || 0}
+                ₹{revenueStats?.totalRevenue || 0}
               </p>
             </div>
           </div>

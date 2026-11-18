@@ -112,7 +112,7 @@ function Cart() {
                     <div className="border-t border-stone-200 pt-4 flex justify-between items-baseline">
                       <span className="font-serif text-lg text-obsidian">Total Investment</span>
                       <span className="font-sans text-xl font-semibold text-obsidian tracking-tight">
-                        {currency || "$"} {subtotal}
+                        {currency || "₹"} {subtotal}
                       </span>
                     </div>
 

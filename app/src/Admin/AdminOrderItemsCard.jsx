@@ -18,7 +18,7 @@ function AdminOrderItemCards({ image, name, price, count, id }) {
         <div className="space-y-0.5 text-xs">
           <p className="font-serif text-obsidian line-clamp-1">{name}</p>
           <p className="font-sans font-semibold text-obsidian">
-            {currency || "$"} {price}
+            {currency || "₹"} {price}
           </p>
         </div>
       </div>

@@ -11,6 +11,7 @@ import { LuPackage, LuLogOut, LuPen, LuChevronRight } from "react-icons/lu";
 
 function User() {
   const { currentUser } = useSelector((state) => state.user);
+  const { currency } = useSelector((state) => state.public);
   const [orders, setOrders] = useState([]);
   const [updateForm, setUpdateForm] = useState({
     name: currentUser?.name || "",
@@ -295,7 +296,7 @@ function User() {
                           Total
                         </span>
                         <span className="font-sans text-base font-semibold text-obsidian">
-                          ${order?.totalAmount}
+                          {currency || "₹"} {order?.totalAmount}
                         </span>
                       </div>
                       <LuChevronRight className="w-4 h-4 text-stone-400 group-hover:text-obsidian group-hover:translate-x-1 transition-all" />

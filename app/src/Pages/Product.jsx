@@ -15,18 +15,22 @@ import {
 } from "../Redux/userSlice";
 import { toast } from "react-toastify";
 import axiosInstance from "../utilities/axiosInstance";
+import { getProductAppraisals } from "../data/keralaReviews";
 
 function Product() {
   const { Id } = useParams();
-  const { currentUser, userCart, userWishlist, currency } = useSelector(
+  const { currentUser, userCart, userWishlist } = useSelector(
     (state) => state.user
   );
+  const { currency } = useSelector((state) => state.public);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
   const [loading, setLoading] = useState(true);
   const [interestedProduct, setInterestedProduct] = useState([]);
   const [isInWishlist, setIsInWishlist] = useState(false);
+
+  const appraisals = getProductAppraisals(Id || "default");
 
   const addToCartDispatch = async () => {
     if (!currentUser) {
@@ -155,7 +159,7 @@ function Product() {
                       <IoMdStar key={index} className="w-3.5 h-3.5" />
                     ))}
                     <span className="text-stone-500 text-[11px] font-sans ml-1">
-                      (4.9 &bull; 42 Appraisals)
+                      ({appraisals.score} &bull; {appraisals.totalEvaluations} Verified Evaluations)
                     </span>
                   </div>
                   {product?.original && product?.original !== "false" && (
@@ -165,10 +169,10 @@ function Product() {
                   )}
                 </div>
 
-                {/* Price Display */}
+                {/* Price Display in Indian Rupee Alone */}
                 <div className="pt-2">
                   <span className="font-sans text-2xl sm:text-3xl font-semibold text-obsidian tracking-tight">
-                    {currency || "$"} {product?.price}
+                    {currency || "₹"} {product?.price}
                   </span>
                 </div>
               </div>
@@ -180,7 +184,7 @@ function Product() {
                 </h4>
                 <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-light">
                   {product?.description ||
-                    "Expertly articulated proportions crafted with premium joinery and durable, tactile upholstery. Designed for longevity and refined ease."}
+                    "Expertly articulated proportions crafted with premium joinery and durable, tactile upholstery. Designed for longevity and refined ease in coastal and contemporary Kerala interiors."}
                 </p>
               </div>
 
@@ -241,7 +245,7 @@ function Product() {
             </div>
           </div>
 
-          {/* Luxury Collector Ratings & Quality Breakdown (4-5 Star Ratings, Clean & Understated) */}
+          {/* Dynamic Kerala Collector Ratings & Quality Breakdown (Zero Emojis) */}
           <section className="pt-16 pb-16 border-b border-stone-200">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
               {/* Left Column: Overall Rating & Distribution */}
@@ -256,7 +260,9 @@ function Product() {
                 </div>
 
                 <div className="flex items-baseline gap-3">
-                  <span className="font-serif text-5xl text-obsidian font-normal">4.9</span>
+                  <span className="font-serif text-5xl text-obsidian font-normal">
+                    {appraisals.score}
+                  </span>
                   <div className="space-y-1">
                     <div className="flex items-center gap-0.5 text-champagne text-sm">
                       {Array.from({ length: 5 }).map((_, i) => (
@@ -264,7 +270,7 @@ function Product() {
                       ))}
                     </div>
                     <p className="text-[11px] text-stone-500 font-light">
-                      42 verified collector evaluations
+                      {appraisals.totalEvaluations} verified Kerala acquisitions
                     </p>
                   </div>
                 </div>
@@ -274,16 +280,26 @@ function Product() {
                   <div className="flex items-center gap-3">
                     <span className="w-12 text-[11px]">5 Stars</span>
                     <div className="flex-1 h-1.5 bg-stone-100 overflow-hidden">
-                      <div className="h-full bg-champagne w-[92%]" />
+                      <div
+                        className="h-full bg-champagne"
+                        style={{ width: `${appraisals.fiveStarPct}%` }}
+                      />
                     </div>
-                    <span className="w-8 text-right text-[11px] text-stone-400">92%</span>
+                    <span className="w-8 text-right text-[11px] text-stone-400">
+                      {appraisals.fiveStarPct}%
+                    </span>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="w-12 text-[11px]">4 Stars</span>
                     <div className="flex-1 h-1.5 bg-stone-100 overflow-hidden">
-                      <div className="h-full bg-champagne w-[8%]" />
+                      <div
+                        className="h-full bg-champagne"
+                        style={{ width: `${appraisals.fourStarPct}%` }}
+                      />
                     </div>
-                    <span className="w-8 text-right text-[11px] text-stone-400">8%</span>
+                    <span className="w-8 text-right text-[11px] text-stone-400">
+                      {appraisals.fourStarPct}%
+                    </span>
                   </div>
                   <div className="flex items-center gap-3 opacity-40">
                     <span className="w-12 text-[11px]">3 Stars</span>
@@ -303,89 +319,51 @@ function Product() {
                 </div>
               </div>
 
-              {/* Right Column: Verified Ratings Snapshots (No Long Walls of Text) */}
+              {/* Right Column: Dynamic Kerala Customer Reviews */}
               <div className="lg:col-span-7 space-y-6">
                 <div>
                   <span className="font-sans text-[10px] uppercase tracking-widest text-champagne font-semibold block mb-1">
-                    Verified Ownership
+                    Verified Kerala Feedback
                   </span>
                   <h3 className="font-serif text-2xl text-obsidian font-normal">
-                    Recent Verified Acquisitions
+                    Recent Regional Appraisals
                   </h3>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-4 bg-white border border-stone-200 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-0.5 text-champagne text-xs">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <IoMdStar key={i} />
-                        ))}
+                  {appraisals.reviews.map((rev) => (
+                    <div
+                      key={rev.id}
+                      className="p-5 bg-white border border-stone-200 space-y-2.5 transition-colors hover:border-stone-400"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-0.5 text-champagne text-xs">
+                          {Array.from({ length: rev.rating }).map((_, i) => (
+                            <IoMdStar key={i} />
+                          ))}
+                        </div>
+                        <span className="text-[10px] text-stone-400 font-light">{rev.date}</span>
                       </div>
-                      <span className="text-[10px] text-stone-400">November 2026</span>
-                    </div>
-                    <p className="font-serif text-sm text-obsidian font-medium">
-                      Private Residence &bull; Milan
-                    </p>
-                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
-                      <LuCheck className="w-3 h-3 text-emerald-600" />
-                      <span>Verified Atelier Acquisition</span>
-                    </div>
-                  </div>
 
-                  <div className="p-4 bg-white border border-stone-200 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-0.5 text-champagne text-xs">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <IoMdStar key={i} />
-                        ))}
+                      <div>
+                        <p className="font-serif text-sm text-obsidian font-medium">
+                          {rev.author}
+                        </p>
+                        <p className="text-xs text-stone-500 font-light">
+                          {rev.location} &bull; <span className="text-stone-400 text-[10px] uppercase tracking-wider">{rev.propertyType}</span>
+                        </p>
                       </div>
-                      <span className="text-[10px] text-stone-400">October 2026</span>
-                    </div>
-                    <p className="font-serif text-sm text-obsidian font-medium">
-                      Architectural Studio &bull; London
-                    </p>
-                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
-                      <LuCheck className="w-3 h-3 text-emerald-600" />
-                      <span>Verified Atelier Acquisition</span>
-                    </div>
-                  </div>
 
-                  <div className="p-4 bg-white border border-stone-200 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-0.5 text-champagne text-xs">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <IoMdStar key={i} />
-                        ))}
-                      </div>
-                      <span className="text-[10px] text-stone-400">September 2026</span>
-                    </div>
-                    <p className="font-serif text-sm text-obsidian font-medium">
-                      Interior Curator &bull; Zurich
-                    </p>
-                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
-                      <LuCheck className="w-3 h-3 text-emerald-600" />
-                      <span>Verified Atelier Acquisition</span>
-                    </div>
-                  </div>
+                      <p className="text-xs text-stone-600 font-light leading-relaxed pt-1 border-t border-stone-50">
+                        &quot;{rev.comment}&quot;
+                      </p>
 
-                  <div className="p-4 bg-white border border-stone-200 space-y-2">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-0.5 text-champagne text-xs">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                          <IoMdStar key={i} />
-                        ))}
+                      <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
+                        <LuCheck className="w-3 h-3 text-emerald-600" />
+                        <span>Verified Atelier Acquisition</span>
                       </div>
-                      <span className="text-[10px] text-stone-400">August 2026</span>
                     </div>
-                    <p className="font-serif text-sm text-obsidian font-medium">
-                      Residential Loft &bull; New York
-                    </p>
-                    <div className="flex items-center gap-1.5 text-[10px] text-emerald-700 pt-1">
-                      <LuCheck className="w-3 h-3 text-emerald-600" />
-                      <span>Verified Atelier Acquisition</span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>

@@ -54,7 +54,7 @@ function AdminOrderCards({ orderItems = {}, user = {}, userId, fetchingOrder }) 
           <p><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Email:</span> {user?.email}</p>
           <p><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Telephone:</span> {orderItems?.address?.phone}</p>
           <p className="sm:col-span-2"><span className="text-stone-400 uppercase tracking-widest text-[10px] block">Destination:</span> {orderItems?.address?.street} {orderItems?.address?.city} &mdash; {orderItems?.address?.pincode}</p>
-          <p className="sm:col-span-2 font-semibold text-obsidian text-sm pt-1"><span className="text-stone-400 uppercase tracking-widest text-[10px] block font-normal">Total Amount:</span> ${orderItems?.totalAmount}</p>
+          <p className="sm:col-span-2 font-semibold text-obsidian text-sm pt-1"><span className="text-stone-400 uppercase tracking-widest text-[10px] block font-normal">Total Amount:</span> ₹{orderItems?.totalAmount}</p>
         </div>
 
         {/* Status Actions */}

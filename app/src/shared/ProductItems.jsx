@@ -99,7 +99,7 @@ function ProductItems({ id, name, price, image, rating, original }) {
 
         <div className="flex items-center justify-between pt-1 border-t border-stone-100">
           <p className="font-sans text-xs sm:text-sm font-semibold text-obsidian tracking-tight">
-            {currency || "$"} {price}
+            {currency || "₹"} {price}
           </p>
 
           {rating > 0 && (

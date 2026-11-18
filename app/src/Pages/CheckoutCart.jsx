@@ -274,7 +274,7 @@ function CheckoutCart() {
                         {item?.productId?.name}
                       </h4>
                       <p className="font-sans text-[11px] text-stone-500">
-                        Qty: {item.quantity} &times; {currency || "$"} {item?.productId?.price}
+                        Qty: {item.quantity} &times; {currency || "₹"} {item?.productId?.price}
                       </p>
                     </div>
                   </div>
@@ -295,7 +295,7 @@ function CheckoutCart() {
               <div className="border-t border-stone-200 pt-4 flex justify-between items-baseline">
                 <span className="font-serif text-lg text-obsidian">Total Investment</span>
                 <span className="font-sans text-xl font-semibold text-obsidian tracking-tight">
-                  {currency || "$"} {totalAmount}
+                  {currency || "₹"} {totalAmount}
                 </span>
               </div>
 

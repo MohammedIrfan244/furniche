@@ -61,10 +61,10 @@ function CartCards({ image, name, price, quantity, id }) {
             </h4>
           </Link>
           <span className="font-sans text-[11px] text-stone-500 uppercase tracking-widest block">
-            Unit: {currency || "$"} {price}
+            Unit: {currency || "₹"} {price}
           </span>
           <span className="font-sans text-xs sm:text-sm font-semibold text-obsidian block sm:hidden pt-1">
-            Total: {currency || "$"} {lineTotal}
+            Total: {currency || "₹"} {lineTotal}
           </span>
         </div>
       </div>
@@ -106,7 +106,7 @@ function CartCards({ image, name, price, quantity, id }) {
         {/* Desktop Line Total */}
         <div className="hidden sm:block text-right w-24">
           <span className="font-sans text-sm font-semibold text-obsidian tracking-tight">
-            {currency || "$"} {lineTotal}
+            {currency || "₹"} {lineTotal}
           </span>
         </div>
 

@@ -314,7 +314,7 @@ function AdminProduct() {
                       {product.rating}.0
                     </td>
                     <td className="py-3 px-5 font-semibold text-obsidian">
-                      ${product.price}
+                      ₹{product.price}
                     </td>
                     <td className="py-3 px-5">
                       <span
